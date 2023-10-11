@@ -2,14 +2,14 @@ import React from 'react';
 import {getLayout} from "@/components/Layout/Layout";
 import {HeadMeta} from "@/components/HeadMeta/HeadMeta";
 
-function LogIn () {
+function SignUp() {
     return (
         <>
             <HeadMeta title={"Sign Up"}/>
-           Sign Up page
+            Sign Up page
         </>
     );
 };
 
-LogIn.getLayout = getLayout
-export default LogIn
+SignUp.getLayout = getLayout
+export default SignUp

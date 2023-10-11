@@ -2,14 +2,14 @@ import React from 'react';
 import {getLayout} from "@/components/Layout/Layout";
 import {HeadMeta} from "@/components/HeadMeta/HeadMeta";
 
-function LogIn () {
+function ForgotPassword() {
     return (
         <>
             <HeadMeta title={"Forgot Password?"}/>
-          Forgot Password?
+            Forgot Password?
         </>
     );
 };
 
-LogIn.getLayout = getLayout
-export default LogIn
+ForgotPassword.getLayout = getLayout
+export default ForgotPassword
