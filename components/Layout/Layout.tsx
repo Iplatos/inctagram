@@ -5,7 +5,7 @@ import styles from "@/styles/Home.module.css";
 
 export const Layout: NextPage<PropsWithChildren> = (props) => {
     const {children} = props
-
+//test
     return (
         <main className={styles.main}>
             <NavBar/>
