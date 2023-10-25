@@ -1,19 +1,22 @@
-import {PropsWithChildren, ReactElement} from "react";
-import {NextPage} from "next";
-import {NavBar} from "@/components/NavBar/NavBar";
-import styles from "@/styles/Home.module.css";
+import { PropsWithChildren, ReactElement } from 'react';
 
-export const Layout: NextPage<PropsWithChildren> = (props) => {
-    const {children} = props
-//test
-    return (
-        <main className={styles.main}>
-            <NavBar/>
-            {children}
-        </main>
-    )
-}
+import { NextPage } from 'next';
+
+// import styles from '@/styles/Home.module.css';
+
+import { Header } from '../Header/Header';
+
+export const Layout: NextPage<PropsWithChildren> = props => {
+  const { children } = props;
+
+  return (
+    <>
+      <Header />
+      <main>{children}</main>
+    </>
+  );
+};
 
 export const getLayout = (page: ReactElement) => {
-    return <Layout>{page}</Layout>
-}
+  return <Layout>{page}</Layout>;
+};
