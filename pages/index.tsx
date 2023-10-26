@@ -1,15 +1,13 @@
-import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
-import {HeadMeta} from "@/components/HeadMeta/HeadMeta";
-import {getLayout} from "@/components/Layout/Layout";
-
+import Image from 'next/image';
+import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
+import { getLayout } from '@/components/Layout/Layout';
 
 function Home() {
-    return (
-        <>
-            <HeadMeta title={"main"}/>
+  return (
+    <>
+      <HeadMeta title={'main'} />
 
-            {/* <div className={styles.description}>
+      {/* <div className={styles.description}>
                 <p>
                     Get started by editing&nbsp;
                     <code className={styles.code}>pages/index.tsx</code>
@@ -102,10 +100,9 @@ function Home() {
                     </p>
                 </a>
             </div> */}
-
-        </>
-    )
+    </>
+  );
 }
 
-Home.getLayout = getLayout
-export default Home
+Home.getLayout = getLayout;
+export default Home;
