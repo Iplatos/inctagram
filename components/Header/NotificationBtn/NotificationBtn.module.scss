@@ -1,0 +1,20 @@
+.notifications-wrapper {
+  cursor: pointer;
+  position: relative;
+  margin-right: 3rem;
+
+  span {
+    position: absolute;
+    bottom: 15px;
+    left: 11px;
+
+    width: 13px;
+    height: 13px;
+
+    font-size: 10px;
+    text-align: center;
+
+    background-color: var(--color-danger-500);
+    border-radius: 100%;
+  }
+}
