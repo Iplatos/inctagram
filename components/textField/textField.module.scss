@@ -1,0 +1,46 @@
+.inputContainer{
+   background-color: inherit;
+    position: relative;
+}
+
+.input{
+    padding-right: 32px;
+    padding-left: 12px;
+
+    background-color: inherit;
+    border: 1px solid var(--color-dark-300);
+    border-radius: 2px;
+
+    &:disabled {
+        color: var(--color-dark-300);
+    }
+
+    &.error {
+        color: var(--color-danger-300);
+        border-color: var(--color-danger-300);
+    }
+
+    &:focus {
+        border-color: var(--color-info-700);
+    }
+
+    &:hover {
+        // тут изменил цвет и добавил фоновый цвет
+        color: var(--color-dark-100);
+        background-color: var(--color-dark-700);
+        border-color: var(--color-dark-100);
+    }
+
+    &:active:enabled {
+        border-color: var(--color-light-100);
+    }
+}
+.button{
+    background-color: inherit;
+    position: absolute;
+    right:10px;
+  padding: 0;
+    border: 0;
+    width: 20px;
+    height: 20px;
+}
