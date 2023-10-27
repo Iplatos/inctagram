@@ -4,15 +4,10 @@ import {HeadMeta} from "@/components/HeadMeta/HeadMeta";
 
 function LogIn () {
     return (
-      /*  <>
-            <HeadMeta title={"Sign in"}/>
-           Sign In page!!!!!!
-        </>*/
         <>
-        <input style={{border:"30px red solid"}} />
+            <HeadMeta title={"Sign in"}/>
+           !!!!!!!!!!!Sign In page!!!!!!!!
         </>
-
-
     );
 };
 

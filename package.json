@@ -8,9 +8,12 @@
     "build:production": "yarn build",
     "start": "next start",
     "format": "prettier --write src",
-    "lint": "eslint --fix src/**/*.{tsx,ts,jsx,js} --no-error-on-unmatched-pattern && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input"
+    "lint": "eslint --fix src/**/*.{tsx,ts,jsx,js} --no-error-on-unmatched-pattern && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.0.15",
     "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18"
@@ -19,12 +22,22 @@
     "@it-incubator/eslint-config": "^1.0.1",
     "@it-incubator/prettier-config": "^0.1.2",
     "@it-incubator/stylelint-config": "^0.1.5",
+    "@storybook/addon-essentials": "^7.5.1",
+    "@storybook/addon-interactions": "^7.5.1",
+    "@storybook/addon-links": "^7.5.1",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.5.1",
+    "@storybook/nextjs": "^7.5.1",
+    "@storybook/react": "^7.5.1",
+    "@storybook/testing-library": "^0.2.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
-    "sass": "^1.69.2",
+    "eslint-plugin-storybook": "^0.6.15",
+    "sass": "^1.69.4",
+    "storybook": "^7.5.1",
     "stylelint": "^15.10.3",
     "typescript": "^5"
   }
