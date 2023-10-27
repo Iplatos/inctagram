@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e3e48318-1dae-4a70-ad51-44c5bb0b0c05" name="Changes" comment="test">
-      <change afterPath="$PROJECT_DIR$/assets/icons/eye-outline.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/textField/textField.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/textField/textField.tsx" afterDir="false" />
+    <list default="true" id="e3e48318-1dae-4a70-ad51-44c5bb0b0c05" name="Changes" comment="feat: add logic for types">
+      <change afterPath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/icons/close.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/icons/searchOutline.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/textField/textField.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/components/textField/textField.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/textField/textField.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/textField/textField.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/privacyPolicy/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/privacyPolicy/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +44,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "E:/it-kamasutra/1a_saturdayCardYusup/1/Cards",
+    "last_opened_file_path": "E:/it-kamasutra/fresh/my-app/assets/icons",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
@@ -57,6 +57,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\it-kamasutra\fresh\my-app\assets\icons" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
@@ -119,7 +124,14 @@
       <option name="project" value="LOCAL" />
       <updated>1698396417870</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: add eye-button for input">
+      <created>1698408320425</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1698408320425</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -151,6 +163,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
     <MESSAGE value="test2" />
-    <option name="LAST_COMMIT_MESSAGE" value="test2" />
+    <MESSAGE value="feat: add eye-button for input" />
+    <MESSAGE value="feat: add logic for types" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add logic for types" />
   </component>
 </project>

@@ -1,46 +1,81 @@
-.inputContainer{
-   background-color: inherit;
-    position: relative;
+.inputContainer {
+  background-color: inherit;
+  position: relative;
+  width: 284px;
+  height: 60px;
 }
 
-.input{
-    padding-right: 32px;
-    padding-left: 12px;
+.input {
+  padding-right: 32px;
+  padding-left: 12px;
+  display: flex;
+  background-color: inherit;
+  border: 1px solid var(--color-dark-300);
+  border-radius: 2px;
+  color: var(--color-dark-100);
 
-    background-color: inherit;
-    border: 1px solid var(--color-dark-300);
-    border-radius: 2px;
+  &:disabled {
+    color: var(--color-dark-300);
+  }
 
-    &:disabled {
-        color: var(--color-dark-300);
-    }
+
+  &:focus {
+    border-color: var(--color-info-700);
+    color: var(--color-ligth-100);
+  }
+
+  &:hover {
+    // тут изменил цвет и добавил фоновый цвет
+    color: var(--color-dark-100);
+    border-color: var(--color-dark-100);
+  }
+
+  &:active:enabled {
+    border-color: var(--color-light-100);
+  }
+
+  &.inputSearch {
+    padding-left: 30px;
 
     &.error {
-        color: var(--color-danger-300);
-        border-color: var(--color-danger-300);
-    }
+      color: var(--color-danger-300);
+      border-color: var(--color-danger-300);
 
-    &:focus {
-        border-color: var(--color-info-700);
+      &::placeholder {
+        color: red;
+      }
     }
+  }
 
-    &:hover {
-        // тут изменил цвет и добавил фоновый цвет
-        color: var(--color-dark-100);
-        background-color: var(--color-dark-700);
-        border-color: var(--color-dark-100);
-    }
+  &.error {
+    color: var(--color-danger-300);
+    border-color: var(--color-danger-300);
 
-    &:active:enabled {
-        border-color: var(--color-light-100);
+    &::placeholder {
+      color: red;
     }
+  }
 }
-.button{
-    background-color: inherit;
-    position: absolute;
-    right:10px;
+
+
+
+
+.button {
+  background-color: inherit;
+  position: absolute;
+  right: 35px;
+  bottom: 19px;
   padding: 0;
-    border: 0;
-    width: 20px;
-    height: 20px;
+  border: 0;
+  width: 20px;
+  height: 20px;
+}
+.searchOutline{
+  position: absolute;
+  left: 5px;
+  bottom: 20px;
+}
+.errorMessage{
+  font-size: 12px;
+  color:var(--color-danger-300);
 }
