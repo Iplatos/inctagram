@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e3e48318-1dae-4a70-ad51-44c5bb0b0c05" name="Changes" comment="feat: add alt attribute" />
+    <list default="true" id="e3e48318-1dae-4a70-ad51-44c5bb0b0c05" name="Changes" comment="fix: add idea into gitignore">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,7 +20,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="development" />
+        <entry key="$PROJECT_DIR$" value="input" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -131,12 +133,12 @@
       <option name="project" value="LOCAL" />
       <updated>1698413922787</updated>
     </task>
-    <task id="LOCAL-00007" summary="feat: add alt attribute">
-      <created>1698603526026</created>
+    <task id="LOCAL-00007" summary="fix: add idea into gitignore">
+      <created>1698604384722</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1698603526026</updated>
+      <updated>1698604384722</updated>
     </task>
     <option name="localTasksCounter" value="8" />
     <servers />
@@ -173,7 +175,7 @@
     <MESSAGE value="feat: add eye-button for input" />
     <MESSAGE value="feat: add logic for types" />
     <MESSAGE value="feat: add logic for errorInput" />
-    <MESSAGE value="feat: add alt attribute" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add alt attribute" />
+    <MESSAGE value="fix: add idea into gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: add idea into gitignore" />
   </component>
 </project>
