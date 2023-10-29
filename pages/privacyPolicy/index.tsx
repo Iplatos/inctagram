@@ -1,24 +1,26 @@
-import React, { useState } from "react";
-import {getLayout} from "@/components/Layout/Layout";
-import {HeadMeta} from "@/components/HeadMeta/HeadMeta";
-import { TextField } from "@/components/textField/textField";
+import React, { useState } from 'react';
 
-function PrivacyPolicy () {
-  const [value, setValue] = useState("as")
-    return (
-        <>
-            <HeadMeta title={" Terms of Service"}/>
-          Privacy Policy
-          <TextField
+import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
+import { getLayout } from '@/components/Layout/Layout';
+import { TextField } from '@/components/textField/textField';
 
-                     inputType={"password"}
-                     value={value}
-                     onChangeValue={setValue}
-                     label={"label"}
-                    />
-        </>
-    );
-};
+function PrivacyPolicy() {
+  const [value, setValue] = useState('as');
 
-PrivacyPolicy.getLayout = getLayout
-export default PrivacyPolicy
+  return (
+    <>
+      <HeadMeta title={' Terms of Service'} />
+      Privacy Policy
+      <TextField
+        as={'textarea'}
+        inputType={'password'}
+        label={'label'}
+        onChangeValue={setValue}
+        value={value}
+      />
+    </>
+  );
+}
+
+PrivacyPolicy.getLayout = getLayout;
+export default PrivacyPolicy;

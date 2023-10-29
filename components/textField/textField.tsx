@@ -1,57 +1,74 @@
-import s from "../textField/textField.module.scss";
-import { ComponentPropsWithoutRef, ElementType, useState } from "react";
-import eye from "assets/icons/eye-outline.svg";
-import close from "assets/icons/close.svg";
-import searchOutline from "assets/icons/searchOutline.svg";
+import { ComponentPropsWithoutRef, ElementType, useState } from 'react';
 
-type TextFieldProps <T extends ElementType = 'input'>= {
-  as?:T
-  label?: string
-  inputType?: "text" | "password"
-  value: string
-  onChangeValue: (e: string) => void
-  isSearchInput?: boolean
-  error?:string
-  className?:string
-} & ComponentPropsWithoutRef<T>
+import close from 'assets/icons/close.svg';
+import eye from 'assets/icons/eye-outline.svg';
+import searchOutline from 'assets/icons/searchOutline.svg';
 
-export const TextField = <T extends ElementType = 'input'>(props: TextFieldProps<T>
-  & Omit<ComponentPropsWithoutRef<T>, keyof TextFieldProps<T>>) => {
+import s from '../textField/textField.module.scss';
+
+type InputType = 'input' | 'textarea';
+
+type TextFieldProps<T extends InputType = 'input'> = {
+  as?: T;
+  className?: string;
+  error?: string;
+  inputType?: 'password' | 'text';
+  isSearchInput?: boolean;
+  label?: string;
+  onChangeValue: (e: string) => void;
+  value: string;
+} & ComponentPropsWithoutRef<T>;
+
+export const TextField = <T extends ElementType = 'input'>(
+  props: TextFieldProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TextFieldProps<T>>
+) => {
   const {
-    label,
-    inputType = "text",
-    value,
+    className,
     error,
+    inputType = 'text',
     isSearchInput,
+    label,
     onChangeValue,
-    className
+    value,
   } = props;
 
   const [type, setType] = useState(inputType);
 
   const changeInputType = () => {
-    type === "password" ? setType("text") : setType("password");
+    type === 'password' ? setType('text') : setType('password');
   };
   const clearTextField = () => {
-    onChangeValue("")
+    onChangeValue('');
   };
-  const { as: Component = 'input', ...rest } = props
+  const { as: Component = 'input', ...rest } = props;
 
   return (
     <div className={s.inputContainer}>
       <label>{label}</label>
-      <Component value={value} onChange={(e)=>onChangeValue(e.currentTarget.value)}
-             type={type} className={`${ isSearchInput ? `${s.input} ${s.inputSearch}` : s.input } ${error? `${s.input} ${s.error}`: s.input} ${className}`}
-             disabled={false} placeholder={"email"} {...rest}/>
-      {inputType !== "text" && <button onClick={changeInputType}
-                                       className={s.button}>
-        <img src={eye.src} alt={'search logo'} />
-      </button>}
-      {isSearchInput && value && <button onClick={clearTextField}
-                                className={s.button}>
-        <img src={close.src} alt={'close logo'} />
-      </button>}
-      {isSearchInput && <img className={s.searchOutline} src={searchOutline.src} alt={'searchOutline logo'}/>}
+      <Component
+        className={`${isSearchInput ? `${s.input} ${s.inputSearch}` : s.input} ${
+          error ? `${s.input} ${s.error}` : s.input
+        } ${className}`}
+        disabled={false}
+        onChange={e => onChangeValue(e.currentTarget.value)}
+        placeholder={'email'}
+        type={type}
+        value={value}
+        {...rest}
+      />
+      {inputType !== 'text' && (
+        <button className={s.button} onClick={changeInputType}>
+          <img alt={'search logo'} src={eye.src} />
+        </button>
+      )}
+      {isSearchInput && value && (
+        <button className={s.button} onClick={clearTextField}>
+          <img alt={'close logo'} src={close.src} />
+        </button>
+      )}
+      {isSearchInput && (
+        <img alt={'searchOutline logo'} className={s.searchOutline} src={searchOutline.src} />
+      )}
       <div className={s.errorMessage}>{error}</div>
     </div>
   );
