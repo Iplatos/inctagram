@@ -22,6 +22,7 @@ export const TextField = (props: TextFieldProps) => {
     isSearchInput,
     onChangeValue
   } = props;
+
   const [type, setType] = useState(inputType);
 
   const changeInputType = () => {
@@ -30,7 +31,7 @@ export const TextField = (props: TextFieldProps) => {
   const clearTextField = () => {
     onChangeValue("")
   };
-  console.log(error);
+
   return (
     <div className={s.inputContainer}>
       <label>{label}</label>
@@ -39,15 +40,14 @@ export const TextField = (props: TextFieldProps) => {
              disabled={false} placeholder={"email"} />
       {inputType !== "text" && <button onClick={changeInputType}
                                        className={s.button}>
-        <img src={eye.src} />
+        <img src={eye.src} alt={'search logo'} />
       </button>}
       {isSearchInput && value && <button onClick={clearTextField}
                                 className={s.button}>
-        <img src={close.src} />
+        <img src={close.src} alt={'close logo'} />
       </button>}
-      {isSearchInput && <img className={s.searchOutline} src={searchOutline.src} />}
+      {isSearchInput && <img className={s.searchOutline} src={searchOutline.src} alt={'searchOutline logo'}/>}
       <div className={s.errorMessage}>{error}</div>
-
     </div>
   );
 };
