@@ -10,13 +10,12 @@ function PrivacyPolicy () {
             <HeadMeta title={" Terms of Service"}/>
           Privacy Policy
           <TextField
-                     isSearchInput={true}
+
+                     inputType={"password"}
                      value={value}
                      onChangeValue={setValue}
                      label={"label"}
-
                     />
-
         </>
     );
 };
