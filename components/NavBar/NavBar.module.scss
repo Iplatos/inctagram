@@ -1,0 +1,21 @@
+.linksContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+}
+
+.links {
+  background-color: var(--color-dark-100);
+  position: absolute;
+  width: 90%;
+  height: 40px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  bottom: 20px
+}
+
+.links a:hover {
+  color: yellow;
+}

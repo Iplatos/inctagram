@@ -4,7 +4,7 @@ import close from 'assets/icons/close.svg';
 import eye from 'assets/icons/eye-outline.svg';
 import searchOutline from 'assets/icons/searchOutline.svg';
 
-import s from '../textField/textField.module.scss';
+import s from './TextField.module.scss';
 
 type InputType = 'input' | 'textarea';
 
