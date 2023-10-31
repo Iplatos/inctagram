@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
 
