@@ -7,7 +7,7 @@ function ForgotPassword() {
   return (
     <>
       <HeadMeta title={'Forgot Password?'} />
-      Forgot Password ?
+      Forgot Password 1?
     </>
   );
 }
