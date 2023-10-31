@@ -1,16 +1,18 @@
 import { PropsWithChildren, ReactElement } from 'react';
 
+import { Header } from '@/components/Header/Header';
 import { NavBar } from '@/components/NavBar/NavBar';
 import { NextPage } from 'next';
-
-import styles from 'components/Layout/Home.module.scss';
 
 export const Layout: NextPage<PropsWithChildren> = props => {
   const { children } = props;
 
   return (
-    <main className={styles.main}>
+    <main>
+      <Header />
+
       <NavBar />
+
       {children}
     </main>
   );
