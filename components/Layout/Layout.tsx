@@ -1,7 +1,9 @@
 import { PropsWithChildren, ReactElement } from 'react';
+import { Provider } from 'react-redux';
 
 import { Header } from '@/components/Header/Header';
 import { NavBar } from '@/components/NavBar/NavBar';
+import { store } from '@/pages/api/store';
 import { NextPage } from 'next';
 
 export const Layout: NextPage<PropsWithChildren> = props => {
@@ -9,11 +11,11 @@ export const Layout: NextPage<PropsWithChildren> = props => {
 
   return (
     <main>
-      <Header />
-
-      <NavBar />
-
-      {children}
+      <Provider store={store}>
+        <Header />
+        <NavBar />
+        {children}
+      </Provider>
     </main>
   );
 };

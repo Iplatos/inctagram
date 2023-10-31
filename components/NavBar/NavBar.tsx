@@ -12,6 +12,7 @@ export const NavBar = () => {
         <Link href={'/forgotPassword'}>Forgot Password</Link>
         <Link href={'/termsOfService'}>Terms Of Service</Link>
         <Link href={'/privacyPolicy'}>Privacy Policy</Link>
+        <Link href={'/confirm-registration'}>Confirm Registration</Link>
       </div>
     </div>
   );
