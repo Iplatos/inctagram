@@ -1,5 +1,27 @@
 import s from './Header.module.scss';
 
+import outlineBell from './../../assets/icons/outlineBell.svg';
+
 export const Header = () => {
-  return <div className={s.headerContainer}>HEADER</div>;
+  const isLogged = false;
+
+  return (
+    <div className={s.headerContainer}>
+      <div className={s.header}>
+        <div>inctagram</div>
+        <div className={s.headerInterface}>
+          {isLogged ? <img alt={'outlineBell logo'} src={outlineBell.src} /> : ' '}
+          <div>SUPURSELECT</div>
+          {isLogged ? (
+            ''
+          ) : (
+            <div>
+              <button>login</button>
+              <button>signUp</button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 };
