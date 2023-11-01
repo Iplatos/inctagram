@@ -1,7 +1,7 @@
 import { PropsWithChildren, ReactElement } from 'react';
 
-import { Header } from '@/components/Header/Header';
 import { NavBar } from '@/components/NavBar/NavBar';
+import { SideBar } from '@/components/shared/SideBar/SIdeBar';
 import { NextPage } from 'next';
 
 export const Layout: NextPage<PropsWithChildren> = props => {
@@ -9,11 +9,10 @@ export const Layout: NextPage<PropsWithChildren> = props => {
 
   return (
     <main>
-      <Header />
-
       <NavBar />
 
       {children}
+      <SideBar />
     </main>
   );
 };
