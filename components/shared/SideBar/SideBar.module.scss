@@ -9,9 +9,6 @@
   border: 1px solid var(--color-dark-300);
   padding-left: 60px;
 
-  img {
-    margin-right: 10px;
-  }
 
   button {
     border: none;
@@ -24,22 +21,20 @@
     margin: 12px 0 12px 0;
     background-color: inherit;
 
-    & :active {
-      background-color: green;
-      font-weight: bold;
-    }
-
     &:hover {
-      background: var(--primary-300, #a280ff);
+      color: var(--primary-100, #a280ff);
     }
 
+    &:active {
+      outline: 2px solid var(--info-700, #2f68cc);
+      font-size: large;
+    }
 
     &:disabled {
       background-color: var(--primary-900, #382766);
     }
 
     &:focus-visible {
-      background: var(--primary-500, #8c61ff);
       outline: 2px solid var(--info-700, #2f68cc);
     }
   }
@@ -60,6 +55,20 @@
   justify-content: end;
 }
 
+
+.image {
+  margin-right: 10px;
+
+  & svg path {
+    stroke: color("red");
+    fill: #ff8099;
+  }
+
+  & svg:hover {
+    stroke: red;
+    fill: red;
+  }
+}
 
 
 
