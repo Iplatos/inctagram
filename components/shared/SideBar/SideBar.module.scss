@@ -1,28 +1,66 @@
 .sidebarContainer {
-  background-color: red; //var(--color-dark-700);
+  background-color: var(--color-dark-700);
   width: 220px;
   height: 660px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
+  align-items: start;
   border: 1px solid var(--color-dark-300);
-  padding: 0 40px 0 40px;
+  padding-left: 60px;
+
+  img {
+    margin-right: 10px;
+  }
+
+  button {
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    height: 24px;
+    padding: 1px 6px 1px 0;
+    margin: 12px 0 12px 0;
+    background-color: inherit;
+
+    & :active {
+      background-color: green;
+      font-weight: bold;
+    }
+
+    &:hover {
+      background: var(--primary-300, #a280ff);
+    }
+
+
+    &:disabled {
+      background-color: var(--primary-900, #382766);
+    }
+
+    &:focus-visible {
+      background: var(--primary-500, #8c61ff);
+      outline: 2px solid var(--info-700, #2f68cc);
+    }
+  }
 }
 
-.header {
-  width: 1260px;
+.buttonContainer {
+  margin-top: 60px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
 }
 
-.headerInterface {
+.logOutButtonContainer {
   display: flex;
-
-
+  height: 154px;
+  flex-direction: column;
+  justify-content: end;
 }
 
-.headerInterface > div {
-  padding: 10px;
-}
+
+
+
+
