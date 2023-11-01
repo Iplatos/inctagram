@@ -1,7 +1,15 @@
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
 
+import { useTransition } from 'react';
+
 function Home() {
+  const { t } = useTransition();
+
+  //   console.log('router.locales: ', router.locales);
+  //   console.log('router.locale: ', router.locale);
+  //   console.log('router.defaultLocale: ', router.defaultLocale);
+
   return (
     <>
       <HeadMeta title={'main'} />
