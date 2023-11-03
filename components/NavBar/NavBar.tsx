@@ -1,15 +1,21 @@
-import Link from "next/link";
-import styles from "./NavBar/NavBar.module.css"
+import { useTranslation } from '@/shared/hooks/useTranslation';
+import Link from 'next/link';
+
+import styles from './NavBar.module.scss';
 
 export const NavBar = () => {
-    return (
-        <div className={styles.links}>
-            <Link href={"/"}>Main</Link>
-            <Link href={"/signIn"}>Sign In</Link>
-            <Link href={"/signUp"}>Sign Up</Link>
-            <Link href={"/forgotPassword"}>Forgot Password</Link>
-            <Link href={"/termsOfService"}>Terms Of Service</Link>
-            <Link href={"/privacyPolicy"}>Privacy Policy</Link>
-        </div>
-    );
+  const { t } = useTranslation();
+
+  return (
+    <div className={styles.linksContainer}>
+      <div className={styles.links}>
+        <Link href={'/'}>{t.navbar.main}</Link>
+        <Link href={'/signIn'}>{t.navbar.signIn}</Link>
+        <Link href={'/signUp'}>{t.navbar.signUp}</Link>
+        <Link href={'/forgotPassword'}>{t.navbar.forgotPassword}</Link>
+        <Link href={'/termsOfService'}>{t.navbar.termsOfService}</Link>
+        <Link href={'/privacyPolicy'}>{t.navbar.privacyPolicy}</Link>
+      </div>
+    </div>
+  );
 };
