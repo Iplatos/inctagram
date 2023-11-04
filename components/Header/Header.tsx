@@ -23,7 +23,7 @@ export const Header = () => {
         {isLoggedIn ? (
           <>
             <NotificationBtn notifications={notifications} />
-            <SelectBox options={selectOptions} width={'small'} />
+            <SelectBox options={selectOptions} width={'small'} defaultValue={1}/>
           </>
         ) : (
           <>

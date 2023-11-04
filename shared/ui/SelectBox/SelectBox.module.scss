@@ -55,13 +55,15 @@
   border: var(--color-light-900) solid 1px;
 }
 
-.option {
-  cursor: pointer;
-
+.option,
+.default {
   display: flex;
   gap: 12px;
   align-items: center;
+}
 
+.option {
+  cursor: pointer;
   padding: 6px 6px 6px 12px;
 
   &:hover {
