@@ -1,12 +1,10 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
+import Arrow from '@/assets/icons/arrow.svg';
 import * as Select from '@radix-ui/react-select';
 import Image from 'next/image';
 
 import styles from './SelectBox.module.scss';
-
-import Arrow from '../../../assets/icons/arrow.svg';
-import React from 'react';
 
 type Option = {
   image?: string;
@@ -16,13 +14,12 @@ type Option = {
 
 type SelectProps = Select.SelectValueProps & {
   disabled?: boolean;
+  onChangeFn?: (value: string) => void;
   options?: Option[];
   width?: 'medium' | 'small' | 'tiny';
 };
 
-const DefaultFieldCreator = (option: Option, optionClassName: string) => {
-  const { label, image } = option;
-
+const DefaultFieldCreator = ({ image, label }: Option) => {
   return (
     <div className={`${styles.default}`}>
       {image && <Image alt={'Option image'} src={image} />}
@@ -32,18 +29,19 @@ const DefaultFieldCreator = (option: Option, optionClassName: string) => {
 };
 
 export const SelectBox = (props: SelectProps) => {
-  const { defaultValue, disabled, options, placeholder, width } = props;
+  const { defaultValue, disabled, onChangeFn, options, placeholder, width } = props;
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const widthClassName = !width ? 'width-medium' : `width-${width}`;
   const defaultField =
     typeof defaultValue === 'number' && options?.[defaultValue]
-      ? DefaultFieldCreator(options[defaultValue], widthClassName)
+      ? DefaultFieldCreator(options[defaultValue])
       : defaultValue;
 
   const handleValueChange = (value: string): void => {
     const option = options?.find(opt => opt.value === value) || null;
 
     setSelectedOption(option);
+    onChangeFn?.(value);
   };
 
   return (
