@@ -46,12 +46,3 @@ export const Text: Story = {
     variant: 'text',
   },
 };
-
-export const AsLink: Story = {
-  args: {
-    as: 'a',
-    children: 'Link that looks like a button',
-    disabled: false,
-    variant: 'primary',
-  },
-};
