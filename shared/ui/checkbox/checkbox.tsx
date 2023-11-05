@@ -34,14 +34,15 @@ export const Checkbox = (props: CheckboxProps) => {
     <div className={style.container}>
       <CheckboxRadix.Root
         className={style.checkboxRoot}
-        id="checkbox"
+        id={id}
         onCheckedChange={onChange}
         disabled={disabled}
+        required={required}
       >
         <Image src={checkboxImage} alt="checkboxImage" />
       </CheckboxRadix.Root>
 
-      <label className={style.checkboxLabel} htmlFor="checkbox">
+      <label className={style.checkboxLabel} htmlFor={id}>
         {label}
       </label>
     </div>
