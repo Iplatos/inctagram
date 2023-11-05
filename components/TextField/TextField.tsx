@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementType, useState } from 'react';
+import { ComponentPropsWithoutRef, useState } from 'react';
 
 import close from 'assets/icons/close.svg';
 import eye from 'assets/icons/eye-outline.svg';
@@ -19,9 +19,7 @@ type TextFieldProps<T extends InputType = 'input'> = {
   value: string;
 } & ComponentPropsWithoutRef<T>;
 
-export const TextField = <T extends ElementType = 'input'>(
-  props: TextFieldProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TextFieldProps<T>>
-) => {
+export const TextField: React.FC<TextFieldProps> = props => {
   const {
     className,
     error,
@@ -46,6 +44,7 @@ export const TextField = <T extends ElementType = 'input'>(
     <div className={s.inputContainer}>
       <label>{label}</label>
       <Component
+        {...rest}
         className={`${isSearchInput ? `${s.input} ${s.inputSearch}` : s.input} ${
           error ? `${s.input} ${s.error}` : s.input
         } ${className}`}
@@ -54,7 +53,6 @@ export const TextField = <T extends ElementType = 'input'>(
         placeholder={'email'}
         type={type}
         value={value}
-        {...rest}
       />
       {inputType !== 'text' && (
         <button className={s.button} onClick={changeInputType}>

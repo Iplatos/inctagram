@@ -1,6 +1,7 @@
 import s from './Header.module.scss';
 
 import outlineBell from './../../assets/icons/outlineBell.svg';
+import { LangSelect } from '@/components/langSelect/LangSelect';
 
 export const Header = () => {
   const isLogged = false;
@@ -20,6 +21,7 @@ export const Header = () => {
               <button>signUp</button>
             </div>
           )}
+          <LangSelect />
         </div>
       </div>
     </div>
