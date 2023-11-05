@@ -16,6 +16,7 @@ type TextFieldProps<T extends InputType = 'input'> = {
   isSearchInput?: boolean;
   label?: string;
   onChangeValue: (e: string) => void;
+  placeholder: string;
   value: string;
 } & ComponentPropsWithoutRef<T>;
 
@@ -27,6 +28,7 @@ export const TextField: React.FC<TextFieldProps> = props => {
     isSearchInput,
     label,
     onChangeValue,
+    placeholder = 'email',
     value,
   } = props;
 
@@ -50,7 +52,7 @@ export const TextField: React.FC<TextFieldProps> = props => {
         } ${className}`}
         disabled={false}
         onChange={e => onChangeValue(e.currentTarget.value)}
-        placeholder={'email'}
+        placeholder={placeholder}
         type={type}
         value={value}
       />

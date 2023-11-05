@@ -8,7 +8,7 @@ interface IFormInputs {
 }
 
 export const ControlledTextField = () => {
-  const { control, handleSubmit } = useForm<IFormInputs>({
+  const { control, handleSubmit, register, setValue } = useForm<IFormInputs>({
     defaultValues: {
       email: '',
       password: '',
@@ -23,51 +23,16 @@ export const ControlledTextField = () => {
       <Controller
         control={control}
         name="email"
-        render={({ field }) => <TextField {...field} />}
+        render={({ field }) => <TextField onChangeValue={field.onChange} inputType={"text"} {...field} />}
       />{" "}
       <Controller
         control={control}
         name="password"
-        render={({ field }) => <TextField {...field} />}
+        render={({ field }) => <TextField onChangeValue={field.onChange} placeholder={"password"} inputType={"password"}
+                                          label={"password"} {...field} />}
       />
-      /* eslint-enable */
       <input type={"submit"} />
     </form>
+    /* eslint-enable */
   );
 };
-
-/*
-const [login, { error }] = useLoginMutation();
-
-const {
-  formState: { errors },
-} = useForm();
-const onSubmit: SubmitHandler<FormValues> = data => console.log(data);
-
-const { control, handleSubmit } = useForm<FormValues>({
-  defaultValues: {
-    FirstName: '',
-    email: '',
-    password: '',
-  },
-  mode: 'onChange',
-});
-
-return (
-  <form onSubmit={handleSubmit(onSubmit)}>
-    <Controller
-      control={control}
-      name={'email'}
-      render={({ field }) => <TextField inputType={'text'} {...field} />}
-      rules={{ required: true }}
-    />
-    <Controller
-      control={control}
-      name={'password'}
-      render={({ field }) => <TextField inputType={'password'} label={'sa'} {...field} />}
-      rules={{ required: true }}
-    />
-    <TextField inputType={'password'} label={'sa'} />
-    <input control={control} name={'FirstName'} />
-    <input type={'submit'} />
-  </form>*/
