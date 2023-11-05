@@ -2,7 +2,13 @@ import { baseApi } from '@/pages/api/base-api';
 
 const authService = baseApi.injectEndpoints({
   endpoints: builder => ({
-    login: builder.query<any, any>({
+    getMe: builder.query<any, any>({
+      query: () => ({
+        method: 'GET',
+        url: '/api/v1/users',
+      }),
+    }),
+    login: builder.mutation<any, any>({
       query: data => ({
         body: data,
         method: 'POST',
@@ -12,4 +18,4 @@ const authService = baseApi.injectEndpoints({
   }),
 });
 
-export const { useLoginQuery } = authService;
+export const { useGetMeQuery, useLoginMutation } = authService;
