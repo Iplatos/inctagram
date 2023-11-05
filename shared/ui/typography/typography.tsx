@@ -1,38 +1,44 @@
-import { ComponentProps, ElementType, JSXElementConstructor, ReactNode } from 'react';
-
-import style from './typography.module.scss';
+import {
+  ComponentProps,
+  ElementType,
+  JSXElementConstructor,
+  ReactNode,
+  CSSProperties,
+  FC,
+} from 'react';
+import s from './typography.module.scss';
+import { clsx } from 'clsx';
 
 export type PropsOf<TTag extends ReactTag> = TTag extends ElementType
   ? Omit<ComponentProps<TTag>, 'ref'>
   : never;
+export type ReactTag = JSXElementConstructor<any> | keyof JSX.IntrinsicElements;
 
-export type ReactTag = keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
-
-export type TypographyVariantTypes =
-  | 'large'
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'regular16'
-  | 'bold16'
-  | 'regular14'
-  | 'medium14'
-  | 'bold14'
-  | 'regular12'
-  | 'semibold12'
-  | 'regularLink'
-  | 'smallLink';
-
-type TypographyPropsType = {
+export type TypographyProps<Ttag extends ReactTag> = {
   children: ReactNode;
-  component?: keyof JSX.IntrinsicElements;
-};
+  className?: string;
+  color?: CSSProperties['color'];
+  component?: Ttag;
+} & PropsOf<Ttag>;
 
-const createTypography = (variant: TypographyVariantTypes) => {
-  return ({ children, component }: TypographyPropsType) => {
-    const Component = component || 'span';
+const createTypography = <T extends ReactTag>(
+  basicClassName: Component
+): FC<TypographyProps<T>> => {
+  return ({ children, className, color, component, style, ...rest }) => {
+    const Component = component || COMPONENTS[basicClassName] || 'span';
 
-    return <Component className={`${variant && style[variant]}`}>{children}</Component>;
+    const classNames = clsx(s[basicClassName], className);
+
+    const styles = {
+      ...(color && { color }),
+      ...style,
+    };
+
+    return (
+      <Component className={classNames} style={styles} {...rest}>
+        {children}
+      </Component>
+    );
   };
 };
 
@@ -51,3 +57,21 @@ export const Typography = {
   RegularLink: createTypography('regularLink'),
   SmallLink: createTypography('smallLink'),
 };
+
+const COMPONENTS = {
+  large: 'p',
+  h1: 'h1',
+  h2: 'h2',
+  h3: 'h3',
+  regular16: 'span',
+  bold16: 'span',
+  regular14: 'span',
+  medium14: 'span',
+  bold14: 'span',
+  regular12: 'span',
+  semibold12: 'span',
+  regularLink: 'a',
+  smallLink: 'a',
+} as const;
+
+type Component = keyof typeof COMPONENTS;
