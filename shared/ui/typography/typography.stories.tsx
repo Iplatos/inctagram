@@ -35,5 +35,9 @@ export const H1 = {
 };
 
 export const H1WithComponent = {
-  render: () => <Typography.H1 component={'div'}>Hello world</Typography.H1>,
+  render: () => (
+    <Typography.H1 component={'div'} style={{ color: '#8D9094' }}>
+      Hello world
+    </Typography.H1>
+  ),
 };
