@@ -28,4 +28,18 @@
   display: flex;
   gap: 1.5rem;
   margin-left: 2.25rem;
+
+  button {
+    white-space: nowrap;
+  }
+}
+
+@media (width <= 767px) {
+  .container {
+    padding: 12px 15px;
+  }
+
+  .buttons-wrapper {
+    display: none;
+  }
 }

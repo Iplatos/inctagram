@@ -69,8 +69,8 @@ export const SmallPlaceholderAndOptions: Story = {
 
 export const SmallWithDefaultStringValue: Story = {
   args: {
-    options: mockedOptions,
     defaultValue: 'a value',
+    options: mockedOptions,
     placeholder: mockedPlaceHolder,
     width: 'small',
   },
@@ -78,8 +78,8 @@ export const SmallWithDefaultStringValue: Story = {
 
 export const SmallWithDefaultOptionValue: Story = {
   args: {
-    options: mockedOptions,
     defaultValue: 1,
+    options: mockedOptions,
     placeholder: mockedPlaceHolder,
     width: 'small',
   },
@@ -87,8 +87,8 @@ export const SmallWithDefaultOptionValue: Story = {
 
 export const SmallWithDefaultNumberValue: Story = {
   args: {
-    options: mockedOptions,
     defaultValue: 123,
+    options: mockedOptions,
     placeholder: mockedPlaceHolder,
     width: 'small',
   },
@@ -115,8 +115,8 @@ export const TinyPlaceholderAndImages: Story = {
 
 export const TinyWithDefultStringDisabled: Story = {
   args: {
-    disabled: true,
     defaultValue: 'sad :(',
+    disabled: true,
     width: 'tiny',
   },
 };

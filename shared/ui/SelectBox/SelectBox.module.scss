@@ -72,3 +72,14 @@
     outline: none;
   }
 }
+
+@media (width <= 767px) {
+  .width-small {
+    width: 84px;
+
+    &.option img + span,
+    .valueWrapper img + span {
+      display: none;
+    }
+  }
+}

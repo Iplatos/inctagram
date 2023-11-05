@@ -1,9 +1,15 @@
+import { useTranslation } from '@/shared/hooks/useTranslation';
+import { Button } from '@/shared/ui';
+import Link from 'next/link';
+
 import styles from './Header.module.scss';
 
+import { ExpandBtn } from './ExpandBtn';
 import { LangSwitcher } from './LangSwitcher';
 import { NotificationBtn } from './NotificationBtn';
 
 export const Header = () => {
+  const { t } = useTranslation();
   const isLoggedIn = true;
   const notifications = 3;
 
@@ -16,13 +22,18 @@ export const Header = () => {
             <>
               <NotificationBtn notifications={notifications} />
               <LangSwitcher />
+              <ExpandBtn />
             </>
           ) : (
             <>
               <LangSwitcher />
               <div className={styles['buttons-wrapper']}>
-                <button>Log in</button>
-                <button>Sign up</button>
+                <Button variant={'text'}>
+                  <Link href={'/signIn'}>{t.navbar.signIn}</Link>
+                </Button>
+                <Button>
+                  <Link href={'/signUp'}>{t.navbar.signUp}</Link>
+                </Button>
               </div>
             </>
           )}
