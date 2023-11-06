@@ -1,23 +1,24 @@
-import { useState } from 'react';
-import { Checkbox } from '../checkbox/checkbox';
-
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { useState } from 'react';
+
+import { Checkbox } from '../checkbox/checkbox';
+
 const meta = {
-  title: 'Components/Checkbox',
-  component: Checkbox,
-  tags: ['autodocs'],
   argTypes: {
     checked: {
+      control: 'boolean',
+    },
+    disabled: {
       control: 'boolean',
     },
     label: {
       control: 'string',
     },
-    disabled: {
-      control: 'boolean',
-    },
   },
+  component: Checkbox,
+  tags: ['autodocs'],
+  title: 'Components/Checkbox',
 } satisfies Meta<typeof Checkbox>;
 
 export default meta;
@@ -25,14 +26,15 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  render: args => {
-    const [checked, setChecked] = useState(false);
-
-    return <Checkbox {...args} checked={checked} onChange={setChecked} />;
-  },
-
   args: {
     checked: false,
+  },
+
+  render: args => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [checked, setChecked] = useState<boolean>(false);
+
+    return <Checkbox {...args} checked={checked} onChange={setChecked} />;
   },
 };
 
