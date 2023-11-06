@@ -23,7 +23,7 @@ export type TypographyProps<Ttag extends ReactTag> = {
   component?: Ttag;
 } & PropsOf<Ttag>;
 
-const createTypography = <T extends ReactTag>(
+export const createTypography = <T extends ReactTag>(
   basicClassName: Component
 ): FC<TypographyProps<T>> => {
   return ({ children, className, color, component, style, ...rest }) => {

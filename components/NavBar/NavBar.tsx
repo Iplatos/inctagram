@@ -15,6 +15,7 @@ export const NavBar = () => {
         <Link href={'/forgotPassword'}>{t.navbar.forgotPassword}</Link>
         <Link href={'/termsOfService'}>{t.navbar.termsOfService}</Link>
         <Link href={'/privacyPolicy'}>{t.navbar.privacyPolicy}</Link>
+        <Link href={'/confirm-registration'}>Confirm Registration</Link>
       </div>
     </div>
   );
