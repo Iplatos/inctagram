@@ -4,7 +4,7 @@ import { useLoginMutation } from '@/pages/api/auth.service';
 import { Button } from '@/shared/ui/Button/button';
 import { Card } from '@/shared/ui/Card/Card';
 import { TextField } from '@/shared/ui/textField/TextField';
-import { createTypography } from '@/shared/ui/typography';
+import { Typography } from '@/shared/ui/typography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
@@ -37,14 +37,11 @@ export const SignInForm = () => {
   return (
     /* eslint-disable */
     <Card className={s.signInFormContainer}>
-      <createTypography>hello</createTypography>
+      <Typography.Regular12>hello</Typography.Regular12>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
           name="email"
-          rules={
-            { required: "required" }
-          }
           render={({ field, fieldState }) => <TextField
             errors={fieldState?.error?.message}
             onChange={field.onChange}
