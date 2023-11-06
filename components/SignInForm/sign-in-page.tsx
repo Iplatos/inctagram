@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { TextField } from '@/components/TextField/TextField';
+import { useLoginMutation } from '@/pages/api/auth.service';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
@@ -12,6 +14,8 @@ const signInSchema = z.object({
 type FormValuesType = z.infer<typeof signInSchema>;
 
 export const SignInForm = () => {
+  const [login] = useLoginMutation();
+
   const onSubmit = data => console.log(data);
   const {
     control,
@@ -25,6 +29,10 @@ export const SignInForm = () => {
     mode: 'onSubmit',
     resolver: zodResolver(signInSchema),
   });
+  const [a, setA] = useState('s');
+  const ddd = e => {
+    setA(e.currentTarget.value);
+  };
 
   return (
     /* eslint-disable */

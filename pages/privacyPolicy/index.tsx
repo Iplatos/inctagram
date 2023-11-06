@@ -2,7 +2,7 @@ import React from 'react';
 
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
-import { SignInForm } from '@/components/SignInForm';
+import { SignInForm } from '@/components/SignInForm/sign-in-page';
 
 function PrivacyPolicy() {
   return (

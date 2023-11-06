@@ -12,7 +12,7 @@ const authService = baseApi.injectEndpoints({
       query: data => ({
         body: data,
         method: 'POST',
-        url: '/api/v1/auth/registration',
+        url: '/api/v1/auth/login',
       }),
     }),
   }),

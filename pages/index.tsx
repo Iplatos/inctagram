@@ -1,7 +1,7 @@
+import { useTransition } from 'react';
+
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
-
-import { useTransition } from 'react';
 
 function Home() {
   const { t } = useTransition();
@@ -17,7 +17,7 @@ function Home() {
       {/* <div className={styles.description}>
                 <p>
                     Get started by editing&nbsp;
-                    <code className={styles.code}>pages/index.tsx</code>
+                    <code className={styles.code}>pages/sign-in-page.tsx</code>
                 </p>
                 <div>
                     <a
