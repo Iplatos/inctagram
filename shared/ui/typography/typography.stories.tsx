@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 
 import { Typography } from './';
 
 const meta = {
-  title: 'Components/Typography',
   component: Typography.H1,
   tags: ['autodocs'],
+  title: 'Components/Typography',
 } satisfies Meta<typeof Typography.H1>;
 
 export default meta;

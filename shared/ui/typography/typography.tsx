@@ -1,13 +1,15 @@
 import {
+  CSSProperties,
   ComponentProps,
   ElementType,
+  FC,
   JSXElementConstructor,
   ReactNode,
-  CSSProperties,
-  FC,
 } from 'react';
-import s from './typography.module.scss';
+
 import { clsx } from 'clsx';
+
+import s from './typography.module.scss';
 
 export type PropsOf<TTag extends ReactTag> = TTag extends ElementType
   ? Omit<ComponentProps<TTag>, 'ref'>
@@ -43,34 +45,34 @@ const createTypography = <T extends ReactTag>(
 };
 
 export const Typography = {
-  Large: createTypography('large'),
+  Bold14: createTypography('bold14'),
+  Bold16: createTypography('bold16'),
   H1: createTypography('h1'),
   H2: createTypography('h2'),
   H3: createTypography('h3'),
-  Regular16: createTypography('regular16'),
-  Bold16: createTypography('bold16'),
-  Regular14: createTypography('regular14'),
+  Large: createTypography('large'),
   Medium14: createTypography('medium14'),
-  Bold14: createTypography('bold14'),
   Regular12: createTypography('regular12'),
-  Semibold12: createTypography('semibold12'),
+  Regular14: createTypography('regular14'),
+  Regular16: createTypography('regular16'),
   RegularLink: createTypography('regularLink'),
+  Semibold12: createTypography('semibold12'),
   SmallLink: createTypography('smallLink'),
 };
 
 const COMPONENTS = {
-  large: 'p',
+  bold14: 'span',
+  bold16: 'span',
   h1: 'h1',
   h2: 'h2',
   h3: 'h3',
-  regular16: 'span',
-  bold16: 'span',
-  regular14: 'span',
+  large: 'p',
   medium14: 'span',
-  bold14: 'span',
   regular12: 'span',
-  semibold12: 'span',
+  regular14: 'span',
+  regular16: 'span',
   regularLink: 'a',
+  semibold12: 'span',
   smallLink: 'a',
 } as const;
 

@@ -1,23 +1,26 @@
 import React from 'react';
-import style from './checkbox.module.scss';
+
 import * as CheckboxRadix from '@radix-ui/react-checkbox';
+import Image from 'next/image';
+
+import style from './checkbox.module.scss';
+
 import defaultSelectedImg from '../../../assets/icons/checkbox-default-selected.svg';
 import defaultUnselectedImg from '../../../assets/icons/checkbox-default-unselected.svg';
 import disabledSelectedImg from '../../../assets/icons/checkbox-disabled-selected.svg';
 import disabledUnselectedImg from '../../../assets/icons/checkbox-disabled-unselected.svg';
-import Image from 'next/image';
 
 export type CheckboxProps = {
   checked: boolean;
-  onChange: (checked: boolean) => void;
+  disabled?: boolean;
   id?: string;
   label?: string;
-  disabled?: boolean;
+  onChange: (checked: boolean) => void;
   required?: boolean;
 };
 
 export const Checkbox = (props: CheckboxProps) => {
-  const { id, label, checked, disabled, onChange, required } = props;
+  const { checked, disabled, id, label, onChange, required } = props;
 
   let checkboxImage = defaultUnselectedImg;
 
@@ -34,12 +37,12 @@ export const Checkbox = (props: CheckboxProps) => {
     <div className={style.container}>
       <CheckboxRadix.Root
         className={style.checkboxRoot}
+        disabled={disabled}
         id={id}
         onCheckedChange={onChange}
-        disabled={disabled}
         required={required}
       >
-        <Image src={checkboxImage} alt="checkboxImage" />
+        <Image alt={'checkboxImage'} src={checkboxImage} />
       </CheckboxRadix.Root>
 
       <label className={style.checkboxLabel} htmlFor={id}>
