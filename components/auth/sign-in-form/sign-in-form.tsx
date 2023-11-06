@@ -8,7 +8,7 @@ import { createTypography } from '@/shared/ui/typography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-import s from './sign-in-page.module.scss';
+import s from 'components/auth/sign-in-form/sign-in-form.module.scss';
 
 const signInSchema = z.object({
   email: z.string().email('Invalid email address').nonempty('Enter email'),

@@ -17,7 +17,7 @@ function Home() {
       {/* <div className={styles.description}>
                 <p>
                     Get started by editing&nbsp;
-                    <code className={styles.code}>pages/sign-in-page.tsx</code>
+                    <code className={styles.code}>pages/sign-in-form.tsx</code>
                 </p>
                 <div>
                     <a
