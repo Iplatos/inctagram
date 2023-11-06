@@ -15,39 +15,40 @@ export type Notification = {
   notificationTime: string;
 };
 
+const mockedNotifications: Notification[] = [
+  {
+    id: '0',
+    isNew: true,
+    message: 'Следующий платеж у вас спишется через 1 день',
+    notificationTime: '1 час',
+  },
+  {
+    id: '1',
+    isNew: true,
+    message: 'Ваша подписка истекает через 7 дней',
+    notificationTime: '1 день',
+  },
+  {
+    id: '2',
+    isNew: true,
+    message: 'Ваша подписка истекает через 7 дней',
+    notificationTime: '1 день',
+  },
+  {
+    id: '3',
+    message: 'Ваша подписка истекает через 7 дней',
+    notificationTime: '1 день',
+  },
+  {
+    id: '4',
+    message: 'Ваша подписка истекает через 7 дней',
+    notificationTime: '1 день',
+  },
+];
+
 export const Header = () => {
   const { t } = useTranslation();
   const isLoggedIn = true;
-  const notifications: Notification[] = [
-    {
-      id: '0',
-      isNew: true,
-      message: 'Следующий платеж у вас спишется через 1 день',
-      notificationTime: '1 час',
-    },
-    {
-      id: '1',
-      isNew: true,
-      message: 'Ваша подписка истекает через 7 дней',
-      notificationTime: '1 день',
-    },
-    {
-      id: '2',
-      isNew: true,
-      message: 'Ваша подписка истекает через 7 дней',
-      notificationTime: '1 день',
-    },
-    {
-      id: '3',
-      message: 'Ваша подписка истекает через 7 дней',
-      notificationTime: '1 день',
-    },
-    {
-      id: '4',
-      message: 'Ваша подписка истекает через 7 дней',
-      notificationTime: '1 день',
-    },
-  ];
 
   return (
     <header className={styles.header}>
@@ -56,7 +57,7 @@ export const Header = () => {
         <div className={styles.flex}>
           {isLoggedIn ? (
             <>
-              <NotificationMenu notifications={notifications} />
+              <NotificationMenu notifications={mockedNotifications} />
               <LangSwitcher />
               <ExpandBtn />
             </>
