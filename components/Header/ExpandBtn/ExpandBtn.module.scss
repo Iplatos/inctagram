@@ -1,0 +1,7 @@
+.wrapper {
+  margin-left: 24px;
+
+  @media (width > 767px) {
+    display: none;
+  }
+}

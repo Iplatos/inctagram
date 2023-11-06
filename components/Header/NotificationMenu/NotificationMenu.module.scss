@@ -1,0 +1,96 @@
+.DropdownMenuButton {
+  cursor: pointer;
+
+  position: relative;
+
+  margin-top: 6px;
+  margin-right: 3rem;
+  padding: 0;
+
+  background-color: transparent;
+  border: none;
+
+  span {
+    position: absolute;
+    bottom: 15px;
+    left: 11px;
+
+    padding: 1px 4px;
+
+    font-size: 10px;
+    text-align: center;
+
+    background-color: var(--color-danger-500);
+    border-radius: 100%;
+  }
+
+  @media (width <= 767px) {
+    display: none;
+  }
+}
+
+.DropdownMenuArrow {
+  position: absolute;
+  top: -8px;
+  left: -21px;
+}
+
+.DropdownMenuContent {
+  overflow-y: scroll;
+
+  width: 331px;
+  max-height: 400px;
+  padding: 12px;
+
+  background-color: var(--color-dark-700);
+  border: 1px solid var(--color-dark-100);
+  border-radius: 4px;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-top: 111px solid var(--color-dark-100);
+  }
+
+  div {
+    user-select: none;
+    outline: none;
+  }
+}
+
+.DropdownMenuItem {
+  user-select: none;
+  outline: none;
+}
+
+.NewNotification {
+  padding-left: 0.25rem;
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-s);
+  color: var(--color-accent-500);
+}
+
+.NotificationMessage {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+}
+
+.DropdownMenuSeparator {
+  width: 100%;
+  height: 1px;
+  margin: 10px 0;
+  background-color: var(--color-dark-100);
+}
+
+.NotificationDate {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-s);
+  color: var(--color-light-900);
+}

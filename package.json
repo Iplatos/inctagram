@@ -14,7 +14,9 @@
   },
   "dependencies": {
     "@fontsource/inter": "^5.0.15",
+    "@fontsource/roboto": "^5.0.8",
     "@radix-ui/react-checkbox": "^1.0.4",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-select": "^2.0.0",
     "next": "13.5.4",
     "radix-ui-react-native-icons": "^1.0.8",
