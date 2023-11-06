@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { ControlledTextField } from '@/components/ControlledTextField';
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
+import { SignInForm } from '@/components/SignInForm';
 
 function PrivacyPolicy() {
   return (
     <>
       <HeadMeta title={' Terms of Service'} />
       Privacy Policy
-      <ControlledTextField />
+      <SignInForm />
     </>
   );
 }

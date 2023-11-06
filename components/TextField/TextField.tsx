@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, useState } from 'react';
+import { forwardRef, useState } from 'react';
 
 import close from 'assets/icons/close.svg';
 import eye from 'assets/icons/eye-outline.svg';
@@ -6,39 +6,39 @@ import searchOutline from 'assets/icons/searchOutline.svg';
 
 import s from './TextField.module.scss';
 
-type InputType = 'input' | 'textarea';
+type TextFieldType = 'input' | 'textarea';
 
-type TextFieldProps<T extends InputType = 'input'> = {
+type TextFieldProps<T extends TextFieldType = 'input'> = {
   as?: T;
   className?: string;
-  error?: string;
-  inputType?: 'password' | 'text';
+  errors?: string;
+  inputtype?: 'password' | 'text';
   isSearchInput?: boolean;
   label?: string;
-  onChangeValue: (e: string) => void;
+  onChange: (e: string) => void;
   placeholder: string;
   value: string;
-} & ComponentPropsWithoutRef<T>;
+}; //& ComponentPropsWithoutRef<T>;
 
-export const TextField: React.FC<TextFieldProps> = props => {
+export const TextField = forwardRef((props: TextFieldProps, ref) => {
   const {
     className,
-    error,
-    inputType = 'text',
+    errors,
+    inputtype = 'text',
     isSearchInput,
     label,
-    onChangeValue,
+    onChange,
     placeholder = 'email',
     value,
   } = props;
 
-  const [type, setType] = useState(inputType);
+  const [type, setType] = useState(inputtype);
 
   const changeInputType = () => {
     type === 'password' ? setType('text') : setType('password');
   };
   const clearTextField = () => {
-    onChangeValue('');
+    onChange('');
   };
   const { as: Component = 'input', ...rest } = props;
 
@@ -48,15 +48,15 @@ export const TextField: React.FC<TextFieldProps> = props => {
       <Component
         {...rest}
         className={`${isSearchInput ? `${s.input} ${s.inputSearch}` : s.input} ${
-          error ? `${s.input} ${s.error}` : s.input
+          errors ? `${s.input} ${s.error}` : s.input
         } ${className}`}
         disabled={false}
-        onChange={e => onChangeValue(e.currentTarget.value)}
+        onChange={e => onChange(e.currentTarget.value)}
         placeholder={placeholder}
         type={type}
         value={value}
       />
-      {inputType !== 'text' && (
+      {inputtype !== 'text' && (
         <button className={s.button} onClick={changeInputType}>
           <img alt={'search logo'} src={eye.src} />
         </button>
@@ -69,7 +69,7 @@ export const TextField: React.FC<TextFieldProps> = props => {
       {isSearchInput && (
         <img alt={'searchOutline logo'} className={s.searchOutline} src={searchOutline.src} />
       )}
-      <div className={s.errorMessage}>{error}</div>
+      <div className={s.errorMessage}>{errors}</div>
     </div>
   );
-};
+});
