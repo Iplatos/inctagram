@@ -1,10 +1,10 @@
 import { forwardRef, useState } from 'react';
 
-import close from 'assets/icons/close.svg';
-import eye from 'assets/icons/eye-outline.svg';
-import searchOutline from 'assets/icons/searchOutline.svg';
+import close from '@/assets/icons/close.svg';
+import eye from '@/assets/icons/eye-outline.svg';
+import searchOutline from '@/assets/icons/searchOutline.svg';
 
-import s from './TextField.module.scss';
+import s from 'shared/ui/textField/TextField.module.scss';
 
 type TextFieldType = 'input' | 'textarea';
 
