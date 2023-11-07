@@ -1,0 +1,72 @@
+.sidebarContainer {
+  background-color: var(--color-dark-700);
+  width: 220px;
+  height: 660px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  border: 1px solid var(--color-dark-300);
+  padding-left: 60px;
+
+
+  button {
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    height: 24px;
+    padding: 1px 6px 1px 0;
+    margin: 12px 0 12px 0;
+    background-color: inherit;
+
+    &:hover {
+      color: var(--primary-100, #a280ff);
+    }
+
+    &:active {
+      outline: 2px solid var(--info-700, #2f68cc);
+      font-size: large;
+    }
+
+    &:disabled {
+      background-color: var(--primary-900, #382766);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--info-700, #2f68cc);
+    }
+  }
+}
+
+.buttonContainer {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+
+.logOutButtonContainer {
+  display: flex;
+  height: 154px;
+  flex-direction: column;
+  justify-content: end;
+}
+
+
+.image {
+  margin-right: 10px;
+
+  & svg path {
+    stroke: color("red");
+    fill: #ff8099;
+  }
+
+  & svg:hover {
+    stroke: red;
+    fill: red;
+  }
+}
+

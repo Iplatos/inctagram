@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { NavBar } from '@/components/NavBar/NavBar';
 import { Header } from '@/components/header/header';
 import { store } from '@/pages/api/store';
+import { SideBar } from '@/shared/ui/sideBar/sidebar';
 import { NextPage } from 'next';
 
 export const Layout: NextPage<PropsWithChildren> = props => {
@@ -12,6 +13,7 @@ export const Layout: NextPage<PropsWithChildren> = props => {
   return (
     <main>
       <Header />
+      <SideBar />
       <Provider store={store}>
         <NavBar />
         {children}
