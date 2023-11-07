@@ -7,7 +7,7 @@ export const SideBar = () => {
   return (
     <div className={s.sidebarContainer}>
       <div className={s.buttonContainer}>
-        <button onMouseDown={() => console.log('asd')}>
+        <button>
           <HomeOutline className={s.svgAsComponent} />
           Home
         </button>
