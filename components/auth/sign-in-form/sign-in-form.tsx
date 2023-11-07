@@ -57,7 +57,7 @@ export const SignInForm = () => {
             placeholder={"password"}
             inputtype={"password"}
             errors={fieldState?.error?.message}
-            label={"password"} {...field} />}
+            {...field} />}
         />
         <Button type={"submit"}>Sign In</Button>
       </form>

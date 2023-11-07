@@ -60,17 +60,25 @@
   background-color: inherit;
   position: absolute;
   right: 35px;
-  bottom: 15px;
+  bottom: 38px;
   padding: 0;
   border: 0;
   width: 20px;
   height: 20px;
+
+  &.buttonWithLabel {
+    bottom: 14px;
+  }
 }
 
 .searchOutline {
   position: absolute;
   left: 5px;
-  top: 3px;
+  top: 2px;
+
+  &.searchOutlineWithLabel {
+    top: 25px;
+  }
 }
 
 .errorMessage {
