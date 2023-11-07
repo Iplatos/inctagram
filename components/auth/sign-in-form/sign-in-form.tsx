@@ -42,9 +42,6 @@ export const SignInForm = () => {
         <Controller
           control={control}
           name="email"
-          rules={
-            { required: "required" }
-          }
           render={({ field, fieldState }) => <TextField
             errors={fieldState?.error?.message}
             onChange={field.onChange}
