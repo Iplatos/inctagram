@@ -20,14 +20,26 @@
     padding: 1px 6px 1px 0;
     margin: 12px 0 12px 0;
     background-color: inherit;
+    font-size: 14px;
 
     &:hover {
-      color: var(--primary-100, #a280ff);
+      color: var(--primary-100, #73A5FF);
+
+      .svgAsComponent * {
+        fill: var(--primary-100, #73A5FF)
+      }
     }
 
     &:active {
-      outline: 2px solid var(--info-700, #2f68cc);
-      font-size: large;
+      font-weight: bold;
+      border: none;
+      outline: 0px;
+
+      color: var(--primary-500, #397DF6);
+
+      .svgAsComponent * {
+        fill: var(--primary-500, #397DF6);
+      }
     }
 
     &:disabled {
@@ -56,17 +68,17 @@
 }
 
 
-.image {
+.svgAsComponent {
   margin-right: 10px;
 
-  & svg path {
-    stroke: color("red");
-    fill: #ff8099;
-  }
+  & * {
+    fill: white;
 
-  & svg:hover {
-    stroke: red;
-    fill: red;
   }
 }
+
+
+
+
+
 

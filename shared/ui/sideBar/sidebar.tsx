@@ -1,4 +1,5 @@
-//import homeOutline from 'assets/icons/home-outline.svg';
+import HomeOutline from 'assets/icons/home-outline.svg';
+import SearchOutline from 'assets/icons/searchOutline.svg';
 
 import s from './sidebar.module.scss';
 
@@ -6,14 +7,17 @@ export const SideBar = () => {
   return (
     <div className={s.sidebarContainer}>
       <div className={s.buttonContainer}>
-        <button>
-          {/* <img alt={'home logo'} className={s.image} src={homeOutline.src} />*/}
+        <button onMouseDown={() => console.log('asd')}>
+          <HomeOutline className={s.svgAsComponent} />
           Home
         </button>
         <button>Create</button>
         <button>My Profile</button>
         <button>Messenger</button>
-        <button>Search</button>
+        <button>
+          <SearchOutline className={s.svgAsComponent} />
+          Search
+        </button>
       </div>
       <div className={s.buttonContainer}>
         <button>Statistics</button>

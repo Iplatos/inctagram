@@ -2,7 +2,7 @@ import { forwardRef, useState } from 'react';
 
 import close from '@/assets/icons/close.svg';
 import eye from '@/assets/icons/eye-outline.svg';
-import searchOutline from '@/assets/icons/searchOutline.svg';
+import SearchOutline from '@/assets/icons/searchOutline.svg';
 import { Typography } from '@/shared/ui/typography';
 
 import s from 'shared/ui/textField/TextField.module.scss';
@@ -77,10 +77,9 @@ export const TextField = forwardRef((props: TextFieldProps, ref) => {
         </button>
       )}
       {isSearchInput && (
-        <img
+        <SearchOutline
           alt={'searchOutline logo'}
           className={!label ? s.searchOutline : `${s.searchOutline} ${s.searchOutlineWithLabel} `}
-          src={searchOutline.src}
         />
       )}
       <div className={s.errorMessage}>{errors}</div>
