@@ -3,6 +3,7 @@ import { forwardRef, useState } from 'react';
 import close from '@/assets/icons/close.svg';
 import eye from '@/assets/icons/eye-outline.svg';
 import searchOutline from '@/assets/icons/searchOutline.svg';
+import { Typography } from '@/shared/ui/typography';
 
 import s from 'shared/ui/textField/TextField.module.scss';
 
@@ -46,7 +47,7 @@ export const TextField = forwardRef((props: TextFieldProps, ref) => {
 
   return (
     <div className={s.inputContainer}>
-      <label>{label}</label>
+      <Typography.Regular14>{label}</Typography.Regular14>
       <Component
         {...rest}
         className={`${isSearchInput ? `${s.input} ${s.inputSearch}` : s.input} ${
@@ -62,6 +63,7 @@ export const TextField = forwardRef((props: TextFieldProps, ref) => {
         <button
           className={!label ? s.button : `${s.buttonWithLabel} ${s.button}`}
           onClick={changeInputType}
+          type={'button'}
         >
           <img alt={'search logo'} src={eye.src} />
         </button>
