@@ -21,6 +21,7 @@
 }
 
 .linksAndButtonsContainer {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -29,5 +30,6 @@
 }
 
 .forgotPasswordLink {
-  background-color: #ff8099;
+  width: 100%;
+  text-align: end;
 }

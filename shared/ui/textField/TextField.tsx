@@ -47,7 +47,7 @@ export const TextField = forwardRef((props: TextFieldProps, ref) => {
 
   return (
     <div className={s.inputContainer}>
-      <Typography.Regular14>{label}</Typography.Regular14>
+      <Typography.Regular14 color={'var(--color-light-900)'}>{label}</Typography.Regular14>
       <Component
         {...rest}
         className={`${isSearchInput ? `${s.input} ${s.inputSearch}` : s.input} ${

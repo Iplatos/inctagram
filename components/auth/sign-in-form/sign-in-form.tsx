@@ -48,8 +48,6 @@ export const SignInForm = () => {
       <div className={s.gitHubGoogleContainer}>
         <img src={googleLogo.src} />
         <img src={gitHubLogo.src} />
-
-
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
@@ -59,7 +57,7 @@ export const SignInForm = () => {
             errors={fieldState?.error?.message}
             onChange={field.onChange}
             value={field.value}
-            label={"email"}
+            label={"Email"}
             inputtype={"text"} />}
         />
         <Controller
@@ -68,18 +66,19 @@ export const SignInForm = () => {
           render={({ field, fieldState }) => <TextField
             onChange={field.onChange}
             placeholder={"password"}
-            label={"password"}
+            label={"Password"}
             inputtype={"password"}
             errors={fieldState?.error?.message}
             {...field} />}
         />
 
         <div className={s.linksAndButtonsContainer}>
-          <Link className={s.forgotPasswordLink}
-                href={"/forgotPassword"}><Typography.Regular14>{t.navbar.forgotPassword}</Typography.Regular14></Link>
-          <Button type={"submit"}>Sign In</Button>
-          <Link href={"/forgotPassword"}><Typography.Regular16>Don't have an account</Typography.Regular16></Link>
-          <Link href={"/forgotPassword"}>Sign Up</Link>
+          <div className={s.forgotPasswordLink}><Link
+            href={"/forgotPassword"}><Typography.Regular14
+            color={"var(--color-light-900)"}>{t.navbar.forgotPassword}</Typography.Regular14></Link></div>
+          <Button style={{ width: "100%" }} type={"submit"}>Sign In</Button>
+          <Link href={""}><Typography.Regular16>Don't have an account</Typography.Regular16></Link>
+          <Link href={"/signUp"}>Sign Up</Link>
         </div>
       </form>
     </Card>
