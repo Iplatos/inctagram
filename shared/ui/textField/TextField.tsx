@@ -3,6 +3,7 @@ import { forwardRef, useState } from 'react';
 import close from '@/assets/icons/close.svg';
 import eye from '@/assets/icons/eye-outline.svg';
 import searchOutline from '@/assets/icons/searchOutline.svg';
+import { Typography } from '@/shared/ui/typography';
 
 import s from 'shared/ui/textField/TextField.module.scss';
 
@@ -11,6 +12,7 @@ type TextFieldType = 'input' | 'textarea';
 type TextFieldProps<T extends TextFieldType = 'input'> = {
   as?: T;
   className?: string;
+  disabled?: boolean;
   errors?: string;
   inputtype?: 'password' | 'text';
   isSearchInput?: boolean;
@@ -23,6 +25,7 @@ type TextFieldProps<T extends TextFieldType = 'input'> = {
 export const TextField = forwardRef((props: TextFieldProps, ref) => {
   const {
     className,
+    disabled,
     errors,
     inputtype = 'text',
     isSearchInput,
@@ -44,30 +47,41 @@ export const TextField = forwardRef((props: TextFieldProps, ref) => {
 
   return (
     <div className={s.inputContainer}>
-      <label>{label}</label>
+      <Typography.Regular14 color={'var(--color-light-900)'}>{label}</Typography.Regular14>
       <Component
         {...rest}
         className={`${isSearchInput ? `${s.input} ${s.inputSearch}` : s.input} ${
           errors ? `${s.input} ${s.error}` : s.input
         } ${className}`}
-        disabled={false}
+        disabled={disabled}
         onChange={e => onChange(e.currentTarget.value)}
         placeholder={placeholder}
         type={type}
         value={value}
       />
       {inputtype !== 'text' && (
-        <button className={s.button} onClick={changeInputType}>
+        <button
+          className={!label ? s.button : `${s.buttonWithLabel} ${s.button}`}
+          onClick={changeInputType}
+          type={'button'}
+        >
           <img alt={'search logo'} src={eye.src} />
         </button>
       )}
       {isSearchInput && value && (
-        <button className={s.button} onClick={clearTextField}>
+        <button
+          className={!label ? s.button : `${s.buttonWithLabel} ${s.button}`}
+          onClick={clearTextField}
+        >
           <img alt={'close logo'} src={close.src} />
         </button>
       )}
       {isSearchInput && (
-        <img alt={'searchOutline logo'} className={s.searchOutline} src={searchOutline.src} />
+        <img
+          alt={'searchOutline logo'}
+          className={!label ? s.searchOutline : `${s.searchOutline} ${s.searchOutlineWithLabel} `}
+          src={searchOutline.src}
+        />
       )}
       <div className={s.errorMessage}>{errors}</div>
     </div>
