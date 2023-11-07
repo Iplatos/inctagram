@@ -2,7 +2,7 @@ import React from 'react';
 
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
-import { ForgotPasswordForm } from '@/components/auth';
+import { ForgotPasswordForm } from '@/components/auth/forgot-password-form';
 
 function ForgotPassword() {
   return (
