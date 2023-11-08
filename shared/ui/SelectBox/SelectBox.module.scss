@@ -55,18 +55,31 @@
   border: var(--color-light-900) solid 1px;
 }
 
-.option {
-  cursor: pointer;
-
+.option,
+.default {
   display: flex;
   gap: 12px;
   align-items: center;
+}
 
+.option {
+  cursor: pointer;
   padding: 6px 6px 6px 12px;
 
   &:hover {
     color: var(--color-accent-500);
     background-color: var(--color-dark-300);
     outline: none;
+  }
+}
+
+@media (width <= 767px) {
+  .width-small {
+    width: 84px;
+
+    &.option img + span,
+    .valueWrapper img + span {
+      display: none;
+    }
   }
 }
