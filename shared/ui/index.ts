@@ -1,5 +1,5 @@
-export { Button } from './Button';
-export { Card } from './Card';
-export { SelectBox } from './SelectBox';
-export { Checkbox } from './checkbox';
-export { Typography } from './typography';
+export * from './Button';
+export * from './Card';
+export * from './checkbox';
+export * from './typography';
+export * from './SelectBox';
