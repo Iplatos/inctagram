@@ -1,1 +1,1 @@
-export { SelectBox } from './SelectBox';
+export * from './SelectBox';

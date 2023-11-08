@@ -4,8 +4,8 @@ const tagsRegex = /(<\d+>[^<>]*<\/\d+>)/;
 const openCloseTagRegex = /<(\d+)>([^<>]*)<\/(\d+)>/;
 
 type TransType = {
-  text: string;
   tags?: Record<string, (str: string) => JSX.Element>;
+  text: string;
 };
 
 export const Trans: FC<TransType> = props => {
@@ -13,7 +13,8 @@ export const Trans: FC<TransType> = props => {
 };
 
 const interpolateTags = (data: TransType) => {
-  const { text, tags } = data;
+  const { tags, text } = data;
+
   if (!tags) {
     return text;
   }
