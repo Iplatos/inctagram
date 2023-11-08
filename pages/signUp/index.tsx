@@ -14,11 +14,11 @@ function SignUp() {
       Sign Up page
       <span>
         <Trans
-          text={t.auth.signUpPage.agreement}
           tags={{
             '1': () => <b>test1</b>,
             '2': () => <b>test2</b>,
           }}
+          text={t.auth.signUpPage.agreement}
         />
       </span>
     </>
