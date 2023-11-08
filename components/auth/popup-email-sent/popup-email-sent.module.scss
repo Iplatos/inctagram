@@ -14,7 +14,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 378px;
-    padding: 12px 24px 36px 24px;
+    padding: 12px 0 36px 0;
     animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
     box-sizing: border-box;
     border: 1px solid var(--color-dark-100);
@@ -28,20 +28,14 @@
     margin: 0;
   }
 
+  .dialogDescription {
+    color: var(--color-light-900);
+  }
   
 
   .button {
-    all: unset;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    padding: 0 15px;
-    font-size: 15px;
-    line-height: 1;
-    font-weight: 500;
-    height: 35px;
-    background-color: rgb(21, 112, 182);
+    width: 96px;
+
   }
 
 
@@ -57,6 +51,18 @@
   top: 10px;
   right: 10px;
 }
+
+.titleBlock {
+border-bottom: 1px solid var(--color-dark-100);
+padding: 0 24px 11px 24px;
+// background: red;
+}
+
+.contentBlock {
+padding: 30px 24px 0 24px;
+
+}
+
   @keyframes overlayShow {
     from {
       opacity: 0;
