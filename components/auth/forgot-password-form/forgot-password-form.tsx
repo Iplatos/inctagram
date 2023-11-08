@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 
-import { Typography } from '@/shared/ui';
+import { Checkbox, Typography } from '@/shared/ui';
 import { Button } from '@/shared/ui/Button/button';
 import { Card } from '@/shared/ui/Card/Card';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useRouter } from 'next/navigation';
 
 import style from './forgot-password.module.scss';
-import { PopupEmailSent } from '../popup-email-sent/popup-email-sent';
+// import { PopupEmailSent } from '../popup-email-sent/popup-email-sent';
 
 export const ForgotPasswordForm = () => {
   const router = useRouter();
   const [email, setEmail] = useState<string>('');
+
   const [popupActive, setPopupActive] = useState<boolean>(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
