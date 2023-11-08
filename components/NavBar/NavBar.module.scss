@@ -1,8 +1,10 @@
 .linksContainer {
-  width: 100%;
   display: flex;
   justify-content: center;
-
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
 }
 
 .links {
@@ -18,4 +20,11 @@
 
 .links a:hover {
   color: yellow;
+}
+
+.showNavBarButton {
+  position: fixed;
+  bottom: 25px;
+  left: 0px;
+  background-color: #ff8099;
 }

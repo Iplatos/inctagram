@@ -1,10 +1,35 @@
 .signInFormContainer {
-  max-width: 420px;
-  height: 528px;
-  margin: 0 auto;
-  padding: 33px 36px 29px;
+  width: 378px;
+  margin: 72px auto;
+  padding: 24px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   background-color: var(--color-dark-500);
   border: 1px solid var(--color-dark-300);
+  border-radius: 3px;
+  gap: 24px
+}
+
+.gitHubGoogleContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+  height: 36px;
+}
+
+.linksAndButtonsContainer {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px
+}
+
+.forgotPasswordLink {
+  width: 100%;
+  text-align: end;
 }

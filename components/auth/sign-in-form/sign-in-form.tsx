@@ -1,14 +1,19 @@
 import { Controller, useForm } from 'react-hook-form';
 
 import { useLoginMutation } from '@/pages/api/auth.service';
+import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button/button';
 import { Card } from '@/shared/ui/Card/Card';
 import { TextField } from '@/shared/ui/textField/TextField';
-import { createTypography } from '@/shared/ui/typography';
+import { Typography } from '@/shared/ui/typography';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
 import { z } from 'zod';
 
 import s from 'components/auth/sign-in-form/sign-in-form.module.scss';
+
+import gitHubLogo from '../../../assets/icons/gitHubLogo.svg';
+import googleLogo from '../../../assets/icons/googleLogo.svg';
 
 const signInSchema = z.object({
   email: z.string().email('Invalid email address').nonempty('Enter email'),
@@ -19,8 +24,10 @@ type FormValuesType = z.infer<typeof signInSchema>;
 
 export const SignInForm = () => {
   const [login] = useLoginMutation();
-
-  const onSubmit = data => console.log(data);
+  const { t } = useTranslation();
+  const onSubmit = data => {
+    login(data);
+  };
   const {
     control,
     formState: { errors },
@@ -37,19 +44,20 @@ export const SignInForm = () => {
   return (
     /* eslint-disable */
     <Card className={s.signInFormContainer}>
-      <createTypography>hello</createTypography>
+      <div><Typography.H1>Sign In</Typography.H1></div>
+      <div className={s.gitHubGoogleContainer}>
+        <img src={googleLogo.src} />
+        <img src={gitHubLogo.src} />
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
           name="email"
-          rules={
-            { required: "required" }
-          }
           render={({ field, fieldState }) => <TextField
             errors={fieldState?.error?.message}
             onChange={field.onChange}
             value={field.value}
-            label={"email"}
+            label={"Email"}
             inputtype={"text"} />}
         />
         <Controller
@@ -58,11 +66,20 @@ export const SignInForm = () => {
           render={({ field, fieldState }) => <TextField
             onChange={field.onChange}
             placeholder={"password"}
+            label={"Password"}
             inputtype={"password"}
             errors={fieldState?.error?.message}
-            label={"password"} {...field} />}
+            {...field} />}
         />
-        <Button type={"submit"}>Sign In</Button>
+
+        <div className={s.linksAndButtonsContainer}>
+          <div className={s.forgotPasswordLink}><Link
+            href={"/forgotPassword"}><Typography.Regular14
+            color={"var(--color-light-900)"}>{t.navbar.forgotPassword}</Typography.Regular14></Link></div>
+          <Button style={{ width: "100%" }} type={"submit"}>Sign In</Button>
+          <Link href={""}><Typography.Regular16>Don't have an account</Typography.Regular16></Link>
+          <Link href={"/signUp"}>Sign Up</Link>
+        </div>
       </form>
     </Card>
     /* eslint-enable */
