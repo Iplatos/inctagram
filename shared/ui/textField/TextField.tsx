@@ -1,7 +1,7 @@
 import { forwardRef, useState } from 'react';
 
-import close from '@/assets/icons/close.svg';
-import eye from '@/assets/icons/eye-outline.svg';
+import Close from '@/assets/icons/close.svg';
+import Eye from '@/assets/icons/eye-outline.svg';
 import SearchOutline from '@/assets/icons/searchOutline.svg';
 import { Typography } from '@/shared/ui/typography';
 
@@ -65,7 +65,7 @@ export const TextField = forwardRef((props: TextFieldProps, ref) => {
           onClick={changeInputType}
           type={'button'}
         >
-          <img alt={'search logo'} src={eye.src} />
+          <Eye />
         </button>
       )}
       {isSearchInput && value && (
@@ -73,7 +73,7 @@ export const TextField = forwardRef((props: TextFieldProps, ref) => {
           className={!label ? s.button : `${s.buttonWithLabel} ${s.button}`}
           onClick={clearTextField}
         >
-          <img alt={'close logo'} src={close.src} />
+          <Close />
         </button>
       )}
       {isSearchInput && (
