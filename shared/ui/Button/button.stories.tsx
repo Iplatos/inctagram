@@ -46,3 +46,11 @@ export const Text: Story = {
     variant: 'text',
   },
 };
+export const FullWidth: Story = {
+  args: {
+    children: 'Full Width Button',
+    disabled: false,
+    fullWidth: true,
+    variant: 'primary',
+  },
+};
