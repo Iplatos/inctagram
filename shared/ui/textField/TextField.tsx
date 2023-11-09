@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { useState } from 'react';
 
 import Close from '@/assets/icons/close.svg';
 import Eye from '@/assets/icons/eye-outline.svg';
@@ -9,7 +9,7 @@ import s from 'shared/ui/textField/TextField.module.scss';
 
 type TextFieldType = 'input' | 'textarea';
 
-type TextFieldProps<T extends TextFieldType = 'input'> = {
+export type TextFieldProps<T extends TextFieldType = 'input'> = {
   as?: T;
   className?: string;
   disabled?: boolean;
@@ -20,9 +20,9 @@ type TextFieldProps<T extends TextFieldType = 'input'> = {
   onChange: (e: string) => void;
   placeholder: string;
   value: string;
-}; //& ComponentPropsWithoutRef<T>;
+};
 
-export const TextField = forwardRef((props: TextFieldProps, ref) => {
+export const TextField = (props: TextFieldProps) => {
   const {
     className,
     disabled,
@@ -40,9 +40,11 @@ export const TextField = forwardRef((props: TextFieldProps, ref) => {
   const changeInputType = () => {
     type === 'password' ? setType('text') : setType('password');
   };
+
   const clearTextField = () => {
     onChange('');
   };
+
   const { as: Component = 'input', ...rest } = props;
 
   return (
@@ -85,4 +87,4 @@ export const TextField = forwardRef((props: TextFieldProps, ref) => {
       <div className={s.errorMessage}>{errors}</div>
     </div>
   );
-});
+};

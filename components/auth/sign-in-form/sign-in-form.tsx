@@ -12,8 +12,8 @@ import { z } from 'zod';
 
 import s from 'components/auth/sign-in-form/sign-in-form.module.scss';
 
-import gitHubLogo from '../../../assets/icons/gitHubLogo.svg';
-import googleLogo from '../../../assets/icons/googleLogo.svg';
+import GitHubLogo from '../../../assets/icons/gitHubLogo.svg';
+import GoogleLogo from '../../../assets/icons/googleLogo.svg';
 
 const signInSchema = z.object({
   email: z.string().email('Invalid email address').nonempty('Enter email'),
@@ -24,6 +24,7 @@ type FormValuesType = z.infer<typeof signInSchema>;
 
 export const SignInForm = () => {
   const [login] = useLoginMutation();
+
   const { t } = useTranslation();
   const onSubmit = data => {
     login(data);
@@ -46,8 +47,8 @@ export const SignInForm = () => {
     <Card className={s.signInFormContainer}>
       <div><Typography.H1>Sign In</Typography.H1></div>
       <div className={s.gitHubGoogleContainer}>
-        <img src={googleLogo.src} />
-        <img src={gitHubLogo.src} />
+        <GoogleLogo />
+        <GitHubLogo />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
