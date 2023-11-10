@@ -1,9 +1,10 @@
 import { useState } from 'react';
 
-import Close from '@/assets/icons/close.svg';
-import Eye from '@/assets/icons/eye-outline.svg';
-import SearchOutline from '@/assets/icons/searchOutline.svg';
+import Close from '@/assets/icons/close.svg?url';
+import Eye from '@/assets/icons/eye-outline.svg?url';
+import SearchOutline from '@/assets/icons/searchOutline.svg?url';
 import { Typography } from '@/shared/ui/typography';
+import Image from 'next/image';
 
 import s from 'shared/ui/textField/TextField.module.scss';
 
@@ -67,7 +68,7 @@ export const TextField = (props: TextFieldProps) => {
           onClick={changeInputType}
           type={'button'}
         >
-          <Eye />
+          <Image alt={'bell'} src={Eye} />
         </button>
       )}
       {isSearchInput && value && (
@@ -75,13 +76,14 @@ export const TextField = (props: TextFieldProps) => {
           className={!label ? s.button : `${s.buttonWithLabel} ${s.button}`}
           onClick={clearTextField}
         >
-          <Close />
+          <Image alt={'close Logo'} src={Close} />
         </button>
       )}
       {isSearchInput && (
-        <SearchOutline
+        <Image
           alt={'searchOutline logo'}
           className={!label ? s.searchOutline : `${s.searchOutline} ${s.searchOutlineWithLabel} `}
+          src={SearchOutline}
         />
       )}
       <div className={s.errorMessage}>{errors}</div>
