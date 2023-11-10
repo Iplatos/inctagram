@@ -13,10 +13,11 @@ export const SideBar = () => {
   return (
     <div className={s.sidebarContainer}>
       <div className={s.buttonContainer}>
-        <button>
+        <button disabled>
           <HomeOutline className={s.svgAsComponent} />
           Home
         </button>
+
         <button>
           <PlusSquareOutline className={s.svgAsComponent} />
           Create

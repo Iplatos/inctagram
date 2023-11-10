@@ -5,7 +5,7 @@ const authService = baseApi.injectEndpoints({
     getMe: builder.query<any, any>({
       query: () => ({
         method: 'GET',
-        url: '/api/v1/users',
+        url: '/api/v1/auth/me',
       }),
     }),
     login: builder.mutation<any, any>({
@@ -15,7 +15,14 @@ const authService = baseApi.injectEndpoints({
         url: '/api/v1/auth/login',
       }),
     }),
+    /*   login: builder.mutation<any, any>({
+         query: data => ({
+           body: data,
+           method: '',
+           url: '/api/v1/auth/google',
+         }),
+       }),*/
   }),
 });
 
-export const { useGetMeQuery, useLoginMutation } = authService;
+export const { useGetMeQuery, useGoogleMutation, useLoginMutation } = authService;
