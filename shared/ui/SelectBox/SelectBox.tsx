@@ -1,6 +1,6 @@
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 
-import Arrow from '@/assets/icons/arrow.svg';
+import Arrow from '@/assets/icons/arrow.svg?url';
 import * as Select from '@radix-ui/react-select';
 import Image from 'next/image';
 

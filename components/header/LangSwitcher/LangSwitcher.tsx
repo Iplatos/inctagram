@@ -1,5 +1,5 @@
-import FlagRu from '@/assets/icons/flag-ru.svg';
-import FlagEn from '@/assets/icons/flag-uk.svg';
+import FlagRu from '@/assets/icons/flag-ru.svg?url';
+import FlagEn from '@/assets/icons/flag-uk.svg?url';
 import { SelectBox } from '@/shared/ui';
 import { useRouter } from 'next/router';
 

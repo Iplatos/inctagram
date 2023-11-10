@@ -1,10 +1,10 @@
-import type { Notification } from '../Header';
+import type { Notification } from '../header';
 
 import { useState } from 'react';
 
-import OutlinedBell from '@/assets/icons/bell.svg';
+import OutlinedBell from '@/assets/icons/bell.svg?url';
 import DropdownArrow from '@/assets/icons/dropdown-arrow.svg';
-import FilledBell from '@/assets/icons/filled-bell.svg';
+import FilledBell from '@/assets/icons/filled-bell.svg?url';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
@@ -55,7 +55,7 @@ export const NotificationMenu = ({ notifications }: { notifications: Notificatio
             </DropdownMenu.Item>
           </div>
         ))}
-        <Image alt={'Dropdown arrow'} className={styles.DropdownMenuArrow} src={DropdownArrow} />
+        <DropdownArrow className={styles.DropdownMenuArrow} />
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );
