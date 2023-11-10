@@ -1,13 +1,16 @@
 import React from 'react';
 
 import * as CheckboxRadix from '@radix-ui/react-checkbox';
+import { clsx } from 'clsx';
+import Image from 'next/image';
 
 import style from './checkbox.module.scss';
 
-import DefaultSelectedImg from '../../../assets/icons/checkbox-default-selected.svg';
-import DefaultUnselectedImg from '../../../assets/icons/checkbox-default-unselected.svg';
-import DisabledSelectedImg from '../../../assets/icons/checkbox-disabled-selected.svg';
-import DisabledUnselectedImg from '../../../assets/icons/checkbox-disabled-unselected.svg';
+import { Typography } from '..';
+import DefaultSelectedImgUrl from '../../../assets/icons/checkbox-default-selected.svg?url';
+import DefaultUnselectedImgUrl from '../../../assets/icons/checkbox-default-unselected.svg?url';
+import DisabledSelectedImgUrl from '../../../assets/icons/checkbox-disabled-selected.svg?url';
+import DisabledUnselectedImgUrl from '../../../assets/icons/checkbox-disabled-unselected.svg?url';
 
 export type CheckboxProps = {
   checked: boolean;
@@ -21,31 +24,33 @@ export type CheckboxProps = {
 export const Checkbox = (props: CheckboxProps) => {
   const { checked, disabled, id, label, onChange, required } = props;
 
-  let checkboxImage = <DefaultUnselectedImg />;
+  let checkboxImage = DefaultUnselectedImgUrl;
 
   if (checked) {
-    checkboxImage = <DefaultSelectedImg />;
+    checkboxImage = DefaultSelectedImgUrl;
     if (disabled) {
-      checkboxImage = <DisabledSelectedImg />;
+      checkboxImage = DisabledSelectedImgUrl;
     }
   } else if (disabled) {
-    checkboxImage = <DisabledUnselectedImg />;
+    checkboxImage = DisabledUnselectedImgUrl;
   }
 
   return (
     <div className={style.container}>
       <CheckboxRadix.Root
-        className={style.checkboxRoot}
+        className={`${style.checkboxRoot} ${disabled && style.disabled}`}
         disabled={disabled}
         id={id}
         onCheckedChange={onChange}
         required={required}
       >
-        <CheckboxRadix.Indicator>{checkboxImage}</CheckboxRadix.Indicator>
+        <Image alt={'checkbox'} src={checkboxImage} />
       </CheckboxRadix.Root>
 
       <label className={style.checkboxLabel} htmlFor={id}>
-        {label}
+        <Typography.Regular14 className={`${disabled && style.labelDisabled}`}>
+          {label}
+        </Typography.Regular14>
       </label>
     </div>
   );

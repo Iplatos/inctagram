@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 
-import { Checkbox, Typography } from '@/shared/ui';
+import { Typography } from '@/shared/ui';
 import { Button } from '@/shared/ui/Button/button';
 import { Card } from '@/shared/ui/Card/Card';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useRouter } from 'next/navigation';
 
 import style from './forgot-password.module.scss';
+
 // import { PopupEmailSent } from '../popup-email-sent/popup-email-sent';
 
 export const ForgotPasswordForm = () => {
@@ -27,7 +28,9 @@ export const ForgotPasswordForm = () => {
 
       <form className={style.form} onSubmit={handleSubmit}>
         <label htmlFor={'email'}>
-          <Typography.Regular14 style={{ color: '#8D9094' }}>Email</Typography.Regular14>
+          <Typography.Regular14 style={{ color: 'var(--color-light-900)' }}>
+            Email
+          </Typography.Regular14>
         </label>
 
         <input
@@ -38,7 +41,7 @@ export const ForgotPasswordForm = () => {
           value={email}
         />
 
-        <Typography.Regular14 className={style.text} style={{ color: '#8D9094' }}>
+        <Typography.Regular14 className={style.text} style={{ color: 'var(--color-light-900)' }}>
           Enter your email address and we will send you further instructions
         </Typography.Regular14>
 

@@ -52,8 +52,12 @@
 .checkboxLabel {
     display: flex;
     align-items: center;
-    font-size: var(--font-size-s);
-    font-weight: var(--font-weight-regular);
-    line-height: var(--line-height-m);
-    color: var(--light-100, --color-light-100);
+}
+
+.disabled {
+  pointer-events: none;
+}
+
+.labelDisabled {
+  color: var(--color-light-900);
 }
