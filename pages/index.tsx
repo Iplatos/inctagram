@@ -15,7 +15,6 @@ function Home() {
   const router = useRouter();
   /*const { getMe } = useGetMeQuery();*/
 
-  console.log(data);
   //   console.log('router.locales: ', router.locales);
   //   console.log('router.locale: ', router.locale);
   //   console.log('router.defaultLocale: ', router.defaultLocale);
