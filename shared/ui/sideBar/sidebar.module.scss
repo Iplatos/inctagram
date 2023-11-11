@@ -22,6 +22,7 @@
     background-color: inherit;
     font-size: 14px;
 
+
     &:hover {
       color: var(--primary-100, #73A5FF);
 
@@ -30,6 +31,7 @@
 
       }
     }
+
 
     &:active {
       font-weight: bold;
@@ -40,45 +42,53 @@
 
       .svgAsComponent * {
         fill: var(--primary-500, #397DF6);
+
       }
     }
 
     &:disabled {
-      background-color: var(--primary-900, #382766);
-    }
+      color: var(--dark-100,
+              #4C4C4C);
 
-    &:focus-visible {
-      outline: 2px solid var(--info-700, #2f68cc);
+      .svgAsComponent * {
+        fill: var(--dark-100,
+                #4C4C4C);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--info-700, #2f68cc);
+      }
+
+
+    }
+  }
+
+  .buttonContainer {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+  }
+
+  .logOutButtonContainer {
+    display: flex;
+    height: 154px;
+    flex-direction: column;
+    justify-content: end;
+
+  }
+
+  .svgAsComponent {
+    margin-right: 10px;
+
+
+    & * {
+      fill: white;
+
     }
   }
 }
-
-.buttonContainer {
-  margin-top: 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: start;
-}
-
-.logOutButtonContainer {
-  display: flex;
-  height: 154px;
-  flex-direction: column;
-  justify-content: end;
-
-}
-
-.svgAsComponent {
-  margin-right: 10px;
-
-
-  & * {
-    fill: white;
-
-  }
-}
-
 
 
 

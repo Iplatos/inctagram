@@ -1,6 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
 
 import { useLoginMutation } from '@/pages/api/auth.service';
+import { baseUrl } from '@/pages/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button/button';
 import { Card } from '@/shared/ui/Card/Card';
@@ -8,6 +9,7 @@ import { TextField } from '@/shared/ui/textField/TextField';
 import { Typography } from '@/shared/ui/typography';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 
 import s from 'components/auth/sign-in-form/sign-in-form.module.scss';
@@ -23,7 +25,11 @@ const signInSchema = z.object({
 type FormValuesType = z.infer<typeof signInSchema>;
 
 export const SignInForm = () => {
+  const router = useRouter();
   const [login] = useLoginMutation();
+  const onGoogle = () => {
+    router.push(`${baseUrl}/api/v1/auth/google`);
+  };
 
   const { t } = useTranslation();
   const onSubmit = data => {
@@ -47,7 +53,7 @@ export const SignInForm = () => {
     <Card className={s.signInFormContainer}>
       <div><Typography.H1>Sign In</Typography.H1></div>
       <div className={s.gitHubGoogleContainer}>
-        <GoogleLogo />
+        <GoogleLogo onClick={onGoogle} />
         <GitHubLogo />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -55,6 +61,7 @@ export const SignInForm = () => {
           control={control}
           name="email"
           render={({ field, fieldState }) => <TextField
+            {...field}
             errors={fieldState?.error?.message}
             onChange={field.onChange}
             value={field.value}
@@ -65,12 +72,13 @@ export const SignInForm = () => {
           control={control}
           name="password"
           render={({ field, fieldState }) => <TextField
+            {...field}
             onChange={field.onChange}
             placeholder={"password"}
             label={"Password"}
             inputtype={"password"}
             errors={fieldState?.error?.message}
-            {...field} />}
+          />}
         />
 
         <div className={s.linksAndButtonsContainer}>
