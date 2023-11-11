@@ -1,5 +1,11 @@
 export const ru = {
   auth: {
+    ForgotPasswordPage: {
+      backToSignIn: 'Вернуться на страницу входа',
+      message: 'Напишите адрес электронной почты и мы отправим ссылку для восстановления пароля',
+      sendLink: 'Отправить ссылку',
+      title: 'Забыл пароль',
+    },
     signUpPage: {
       agreement: 'Я согласен с <1>text</1> и <2>text</2>',
     },
