@@ -32,7 +32,7 @@ export const SignInForm = () => {
   };
 
   const { t } = useTranslation();
-  const onSubmit = data => {
+  const onSubmit = (data: FormValuesType) => {
     login(data);
   };
   const {
