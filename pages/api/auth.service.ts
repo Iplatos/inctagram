@@ -11,18 +11,11 @@ const authService = baseApi.injectEndpoints({
     login: builder.mutation<any, any>({
       query: data => ({
         body: data,
-        method: 'POST',
-        url: '/api/v1/auth/login',
+        method: 'GET',
+        url: '/api/v1/auth/google',
       }),
     }),
-    /*   login: builder.mutation<any, any>({
-         query: data => ({
-           body: data,
-           method: '',
-           url: '/api/v1/auth/google',
-         }),
-       }),*/
   }),
 });
 
-export const { useGetMeQuery, useGoogleMutation, useLoginMutation } = authService;
+export const { useGetMeQuery, useLoginMutation } = authService;

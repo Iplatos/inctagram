@@ -21,9 +21,6 @@ export const baseApi = createApi({
       filteredPosts: builder.query<any, void>({
         query: () => `/api/v1/post/filtered-posts/title=asd`,
       }),
-      getDecks: builder.query<any, void>({
-        query: () => `/api/v1/users`,
-      }),
       getFeed: builder.query<any, void>({
         query: () => `/api/v1/post/feed`,
       }),

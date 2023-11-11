@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
-
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
+import { useGetMeQuery } from '@/pages/api/auth.service';
 import {
   setTokenToLocalStorage,
   useFilteredPostsQuery,
@@ -15,26 +14,22 @@ function Home() {
   const { data: feed } = useGetFeedQuery();
   const { data, error } = useFilteredPostsQuery();
   const router = useRouter();
+  const { getMe } = useGetMeQuery();
 
   console.log(data);
   //   console.log('router.locales: ', router.locales);
   //   console.log('router.locale: ', router.locale);
   //   console.log('router.defaultLocale: ', router.defaultLocale);
-  /*  useEffect(() => {
-      feed();
-    }, []);*/
+
   const logOut = () => {
     setTokenToLocalStorage(null);
   };
 
-  useEffect(() => {
-    if (error) {
-      if (error.status === 401) {
-        router.push('/signIn');
-      }
-      console.log(error);
+  if (error) {
+    if (error.status === 401) {
+      router.push('/signIn');
     }
-  }, [error]);
+  }
 
   return (
     <>

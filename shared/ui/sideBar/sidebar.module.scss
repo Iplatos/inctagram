@@ -51,9 +51,8 @@
               #4C4C4C);
 
       .svgAsComponent * {
-        fill: var(--primary-500, #397DF6);
-        stroke: #ff8099;
-        stroke-linejoin: round;
+        fill: var(--dark-100,
+                #4C4C4C);
       }
 
       &:focus-visible {
