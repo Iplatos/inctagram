@@ -1,6 +1,5 @@
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
-import { useGetMeQuery } from '@/pages/api/auth.service';
 import {
   setTokenToLocalStorage,
   useFilteredPostsQuery,
@@ -14,7 +13,7 @@ function Home() {
   const { data: feed } = useGetFeedQuery();
   const { data, error } = useFilteredPostsQuery();
   const router = useRouter();
-  const { getMe } = useGetMeQuery();
+  /*const { getMe } = useGetMeQuery();*/
 
   console.log(data);
   //   console.log('router.locales: ', router.locales);
@@ -25,19 +24,19 @@ function Home() {
     setTokenToLocalStorage(null);
   };
 
-  if (error) {
-    if (error.status === 401) {
-      router.push('/signIn');
-    }
-  }
+  /*  if (error) {
+      if ('status' in error) {
+        error.status === 401 && router.push('/signIn');
+      }
+    }*/
 
   return (
     <>
       <HeadMeta title={'main'} />
       <div>adf</div>
-      <div>
+      {/*  <div>
         {error?.status} {JSON.stringify(error)}
-      </div>
+      </div>*/}
       <button onClick={logOut}>logout</button>
     </>
   );

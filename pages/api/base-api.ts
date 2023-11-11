@@ -2,20 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const baseUrl = 'https://incubator-icta-trainee.uk';
 export const baseApi = createApi({
-  baseQuery: fetchBaseQuery({
-    baseUrl,
-    endpoints: () => ({}),
-    prepareHeaders: (headers, { getState }) => {
-      const token = getTokenFromLocalStorage();
-
-      // If we have a token set in state, let's assume that we should be passing it.
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-
-      return headers;
-    },
-  }),
+  baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: builder => {
     return {
       filteredPosts: builder.query<any, void>({
@@ -26,7 +13,16 @@ export const baseApi = createApi({
       }),
     };
   },
-
+  /*  prepareHeaders: (headers, { getState }) => {
+      const token = getTokenFromLocalStorage();
+  
+      // If we have a token set in state, let's assume that we should be passing it.
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`);
+      }
+  
+      return headers;
+    },*/
   reducerPath: 'baseApi',
 });
 
@@ -40,4 +36,4 @@ export const setTokenToLocalStorage = (token: null | string) => {
 
   return localStorage.setItem('X_auth_token', token);
 };
-export const { useFilteredPostsQuery, useGetDecksQuery, useGetFeedQuery } = baseApi;
+export const { useFilteredPostsQuery, useGetFeedQuery } = baseApi;

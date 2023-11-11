@@ -1,12 +1,11 @@
+import { ExpandBtn } from '@/components/header/ExpandBtn';
+import { LangSwitcher } from '@/components/header/LangSwitcher';
+import { NotificationMenu } from '@/components/header/NotificationMenu';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button } from '@/shared/ui';
+import { Button } from '@/shared/ui/Button';
 import Link from 'next/link';
 
 import styles from './Header.module.scss';
-
-import { ExpandBtn } from './ExpandBtn';
-import { LangSwitcher } from './LangSwitcher';
-import { NotificationMenu } from './NotificationMenu';
 
 export type Notification = {
   id: string;

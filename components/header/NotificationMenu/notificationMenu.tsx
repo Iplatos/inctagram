@@ -6,7 +6,7 @@ import OutlinedBell from '@/assets/icons/bell.svg?url';
 import DropdownArrow from '@/assets/icons/dropdown-arrow.svg';
 import FilledBell from '@/assets/icons/filled-bell.svg?url';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Typography } from '@/shared/ui';
+import { Typography } from '@/shared/ui/typography';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import Image from 'next/image';
 
