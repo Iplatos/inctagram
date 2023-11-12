@@ -57,7 +57,7 @@ export const ForgotPasswordForm = () => {
   return (
     <Card className={style.card}>
       <Typography.H1 style={{ paddingBottom: '37px' }}>
-        {t.auth.ForgotPasswordPage.title}
+        {t.auth.forgotPasswordPage.title}
       </Typography.H1>
 
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
@@ -77,37 +77,32 @@ export const ForgotPasswordForm = () => {
         />
 
         <Typography.Regular14 className={`${style.message} ${style.fontColor}`}>
-          {t.auth.ForgotPasswordPage.message}
+          {t.auth.forgotPasswordPage.message}
         </Typography.Regular14>
 
-        <Button
-          className={style.buttonTrigger}
-          fullWidth
-          onClick={handleModalOpened}
-          type={'submit'}
-        >
-          {t.auth.ForgotPasswordPage.sendLink}
+        <Button fullWidth onClick={handleModalOpened} type={'submit'}>
+          {t.auth.forgotPasswordPage.sendLink}
         </Button>
 
         <Modal
           onClose={handleModalClosed}
           open={open}
           showCloseButton
-          title={t.auth.ForgotPasswordPage.titleModal}
+          title={t.auth.forgotPasswordPage.titleModal}
         >
           <Typography.Regular16 className={style.dialogDescription}>
             <Trans
               tags={{
                 '1': () => <b>{`${email}`}</b>,
               }}
-              text={t.auth.ForgotPasswordPage.messageModal}
+              text={t.auth.forgotPasswordPage.messageModal}
             />
           </Typography.Regular16>
         </Modal>
 
         <Link href={'/signIn'}>
           <Button className={style.buttonBack} fullWidth variant={'tertiary'}>
-            {t.auth.ForgotPasswordPage.backToSignIn}
+            {t.auth.forgotPasswordPage.backToSignIn}
           </Button>
         </Link>
       </form>

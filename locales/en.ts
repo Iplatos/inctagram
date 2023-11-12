@@ -2,7 +2,12 @@ import { LocaleType } from './ru';
 
 export const en: LocaleType = {
   auth: {
-    ForgotPasswordPage: {
+    createNewPasswordPage: {
+      message: 'Your password must be between 6 and 20 characters',
+      textLink: 'Create new password',
+      title: 'Create New Password',
+    },
+    forgotPasswordPage: {
       backToSignIn: 'Back to Sign In',
       message: 'Enter your email address and we will send you further instructions',
       messageModal: 'We have sent a link to confirm your email to <1>text</1>',

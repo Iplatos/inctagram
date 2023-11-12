@@ -1,6 +1,12 @@
+import { CreateNewPasswordForm } from '@/components/auth';
 export const ru = {
   auth: {
-    ForgotPasswordPage: {
+    createNewPasswordPage: {
+      message: 'Ваш пароль должен содержать от 6 до 20 символов',
+      textLink: 'Создать новый пароль',
+      title: 'Создать новый пароль',
+    },
+    forgotPasswordPage: {
       backToSignIn: 'Вернуться на страницу входа',
       message: 'Напишите адрес электронной почты и мы отправим ссылку для восстановления пароля',
       messageModal: 'Мы отправили ссылку для подтверждения пароля на почту <1>text</1>',
