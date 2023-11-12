@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
+import { Trans } from '@/components/Trans/Trans';
+import { Modal } from '@/features';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
 import { Button } from '@/shared/ui/Button/button';
 import { Card } from '@/shared/ui/Card/Card';
 import { TextField } from '@/shared/ui/textField/TextField';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { z } from 'zod';
 
 import style from './forgot-password.module.scss';
-import { Modal } from '@/features';
-import { Trans } from '@/components/Trans/Trans';
 
 const signInSchema = z.object({
   email: z.string().email('Invalid email address').nonempty('Enter email'),
@@ -22,7 +22,6 @@ type FormValuesType = z.infer<typeof signInSchema>;
 
 export const ForgotPasswordForm = () => {
   const { t } = useTranslation();
-  const router = useRouter();
 
   const [open, setOpen] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
@@ -106,14 +105,11 @@ export const ForgotPasswordForm = () => {
           </Typography.Regular16>
         </Modal>
 
-        <Button
-          className={style.buttonBack}
-          fullWidth
-          onClick={() => router.push('/signIn')}
-          variant={'tertiary'}
-        >
-          {t.auth.ForgotPasswordPage.backToSignIn}
-        </Button>
+        <Link href={'/signIn'}>
+          <Button className={style.buttonBack} fullWidth variant={'tertiary'}>
+            {t.auth.ForgotPasswordPage.backToSignIn}
+          </Button>
+        </Link>
       </form>
       <div className={style.recaptcha}>recaptcha</div>
     </Card>
