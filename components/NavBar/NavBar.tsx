@@ -23,6 +23,7 @@ export const NavBar = () => {
           <Link href={'/termsOfService'}>{t.navbar.termsOfService}</Link>
           <Link href={'/privacyPolicy'}>{t.navbar.privacyPolicy}</Link>
           <Link href={'/confirm-registration'}>Confirm Registration</Link>
+          <Link href={'/emailConfirmed'}>Confirmed Email</Link>
         </div>
       )}
     </div>
