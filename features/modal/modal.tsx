@@ -11,7 +11,7 @@ import {
 } from '@radix-ui/react-dialog';
 import Image from 'next/image';
 
-import style from './dialog.module.scss';
+import style from './modal.module.scss';
 
 import CloseUrl from '../../assets/icons/close.svg?url';
 
@@ -50,16 +50,7 @@ export const Modal = (props: ModalProps) => {
                 )}
               </div>
 
-              <div className={style.contentBlock}>
-                {children}
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 25 }}>
-                  <DialogClose asChild>
-                    <Button className={style.dialogButton} variant={'primary'}>
-                      OK
-                    </Button>
-                  </DialogClose>
-                </div>
-              </div>
+              <div className={style.contentBlock}>{children}</div>
             </div>
           </DialogContent>
         </DialogPortal>
@@ -67,3 +58,5 @@ export const Modal = (props: ModalProps) => {
     </Dialog>
   );
 };
+
+export const CloseDialog = DialogClose;
