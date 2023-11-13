@@ -1,10 +1,10 @@
-import { ExpandBtn } from '@/components/header/ExpandBtn';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button } from '@/shared/ui/Button';
+import { Button } from '@/shared/ui';
 import Link from 'next/link';
 
 import styles from './Header.module.scss';
 
+import { ExpandBtn } from './ExpandBtn';
 import { LangSwitcher } from './LangSwitcher';
 import { NotificationMenu } from './NotificationMenu';
 
