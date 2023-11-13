@@ -51,7 +51,9 @@ export const SignInForm = () => {
   return (
     /* eslint-disable */
     <Card className={s.signInFormContainer}>
-      <div><Typography.H1>Sign In</Typography.H1></div>
+      <div>
+        <Typography.H1>Sign In</Typography.H1>
+      </div>
       <div className={s.gitHubGoogleContainer}>
         <GoogleLogo onClick={onGoogle} />
         <GitHubLogo />
@@ -60,34 +62,47 @@ export const SignInForm = () => {
         <Controller
           control={control}
           name="email"
-          render={({ field, fieldState }) => <TextField
-            {...field}
-            errors={fieldState?.error?.message}
-            onChange={field.onChange}
-            value={field.value}
-            label={"Email"}
-            inputtype={"text"} />}
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              errors={fieldState?.error?.message}
+              onChange={field.onChange}
+              value={field.value}
+              label={'Email'}
+              inputtype={'text'}
+            />
+          )}
         />
         <Controller
           control={control}
           name="password"
-          render={({ field, fieldState }) => <TextField
-            {...field}
-            onChange={field.onChange}
-            placeholder={"password"}
-            label={"Password"}
-            inputtype={"password"}
-            errors={fieldState?.error?.message}
-          />}
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              onChange={field.onChange}
+              placeholder={'password'}
+              label={'Password'}
+              inputtype={'password'}
+              errors={fieldState?.error?.message}
+            />
+          )}
         />
 
         <div className={s.linksAndButtonsContainer}>
-          <div className={s.forgotPasswordLink}><Link
-            href={"/forgotPassword"}><Typography.Regular14
-            color={"var(--color-light-900)"}>{t.navbar.forgotPassword}</Typography.Regular14></Link></div>
-          <Button style={{ width: "100%" }} type={"submit"}>Sign In</Button>
-          <Link href={""}><Typography.Regular16>Don't have an account</Typography.Regular16></Link>
-          <Link href={"/signUp"}>Sign Up</Link>
+          <div className={s.forgotPasswordLink}>
+            <Link href={'/forgotPassword'}>
+              <Typography.Regular14 color={'var(--color-light-900)'}>
+                {t.navbar.forgotPassword}
+              </Typography.Regular14>
+            </Link>
+          </div>
+          <Button style={{ width: '100%' }} type={'submit'}>
+            Sign In
+          </Button>
+          <Link href={''}>
+            <Typography.Regular16>Don't have an account</Typography.Regular16>
+          </Link>
+          <Link href={'/signUp'}>Sign Up</Link>
         </div>
       </form>
     </Card>

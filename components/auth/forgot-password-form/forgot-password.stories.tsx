@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ForgotPasswordForm } from '.';
+import { ForgotPasswordForm } from './forgot-password-form';
 
 const meta = {
   argTypes: {},
   component: ForgotPasswordForm,
   parameters: {
-    nextjs: {
+    nextRouter: {
       appDirectory: true,
     },
   },

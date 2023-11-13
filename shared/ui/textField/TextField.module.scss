@@ -8,6 +8,7 @@
 .input {
   padding-right: 32px;
   padding-left: 12px;
+  height: 36px;
   width: 100%;
   display: flex;
   background-color: inherit;
@@ -68,7 +69,8 @@
   height: 20px;
 
   &.buttonWithLabel {
-    bottom: 14px;
+    bottom: 8px;
+    cursor: pointer;
   }
 }
 
