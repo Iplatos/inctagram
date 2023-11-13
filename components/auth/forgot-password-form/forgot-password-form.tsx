@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { Trans } from '@/components/Trans/Trans';
-import { Modal } from '@/features';
+import { CloseDialog, Modal } from '@/features';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
 import { Button } from '@/shared/ui/Button/button';
@@ -98,6 +98,13 @@ export const ForgotPasswordForm = () => {
               text={t.auth.forgotPasswordPage.messageModal}
             />
           </Typography.Regular16>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 25 }}>
+            <CloseDialog asChild>
+              <Button className={style.dialogButton} variant={'primary'}>
+                OK
+              </Button>
+            </CloseDialog>
+          </div>
         </Modal>
 
         <Link href={'/signIn'}>
