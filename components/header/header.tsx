@@ -1,8 +1,8 @@
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button } from '@/shared/ui';
+import { Button } from '@/shared/ui/Button';
 import Link from 'next/link';
 
-import styles from './Header.module.scss';
+import styles from './header.module.scss';
 
 import { ExpandBtn } from './ExpandBtn';
 import { LangSwitcher } from './LangSwitcher';
