@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "test": "yarn test",
     "build:production": "yarn build",
     "start": "next start",
     "format": "prettier --write -- pages components",
