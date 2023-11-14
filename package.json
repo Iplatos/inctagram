@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "test": "jest",
     "build:production2": "env-cmd -f .env.production yarn build",
     "start": "next start",
     "format": "prettier --write -- pages components",
