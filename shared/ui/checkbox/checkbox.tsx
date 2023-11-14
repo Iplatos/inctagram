@@ -1,7 +1,6 @@
 import React from 'react';
 
 import * as CheckboxRadix from '@radix-ui/react-checkbox';
-import { clsx } from 'clsx';
 import Image from 'next/image';
 
 import style from './checkbox.module.scss';
@@ -48,9 +47,9 @@ export const Checkbox = (props: CheckboxProps) => {
       </CheckboxRadix.Root>
 
       <label className={style.checkboxLabel} htmlFor={id}>
-        <Typography.Regular14 className={`${disabled && style.labelDisabled}`}>
+        <Typography.Regular12 className={`${disabled && style.labelDisabled}`}>
           {label}
-        </Typography.Regular14>
+        </Typography.Regular12>
       </label>
     </div>
   );

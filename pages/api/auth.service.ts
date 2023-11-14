@@ -15,7 +15,16 @@ const authService = baseApi.injectEndpoints({
         url: '/api/v1/auth/google',
       }),
     }),
+    signUp: builder.mutation<any, any>({
+      query: params => {
+        return {
+          body: params,
+          method: 'POST',
+          url: 'v1/auth/sign-up',
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetMeQuery, useLoginMutation } = authService;
+export const { useGetMeQuery, useLoginMutation, useSignUpMutation } = authService;
