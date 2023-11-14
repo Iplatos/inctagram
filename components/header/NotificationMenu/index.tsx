@@ -1,1 +1,1 @@
-export { NotificationMenu } from './NotificationMenu';
+export * from './notificationMenu';

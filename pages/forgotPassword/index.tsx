@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
-import { ForgotPasswordForm } from '@/components/auth';
+import { CreateNewPasswordForm, ForgotPasswordForm } from '@/components/auth';
 
 function ForgotPassword() {
   return (
@@ -10,6 +10,7 @@ function ForgotPassword() {
       <HeadMeta title={'Forgot Password?'} />
 
       <ForgotPasswordForm />
+      {/* <CreateNewPasswordForm /> */}
     </>
   );
 }

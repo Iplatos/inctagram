@@ -1,1 +1,1 @@
-export { ExpandBtn } from './ExpandBtn';
+export * from './expandBtn';

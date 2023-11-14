@@ -1,1 +1,1 @@
-export { LangSwitcher } from './LangSwitcher';
+export * from './langSwitcher';

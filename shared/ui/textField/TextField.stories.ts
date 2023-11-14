@@ -1,7 +1,4 @@
-import { useState } from 'react';
-
-import { Checkbox } from '@/shared/ui/checkbox';
-import { Meta, Story } from '@storybook/react';
+import { Meta, Story, StoryObj } from '@storybook/react';
 
 import { TextField } from './TextField';
 
@@ -14,7 +11,7 @@ const meta = {
       options: [true, false],
     },
     value: {
-      options: 'string',
+      control: 'string',
     },
   },
   component: TextField,
