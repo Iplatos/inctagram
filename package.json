@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "test": "yarn run test",
+    "test": "jest",
     "build:production": "yarn build",
     "build:production2": "env-cmd -f .env.production yarn build",
     "start": "next start",
