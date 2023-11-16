@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import GitHubLogo from '@/assets/icons/gitHubLogo.svg';
@@ -18,27 +18,20 @@ import s from 'components/auth/sign-up-form/sign-up.module.scss';
 const schema = z
   .object({
     confirm: z.string(),
-    email: z
-      .string()
-      .email()
-      .min(1, { message: 'This field has to be filled.' })
-      .email(`The email must match the format example@example.com`),
+    email: z.string().email(),
     password: z
       .string()
-      .min(6, { message: 'Minimum number of characters 6' })
-      .max(20, { message: 'Maximum number of characters 20' })
-      .regex(/^[0-9A-Za-z!@#$%^&*()+,-./:;<=>?@[\]^_`{|}~]+$/, {
-        message:
-          'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~}',
-      }),
+      .min(6)
+      .max(20)
+      .regex(/^[0-9A-Za-z!@#$%^&*()+,-./:;<=>?@[\]^_`{|}~]+$/),
     username: z
       .string()
-      .min(6, { message: 'Minimum number of characters 6' })
-      .max(30, { message: 'Maximum number of characters 30' })
+      .min(6)
+      .max(30)
       .regex(/^[0-9A-Za-z_-]+$/),
   })
   .refine(data => data.password === data.confirm, {
-    message: 'Passwords must match',
+    message: "Passwords don't match",
     path: ['confirm'],
   });
 
@@ -94,7 +87,7 @@ export const SignUp = () => {
               <div className={s.element}>
                 <Controller
                   control={control}
-                  name={'username'}
+                  name={'Username'}
                   render={({ field, fieldState }) => (
                     <TextField
                       {...field}
@@ -102,6 +95,7 @@ export const SignUp = () => {
                       inputtype={'text'}
                       label={'Username'}
                       onChange={field.onChange}
+                      placeholder={field.name}
                       value={field.value}
                     />
                   )}
