@@ -1,3 +1,4 @@
+import { useAppSelector } from '@/pages/api/store';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button';
 import Link from 'next/link';
@@ -7,6 +8,7 @@ import styles from './header.module.scss';
 import { ExpandBtn } from './ExpandBtn';
 import { LangSwitcher } from './LangSwitcher';
 import { NotificationMenu } from './NotificationMenu';
+import { mockedNotifications } from './mockedData';
 
 export type Notification = {
   id: string;
@@ -15,40 +17,10 @@ export type Notification = {
   notificationTime: string;
 };
 
-const mockedNotifications: Notification[] = [
-  {
-    id: '0',
-    isNew: true,
-    message: 'Следующий платеж у вас спишется через 1 день',
-    notificationTime: '1 час',
-  },
-  {
-    id: '1',
-    isNew: true,
-    message: 'Ваша подписка истекает через 7 дней',
-    notificationTime: '1 день',
-  },
-  {
-    id: '2',
-    isNew: true,
-    message: 'Ваша подписка истекает через 7 дней',
-    notificationTime: '1 день',
-  },
-  {
-    id: '3',
-    message: 'Ваша подписка истекает через 7 дней',
-    notificationTime: '1 день',
-  },
-  {
-    id: '4',
-    message: 'Ваша подписка истекает через 7 дней',
-    notificationTime: '1 день',
-  },
-];
-
 export const Header = () => {
   const { t } = useTranslation();
-  const isLoggedIn = true;
+
+  const { isLoggedIn } = useAppSelector(state => state.authReducer);
 
   return (
     <header className={styles.header}>
