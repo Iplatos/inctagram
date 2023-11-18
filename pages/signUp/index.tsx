@@ -27,7 +27,7 @@ const schema = z
       .string()
       .min(6, { message: 'Minimum number of characters 6' })
       .max(20, { message: 'Maximum number of characters 20' })
-      .regex(/^[0-9A-Za-z!@#$%^&*()+,-./:;<=>?@[\]^_`{|}~]+$/, {
+      .regex(/^[0-9A-Za-z!"#$%&'()*+,-./:;<=>?@[\\\]^_`{|}~]+$/, {
         message:
           'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~}',
       }),
@@ -57,17 +57,22 @@ export const SignUp = () => {
     handleSubmit,
     setError,
   } = useForm<FormValues>({
+    defaultValues: {
+      email: '',
+      password: '',
+      username: '',
+    },
     resolver: zodResolver(schema),
   });
 
   const handleFormSubmitted = handleSubmit(data => signUp(omit(data, ['confirm'])));
 
-  const [username, setUsername] = useState<string>('');
+  // const [username, setUsername] = useState<string>('');
   const [checked, setChecked] = useState(false);
 
-  const handleUsernameChange = (newValue: string) => {
-    setUsername(newValue);
-  };
+  /*  const handleUsernameChange = (newValue: string) => {
+      setUsername(newValue);
+    };*/
 
   return (
     <>
@@ -142,7 +147,7 @@ export const SignUp = () => {
               <div className={s.element}>
                 <Controller
                   control={control}
-                  name={'password'}
+                  name={'confirm'}
                   render={({ field, fieldState }) => (
                     <TextField
                       {...field}
@@ -167,13 +172,13 @@ export const SignUp = () => {
             <Button className={s.button} type={'submit'}>
               Sign Up
             </Button>
-            <div className={s.bottom}>
-              <Typography.Regular16>Do you have an account?</Typography.Regular16>
-            </div>
-            <Button className={clsx(s.center, s.signUp)} variant={'text'}>
-              Sign In
-            </Button>
           </form>
+          <div className={s.bottom}>
+            <Typography.Regular16>Do you have an account?</Typography.Regular16>
+          </div>
+          <Button className={clsx(s.center, s.signUp)} variant={'text'}>
+            Sign In
+          </Button>
         </Card>
       </div>
     </>
