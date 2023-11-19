@@ -7,7 +7,7 @@
     "build": "next build",
     "test": "jest",
     "build:production": "yarn build",
-    "start": "next start",
+    "start": "node dist/main",
     "format": "prettier --write -- pages components",
     "lint": "eslint --fix \"{components,pages}/**/*.{tsx,ts,jsx,js}\" --no-error-on-unmatched-pattern && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input",
     "storybook": "storybook dev -p 6006",

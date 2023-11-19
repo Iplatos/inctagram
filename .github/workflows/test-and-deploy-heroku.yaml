@@ -3,7 +3,7 @@ name: Test & Deploy #Название pipeline который будет вып�
 on:
   push:
     branches:
-      - staging # указываем название ветки в которую хотим пушить и запускать наш деплой
+      - stagingHeroku # указываем название ветки в которую хотим пушить и запускать наш деплой
 
 jobs:
   tests:
@@ -25,9 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: superfly/flyctl-actions@1.1 # This is the action
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
-          args: "deploy"
-        env:
-          FLY_API_TOKEN: ${{ secrets.INCTAGRAM_TRAINEE_FRONT_TOKEN }}
-
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}} # данный апи кей нужно получить в своем аккаунте на хероку
+          heroku_app_name: "incubator-icta-trainee" #Must be unique in Heroku
+          heroku_email: "platonoff91@gmail.com" # ваш email который зареган в heroku
+          //"8c9252c9-bff2-49e1-8027-38883b2d5cc5", -INCTAGRAM_TRAINEE_FRONT_TOKEN_HEROKU , incubator-icta-trainee

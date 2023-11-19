@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
-import { CreateNewPasswordForm, ForgotPasswordForm } from '@/components/auth';
+import { ForgotPasswordForm } from '@/components/auth';
 
 function ForgotPassword() {
   return (
@@ -15,5 +15,6 @@ function ForgotPassword() {
   );
 }
 
+//INCTAGRAM_TRAINEE_FRONT_TOKEN
 ForgotPassword.getLayout = getLayout;
 export default ForgotPassword;
