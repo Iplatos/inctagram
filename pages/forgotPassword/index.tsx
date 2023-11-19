@@ -10,7 +10,6 @@ function ForgotPassword() {
       <HeadMeta title={'Forgot Password?'} />
 
       <ForgotPasswordForm />
-      {/*<ForgotPasswordForm />*/}
     </>
   );
 }
