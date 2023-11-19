@@ -42,4 +42,4 @@ build
 .idea\workspace.xml
 # Editor-based HTTP Client requests
 .idea\httpRequests
-fly.toml
+
