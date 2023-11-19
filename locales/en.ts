@@ -34,7 +34,7 @@ export const en: LocaleType = {
     forgotPassword: 'Forgot Password',
     main: 'Main',
     privacyPolicy: 'Privacy Policy',
-    signIn: 'Sign In',
+    signIn: 'Log In',
     signUp: 'Sign Up',
     termsOfService: 'Terms Of Service',
   },
