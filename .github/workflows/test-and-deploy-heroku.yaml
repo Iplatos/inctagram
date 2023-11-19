@@ -29,4 +29,4 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}} # данный апи кей нужно получить в своем аккаунте на хероку
           heroku_app_name: "incubator-icta-trainee" #Must be unique in Heroku
-          heroku_email: "platonoff91@gmail.com" # ваш email который зареган в heroku
+          heroku_email: "platonoff9168@gmail.com" # ваш email который зареган в heroku
