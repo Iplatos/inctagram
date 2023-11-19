@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ElementRef, forwardRef } from 'react';
 
 import * as CheckboxRadix from '@radix-ui/react-checkbox';
 import Image from 'next/image';
@@ -20,37 +20,41 @@ export type CheckboxProps = {
   required?: boolean;
 };
 
-export const Checkbox = (props: CheckboxProps) => {
-  const { checked, disabled, id, label, onChange, required } = props;
+export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, CheckboxProps>(
+  (props, ref) => {
+    const { checked, disabled, id, label, onChange, required } = props;
 
-  let checkboxImage = DefaultUnselectedImgUrl;
+    let checkboxImage = DefaultUnselectedImgUrl;
 
-  if (checked) {
-    checkboxImage = DefaultSelectedImgUrl;
-    if (disabled) {
-      checkboxImage = DisabledSelectedImgUrl;
+    if (checked) {
+      checkboxImage = DefaultSelectedImgUrl;
+      if (disabled) {
+        checkboxImage = DisabledSelectedImgUrl;
+      }
+    } else if (disabled) {
+      checkboxImage = DisabledUnselectedImgUrl;
     }
-  } else if (disabled) {
-    checkboxImage = DisabledUnselectedImgUrl;
+
+    return (
+      <div className={style.container}>
+        <CheckboxRadix.Root
+          checked={checked}
+          className={`${style.checkboxRoot} ${disabled && style.disabled}`}
+          disabled={disabled}
+          id={id}
+          onCheckedChange={onChange}
+          ref={ref}
+          required={required}
+        >
+          <Image alt={'checkbox'} src={checkboxImage} />
+        </CheckboxRadix.Root>
+
+        <label className={style.checkboxLabel} htmlFor={id}>
+          <Typography.Regular12 className={`${disabled && style.labelDisabled}`}>
+            {label}
+          </Typography.Regular12>
+        </label>
+      </div>
+    );
   }
-
-  return (
-    <div className={style.container}>
-      <CheckboxRadix.Root
-        className={`${style.checkboxRoot} ${disabled && style.disabled}`}
-        disabled={disabled}
-        id={id}
-        onCheckedChange={onChange}
-        required={required}
-      >
-        <Image alt={'checkbox'} src={checkboxImage} />
-      </CheckboxRadix.Root>
-
-      <label className={style.checkboxLabel} htmlFor={id}>
-        <Typography.Regular12 className={`${disabled && style.labelDisabled}`}>
-          {label}
-        </Typography.Regular12>
-      </label>
-    </div>
-  );
-};
+);

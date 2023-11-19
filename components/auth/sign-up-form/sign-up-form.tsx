@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import GitHubLogo from '@/assets/icons/gitHubLogo.svg';
@@ -6,7 +6,8 @@ import GoogleLogo from '@/assets/icons/googleLogo.svg';
 import { useSignUpMutation } from '@/pages/api/auth.service';
 import { baseUrl } from '@/pages/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button, Card, Checkbox, TextField, Typography } from '@/shared/ui';
+import { Button, Card, TextField, Typography } from '@/shared/ui';
+import { ControlledCheckbox } from '@/shared/ui/checkbox/controlled-checkbox';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { clsx } from 'clsx';
 import { omit } from 'next/dist/shared/lib/router/utils/omit';
@@ -17,27 +18,32 @@ import s from 'components/auth/sign-up-form/sign-up.module.scss';
 
 const schema = z
   .object({
+    checkbox: z.boolean(),
     confirm: z.string(),
-    email: z.string().email(),
+    email: z.string().email({ message: 'The email must match the format example@example.com' }),
     password: z
       .string()
-      .min(6)
-      .max(20)
-      .regex(/^[0-9A-Za-z!@#$%^&*()+,-./:;<=>?@[\]^_`{|}~]+$/),
+      .min(6, { message: 'Minimum number of characters 6' })
+      .max(20, { message: 'Maximum number of characters 20' })
+      .refine(
+        value =>
+          /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~])/.test(value),
+        'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
+      ),
     username: z
       .string()
-      .min(6)
-      .max(30)
+      .min(6, { message: 'Minimum number of characters 6' })
+      .max(30, { message: 'Maximum number of characters 30' })
       .regex(/^[0-9A-Za-z_-]+$/),
   })
   .refine(data => data.password === data.confirm, {
-    message: "Passwords don't match",
+    message: 'Passwords must match',
     path: ['confirm'],
   });
 
 type FormValues = z.input<typeof schema>;
 
-export const SignUp = () => {
+export const SignUpForm = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const [signUp, { error }] = useSignUpMutation();
@@ -50,17 +56,11 @@ export const SignUp = () => {
     handleSubmit,
     setError,
   } = useForm<FormValues>({
+    mode: 'onBlur',
     resolver: zodResolver(schema),
   });
 
   const handleFormSubmitted = handleSubmit(data => signUp(omit(data, ['confirm'])));
-
-  const [username, setUsername] = useState<string>('');
-  const [checked, setChecked] = useState(false);
-
-  const handleUsernameChange = (newValue: string) => {
-    setUsername(newValue);
-  };
 
   return (
     <>
@@ -77,7 +77,7 @@ export const SignUp = () => {
       </span>*/}
       <div className={s.outerContainer}>
         <Card className={s.card}>
-          <Typography.H1 className={s.center}>Sign Up</Typography.H1>
+          <Typography.H1 className={s.center}>{t.auth.signUpPage.title}</Typography.H1>
           <div className={s.gitHubGoogleContainer}>
             <GoogleLogo onClick={onGoogle} />
             <GitHubLogo />
@@ -87,15 +87,15 @@ export const SignUp = () => {
               <div className={s.element}>
                 <Controller
                   control={control}
-                  name={'Username'}
+                  name={'username'}
                   render={({ field, fieldState }) => (
                     <TextField
                       {...field}
                       errors={fieldState?.error?.message}
                       inputtype={'text'}
-                      label={'Username'}
+                      label={t.auth.signUpPage.labelName}
                       onChange={field.onChange}
-                      placeholder={field.name}
+                      placeholder={'username'}
                       value={field.value}
                     />
                   )}
@@ -110,7 +110,7 @@ export const SignUp = () => {
                       {...field}
                       errors={fieldState?.error?.message}
                       inputtype={'text'}
-                      label={'Email'}
+                      label={t.auth.signUpPage.labelEmail}
                       onChange={field.onChange}
                       value={field.value}
                     />
@@ -126,7 +126,7 @@ export const SignUp = () => {
                       {...field}
                       errors={fieldState?.error?.message}
                       inputtype={'password'}
-                      label={'Password'}
+                      label={t.auth.signUpPage.labelPassword}
                       onChange={field.onChange}
                       placeholder={'password'}
                     />
@@ -136,13 +136,13 @@ export const SignUp = () => {
               <div className={s.element}>
                 <Controller
                   control={control}
-                  name={'password'}
+                  name={'confirm'}
                   render={({ field, fieldState }) => (
                     <TextField
                       {...field}
                       errors={fieldState?.error?.message}
                       inputtype={'password'}
-                      label={'Password'}
+                      label={t.auth.signUpPage.labelСonfirm}
                       onChange={field.onChange}
                       placeholder={'password'}
                     />
@@ -151,23 +151,23 @@ export const SignUp = () => {
               </div>
             </div>
             <div className={s.checkbox}>
-              <Checkbox
-                checked={checked}
+              <ControlledCheckbox
+                control={control}
                 label={'I agree to the Terms of Service and Privacy Policy'}
-                onChange={() => setChecked(!checked)}
+                name={'checkbox'}
               />
             </div>
 
             <Button className={s.button} type={'submit'}>
-              Sign Up
-            </Button>
-            <div className={s.bottom}>
-              <Typography.Regular16>Do you have an account?</Typography.Regular16>
-            </div>
-            <Button className={clsx(s.center, s.signUp)} variant={'text'}>
-              Sign In
+              {t.auth.signUpPage.signUp}
             </Button>
           </form>
+          <div className={s.bottom}>
+            <Typography.Regular16>{t.auth.signUpPage.account}</Typography.Regular16>
+          </div>
+          <Button className={clsx(s.center, s.signUp)} variant={'text'}>
+            {t.auth.signUpPage.signIn}
+          </Button>
         </Card>
       </div>
     </>
