@@ -11,8 +11,8 @@ const authService = baseApi.injectEndpoints({
     login: builder.mutation<any, any>({
       query: data => ({
         body: data,
-        method: 'GET',
-        url: '/api/v1/auth/google',
+        method: 'POST',
+        url: '/api/v1/auth/login',
       }),
     }),
   }),

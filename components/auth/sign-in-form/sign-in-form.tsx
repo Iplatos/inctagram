@@ -52,7 +52,7 @@ export const SignInForm = () => {
     /* eslint-disable */
     <Card className={s.signInFormContainer}>
       <div>
-        <Typography.H1>Sign In</Typography.H1>
+        <Typography.H1>{t.navbar.signIn}</Typography.H1>
       </div>
       <div className={s.gitHubGoogleContainer}>
         <GoogleLogo onClick={onGoogle} />
@@ -68,8 +68,8 @@ export const SignInForm = () => {
               errors={fieldState?.error?.message}
               onChange={field.onChange}
               value={field.value}
-              label={'Email'}
-              inputtype={'text'}
+              label={"Email"}
+              inputtype={"text"}
             />
           )}
         />
@@ -80,9 +80,9 @@ export const SignInForm = () => {
             <TextField
               {...field}
               onChange={field.onChange}
-              placeholder={'password'}
-              label={'Password'}
-              inputtype={'password'}
+              placeholder={"password"}
+              label={"Password"}
+              inputtype={"password"}
               errors={fieldState?.error?.message}
             />
           )}
@@ -90,19 +90,17 @@ export const SignInForm = () => {
 
         <div className={s.linksAndButtonsContainer}>
           <div className={s.forgotPasswordLink}>
-            <Link href={'/forgotPassword'}>
-              <Typography.Regular14 color={'var(--color-light-900)'}>
+            <Link href={"/forgotPassword"}>
+              <Typography.Regular14 color={"var(--color-light-900)"}>
                 {t.navbar.forgotPassword}
               </Typography.Regular14>
             </Link>
           </div>
-          <Button style={{ width: '100%' }} type={'submit'}>
-            Sign In
+          <Button style={{ width: "100%" }} type={"submit"}>
+            {t.navbar.signIn}
           </Button>
-          <Link href={''}>
-            <Typography.Regular16>Don't have an account</Typography.Regular16>
-          </Link>
-          <Link href={'/signUp'}>Sign Up</Link>
+          <Typography.Regular16>{t.auth.signInPage.dontHaveAcc}</Typography.Regular16>
+          <Link href={"/signUp"}>{t.navbar.signUp}</Link>
         </div>
       </form>
     </Card>
