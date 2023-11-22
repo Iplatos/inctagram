@@ -1,3 +1,9 @@
+import React, { useState } from 'react';
+
+import { Trans } from '@/components/Trans/Trans';
+import { CloseDialog, Modal } from '@/features';
+import { Typography } from '@/shared/ui';
+import { Button } from '@/shared/ui/Button';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
 import HomeOutline from 'assets/icons/home-outline.svg';
 import LogOutOutline from 'assets/icons/log-out-outline.svg';
@@ -10,6 +16,17 @@ import TrendingUpOutline from 'assets/icons/trending-up-outline.svg';
 import s from './sidebar.module.scss';
 
 export const SideBar = () => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('someEmail');
+
+  function handleModalClosed() {
+    setOpen(false);
+  }
+
+  function handleModalOpened() {
+    setOpen(true);
+  }
+
   return (
     <div className={s.sidebarContainer}>
       <div className={s.buttonContainer}>
@@ -46,10 +63,25 @@ export const SideBar = () => {
         </button>
       </div>
       <div className={s.logOutButtonContainer}>
-        <button>
+        <button onClick={handleModalOpened}>
           <LogOutOutline className={s.svgAsComponent} />
           Log Out
         </button>
+        <Modal onClose={handleModalClosed} open={open} showCloseButton title={'title'}>
+          <Typography.Regular16>
+            <Trans
+              tags={{
+                '1': () => <b>{`${email}`}</b>,
+              }}
+              text={`Are you really want to log out of your account ${email}?`}
+            />
+          </Typography.Regular16>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 25 }}>
+            <CloseDialog asChild>
+              <Button variant={'primary'}>OK</Button>
+            </CloseDialog>
+          </div>
+        </Modal>
       </div>
     </div>
   );
