@@ -19,7 +19,7 @@ import GoogleLogo from '../../../assets/icons/googleLogo.svg';
 
 const signInSchema = z.object({
   email: z.string().email('Invalid email address').nonempty('Enter email'),
-  password: z.string().min(3),
+  password: z.string().min(3, { message: 'Invalid Password' }),
 });
 
 type FormValuesType = z.infer<typeof signInSchema>;
@@ -35,11 +35,7 @@ export const SignInForm = () => {
   const onSubmit = (data: FormValuesType) => {
     login(data);
   };
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({
+  const { control, errors, handleSubmit } = useForm({
     defaultValues: {
       email: '',
       password: '',
