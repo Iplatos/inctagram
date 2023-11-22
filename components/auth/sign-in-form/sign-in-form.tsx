@@ -59,34 +59,35 @@ export const SignInForm = () => {
         <GitHubLogo />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          control={control}
-          name="email"
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              errors={fieldState?.error?.message}
-              onChange={field.onChange}
-              value={field.value}
-              label={"Email"}
-              inputtype={"text"}
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name="password"
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              onChange={field.onChange}
-              placeholder={"password"}
-              label={"Password"}
-              inputtype={"password"}
-              errors={fieldState?.error?.message}
-            />
-          )}
-        />
+        <div className={s.textFieldsContainer}>
+          <Controller
+            control={control}
+            name="email"
+            render={({ field, fieldState }) => (
+              <TextField
+                {...field}
+                errors={fieldState?.error?.message}
+                onChange={field.onChange}
+                value={field.value}
+                label={"Email"}
+                inputtype={"text"}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name="password"
+            render={({ field, fieldState }) => (
+              <TextField
+                {...field}
+                onChange={field.onChange}
+                placeholder={"password"}
+                label={"Password"}
+                inputtype={"password"}
+                errors={fieldState?.error?.message}
+              />
+            )}
+          /></div>
 
         <div className={s.linksAndButtonsContainer}>
           <div className={s.forgotPasswordLink}>

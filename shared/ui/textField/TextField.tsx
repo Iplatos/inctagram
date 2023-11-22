@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 
 import Close from '@/assets/icons/close.svg?url';
 import Eye from '@/assets/icons/eye-outline.svg?url';
@@ -23,7 +23,7 @@ export type TextFieldProps<T extends TextFieldType = 'input'> = {
   value: string;
 };
 
-export const TextField = (props: TextFieldProps) => {
+export const TextField = forwardRef((props: TextFieldProps, ref) => {
   const {
     className,
     disabled,
@@ -89,4 +89,4 @@ export const TextField = (props: TextFieldProps) => {
       <div className={s.errorMessage}>{errors}</div>
     </div>
   );
-};
+});
