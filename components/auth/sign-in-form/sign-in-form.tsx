@@ -44,7 +44,7 @@ export const SignInForm = () => {
       email: '',
       password: '',
     },
-    mode: 'onSubmit',
+    mode: 'onBlur',
     resolver: zodResolver(signInSchema),
   });
 
