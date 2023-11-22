@@ -1,19 +1,14 @@
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
-import {
-  setTokenToLocalStorage,
-  useFilteredPostsQuery,
-  useGetFeedQuery,
-} from '@/pages/api/base-api';
+import { useGetMeQuery } from '@/pages/api/auth.service';
+import { setTokenToLocalStorage } from '@/pages/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { useRouter } from 'next/navigation';
 
 function Home() {
   const { t } = useTranslation();
-  const { data: feed } = useGetFeedQuery();
-  const { data, error } = useFilteredPostsQuery();
   const router = useRouter();
-  /*const { getMe } = useGetMeQuery();*/
+  const { error, getMe } = useGetMeQuery();
 
   //   console.log('router.locales: ', router.locales);
   //   console.log('router.locale: ', router.locale);
@@ -23,11 +18,11 @@ function Home() {
     setTokenToLocalStorage(null);
   };
 
-  /*  if (error) {
-      if ('status' in error) {
-        error.status === 401 && router.push('/signIn');
-      }
-    }*/
+  if (error) {
+    if ('status' in error) {
+      error.status === 401 && router.push('/signIn');
+    }
+  }
 
   return (
     <>
