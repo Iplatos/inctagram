@@ -25,7 +25,15 @@ export const ru = {
       title: 'Срок действия ссылки истек',
     },
     signUpPage: {
+      account: 'У Вас есть аккаунт?',
       agreement: 'Я согласен с <1>text</1> и <2>text</2>',
+      labelEmail: 'Почта',
+      labelName: 'Имя пользователя',
+      labelPassword: 'Пароль',
+      labelСonfirm: 'Подтверждение пароля',
+      signIn: 'Войти',
+      signUp: 'Зарегистрироваться',
+      title: 'Регистрация',
     },
   },
 
