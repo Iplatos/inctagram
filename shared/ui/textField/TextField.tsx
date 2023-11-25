@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 
 import Close from '@/assets/icons/close.svg?url';
 import Eye from '@/assets/icons/eye-outline.svg?url';
