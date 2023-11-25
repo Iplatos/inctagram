@@ -1,4 +1,11 @@
+import React, { useState } from 'react';
+
+import { Trans } from '@/components/Trans/Trans';
+import { CloseDialog, Modal } from '@/features';
+import { setTokenToLocalStorage } from '@/pages/api/base-api';
 import { useAppSelector } from '@/pages/api/store';
+import { Typography } from '@/shared/ui';
+import { Button } from '@/shared/ui/Button';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
 import HomeOutline from 'assets/icons/home-outline.svg';
 import LogOutOutline from 'assets/icons/log-out-outline.svg';
@@ -11,7 +18,23 @@ import TrendingUpOutline from 'assets/icons/trending-up-outline.svg';
 import s from './sidebar.module.scss';
 
 export const SideBar = () => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('someEmail');
+
   const { isLoggedIn } = useAppSelector(state => state.authReducer);
+
+  function handleModalClosed() {
+    setOpen(false);
+  }
+
+  function handleModalOpened() {
+    setOpen(true);
+  }
+
+  const logOut = () => {
+    console.log('log out');
+    setTokenToLocalStorage(null);
+  };
 
   if (!isLoggedIn) {
     return;
@@ -53,10 +76,30 @@ export const SideBar = () => {
         </button>
       </div>
       <div className={s.logOutButtonContainer}>
-        <button>
+        <button onClick={handleModalOpened}>
           <LogOutOutline className={s.svgAsComponent} />
           Log Out
         </button>
+        <Modal onClose={handleModalClosed} open={open} showCloseButton title={'Log Out'}>
+          <Typography.Regular16>
+            <Trans
+              tags={{
+                '1': () => <b>{`${email}`}</b>,
+              }}
+              text={`Are you really want to log out of your account "${email}?"`}
+            />
+          </Typography.Regular16>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 25 }}>
+            <CloseDialog asChild>
+              <div style={{ display: 'flex', justifyContent: 'space-Between', width: '216px' }}>
+                <Button onClick={logOut} style={{ width: '96px' }} variant={'tertiary'}>
+                  yes
+                </Button>
+                <Button style={{ width: '96px' }}>no</Button>
+              </div>
+            </CloseDialog>
+          </div>
+        </Modal>
       </div>
     </div>
   );

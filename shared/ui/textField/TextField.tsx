@@ -23,7 +23,7 @@ export type TextFieldProps<T extends TextFieldType = 'input'> = {
   value: string;
 };
 
-export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
+export const TextField = forwardRef((props: TextFieldProps, ref) => {
   const {
     className,
     disabled,
@@ -59,7 +59,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, re
         disabled={disabled}
         onChange={e => onChange(e.currentTarget.value)}
         placeholder={placeholder}
-        ref={ref}
         type={type}
         value={value}
       />
