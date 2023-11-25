@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { Trans } from '@/components/Trans/Trans';
 import { CloseDialog, Modal } from '@/features';
+import { useLogoutMutation } from '@/pages/api/auth.service';
 import { setTokenToLocalStorage } from '@/pages/api/base-api';
 import { useAppSelector } from '@/pages/api/store';
 import { Typography } from '@/shared/ui';
@@ -20,8 +21,10 @@ import s from './sidebar.module.scss';
 export const SideBar = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('someEmail');
-
+  const [logout] = useLogoutMutation();
   const { isLoggedIn } = useAppSelector(state => state.authReducer);
+
+  console.log(isLoggedIn);
 
   function handleModalClosed() {
     setOpen(false);
@@ -32,6 +35,7 @@ export const SideBar = () => {
   }
 
   const logOut = () => {
+    logout();
     console.log('log out');
     setTokenToLocalStorage(null);
   };

@@ -1,5 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
+import { setIsLoggedIn } from '@/components/auth/slices/auth';
 import { useLoginMutation } from '@/pages/api/auth.service';
 import { baseUrl } from '@/pages/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
@@ -25,15 +27,18 @@ const signInSchema = z.object({
 type FormValuesType = z.infer<typeof signInSchema>;
 
 export const SignInForm = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
-  const [login] = useLoginMutation();
+  const [login, { data }] = useLoginMutation();
   const onGoogle = () => {
     router.push(`${baseUrl}/api/v1/auth/google`);
   };
 
+  console.log(data);
   const { t } = useTranslation();
   const onSubmit = (data: FormValuesType) => {
     login(data);
+    dispatch(setIsLoggedIn(true));
   };
   const { clearErrors, control, errors, handleSubmit } = useForm({
     defaultValues: {

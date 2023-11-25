@@ -13,16 +13,16 @@ export const baseApi = createApi({
       }),
     };
   },
-  /*  prepareHeaders: (headers, { getState }) => {
-      const token = getTokenFromLocalStorage();
-  
-      // If we have a token set in state, let's assume that we should be passing it.
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-  
-      return headers;
-    },*/
+  prepareHeaders: (headers, { getState }) => {
+    const token = getTokenFromLocalStorage();
+
+    // If we have a token set in state, let's assume that we should be passing it.
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`);
+    }
+
+    return headers;
+  },
   reducerPath: 'baseApi',
 });
 
