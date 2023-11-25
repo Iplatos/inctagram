@@ -1,3 +1,4 @@
+import { useAppSelector } from '@/pages/api/store';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
 import HomeOutline from 'assets/icons/home-outline.svg';
 import LogOutOutline from 'assets/icons/log-out-outline.svg';
@@ -10,10 +11,16 @@ import TrendingUpOutline from 'assets/icons/trending-up-outline.svg';
 import s from './sidebar.module.scss';
 
 export const SideBar = () => {
+  const { isLoggedIn } = useAppSelector(state => state.authReducer);
+
+  if (!isLoggedIn) {
+    return;
+  }
+
   return (
     <div className={s.sidebarContainer}>
       <div className={s.buttonContainer}>
-        <button disabled>
+        <button>
           <HomeOutline className={s.svgAsComponent} />
           Home
         </button>
