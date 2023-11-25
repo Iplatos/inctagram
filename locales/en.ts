@@ -27,6 +27,7 @@ export const en: LocaleType = {
     },
     signInPage: {
       dontHaveAcc: "Don't have an account?",
+      invalidPass: 'Invalid Password',
     },
     signUpPage: {
       agreement: 'I agree to the <1>text</1> and <2>text</2>',

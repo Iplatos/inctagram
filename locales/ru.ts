@@ -25,6 +25,7 @@ export const ru = {
     },
     signInPage: {
       dontHaveAcc: 'Нет учётной записи?',
+      invalidPass: 'Неверный формат пароля',
     },
     signUpPage: {
       agreement: 'Я согласен с <1>text</1> и <2>text</2>',
