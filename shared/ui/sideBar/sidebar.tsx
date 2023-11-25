@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
 import { Trans } from '@/components/Trans/Trans';
-import { CloseDialog, Modal } from '@/features';
+import { Modal } from '@/features/modal';
 import { setTokenToLocalStorage } from '@/pages/api/base-api';
 import { useAppSelector } from '@/pages/api/store';
-import { Typography } from '@/shared/ui';
 import { Button } from '@/shared/ui/Button';
+import { Typography } from '@/shared/ui/typography';
+import { DialogClose } from '@radix-ui/react-dialog';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
 import HomeOutline from 'assets/icons/home-outline.svg';
 import LogOutOutline from 'assets/icons/log-out-outline.svg';
@@ -90,14 +91,14 @@ export const SideBar = () => {
             />
           </Typography.Regular16>
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 25 }}>
-            <CloseDialog asChild>
+            <DialogClose asChild>
               <div style={{ display: 'flex', justifyContent: 'space-Between', width: '216px' }}>
                 <Button onClick={logOut} style={{ width: '96px' }} variant={'tertiary'}>
                   yes
                 </Button>
                 <Button style={{ width: '96px' }}>no</Button>
               </div>
-            </CloseDialog>
+            </DialogClose>
           </div>
         </Modal>
       </div>

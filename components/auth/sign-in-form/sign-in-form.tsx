@@ -17,21 +17,29 @@ import s from 'components/auth/sign-in-form/sign-in-form.module.scss';
 import GitHubLogo from '../../../assets/icons/gitHubLogo.svg';
 import GoogleLogo from '../../../assets/icons/googleLogo.svg';
 
-const signInSchema = z.object({
-  email: z.string().email('Invalid email address').nonempty('Enter email'),
-  password: z.string().min(3, { message: 'Invalid Password' }),
-});
-
-type FormValuesType = z.infer<typeof signInSchema>;
-
 export const SignInForm = () => {
+  const { t } = useTranslation();
+  const signInSchema = z.object({
+    email: z
+      .string()
+
+      .email(t.auth.signInPage.invalidEmail)
+      .nonempty('Enter email'),
+    password: z
+      .string()
+      .min(6, { message: t.auth.signInPage.invalidPass })
+      .max(20, { message: t.auth.signInPage.invalidPass })
+      .regex(/^[0-9A-Za-z!"#$%&'()*+,\-.\/:;<=>?@[\\\]^_`{|}~]+$/, {
+        message: t.auth.signInPage.invalidPass,
+      }),
+  });
   const router = useRouter();
   const [login] = useLoginMutation();
   const onGoogle = () => {
     router.push(`${baseUrl}/api/v1/auth/google`);
   };
 
-  const { t } = useTranslation();
+  type FormValuesType = z.infer<typeof signInSchema>;
   const onSubmit = (data: FormValuesType) => {
     login(data);
   };
