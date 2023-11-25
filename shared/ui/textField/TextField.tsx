@@ -19,6 +19,7 @@ export type TextFieldProps<T extends TextFieldType = 'input'> = {
   isSearchInput?: boolean;
   label?: string;
   onChange: (e: string) => void;
+  onFocus?: () => void;
   placeholder?: string;
   value: string;
 };

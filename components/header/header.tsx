@@ -1,14 +1,13 @@
+import { ExpandBtn } from '@/components/header/ExpandBtn';
+import { LangSwitcher } from '@/components/header/LangSwitcher';
+import { NotificationMenu } from '@/components/header/NotificationMenu';
+import { mockedNotifications } from '@/components/header/mockedData';
 import { useAppSelector } from '@/pages/api/store';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button';
 import Link from 'next/link';
 
 import styles from './header.module.scss';
-
-import { ExpandBtn } from './ExpandBtn';
-import { LangSwitcher } from './LangSwitcher';
-import { NotificationMenu } from './NotificationMenu';
-import { mockedNotifications } from './mockedData';
 
 export type Notification = {
   id: string;

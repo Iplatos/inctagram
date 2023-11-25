@@ -29,9 +29,11 @@ export const SignInForm = () => {
       .string()
       .min(6, { message: t.auth.signInPage.invalidPass })
       .max(20, { message: t.auth.signInPage.invalidPass })
+      /* eslint-disable */
       .regex(/^[0-9A-Za-z!"#$%&'()*+,\-.\/:;<=>?@[\\\]^_`{|}~]+$/, {
-        message: t.auth.signInPage.invalidPass,
-      }),
+        message: t.auth.signInPage.invalidPass
+      })
+    /* eslint-enable */
   });
   const router = useRouter();
   const [login] = useLoginMutation();
@@ -43,7 +45,7 @@ export const SignInForm = () => {
   const onSubmit = (data: FormValuesType) => {
     login(data);
   };
-  const { clearErrors, control, errors, handleSubmit } = useForm({
+  const { clearErrors, control, handleSubmit } = useForm({
     defaultValues: {
       email: '',
       password: '',
@@ -76,14 +78,12 @@ export const SignInForm = () => {
                 value={field.value}
                 label={"Email"}
                 inputtype={"text"}
-
               />
             )}
           />
           <Controller
             control={control}
             name="password"
-
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
@@ -95,7 +95,8 @@ export const SignInForm = () => {
                 errors={fieldState?.error?.message}
               />
             )}
-          /></div>
+          />
+        </div>
 
         <div className={s.linksAndButtonsContainer}>
           <div className={s.forgotPasswordLink}>
