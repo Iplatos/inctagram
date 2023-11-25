@@ -35,7 +35,7 @@ export const SignInForm = () => {
   const onSubmit = (data: FormValuesType) => {
     login(data);
   };
-  const { control, errors, handleSubmit } = useForm({
+  const { clearErrors, control, errors, handleSubmit } = useForm({
     defaultValues: {
       email: '',
       password: '',
@@ -62,20 +62,24 @@ export const SignInForm = () => {
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
+                onFocus={() => clearErrors("email")}
                 errors={fieldState?.error?.message}
                 onChange={field.onChange}
                 value={field.value}
                 label={"Email"}
                 inputtype={"text"}
+
               />
             )}
           />
           <Controller
             control={control}
             name="password"
+
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
+                onFocus={() => clearErrors("password")}
                 onChange={field.onChange}
                 placeholder={"password"}
                 label={"Password"}
