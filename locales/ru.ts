@@ -1,4 +1,3 @@
-import { CreateNewPasswordForm } from '@/components/auth';
 export const ru = {
   auth: {
     createNewPasswordPage: {
@@ -23,6 +22,10 @@ export const ru = {
       text: 'Похоже, срок действия ссылки для подтверждения истек. Не волнуйтесь, мы можем отправить ссылку еще раз.',
       textButton: 'Отправить еще раз',
       title: 'Срок действия ссылки истек',
+    },
+    signInPage: {
+      dontHaveAcc: 'Нет учётной записи?',
+      invalidPass: 'Неверный формат пароля',
     },
     signUpPage: {
       account: 'У Вас есть аккаунт?',

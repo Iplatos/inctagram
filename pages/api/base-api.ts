@@ -6,7 +6,7 @@ export const baseApi = createApi({
   endpoints: builder => {
     return {
       filteredPosts: builder.query<any, void>({
-        query: () => `/api/v1/post/filtered-posts/title=asd`,
+        query: () => `/api/v1/post/filtered-posts/title`,
       }),
       getFeed: builder.query<any, void>({
         query: () => `/api/v1/post/feed`,

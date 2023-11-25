@@ -25,6 +25,10 @@ export const en: LocaleType = {
       textButton: 'Resend verification link',
       title: 'Email verification link expired',
     },
+    signInPage: {
+      dontHaveAcc: "Don't have an account?",
+      invalidPass: 'Invalid Password',
+    },
     signUpPage: {
       account: 'Do you have an account?',
       agreement: 'I agree to the <1>text</1> and <2>text</2>',
