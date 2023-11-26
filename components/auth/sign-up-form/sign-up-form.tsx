@@ -46,7 +46,7 @@ type FormValues = z.input<typeof schema>;
 export const SignUpForm = () => {
   const router = useRouter();
   const { t } = useTranslation();
-  const [signUp, { error }] = useSignUpMutation();
+  const [signUp, { data: signUpData, error }] = useSignUpMutation();
   const onGoogle = () => {
     router.push(`${baseUrl}/api/v1/auth/google`);
   };
@@ -60,6 +60,9 @@ export const SignUpForm = () => {
     resolver: zodResolver(schema),
   });
 
+  if (signUpData) {
+    router.push(`/email-confirmed`);
+  }
   const handleFormSubmitted = handleSubmit(data => signUp(omit(data, ['confirm'])));
 
   return (

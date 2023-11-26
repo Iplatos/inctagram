@@ -29,18 +29,16 @@ type FormValuesType = z.infer<typeof signInSchema>;
 export const SignInForm = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [login, { data: loginData }] = useLoginMutation();
+  const [login] = useLoginMutation();
   const onGoogle = () => {
     router.push(`${baseUrl}/api/v1/auth/google`);
   };
 
-  if (loginData) {
-    router.push(`http://localhost:3000/email-confirmed`);
-  }
   const { t } = useTranslation();
   const onSubmit = (data: FormValuesType) => {
     login(data);
     dispatch(setIsLoggedIn(true));
+    router.push(`/`);
   };
   const { clearErrors, control, errors, handleSubmit } = useForm({
     defaultValues: {
