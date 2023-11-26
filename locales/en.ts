@@ -30,7 +30,15 @@ export const en: LocaleType = {
       invalidPass: 'Invalid Password',
     },
     signUpPage: {
+      account: 'Do you have an account?',
       agreement: 'I agree to the <1>text</1> and <2>text</2>',
+      labelEmail: 'Email',
+      labelName: 'Username',
+      labelPassword: 'Password',
+      labelСonfirm: 'Password confirmation',
+      signIn: 'Sign In',
+      signUp: 'Sign Up',
+      title: 'Sign Up',
     },
   },
 
