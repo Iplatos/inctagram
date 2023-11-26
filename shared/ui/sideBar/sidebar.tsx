@@ -24,8 +24,6 @@ export const SideBar = () => {
   const [logout] = useLogoutMutation();
   const { isLoggedIn } = useAppSelector(state => state.authReducer);
 
-  console.log(isLoggedIn);
-
   function handleModalClosed() {
     setOpen(false);
   }
