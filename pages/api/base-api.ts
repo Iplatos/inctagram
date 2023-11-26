@@ -5,24 +5,31 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: builder => {
     return {
-      filteredPosts: builder.query<any, void>({
-        query: () => `/api/v1/post/filtered-posts/title`,
+      createPost: builder.mutation<any, void>({
+        query: data => ({
+          body: data,
+          method: 'POST',
+          url: `/api/v1/post/post`,
+        }),
       }),
+      /*      filteredPosts: builder.query<any, void>({
+              query: () => `/api/v1/post/filtered-posts/title`,
+            }),*/
       getFeed: builder.query<any, void>({
         query: () => `/api/v1/post/feed`,
       }),
     };
   },
-  /*  prepareHeaders: (headers, { getState }) => {
-      const token = getTokenFromLocalStorage();
-  
-      // If we have a token set in state, let's assume that we should be passing it.
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-  
-      return headers;
-    },*/
+  prepareHeaders: (headers, { getState }) => {
+    const token = getTokenFromLocalStorage();
+
+    // If we have a token set in state, let's assume that we should be passing it.
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`);
+    }
+
+    return headers;
+  },
   reducerPath: 'baseApi',
 });
 
@@ -36,4 +43,4 @@ export const setTokenToLocalStorage = (token: null | string) => {
 
   return localStorage.setItem('X_auth_token', token);
 };
-export const { useFilteredPostsQuery, useGetFeedQuery } = baseApi;
+export const { useCreatePostMutation, useFilteredPostsQuery, useGetFeedQuery } = baseApi;

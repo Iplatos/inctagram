@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Trans } from '@/components/Trans/Trans';
 import { Modal } from '@/features/modal';
+import { setIsLoggedIn } from '@/components/auth/slices/auth';
+import { CloseDialog, Modal } from '@/features/modal';
+import { useLogoutMutation } from '@/pages/api/auth.service';
 import { setTokenToLocalStorage } from '@/pages/api/base-api';
 import { useAppSelector } from '@/pages/api/store';
 import { Button } from '@/shared/ui/Button';
@@ -21,8 +25,9 @@ import s from './sidebar.module.scss';
 export const SideBar = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('someEmail');
-
+  const [logout] = useLogoutMutation();
   const { isLoggedIn } = useAppSelector(state => state.authReducer);
+  const dispatch = useDispatch();
 
   function handleModalClosed() {
     setOpen(false);
@@ -33,7 +38,9 @@ export const SideBar = () => {
   }
 
   const logOut = () => {
+    logout();
     console.log('log out');
+    dispatch(setIsLoggedIn(false));
     setTokenToLocalStorage(null);
   };
 
@@ -91,14 +98,14 @@ export const SideBar = () => {
             />
           </Typography.Regular16>
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 25 }}>
-            <DialogClose asChild>
+            <CloseDialog asChild>
               <div style={{ display: 'flex', justifyContent: 'space-Between', width: '216px' }}>
                 <Button onClick={logOut} style={{ width: '96px' }} variant={'tertiary'}>
                   yes
                 </Button>
                 <Button style={{ width: '96px' }}>no</Button>
               </div>
-            </DialogClose>
+            </CloseDialog>
           </div>
         </Modal>
       </div>

@@ -1,8 +1,6 @@
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
 import { useFilteredPostsQuery, useGetFeedQuery } from '@/pages/api/base-api';
-import { useGetMeQuery } from '@/pages/api/auth.service';
-import { setTokenToLocalStorage } from '@/pages/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { useRouter } from 'next/navigation';
 
@@ -16,10 +14,6 @@ function Home() {
   //   console.log('router.locales: ', router.locales);
   //   console.log('router.locale: ', router.locale);
   //   console.log('router.defaultLocale: ', router.defaultLocale);
-
-  const logOut = () => {
-    setTokenToLocalStorage(null);
-  };
 
   if (error) {
     if ('status' in error) {
