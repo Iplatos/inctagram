@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
-import { CreateNewPasswordForm, ForgotPasswordForm } from '@/components/auth';
+import { ForgotPasswordForm } from '@/components/auth';
 
 function ForgotPassword() {
   return (
@@ -10,10 +10,11 @@ function ForgotPassword() {
       <HeadMeta title={'Forgot Password?'} />
 
       <ForgotPasswordForm />
-      {/* <CreateNewPasswordForm /> */}
     </>
   );
 }
 
+//          //"8c9252c9-bff2-49e1-8027-38883b2d5cc5", -INCTAGRAM_TRAINEE_FRONT_TOKEN_HEROKU , incubator-icta-trainee
+//INCTAGRAM_TRAINEE_FRONT_TOKEN
 ForgotPassword.getLayout = getLayout;
 export default ForgotPassword;
