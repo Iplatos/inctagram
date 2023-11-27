@@ -27,7 +27,7 @@ const authService = baseApi.injectEndpoints({
         url: '/api/v1/auth/login',
       }),
     }),
-    logout: builder.mutation<any, any>({
+    logout: builder.mutation<any, void>({
       query: () => ({
         method: 'GET',
         url: '/api/v1/auth/logout',

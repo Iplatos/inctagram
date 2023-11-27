@@ -46,4 +46,4 @@ export const setTokenToLocalStorage = (token: null | string) => {
 
   return localStorage.setItem('X_auth_token', token);
 };
-export const { useCreatePostMutation, useFilteredPostsQuery, useGetFeedQuery } = baseApi;
+export const { useCreatePostMutation, useGetFeedQuery } = baseApi;
