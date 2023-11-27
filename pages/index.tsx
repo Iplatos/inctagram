@@ -1,13 +1,13 @@
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
-import { useFilteredPostsQuery, useGetFeedQuery } from '@/pages/api/base-api';
+import { useGetFeedQuery } from '@/pages/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { useRouter } from 'next/navigation';
 
 function Home() {
   const { t } = useTranslation();
-  const { data: feed } = useGetFeedQuery();
-  const { data, error } = useFilteredPostsQuery();
+  const { data: feed, error } = useGetFeedQuery();
+  /*const { data, error } = useFilteredPostsQuery();*/
   const router = useRouter();
   /*const { getMe } = useGetMeQuery();*/
 

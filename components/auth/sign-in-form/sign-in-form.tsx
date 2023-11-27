@@ -1,7 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
 
 import { useLoginMutation } from '@/pages/api/auth.service';
-import { baseUrl } from '@/pages/api/base-api';
+import { baseUrl, setTokenToLocalStorage } from '@/pages/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button/button';
 import { Card } from '@/shared/ui/Card/Card';
@@ -36,7 +36,7 @@ export const SignInForm = () => {
     /* eslint-enable */
   });
   const router = useRouter();
-  const [login] = useLoginMutation();
+  const [login, { data: loginData }] = useLoginMutation();
   const onGoogle = () => {
     router.push(`${baseUrl}/api/v1/auth/google`);
   };
@@ -53,6 +53,11 @@ export const SignInForm = () => {
     mode: 'onBlur',
     resolver: zodResolver(signInSchema),
   });
+
+  if (loginData) {
+    setTokenToLocalStorage(loginData.accessToken);
+    router.push(`/`);
+  }
 
   return (
     /* eslint-disable */
@@ -76,7 +81,8 @@ export const SignInForm = () => {
                 errors={fieldState?.error?.message}
                 onChange={field.onChange}
                 value={field.value}
-                label={"Email"}
+                label={t.auth.signInPage.email}
+                placeholder={t.auth.signInPage.email}
                 inputtype={"text"}
               />
             )}
@@ -89,8 +95,8 @@ export const SignInForm = () => {
                 {...field}
                 onFocus={() => clearErrors("password")}
                 onChange={field.onChange}
-                placeholder={"password"}
-                label={"Password"}
+                placeholder={t.auth.signInPage.password}
+                label={t.auth.signInPage.password}
                 inputtype={"password"}
                 errors={fieldState?.error?.message}
               />

@@ -27,8 +27,10 @@ export const en: LocaleType = {
     },
     signInPage: {
       dontHaveAcc: "Don't have an account?",
+      email: 'email',
       invalidEmail: 'Invalid email',
       invalidPass: 'Invalid Password',
+      password: 'password',
     },
     signUpPage: {
       account: 'Do you have an account?',

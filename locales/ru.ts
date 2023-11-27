@@ -25,8 +25,10 @@ export const ru = {
     },
     signInPage: {
       dontHaveAcc: 'Нет учётной записи?',
+      email: 'Электронная почта',
       invalidEmail: 'Неверный формат электронной почты',
       invalidPass: 'Неверный формат пароля',
+      password: 'Пароль',
     },
     signUpPage: {
       account: 'У Вас есть аккаунт?',

@@ -61,7 +61,7 @@ export const SignUpForm = () => {
   });
 
   if (signUpData) {
-    router.push(`/email-confirmed`);
+    router.push(`/email-sent`);
   }
   const handleFormSubmitted = handleSubmit(data => signUp(omit(data, ['confirm'])));
 

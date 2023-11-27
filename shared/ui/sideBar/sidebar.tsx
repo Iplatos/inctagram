@@ -42,7 +42,7 @@ export const SideBar = () => {
     setTokenToLocalStorage(null);
   };
 
-  if (!isLoggedIn) {
+  if (isLoggedIn) {
     return;
   }
 

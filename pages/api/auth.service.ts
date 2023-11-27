@@ -1,4 +1,4 @@
-import { baseApi } from '@/pages/api/base-api';
+import { baseApi, getTokenFromLocalStorage } from '@/pages/api/base-api';
 
 const authService = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -20,6 +20,9 @@ const authService = baseApi.injectEndpoints({
     login: builder.mutation<any, any>({
       query: data => ({
         body: data,
+        headers: {
+          Authorization: `Bearer ${getTokenFromLocalStorage()}`,
+        },
         method: 'POST',
         url: '/api/v1/auth/login',
       }),
