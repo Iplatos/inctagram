@@ -12,9 +12,9 @@ export const baseApi = createApi({
           url: `/api/v1/post/post`,
         }),
       }),
-      /*      filteredPosts: builder.query<any, void>({
-              query: () => `/api/v1/post/filtered-posts/title`,
-            }),*/
+      filteredPosts: builder.query<any, void>({
+        query: () => `/api/v1/post/filtered-posts/title`,
+      }),
       getFeed: builder.query<any, void>({
         query: () => `/api/v1/post/feed`,
       }),
