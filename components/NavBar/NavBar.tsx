@@ -19,7 +19,7 @@ export const NavBar = () => {
           <Link href={'/'}>{t.navbar.main}</Link>
           <Link href={'/signIn'}>{t.navbar.signIn}</Link>
           <Link href={'/signUp'}>{t.navbar.signUp}</Link>
-          <Link href={'/forgotPassword'}>{t.navbar.forgotPassword}</Link>
+          <Link href={'/forgot-password'}>{t.navbar.forgotPassword}</Link>
           <Link href={'/termsOfService'}>{t.navbar.termsOfService}</Link>
           <Link href={'/privacyPolicy'}>{t.navbar.privacyPolicy}</Link>
           <Link href={'/confirm-registration'}>Confirm Registration</Link>
