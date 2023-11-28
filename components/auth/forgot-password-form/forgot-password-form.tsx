@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { Controller, useForm } from 'react-hook-form';
 
 import { Trans } from '@/components/Trans/Trans';
@@ -15,24 +16,34 @@ import { z } from 'zod';
 import style from './forgot-password.module.scss';
 
 const signInSchema = z.object({
-  email: z.string().email('Invalid email address').nonempty('Enter email'),
+  captcha: z.string(),
+  email: z
+    .string()
+    .trim()
+    .email('Invalid email address')
+    // .nonempty('Enter email')
+    .regex(/^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Invalid email address'),
 });
 
 type FormValuesType = z.infer<typeof signInSchema>;
 
 export const ForgotPasswordForm = () => {
+  const recaptchaRef = useRef();
+
   const { t } = useTranslation();
 
   const [open, setOpen] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>('');
 
   const {
     control,
-    formState: { errors, isValid },
+    formState: { errors, isValid, dirtyFields },
+    getValues,
     handleSubmit,
-    resetField,
+    reset,
+    trigger,
   } = useForm({
     defaultValues: {
+      captcha: '',
       email: '',
     },
     mode: 'onSubmit',
@@ -40,19 +51,25 @@ export const ForgotPasswordForm = () => {
   });
 
   const onSubmit = (data: FormValuesType) => {
-    setEmail(data.email);
-
-    resetField('email');
+    // console.log(data);
   };
 
   function handleModalClosed() {
     setOpen(false);
+    reset();
+    recaptchaRef.current.reset();
   }
   function handleModalOpened() {
     if (isValid) {
       setOpen(true);
     }
   }
+  function onBlur() {
+    trigger();
+  }
+
+  const SITE_KEY = '6Lek3hEpAAAAACzSq5KIvkUdoGZYl579JldVdZs-'; //for incubator-icta-trainee.uk
+  const LOCALHOST_KEY = '6Lfm4xEpAAAAAD8LnoqR-DwtFEgFJiiOHaWhAg22'; //for localhost:3000
 
   return (
     <Card className={style.card}>
@@ -80,7 +97,12 @@ export const ForgotPasswordForm = () => {
           {t.auth.forgotPasswordPage.message}
         </Typography.Regular14>
 
-        <Button fullWidth onClick={handleModalOpened} type={'submit'}>
+        <Button
+          disabled={dirtyFields.captcha && dirtyFields.email ? false : true}
+          fullWidth
+          onClick={handleModalOpened}
+          type={'submit'}
+        >
           {t.auth.forgotPasswordPage.sendLink}
         </Button>
 
@@ -93,7 +115,7 @@ export const ForgotPasswordForm = () => {
           <Typography.Regular16 className={style.dialogDescription}>
             <Trans
               tags={{
-                '1': () => <b>{`${email}`}</b>,
+                '1': () => <b>{`${getValues().email}`}</b>,
               }}
               text={t.auth.forgotPasswordPage.messageModal}
             />
@@ -107,13 +129,26 @@ export const ForgotPasswordForm = () => {
           </div>
         </Modal>
 
-        <Link href={'/signIn'}>
-          <Button className={style.buttonBack} fullWidth variant={'tertiary'}>
-            {t.auth.forgotPasswordPage.backToSignIn}
-          </Button>
-        </Link>
+        <Button className={style.buttonBack} fullWidth variant={'tertiary'}>
+          <Link href={'/signIn'}>{t.auth.forgotPasswordPage.backToSignIn}</Link>
+        </Button>
+
+        <Controller
+          control={control}
+          name={'captcha'}
+          render={({ field, fieldState }) => (
+            <ReCAPTCHA
+              {...field}
+              errors={fieldState?.error?.message}
+              onChange={field.onChange}
+              ref={recaptchaRef}
+              sitekey={LOCALHOST_KEY}
+              theme={'dark'}
+              value={field.value}
+            />
+          )}
+        />
       </form>
-      <div className={style.recaptcha}>recaptcha</div>
     </Card>
   );
 };
