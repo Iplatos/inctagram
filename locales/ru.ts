@@ -43,6 +43,10 @@ export const ru = {
     },
   },
 
+  datePicker: {
+    DataSelect: 'Выбор даты',
+  },
+
   navbar: {
     forgotPassword: 'Забыл пароль',
     main: 'Главная страница',
@@ -51,7 +55,6 @@ export const ru = {
     signUp: 'Зарегистрироваться',
     termsOfService: 'Условия пользования',
   },
-
   notificationMenu: {
     ago: 'назад',
     new: 'Новое',

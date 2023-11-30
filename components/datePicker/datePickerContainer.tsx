@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import DatePicker from 'react-multi-date-picker';
 
+import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui/typography';
-import opacity from 'react-element-popper/animations/opacity';
-import transition from 'react-element-popper/animations/transition';
 import InputIcon from 'react-multi-date-picker/components/input_icon';
 
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
@@ -15,19 +14,24 @@ export const DatePickerContainer = () => {
     new Date(new Date().getTime() - 4 * 24 * 60 * 60 * 1000), // Subtract 4 days
     new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000),
   ]);
+  const { t } = useTranslation();
+
+  console.log(t);
 
   return (
     <div className={s.datePickerContainer}>
       <div>
-        <Typography.Regular14 color={'var(--color-light-900)'}>Date select</Typography.Regular14>
+        <Typography.Regular14 color={'var(--color-light-900)'}>
+          {t.datePicker.DataSelect}
+        </Typography.Regular14>
       </div>
       <DatePicker
-        animations={[opacity(), transition({ duration: 800, from: 35 })]}
         className={'bg-dark'}
         containerClassName={s.cont}
         dateSeparator={' - '}
         format={'DD/MM/YYYY'}
         headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
+        /*locale={ru_th}*/
         mapDays={({ date }) => {
           const props = {};
           const isWeekend = [0, 6].includes(date.weekDay.index);

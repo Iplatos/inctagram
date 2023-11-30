@@ -45,6 +45,10 @@ export const en: LocaleType = {
     },
   },
 
+  datePicker: {
+    DataSelect: 'Date select',
+  },
+
   navbar: {
     forgotPassword: 'Forgot Password',
     main: 'Main',
@@ -53,7 +57,6 @@ export const en: LocaleType = {
     signUp: 'Sign Up',
     termsOfService: 'Terms Of Service',
   },
-
   notificationMenu: {
     ago: 'ago',
     new: 'New',
