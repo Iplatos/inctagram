@@ -11,7 +11,7 @@
 
 .datePickerContainer {
   height: 60px;
-
+  width: max-content;
 
 }
 
@@ -28,4 +28,10 @@
 .cont button > i {
   border: solid white;
   border-width: 0 2px 2px 0;
+}
+
+.calendar {
+  position: relative;
+  right: 22.5px;
+  top: 4px
 }

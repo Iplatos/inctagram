@@ -14,14 +14,21 @@ import s from 'components/datePicker/datePicker.module.scss';
 
 export const DatePickerContainer = () => {
   const [values, setValues] = useState([
-    new Date(new Date().getTime() - 4 * 24 * 60 * 60 * 1000), // Subtract 4 days
+    new Date(new Date().getTime() - 4 * 24 * 60 * 60 * 1000),
     new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000),
   ]);
+  const [open, setOpen] = useState(false);
   const { t } = useTranslation();
   const router = useRouter();
 
+  console.log(open);
+
   return (
-    <div className={s.datePickerContainer}>
+    <div
+      className={s.datePickerContainer}
+      /*  onBlur={() => setOpen(false)}
+        onClick={() => setOpen(true)}*/
+    >
       <div>
         <Typography.Regular14 color={'var(--color-light-900)'}>
           {t.datePicker.DataSelect}
@@ -48,7 +55,9 @@ export const DatePickerContainer = () => {
         range
         render={<InputIcon />}
         value={values}
+        weekStartDayIndex={1}
       />
+      {/*{open && <Calendar className={s.calendar} />}*/}
     </div>
   );
 };
