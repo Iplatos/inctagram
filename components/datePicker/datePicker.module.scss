@@ -1,0 +1,31 @@
+.cont input {
+  background-color: var(--color-dark-700);
+
+  height: 36px;
+
+  &:focus {
+    border: 1px solid var(--color-accent-500);
+    color: var(--color-ligth-100);
+  }
+}
+
+.datePickerContainer {
+  height: 60px;
+
+
+}
+
+.cont button {
+  background-color: var(--color-dark-100);
+  padding-top: 2px;
+
+}
+
+.datePickerContainer .rmdp-week {
+  color: #14cc70;
+}
+
+.cont button > i {
+  border: solid white;
+  border-width: 0 2px 2px 0;
+}
