@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import DatePicker from 'react-multi-date-picker';
 
+import ru_th from '@/components/datePicker/ru_th';
+import { en } from '@/locales/en';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui/typography';
+import { useRouter } from 'next/router';
 import InputIcon from 'react-multi-date-picker/components/input_icon';
 
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
@@ -15,8 +18,7 @@ export const DatePickerContainer = () => {
     new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000),
   ]);
   const { t } = useTranslation();
-
-  console.log(t);
+  const router = useRouter();
 
   return (
     <div className={s.datePickerContainer}>
@@ -31,7 +33,7 @@ export const DatePickerContainer = () => {
         dateSeparator={' - '}
         format={'DD/MM/YYYY'}
         headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
-        /*locale={ru_th}*/
+        locale={router.locale === 'en' ? '' : ru_th}
         mapDays={({ date }) => {
           const props = {};
           const isWeekend = [0, 6].includes(date.weekDay.index);
