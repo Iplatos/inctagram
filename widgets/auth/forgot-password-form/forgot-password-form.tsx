@@ -2,13 +2,13 @@ import React, { useRef, useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { Controller, useForm } from 'react-hook-form';
 
-import { Trans } from '@/widgets/Trans/Trans';
 import { CloseDialog, Modal } from '@/features';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
 import { Button } from '@/shared/ui/Button/button';
 import { Card } from '@/shared/ui/Card/Card';
 import { TextField } from '@/shared/ui/textField/TextField';
+import { Trans } from '@/widgets/Trans/Trans';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { z } from 'zod';

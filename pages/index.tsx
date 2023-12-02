@@ -1,7 +1,7 @@
-import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
 import { useGetFeedQuery } from '@/pages/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
+import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
+import { getLayout } from '@/widgets/Layout/Layout';
 import { useRouter } from 'next/navigation';
 
 function Home() {
@@ -10,10 +10,6 @@ function Home() {
   /*const { data, error } = useFilteredPostsQuery();*/
   const router = useRouter();
   /*const { getMe } = useGetMeQuery();*/
-
-  //   console.log('router.locales: ', router.locales);
-  //   console.log('router.locale: ', router.locale);
-  //   console.log('router.defaultLocale: ', router.defaultLocale);
 
   if (error) {
     if ('status' in error) {
