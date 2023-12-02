@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { z } from 'zod';
 
 import style from './forgot-password.module.scss';
+import { useForgotPasswordMutation } from '@/pages/api/auth.service';
 
 const signInSchema = z.object({
   captcha: z.string(),
@@ -50,8 +51,13 @@ export const ForgotPasswordForm = () => {
     resolver: zodResolver(signInSchema),
   });
 
+  const [forgotPassword] = useForgotPasswordMutation();
+
   const onSubmit = (data: FormValuesType) => {
-    // console.log(data);
+    // console.log(data.email);
+    forgotPassword({
+      email: data.email,
+    });
   };
 
   function handleModalClosed() {
