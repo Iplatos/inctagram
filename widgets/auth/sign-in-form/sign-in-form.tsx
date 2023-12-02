@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 
-import s from 'components/auth/sign-in-form/sign-in-form.module.scss';
+import s from 'widgets/auth/sign-in-form/sign-in-form.module.scss';
 
 import GitHubLogo from '../../../assets/icons/gitHubLogo.svg';
 import GoogleLogo from '../../../assets/icons/googleLogo.svg';

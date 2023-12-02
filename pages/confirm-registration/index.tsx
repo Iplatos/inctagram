@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
-import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
-import { getLayout } from '@/components/Layout/Layout';
+import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
+import { getLayout } from '@/widgets/Layout/Layout';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useConfirmCodeMutation } from 'pages/api/auth.service';
 

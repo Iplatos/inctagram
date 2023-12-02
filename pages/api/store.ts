@@ -1,6 +1,6 @@
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
-import authReducer from '@/components/auth/slices/auth';
+import authReducer from '@/widgets/auth/slices/auth';
 import { baseApi } from '@/pages/api/base-api';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 

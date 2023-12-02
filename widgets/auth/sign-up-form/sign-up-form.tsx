@@ -14,7 +14,7 @@ import { omit } from 'next/dist/shared/lib/router/utils/omit';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 
-import s from 'components/auth/sign-up-form/sign-up.module.scss';
+import s from 'widgets/auth/sign-up-form/sign-up.module.scss';
 
 const schema = z
   .object({

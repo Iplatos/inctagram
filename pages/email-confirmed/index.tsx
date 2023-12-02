@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
-import { getLayout } from '@/components/Layout/Layout';
-import { RedirectContent } from '@/components/auth';
+import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
+import { getLayout } from '@/widgets/Layout/Layout';
+import { RedirectContent } from '@/widgets/auth';
 
 function ConfirmedEmailPage() {
   return (
