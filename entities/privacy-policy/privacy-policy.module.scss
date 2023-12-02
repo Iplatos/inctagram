@@ -1,0 +1,17 @@
+.container {
+    padding: 24px 64px;
+}
+
+.buttonBlock {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    cursor: pointer;
+    padding-bottom: 23px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

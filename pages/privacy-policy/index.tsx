@@ -1,13 +1,14 @@
 import React from 'react';
 
+import { PrivacyPolicyContent } from '@/entities';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
 
 function PrivacyPolicy() {
   return (
     <>
-      <HeadMeta title={' Terms of Service'} />
-      Privacy Policy
+      <HeadMeta title={'Privacy policy'} />
+      <PrivacyPolicyContent />
     </>
   );
 }
