@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import { Trans } from '@/components/Trans/Trans';
+import { Trans } from '@/widgets/Trans/Trans';
 import { Modal } from '@/features';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';

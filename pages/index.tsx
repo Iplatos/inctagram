@@ -1,5 +1,5 @@
-import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
-import { getLayout } from '@/components/Layout/Layout';
+import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
+import { getLayout } from '@/widgets/Layout/Layout';
 import { useGetFeedQuery } from '@/pages/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { useRouter } from 'next/navigation';

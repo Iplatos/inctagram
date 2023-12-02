@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { Controller, useForm } from 'react-hook-form';
 
-import { Trans } from '@/components/Trans/Trans';
+import { Trans } from '@/widgets/Trans/Trans';
 import { CloseDialog, Modal } from '@/features';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';

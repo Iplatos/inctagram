@@ -1,7 +1,7 @@
-import { ExpandBtn } from '@/components/header/ExpandBtn';
-import { LangSwitcher } from '@/components/header/LangSwitcher';
-import { NotificationMenu } from '@/components/header/NotificationMenu';
-import { mockedNotifications } from '@/components/header/mockedData';
+import { ExpandBtn } from '@/widgets/header/ExpandBtn';
+import { LangSwitcher } from '@/widgets/header/LangSwitcher';
+import { NotificationMenu } from '@/widgets/header/NotificationMenu';
+import { mockedNotifications } from '@/widgets/header/mockedData';
 import { useAppSelector } from '@/pages/api/store';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button';

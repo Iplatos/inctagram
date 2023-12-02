@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
-import { getLayout } from '@/components/Layout/Layout';
-import { Trans } from '@/components/Trans/Trans';
+import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
+import { getLayout } from '@/widgets/Layout/Layout';
+import { Trans } from '@/widgets/Trans/Trans';
 import { CloseDialog, Modal } from '@/features/modal';
 import { Button } from '@/shared/ui/Button';
 import { Typography } from '@/shared/ui/typography';

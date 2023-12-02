@@ -1,4 +1,4 @@
-import { ForgotPasswordForm } from '@/components/auth';
+import { ForgotPasswordForm } from '@/widgets/auth';
 import { baseApi, getTokenFromLocalStorage } from '@/pages/api/base-api';
 
 const authService = baseApi.injectEndpoints({
