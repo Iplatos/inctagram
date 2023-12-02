@@ -15,6 +15,7 @@ function ConfirmRegistration() {
   useEffect(() => {
     if (code && userId) {
       confirmCode({ code, userId });
+      console.log(userId);
       router.push('/email-confirmed');
     }
   }, [code, userId]);

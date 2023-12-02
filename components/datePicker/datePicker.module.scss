@@ -1,6 +1,5 @@
 .cont input {
   background-color: var(--color-dark-700);
-
   height: 36px;
 
   &:focus {
@@ -12,17 +11,12 @@
 .datePickerContainer {
   height: 60px;
   width: max-content;
-
 }
 
 .cont button {
   background-color: var(--color-dark-100);
   padding-top: 2px;
 
-}
-
-.datePickerContainer .rmdp-week {
-  color: #14cc70;
 }
 
 .cont button > i {

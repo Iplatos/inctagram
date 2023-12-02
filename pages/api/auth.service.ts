@@ -42,6 +42,15 @@ const authService = baseApi.injectEndpoints({
         };
       },
     }),
+    uploadPhoto: builder.mutation<any, any>({
+      query: params => {
+        return {
+          body: params,
+          method: 'POST',
+          url: '/api/v1/avatar/upload',
+        };
+      },
+    }),
   }),
 });
 
@@ -51,4 +60,5 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useSignUpMutation,
+  useUploadPhotoMutation,
 } = authService;

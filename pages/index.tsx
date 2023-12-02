@@ -1,6 +1,7 @@
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
 import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
+import { AddPhoto } from '@/features/addPhoto/addPhoto';
 import { useGetFeedQuery } from '@/pages/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { useRouter } from 'next/navigation';
@@ -28,6 +29,7 @@ function Home() {
       <div style={{ visibility: 'hidden' }}>adf</div>
 
       <DatePickerContainer />
+      <AddPhoto />
       {/*  <div>
         {error?.status} {JSON.stringify(error)}
       </div>*/}

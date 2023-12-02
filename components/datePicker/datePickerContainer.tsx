@@ -21,8 +21,6 @@ export const DatePickerContainer = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  console.log(open);
-
   return (
     <div
       className={s.datePickerContainer}
