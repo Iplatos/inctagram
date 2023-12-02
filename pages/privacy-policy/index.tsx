@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PrivacyPolicyContent } from '@/entities';
+import { AgreementContent } from '@/entities';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
 
@@ -8,7 +8,7 @@ function PrivacyPolicy() {
   return (
     <>
       <HeadMeta title={'Privacy policy'} />
-      <PrivacyPolicyContent />
+      <AgreementContent privacyPolicy />
     </>
   );
 }
