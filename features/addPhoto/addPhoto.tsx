@@ -11,7 +11,7 @@ import s from './addPhoto.module.scss';
 
 // uhs47060@nezid.com pass 12Qwqw!    userId = "245a822d-796a-4bcf-9d69-6c3e246271c9"
 export const AddPhoto = () => {
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('someEmail');
   const [uploadPhoto] = useUploadPhotoMutation();
 

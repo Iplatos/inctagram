@@ -11,11 +11,22 @@ const authService = baseApi.injectEndpoints({
         };
       },
     }),
-    getMe: builder.query<any, any>({
-      query: () => ({
-        method: 'GET',
-        url: '/api/v1/auth/me',
-      }),
+    getMe: builder.query<any, void>({
+      extraOptions: { maxRetries: 0 },
+      providesTags: ['Me'],
+      // @ts-ignore
+      async queryFn(_name, _api, _extraOptions, baseQuery) {
+        const result = await baseQuery({
+          method: 'GET',
+          url: '/api/v1/auth/me',
+        });
+
+        if (result.error) {
+          return { data: { success: false } };
+        }
+
+        return { data: result.data };
+      },
     }),
     login: builder.mutation<any, any>({
       query: data => ({

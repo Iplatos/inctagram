@@ -2,6 +2,7 @@ import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
 import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
 import { AddPhoto } from '@/features/addPhoto/addPhoto';
+import { useGetMeQuery } from '@/pages/api/auth.service';
 import { useGetFeedQuery } from '@/pages/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { useRouter } from 'next/navigation';
@@ -9,6 +10,7 @@ import { useRouter } from 'next/navigation';
 function Home() {
   const { t } = useTranslation();
   const { data: feed, error } = useGetFeedQuery();
+  const { data } = useGetMeQuery();
   /*const { data, error } = useFilteredPostsQuery();*/
   const router = useRouter();
   /*const { getMe } = useGetMeQuery();*/
