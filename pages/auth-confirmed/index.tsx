@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { setTokenToLocalStorage } from '@/pages/api/base-api';
+import { setTokenToLocalStorage } from '@/shared/api/base-api';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export const AuthConfirmed = () => {

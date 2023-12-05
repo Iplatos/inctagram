@@ -1,1 +1,1 @@
-export * from './expandBtn';
+export * from '../../header/ExpandBtn/expandBtn';

@@ -1,4 +1,3 @@
-import { CreateNewPasswordForm } from '@/components/auth';
 export const ru = {
   auth: {
     createNewPasswordPage: {
@@ -24,9 +23,28 @@ export const ru = {
       textButton: 'Отправить еще раз',
       title: 'Срок действия ссылки истек',
     },
-    signUpPage: {
-      agreement: 'Я согласен с <1>text</1> и <2>text</2>',
+    signInPage: {
+      dontHaveAcc: 'Нет учётной записи?',
+      email: 'Электронная почта',
+      invalidEmail: 'Неверный формат электронной почты',
+      invalidPass: 'Неверный формат пароля',
+      password: 'Пароль',
     },
+    signUpPage: {
+      account: 'У Вас есть аккаунт?',
+      agreement: 'Я согласен с <1>text</1> и <2>text</2>',
+      labelEmail: 'Почта',
+      labelName: 'Имя пользователя',
+      labelPassword: 'Пароль',
+      labelСonfirm: 'Подтверждение пароля',
+      signIn: 'Войти',
+      signUp: 'Зарегистрироваться',
+      title: 'Регистрация',
+    },
+  },
+
+  datePicker: {
+    DataSelect: 'Выбор даты',
   },
 
   navbar: {
@@ -37,7 +55,6 @@ export const ru = {
     signUp: 'Зарегистрироваться',
     termsOfService: 'Условия пользования',
   },
-
   notificationMenu: {
     ago: 'назад',
     new: 'Новое',

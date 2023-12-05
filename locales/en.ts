@@ -25,20 +25,38 @@ export const en: LocaleType = {
       textButton: 'Resend verification link',
       title: 'Email verification link expired',
     },
-    signUpPage: {
-      agreement: 'I agree to the <1>text</1> and <2>text</2>',
+    signInPage: {
+      dontHaveAcc: "Don't have an account?",
+      email: 'email',
+      invalidEmail: 'Invalid email',
+      invalidPass: 'Invalid Password',
+      password: 'password',
     },
+    signUpPage: {
+      account: 'Do you have an account?',
+      agreement: 'I agree to the <1>text</1> and <2>text</2>',
+      labelEmail: 'Email',
+      labelName: 'Username',
+      labelPassword: 'Password',
+      labelСonfirm: 'Password confirmation',
+      signIn: 'Sign In',
+      signUp: 'Sign Up',
+      title: 'Sign Up',
+    },
+  },
+
+  datePicker: {
+    DataSelect: 'Date select',
   },
 
   navbar: {
     forgotPassword: 'Forgot Password',
     main: 'Main',
     privacyPolicy: 'Privacy Policy',
-    signIn: 'Sign In',
+    signIn: 'Log In',
     signUp: 'Sign Up',
     termsOfService: 'Terms Of Service',
   },
-
   notificationMenu: {
     ago: 'ago',
     new: 'New',

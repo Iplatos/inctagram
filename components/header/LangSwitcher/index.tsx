@@ -1,1 +1,1 @@
-export * from './langSwitcher';
+export * from '../../header/LangSwitcher/langSwitcher';
