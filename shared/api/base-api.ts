@@ -4,6 +4,7 @@ export const baseUrl = 'https://incubator-icta-trainee.uk';
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl,
+
     prepareHeaders: (headers, { getState }) => {
       const token = getTokenFromLocalStorage();
 
@@ -34,6 +35,7 @@ export const baseApi = createApi({
   },
 
   reducerPath: 'baseApi',
+  tagTypes: ['Me'],
 });
 
 export const getTokenFromLocalStorage = () => {

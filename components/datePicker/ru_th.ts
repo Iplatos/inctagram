@@ -1,4 +1,6 @@
-const thai_th = {
+import { Locale } from 'react-date-object';
+
+const thai_th: Locale = {
   digits: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
 
   meridiems: [
