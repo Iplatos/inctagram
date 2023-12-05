@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Trans } from '@/components/Trans/Trans';
-import { setIsLoggedIn } from '@/components/auth/slices/auth';
 import { CloseDialog, Modal } from '@/features/modal';
 import { useLogoutMutation } from '@/shared/api/auth.service';
 import { setTokenToLocalStorage } from '@/shared/api/base-api';
 import { useAppSelector } from '@/shared/api/store';
 import { Button } from '@/shared/ui/Button';
 import { Typography } from '@/shared/ui/typography';
+import { Trans } from '@/widgets/Trans/Trans';
+import { setIsLoggedIn } from '@/widgets/auth/slices/auth';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
 import HomeOutline from 'assets/icons/home-outline.svg';
 import LogOutOutline from 'assets/icons/log-out-outline.svg';

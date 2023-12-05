@@ -1,13 +1,31 @@
-import { baseApi, getTokenFromLocalStorage } from '@/shared/api/base-api';
+import { baseApi, getTokenFromLocalStorage } from '@/pages/api/base-api';
 
 const authService = baseApi.injectEndpoints({
   endpoints: builder => ({
+    changePassword: builder.mutation<any, any>({
+      query: params => {
+        return {
+          body: params,
+          method: 'POST',
+          url: '/api/v1/auth/change-password',
+        };
+      },
+    }),
     confirmCode: builder.mutation<any, any>({
       query: params => {
         return {
           body: params,
           method: 'POST',
           url: '/api/v1/auth/confirm-code',
+        };
+      },
+    }),
+    forgotPassword: builder.mutation<any, any>({
+      query: params => {
+        return {
+          body: params,
+          method: 'POST',
+          url: '/api/v1/auth/password-recovery-email',
         };
       },
     }),
@@ -67,6 +85,7 @@ const authService = baseApi.injectEndpoints({
 
 export const {
   useConfirmCodeMutation,
+  useForgotPasswordMutation,
   useGetMeQuery,
   useLoginMutation,
   useLogoutMutation,

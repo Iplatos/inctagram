@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
-import { getLayout } from '@/components/Layout/Layout';
-import { SignUpForm } from '@/components/auth/sign-up-form';
+import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
+import { getLayout } from '@/widgets/Layout/Layout';
+import { SignUpForm } from '@/widgets/auth/sign-up-form';
 
 function SignUp() {
   return (
