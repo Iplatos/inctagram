@@ -1,7 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
 
-import { useLoginMutation } from '@/pages/api/auth.service';
-import { baseUrl, setTokenToLocalStorage } from '@/pages/api/base-api';
+import { useLoginMutation } from '@/shared/api/auth.service';
+import { baseUrl, setTokenToLocalStorage } from '@/shared/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button/button';
 import { Card } from '@/shared/ui/Card/Card';

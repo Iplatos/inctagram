@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Trans } from '@/components/Trans/Trans';
 import { InputTypeFile } from '@/features/addPhoto/InputTypeFile';
 import { CloseDialog, Modal } from '@/features/modal';
-import { useUploadPhotoMutation } from '@/pages/api/auth.service';
+import { useUploadPhotoMutation } from '@/shared/api/auth.service';
 import { Button } from '@/shared/ui/Button';
 import { Typography } from '@/shared/ui/typography';
 

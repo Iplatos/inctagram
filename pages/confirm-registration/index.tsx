@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { getLayout } from '@/components/Layout/Layout';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useConfirmCodeMutation } from 'pages/api/auth.service';
+import { useConfirmCodeMutation } from 'shared/api/auth.service';
 
 function ConfirmRegistration() {
   const searchParams = useSearchParams();

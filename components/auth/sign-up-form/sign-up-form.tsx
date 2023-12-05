@@ -3,8 +3,8 @@ import { Controller, useForm } from 'react-hook-form';
 
 import GitHubLogo from '@/assets/icons/gitHubLogo.svg';
 import GoogleLogo from '@/assets/icons/googleLogo.svg';
-import { useSignUpMutation } from '@/pages/api/auth.service';
-import { baseUrl } from '@/pages/api/base-api';
+import { useSignUpMutation } from '@/shared/api/auth.service';
+import { baseUrl } from '@/shared/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Card, TextField, Typography } from '@/shared/ui';
 import { ControlledCheckbox } from '@/shared/ui/checkbox/controlled-checkbox';

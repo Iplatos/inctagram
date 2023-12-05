@@ -2,7 +2,7 @@ import { ExpandBtn } from '@/components/header/ExpandBtn';
 import { LangSwitcher } from '@/components/header/LangSwitcher';
 import { NotificationMenu } from '@/components/header/NotificationMenu';
 import { mockedNotifications } from '@/components/header/mockedData';
-import { useAppSelector } from '@/pages/api/store';
+import { useAppSelector } from '@/shared/api/store';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button';
 import Link from 'next/link';

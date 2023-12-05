@@ -1,4 +1,4 @@
-import { baseApi, getTokenFromLocalStorage } from '@/pages/api/base-api';
+import { baseApi, getTokenFromLocalStorage } from '@/shared/api/base-api';
 
 const authService = baseApi.injectEndpoints({
   endpoints: builder => ({
