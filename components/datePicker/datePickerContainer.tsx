@@ -21,6 +21,17 @@ export const DatePickerContainer = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
+  if (values[0]) {
+    const differenceInSeconds = Math.abs(new Date().getTime() - +values[0]) / 1000;
+    const differenceInYears = differenceInSeconds / (365 * 24 * 3600);
+
+    console.log(
+      `Разница между текущей датой и первой датой составляет приблизительно ${differenceInYears.toFixed(
+        2
+      )} лет`
+    );
+  }
+
   return (
     <div
       className={s.datePickerContainer}
