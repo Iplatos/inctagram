@@ -3,6 +3,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { Controller, useForm } from 'react-hook-form';
 
 import { CloseDialog, Modal } from '@/features';
+import { useForgotPasswordMutation } from '@/shared/api/auth.service';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
 import { Button } from '@/shared/ui/Button/button';
@@ -14,7 +15,6 @@ import Link from 'next/link';
 import { z } from 'zod';
 
 import style from './forgot-password.module.scss';
-import { useForgotPasswordMutation } from '@/pages/api/auth.service';
 
 const signInSchema = z.object({
   captcha: z.string(),
@@ -29,15 +29,16 @@ const signInSchema = z.object({
 type FormValuesType = z.infer<typeof signInSchema>;
 
 export const ForgotPasswordForm = () => {
-  const recaptchaRef = useRef();
+  const recaptchaRef = useRef<ReCAPTCHA | null>(null);
 
+  console.log(recaptchaRef);
   const { t } = useTranslation();
 
   const [open, setOpen] = useState<boolean>(false);
 
   const {
     control,
-    formState: { errors, isValid, dirtyFields },
+    formState: { dirtyFields, errors, isValid },
     getValues,
     handleSubmit,
     reset,
@@ -63,13 +64,15 @@ export const ForgotPasswordForm = () => {
   function handleModalClosed() {
     setOpen(false);
     reset();
-    recaptchaRef.current.reset();
+    recaptchaRef.current?.reset();
   }
+
   function handleModalOpened() {
     if (isValid) {
       setOpen(true);
     }
   }
+
   function onBlur() {
     trigger();
   }
@@ -145,12 +148,12 @@ export const ForgotPasswordForm = () => {
           render={({ field, fieldState }) => (
             <ReCAPTCHA
               {...field}
-              errors={fieldState?.error?.message}
+              /* errors={fieldState?.error?.message}*/
               onChange={field.onChange}
               ref={recaptchaRef}
               sitekey={LOCALHOST_KEY}
               theme={'dark'}
-              value={field.value}
+              /*     value={field.value}*/
             />
           )}
         />

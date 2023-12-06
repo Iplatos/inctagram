@@ -8,7 +8,7 @@ const initialState: AuthState = {
   isLoggedIn: false,
 };
 
-export const authSlice = createSlice({
+const authSlice = createSlice({
   initialState,
   name: 'auth',
   reducers: {

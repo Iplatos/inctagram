@@ -1,14 +1,15 @@
 import React, { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { showErrorMessage } from '@/features/addPhoto/addPhoto.slice';
 import { Button } from '@/shared/ui/Button';
 
-type ADd = {
+type AddPhotoProps = {
   addPhoto: (a: any) => void;
   photo: string;
 };
 
-export const InputTypeFile = (props: ADd) => {
+export const InputTypeFile = (props: AddPhotoProps) => {
   const dispatch = useDispatch();
 
   const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +25,8 @@ export const InputTypeFile = (props: ADd) => {
           /*dispatch(setMe({ avatar: file64 }))*/
         });
       } else {
-        console.error('Error: ', 'Файл слишком большого размера');
+        dispatch(showErrorMessage('error'));
+        console.error('Error: ', 'Файл слишком большого размера fuf');
       }
     }
   };
@@ -49,7 +51,7 @@ export const InputTypeFile = (props: ADd) => {
       <label style={{ width: '50px' }}>
         <input onChange={uploadHandler} style={{ display: 'none' }} type={'file'} />
 
-        <Button as={'span'} onClick={() => console.log('heelo')} style={{ width: '219px' }}>
+        <Button as={'span'} style={{ width: '219px' }}>
           Select from Computer
         </Button>
       </label>

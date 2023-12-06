@@ -1,4 +1,3 @@
-import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
 import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
 import { AddPhoto } from '@/features/addPhoto/addPhoto';
 import { useGetMeQuery } from '@/shared/api/auth.service';

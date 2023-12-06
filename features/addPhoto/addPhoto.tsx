@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { Trans } from '@/components/Trans/Trans';
 import { InputTypeFile } from '@/features/addPhoto/InputTypeFile';
+import { showErrorMessage } from '@/features/addPhoto/addPhoto.slice';
 import { CloseDialog, Modal } from '@/features/modal';
 import { useUploadPhotoMutation } from '@/shared/api/auth.service';
+import { useAppSelector } from '@/shared/api/store';
 import { Button } from '@/shared/ui/Button';
 import { Typography } from '@/shared/ui/typography';
+import { Trans } from '@/widgets/Trans/Trans';
 
 import s from './addPhoto.module.scss';
 
@@ -14,7 +17,7 @@ export const AddPhoto = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('someEmail');
   const [uploadPhoto] = useUploadPhotoMutation();
-
+  const dispatch = useDispatch();
   const addPhoto = (avatar: any) => {
     const formData = new FormData();
 
@@ -28,8 +31,15 @@ export const AddPhoto = () => {
     uploadPhoto(formData);
   };
 
+  const { errorMessage } = useAppSelector(state => state.addPhotoReducer);
+  const islog = useAppSelector(state => state.authReducer);
+
+  console.log(errorMessage);
+  console.log(islog.isLoggedIn);
+
   function handleModalClosed() {
     setOpen(false);
+    dispatch(showErrorMessage(''));
   }
 
   function handleModalOpened() {
@@ -56,6 +66,9 @@ export const AddPhoto = () => {
             text={``}
           />
         </Typography.Regular16>
+        <div style={{ position: 'absolute', right: '0px', textAlign: 'center', width: '100%' }}>
+          {errorMessage || ''}
+        </div>
         <div className={s.photoPlaceHolder}></div>
         <div style={{ display: 'flex', height: '100px', justifyContent: 'center' }}>
           <div

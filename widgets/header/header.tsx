@@ -1,4 +1,4 @@
-import { useAppSelector } from '@/pages/api/store';
+import { useAppSelector } from '@/shared/api/store';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button';
 import { ExpandBtn } from '@/widgets/header/ExpandBtn';
