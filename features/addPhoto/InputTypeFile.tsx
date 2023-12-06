@@ -15,18 +15,22 @@ export const InputTypeFile = (props: AddPhotoProps) => {
   const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0];
+      const allowedFormats = ['image/jpeg', 'image/png'];
 
-      convertFileToBase64(file, (file64: string) => {
-        props.addPhoto(file);
-      });
-
-      if (file.size < 4000000) {
+      if (allowedFormats.includes(file.type)) {
+        // Файл имеет правильный формат, продолжаем обработку
         convertFileToBase64(file, (file64: string) => {
-          /*dispatch(setMe({ avatar: file64 }))*/
+          props.addPhoto(file);
         });
+
+        if (file.size < 4000000) {
+          convertFileToBase64(file, (file64: string) => {});
+        } else {
+          dispatch(showErrorMessage('Error! Photo size must be less than 10 MB!'));
+        }
       } else {
-        dispatch(showErrorMessage('error'));
-        console.error('Error: ', 'Файл слишком большого размера fuf');
+        // Файл имеет неподдерживаемый формат
+        dispatch(showErrorMessage('Error! The format of the uploaded photo must be PNG and JPEG.'));
       }
     }
   };

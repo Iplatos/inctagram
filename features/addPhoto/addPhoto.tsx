@@ -6,7 +6,7 @@ import { showErrorMessage } from '@/features/addPhoto/addPhoto.slice';
 import { CloseDialog, Modal } from '@/features/modal';
 import { useUploadPhotoMutation } from '@/shared/api/auth.service';
 import { useAppSelector } from '@/shared/api/store';
-import { Button } from '@/shared/ui/Button';
+import { Alerts } from '@/shared/ui/alerts/Alerts';
 import { Typography } from '@/shared/ui/typography';
 import { Trans } from '@/widgets/Trans/Trans';
 
@@ -32,10 +32,8 @@ export const AddPhoto = () => {
   };
 
   const { errorMessage } = useAppSelector(state => state.addPhotoReducer);
-  const islog = useAppSelector(state => state.authReducer);
 
   console.log(errorMessage);
-  console.log(islog.isLoggedIn);
 
   function handleModalClosed() {
     setOpen(false);
@@ -56,7 +54,7 @@ export const AddPhoto = () => {
         onClose={handleModalClosed}
         open={open}
         showCloseButton
-        title={'Add Photo'}
+        title={'Add a Profile Photo'}
       >
         <Typography.Regular16>
           <Trans
@@ -66,9 +64,11 @@ export const AddPhoto = () => {
             text={``}
           />
         </Typography.Regular16>
-        <div style={{ position: 'absolute', right: '0px', textAlign: 'center', width: '100%' }}>
-          {errorMessage || ''}
-        </div>
+        <Alerts isError={errorMessage}>
+          <Typography.Regular14 color={'var(--color-light-900)'}>
+            {errorMessage || ''}
+          </Typography.Regular14>
+        </Alerts>
         <div className={s.photoPlaceHolder}></div>
         <div style={{ display: 'flex', height: '100px', justifyContent: 'center' }}>
           <div
@@ -83,9 +83,9 @@ export const AddPhoto = () => {
           >
             <InputTypeFile addPhoto={addPhoto} photo={'avatar'} />
             <CloseDialog asChild>
-              <Button style={{ width: '219px' }} variant={'tertiary'}>
+              {/*  <Button style={{ width: '219px' }} variant={'tertiary'}>
                 Open Draft
-              </Button>
+              </Button>*/}
             </CloseDialog>
           </div>
         </div>
