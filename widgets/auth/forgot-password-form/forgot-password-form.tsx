@@ -22,7 +22,6 @@ const signInSchema = z.object({
     .string()
     .trim()
     .email('Invalid email address')
-    // .nonempty('Enter email')
     .regex(/^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Invalid email address'),
 });
 
@@ -31,14 +30,13 @@ type FormValuesType = z.infer<typeof signInSchema>;
 export const ForgotPasswordForm = () => {
   const recaptchaRef = useRef<ReCAPTCHA | null>(null);
 
-  console.log(recaptchaRef);
   const { t } = useTranslation();
 
   const [open, setOpen] = useState<boolean>(false);
 
   const {
     control,
-    formState: { dirtyFields, errors, isValid },
+    formState: { dirtyFields, isValid },
     getValues,
     handleSubmit,
     reset,
@@ -55,7 +53,6 @@ export const ForgotPasswordForm = () => {
   const [forgotPassword] = useForgotPasswordMutation();
 
   const onSubmit = (data: FormValuesType) => {
-    // console.log(data.email);
     forgotPassword({
       email: data.email,
     });
@@ -71,10 +68,6 @@ export const ForgotPasswordForm = () => {
     if (isValid) {
       setOpen(true);
     }
-  }
-
-  function onBlur() {
-    trigger();
   }
 
   const SITE_KEY = '6Lek3hEpAAAAACzSq5KIvkUdoGZYl579JldVdZs-'; //for incubator-icta-trainee.uk
@@ -145,7 +138,7 @@ export const ForgotPasswordForm = () => {
         <Controller
           control={control}
           name={'captcha'}
-          render={({ field, fieldState }) => (
+          render={({ field }) => (
             <ReCAPTCHA
               {...field}
               /* errors={fieldState?.error?.message}*/
