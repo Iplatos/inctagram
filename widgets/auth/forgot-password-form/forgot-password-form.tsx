@@ -16,21 +16,17 @@ import { z } from 'zod';
 
 import style from './forgot-password.module.scss';
 
-const signInSchema = z.object({
-  captcha: z.string(),
-  email: z
-    .string()
-    .trim()
-    .email('Invalid email address')
-    .regex(/^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Invalid email address'),
-});
-
 type FormValuesType = z.infer<typeof signInSchema>;
 
 export const ForgotPasswordForm = () => {
   const recaptchaRef = useRef<ReCAPTCHA | null>(null);
 
   const { t } = useTranslation();
+
+  const signInSchema = z.object({
+    captcha: z.string(),
+    email: z.string().email(t.auth.forgotPasswordPage.invalidEmail).nonempty('Enter email'),
+  });
 
   const [open, setOpen] = useState<boolean>(false);
 

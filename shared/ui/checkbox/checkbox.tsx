@@ -1,4 +1,4 @@
-import React, { ElementRef, forwardRef } from 'react';
+import React, { ElementRef, ReactNode, forwardRef } from 'react';
 
 import * as CheckboxRadix from '@radix-ui/react-checkbox';
 import Image from 'next/image';
@@ -15,7 +15,7 @@ export type CheckboxProps = {
   checked: boolean;
   disabled?: boolean;
   id?: string;
-  label?: string;
+  label?: ReactNode | string;
   onChange: (checked: boolean) => void;
   required?: boolean;
 };

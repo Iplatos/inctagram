@@ -2,7 +2,7 @@ import { PropsWithChildren, ReactElement } from 'react';
 import { Provider } from 'react-redux';
 
 import { store } from '@/shared/api/store';
-import { SideBar } from '@/shared/ui/sideBar';
+import { SideBar } from '@/shared/ui';
 import { NavBar } from '@/widgets/NavBar/NavBar';
 import { Header } from '@/widgets/header';
 import { NextPage } from 'next';
