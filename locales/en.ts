@@ -14,6 +14,7 @@ export const en: LocaleType = {
     },
     forgotPasswordPage: {
       backToSignIn: 'Back to Sign In',
+      invalidEmail: 'Invalid email',
       message: 'Enter your email address and we will send you further instructions',
       messageModal: 'We have sent a link to confirm your email to <1>text</1>',
       sendLink: 'Send Link',
@@ -99,7 +100,7 @@ export const en: LocaleType = {
     },
     signUpPage: {
       account: 'Do you have an account?',
-      agreement: 'I agree to the <1>text</1> and <2>text</2>',
+      agreement: 'I agree to the <3>text</3> and <4>text</4>',
       labelEmail: 'Email',
       labelName: 'Username',
       labelPassword: 'Password',

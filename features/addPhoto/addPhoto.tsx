@@ -64,7 +64,9 @@ export const AddPhoto = () => {
             text={``}
           />
         </Typography.Regular16>
-        <Alerts isError={errorMessage}>
+        <Alerts
+        // isError={errorMessage}
+        >
           <Typography.Regular14 color={'var(--color-light-900)'}>
             {errorMessage || ''}
           </Typography.Regular14>

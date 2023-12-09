@@ -1,12 +1,7 @@
 .outerContainer {
   display: flex;
   justify-content: center;
-  //height: 100vh;
-}
-
-.center {
-  text-align: center;
-  width: 100%;
+  padding-top: 24px;
 }
 
 .right {
@@ -23,23 +18,15 @@
 .values {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-
-  .element {
-    //height: 58px;
-  }
+  gap: 24px;
 }
 
 .checkbox {
-  margin-top: 17px;
-  margin-bottom: 12px;
-  margin-left: -9px;
+  padding-bottom: 12px;
 }
 
 .button {
-  width: 100%;
   padding: 6px 24px;
-  //gap: 10px;
 }
 
 .bottom {
@@ -57,11 +44,19 @@
 .card {
   display: flex;
   flex-direction: column;
-
   width: 100%;
   max-width: 378px;
-  height: 100%;
-  max-height: 648px;
   padding: 24px;
   gap: 5px;
+  align-items: center;
+}
+
+.bottom {
+  padding-top: 18px;
+}
+
+.link {
+  line-height: var(--line-height-s);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-accent-500);
 }
