@@ -1,8 +1,10 @@
 export const ru = {
   auth: {
-    createNewPasswordPage: {
+    passwordResetPage: {
       confirmPasswordZod: 'Подтверждение пароля обязательно',
       message: 'Ваш пароль должен содержать от 6 до 20 символов',
+      newPassword: 'Новый пароль',
+      passwordConfirmation: 'Подтверждение пароля',
       passwordMaxZod: 'Пароль должен содержать не более 20 символов',
       passwordMinZod: 'Пароль должен содержать минимум 6 символов',
       passwordRefineZod:
