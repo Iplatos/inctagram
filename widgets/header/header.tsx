@@ -24,7 +24,9 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <div className={styles.logo}>Inctagram</div>
+        <div className={styles.logo}>
+          <Link href={'/'}>Inctagram</Link>
+        </div>
         <div className={styles.flex}>
           {isLoggedIn ? (
             <>
