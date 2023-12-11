@@ -84,6 +84,7 @@ const authService = baseApi.injectEndpoints({
 });
 
 export const {
+  useChangePasswordMutation,
   useConfirmCodeMutation,
   useForgotPasswordMutation,
   useGetMeQuery,
