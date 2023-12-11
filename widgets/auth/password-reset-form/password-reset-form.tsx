@@ -12,11 +12,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { z } from 'zod';
 
-import style from './create-new-password-form.module.scss';
+import style from './password-reset-form.module.scss';
 import { useChangePasswordMutation } from '@/shared/api/auth.service';
 import { useSearchParams } from 'next/navigation';
 
-export const CreateNewPasswordForm = () => {
+export const PasswordResetForm = () => {
   const { t } = useTranslation();
 
   const signInSchema = z

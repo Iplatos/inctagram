@@ -2,17 +2,17 @@ import React from 'react';
 
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
-import { CreateNewPasswordForm } from '@/widgets/auth';
+import { PasswordResetForm } from '@/widgets/auth';
 
-function ForgotPassword() {
+function PasswordReset() {
   return (
     <>
       <HeadMeta title={'Create new password'} />
 
-      <CreateNewPasswordForm />
+      <PasswordResetForm />
     </>
   );
 }
 
-ForgotPassword.getLayout = getLayout;
-export default ForgotPassword;
+PasswordReset.getLayout = getLayout;
+export default PasswordReset;
