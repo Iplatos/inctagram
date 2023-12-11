@@ -16,8 +16,6 @@ import { z } from 'zod';
 
 import style from './forgot-password.module.scss';
 
-type FormValuesType = z.infer<typeof signInSchema>;
-
 export const ForgotPasswordForm = () => {
   const recaptchaRef = useRef<ReCAPTCHA | null>(null);
 
@@ -28,6 +26,7 @@ export const ForgotPasswordForm = () => {
     email: z.string().email(t.auth.forgotPasswordPage.invalidEmail).nonempty('Enter email'),
   });
 
+  type FormValuesType = z.infer<typeof signInSchema>;
   const [open, setOpen] = useState<boolean>(false);
 
   const {
@@ -70,40 +69,37 @@ export const ForgotPasswordForm = () => {
   const LOCALHOST_KEY = '6Lfm4xEpAAAAAD8LnoqR-DwtFEgFJiiOHaWhAg22'; //for localhost:3000
 
   return (
+    /* eslint-disable */
     <Card className={style.card}>
-      <Typography.H1 style={{ paddingBottom: '37px' }}>
+      <Typography.H1 style={{ paddingBottom: "37px" }}>
         {t.auth.forgotPasswordPage.title}
       </Typography.H1>
-
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
-          name={'email'}
+          name="email"
           render={({ field, fieldState }) => (
             <TextField
               {...field}
               errors={fieldState?.error?.message}
-              inputtype={'text'}
-              label={'Email'}
+              inputtype={"text"}
+              label={"Email"}
               onChange={field.onChange}
               value={field.value}
             />
           )}
         />
-
         <Typography.Regular14 className={`${style.message} ${style.fontColor}`}>
           {t.auth.forgotPasswordPage.message}
         </Typography.Regular14>
-
         <Button
           disabled={dirtyFields.captcha && dirtyFields.email ? false : true}
           fullWidth
           onClick={handleModalOpened}
-          type={'submit'}
+          type={"submit"}
         >
           {t.auth.forgotPasswordPage.sendLink}
         </Button>
-
         <Modal
           onClose={handleModalClosed}
           open={open}
@@ -113,27 +109,26 @@ export const ForgotPasswordForm = () => {
           <Typography.Regular16 className={style.dialogDescription}>
             <Trans
               tags={{
-                '1': () => <b>{`${getValues().email}`}</b>,
+                "1": () => <b>{`${getValues().email}`}</b>
               }}
               text={t.auth.forgotPasswordPage.messageModal}
             />
           </Typography.Regular16>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 25 }}>
+          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 25 }}>
             <CloseDialog asChild>
-              <Button className={style.dialogButton} variant={'primary'}>
+              <Button className={style.dialogButton} variant={"primary"}>
                 OK
               </Button>
             </CloseDialog>
           </div>
         </Modal>
-
-        <Button className={style.buttonBack} fullWidth variant={'tertiary'}>
-          <Link href={'/signIn'}>{t.auth.forgotPasswordPage.backToSignIn}</Link>
+        <Button className={style.buttonBack} fullWidth variant={"tertiary"}>
+          <Link href={"/signIn"}>{t.auth.forgotPasswordPage.backToSignIn}</Link>
         </Button>
 
         <Controller
           control={control}
-          name={'captcha'}
+          name="captcha"
           render={({ field }) => (
             <ReCAPTCHA
               {...field}
@@ -141,12 +136,13 @@ export const ForgotPasswordForm = () => {
               onChange={field.onChange}
               ref={recaptchaRef}
               sitekey={LOCALHOST_KEY}
-              theme={'dark'}
+              theme={"dark"}
               /*     value={field.value}*/
             />
           )}
         />
       </form>
     </Card>
+    /* eslint-enable */
   );
 };
