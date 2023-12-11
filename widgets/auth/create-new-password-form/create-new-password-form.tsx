@@ -13,21 +13,31 @@ import Link from 'next/link';
 import { z } from 'zod';
 
 import style from './create-new-password-form.module.scss';
-
-const signInSchema = z
-  .object({
-    confirmPassword: z.string().min(1, { message: 'Confirm Password is required' }),
-    password: z.string().min(6, { message: 'Password must be atleast 6 characters' }),
-  })
-  .refine(data => data.password === data.confirmPassword, {
-    message: 'The passwords must match',
-    path: ['confirmPassword'],
-  });
-
-type FormValuesType = z.infer<typeof signInSchema>;
+import { useChangePasswordMutation } from '@/shared/api/auth.service';
+import { useSearchParams } from 'next/navigation';
 
 export const CreateNewPasswordForm = () => {
   const { t } = useTranslation();
+
+  const signInSchema = z
+    .object({
+      confirmPassword: z.string(),
+      password: z
+        .string()
+        .min(6, { message: t.auth.createNewPasswordPage.passwordMinZod })
+        .max(20, { message: t.auth.createNewPasswordPage.passwordMaxZod })
+        .refine(
+          value =>
+            /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~])/.test(value),
+          t.auth.createNewPasswordPage.passwordRefineZod
+        ),
+    })
+    .refine(data => data.password === data.confirmPassword, {
+      message: t.auth.createNewPasswordPage.confirmPasswordZod,
+      path: ['confirmPassword'],
+    });
+
+  type FormValuesType = z.infer<typeof signInSchema>;
 
   const {
     control,
@@ -42,10 +52,21 @@ export const CreateNewPasswordForm = () => {
     resolver: zodResolver(signInSchema),
   });
 
-  const onSubmit = (data: FormValuesType) => {
-    console.log(data);
+  // https://incubator-icta-trainee.uk/password-reset?userId=3db0ac99-c78b-4d00-89de-7bf82a4942bc&code=c0f2e6a9aead0c45220462df69ef1d01cbabbf062276624306cedeff63d02c17b5b6f76659d6300b436f753bb0012959
+  const searchParams = useSearchParams();
+  const code = searchParams.get('code');
+  const userId = searchParams.get('userId');
 
-    // resetField('email');
+  console.log(userId);
+
+  const [changePassword] = useChangePasswordMutation();
+
+  const onSubmit = (data: FormValuesType) => {
+    changePassword({
+      code: code,
+      password: data.password,
+      userId: userId,
+    });
   };
 
   return (

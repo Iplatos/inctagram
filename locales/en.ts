@@ -3,7 +3,12 @@ import { LocaleType } from './ru';
 export const en: LocaleType = {
   auth: {
     createNewPasswordPage: {
+      confirmPasswordZod: 'Confirm password is required',
       message: 'Your password must be between 6 and 20 characters',
+      passwordMaxZod: 'Maximum number of characters is 20',
+      passwordMinZod: 'Password must be at least 6 characters',
+      passwordRefineZod:
+        'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~',
       textLink: 'Create new password',
       title: 'Create New Password',
     },
