@@ -1,9 +1,6 @@
-import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
-import { AddPhoto } from '@/features/addPhoto/addPhoto';
 import { useGetMeQuery } from '@/shared/api/auth.service';
 import { useGetFeedQuery } from '@/shared/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { TabContent, Tabs } from '@/shared/ui';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
 import { useRouter } from 'next/navigation';
@@ -27,9 +24,9 @@ function Home() {
       <HeadMeta title={'main'} />
       {/* <div style={{ visibility: 'hidden' }}>adf</div> */}
 
-      <DatePickerContainer />
+      {/*     <DatePickerContainer />
 
-      <AddPhoto />
+      <AddPhoto />*/}
 
       {/*  <div>
         {error?.status} {JSON.stringify(error)}
