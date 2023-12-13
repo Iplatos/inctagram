@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Avatar } from '@/components/Avatar/Avatar';
 import { InputTypeFile } from '@/features/addPhoto/InputTypeFile';
 import { showErrorMessage, showPreViewAvatar } from '@/features/addPhoto/addPhoto.slice';
-import { CloseDialog, Modal } from '@/features/modal';
+import { Modal } from '@/features/modal';
 import { useUploadPhotoMutation } from '@/shared/api/auth.service';
 import { useAppSelector } from '@/shared/api/store';
 import { Button } from '@/shared/ui/Button';
@@ -23,7 +23,7 @@ export const AddPhoto = () => {
   const dispatch = useDispatch();
   const { avatar, errorMessage } = useAppSelector(state => state.addPhotoReducer);
 
-  const addPhoto = (photo: any) => {
+  const addPhoto = (photo: File) => {
     const formData = new FormData();
 
     formData.append('file', photo);
@@ -78,8 +78,11 @@ export const AddPhoto = () => {
             {errorMessage || ''}
           </Typography.Regular14>
         </Alerts>
-        <div className={avatar ? s.photoPlaceHolderWithAvatar : s.photoPlaceHolder}>
-          {avatar ? <Avatar photo={avatar} size={size} /> : ''}
+
+        <div className={s.border}>
+          <div className={avatar ? s.photoPlaceHolderWithAvatar : s.photoPlaceHolder}>
+            {avatar ? <Avatar photo={avatar} size={size} /> : ''}
+          </div>
         </div>
         <div style={{ display: 'flex', height: '100px', justifyContent: 'center' }}>
           <div
@@ -92,22 +95,14 @@ export const AddPhoto = () => {
               width: '216px',
             }}
           >
-            {!avatar ? (
-              <InputTypeFile
-                addPhoto={addPhoto}
-                photo={'avatar'}
-                preViewAvatar={addAvatarForPreView}
-              />
-            ) : (
-              <CloseDialog asChild>
-                <Button style={{ width: '86px' }} variant={'tertiary'}>
-                  Save
-                </Button>
-              </CloseDialog>
-            )}
+            <InputTypeFile addPhoto={addPhoto} photo={avatar} preViewAvatar={addAvatarForPreView} />
           </div>
-          <button onClick={() => changePhotoSize('+')}>+</button>
-          <button onClick={() => changePhotoSize('-')}>-</button>
+          {avatar && (
+            <div style={{ position: 'absolute' }}>
+              <Button onClick={() => changePhotoSize('+')}>+</Button>
+              <Button onClick={() => changePhotoSize('-')}>-</Button>
+            </div>
+          )}
         </div>
       </Modal>
     </div>

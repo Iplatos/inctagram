@@ -1,18 +1,20 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { showErrorMessage } from '@/features/addPhoto/addPhoto.slice';
+import { CloseDialog } from '@/features/modal';
 import { Button } from '@/shared/ui/Button';
 
 type AddPhotoProps = {
   addPhoto: (a: any) => void;
-  photo: string;
-  preViewAvatar: (photo: string) => void;
+  photo?: string;
+  preViewAvatar?: (photo: string) => void;
 };
 
 export const InputTypeFile = (props: AddPhotoProps) => {
   const dispatch = useDispatch();
-
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const { addPhoto, photo, preViewAvatar } = props;
   const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0];
@@ -21,9 +23,8 @@ export const InputTypeFile = (props: AddPhotoProps) => {
       if (allowedFormats.includes(file.type)) {
         // Файл имеет правильный формат, продолжаем обработку
         convertFileToBase64(file, (file64: string) => {
-          props.preViewAvatar(file64);
-
-          return file;
+          preViewAvatar(file64);
+          setUploadFile(file);
         });
 
         if (file.size < 4000000) {
@@ -53,16 +54,30 @@ export const InputTypeFile = (props: AddPhotoProps) => {
     console.log('error');
   };
 
-  console.log('hui');
-
   return (
     <div>
       <label style={{ width: '50px' }}>
         <input onChange={uploadHandler} style={{ display: 'none' }} type={'file'} />
 
-        <Button as={'span'} style={{ width: '219px' }}>
-          Select from Computer
-        </Button>
+        {photo ? (
+          <CloseDialog asChild>
+            <Button
+              onClick={() => {
+                if (uploadFile) {
+                  addPhoto(uploadFile);
+                }
+              }}
+              style={{ marginLeft: '270px', width: '86px' }}
+              variant={'tertiary'}
+            >
+              Save
+            </Button>
+          </CloseDialog>
+        ) : (
+          <Button as={'span'} style={{ width: '219px' }}>
+            Select from Computer
+          </Button>
+        )}
       </label>
     </div>
   );

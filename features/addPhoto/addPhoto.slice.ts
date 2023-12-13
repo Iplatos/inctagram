@@ -9,7 +9,7 @@ export const addPhotoReducer = createSlice({
   name: 'addPhotoReducer',
   reducers: {
     setAvatarForRequest: (state, action: PayloadAction<any>) => {
-      state.avatar = action.payload;
+      state.avatarForReq = action.payload;
     },
     showErrorMessage: (state, action: PayloadAction<string>) => {
       state.errorMessage = action.payload;

@@ -48,7 +48,11 @@ export const Avatar = (props: AvatarType) => {
         top: `${position.y}px`,
       }}
     >
-      <img alt={'Avatar'} src={props.photo} style={{ width: props.size }} />
+      <img
+        alt={'Avatar'}
+        src={props.photo}
+        style={{ backGroundClip: 'paddingBox', width: props.size, zIndex: -121 }}
+      />
     </div>
   );
 };
