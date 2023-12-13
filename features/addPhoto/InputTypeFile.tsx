@@ -22,6 +22,8 @@ export const InputTypeFile = (props: AddPhotoProps) => {
         // Файл имеет правильный формат, продолжаем обработку
         convertFileToBase64(file, (file64: string) => {
           props.preViewAvatar(file64);
+
+          return file;
         });
 
         if (file.size < 4000000) {
@@ -50,6 +52,8 @@ export const InputTypeFile = (props: AddPhotoProps) => {
     /*dispatch(setMe({ avatar: profDefaultPicture }));*/
     console.log('error');
   };
+
+  console.log('hui');
 
   return (
     <div>

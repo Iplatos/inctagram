@@ -21,13 +21,12 @@ export const AddPhoto = () => {
   const [size, setSize] = useState<number>(100);
   const [uploadPhoto] = useUploadPhotoMutation();
   const dispatch = useDispatch();
-  const { avatar, avatarForReq, errorMessage } = useAppSelector(state => state.addPhotoReducer);
+  const { avatar, errorMessage } = useAppSelector(state => state.addPhotoReducer);
 
-  console.log(avatarForReq);
-  const addPhoto = (avatarForReq: any) => {
+  const addPhoto = (photo: any) => {
     const formData = new FormData();
 
-    formData.append('file', avatarForReq);
+    formData.append('file', photo);
     formData.append('userId', '245a822d-796a-4bcf-9d69-6c3e246271c9');
     formData.append('firstName', 'Jonh');
     formData.append('familyName', 'Doe');
