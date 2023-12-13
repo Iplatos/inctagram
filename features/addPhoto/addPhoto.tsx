@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { Avatar } from '@/components/Avatar/Avatar';
 import { InputTypeFile } from '@/features/addPhoto/InputTypeFile';
-import { showErrorMessage } from '@/features/addPhoto/addPhoto.slice';
+import { showErrorMessage, showPreViewAvatar } from '@/features/addPhoto/addPhoto.slice';
 import { CloseDialog, Modal } from '@/features/modal';
 import { useUploadPhotoMutation } from '@/shared/api/auth.service';
 import { useAppSelector } from '@/shared/api/store';
+import { Button } from '@/shared/ui/Button';
 import { Alerts } from '@/shared/ui/alerts/Alerts';
 import { Typography } from '@/shared/ui/typography';
 import { Trans } from '@/widgets/Trans/Trans';
@@ -16,33 +18,41 @@ import s from './addPhoto.module.scss';
 export const AddPhoto = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('someEmail');
+  const [size, setSize] = useState<number>(100);
   const [uploadPhoto] = useUploadPhotoMutation();
   const dispatch = useDispatch();
-  const addPhoto = (avatar: any) => {
+  const { avatar, avatarForReq, errorMessage } = useAppSelector(state => state.addPhotoReducer);
+
+  console.log(avatarForReq);
+  const addPhoto = (avatarForReq: any) => {
     const formData = new FormData();
 
-    formData.append('file', avatar);
+    formData.append('file', avatarForReq);
     formData.append('userId', '245a822d-796a-4bcf-9d69-6c3e246271c9');
     formData.append('firstName', 'Jonh');
     formData.append('familyName', 'Doe');
     formData.append('dateOfBirth', '12.12.1999');
     formData.append('aboutMe', 'about me any text');
 
-    uploadPhoto(formData);
+    uploadPhoto(formData as unknown as any);
   };
-
-  const { errorMessage } = useAppSelector(state => state.addPhotoReducer);
-
-  console.log(errorMessage);
 
   function handleModalClosed() {
     setOpen(false);
     dispatch(showErrorMessage(''));
+    dispatch(showPreViewAvatar(''));
   }
 
   function handleModalOpened() {
     setOpen(true);
   }
+
+  const addAvatarForPreView = photo => {
+    dispatch(showPreViewAvatar(photo));
+  };
+  const changePhotoSize = (param: string) => {
+    param === '+' ? setSize(size + 5) : setSize(size - 5);
+  };
 
   return (
     <div>
@@ -64,14 +74,14 @@ export const AddPhoto = () => {
             text={``}
           />
         </Typography.Regular16>
-        <Alerts
-        // isError={errorMessage}
-        >
+        <Alerts isError={errorMessage}>
           <Typography.Regular14 color={'var(--color-light-900)'}>
             {errorMessage || ''}
           </Typography.Regular14>
         </Alerts>
-        <div className={s.photoPlaceHolder}></div>
+        <div className={avatar ? s.photoPlaceHolderWithAvatar : s.photoPlaceHolder}>
+          {avatar ? <Avatar photo={avatar} size={size} /> : ''}
+        </div>
         <div style={{ display: 'flex', height: '100px', justifyContent: 'center' }}>
           <div
             style={{
@@ -83,13 +93,22 @@ export const AddPhoto = () => {
               width: '216px',
             }}
           >
-            <InputTypeFile addPhoto={addPhoto} photo={'avatar'} />
-            <CloseDialog asChild>
-              {/*  <Button style={{ width: '219px' }} variant={'tertiary'}>
-                Open Draft
-              </Button>*/}
-            </CloseDialog>
+            {!avatar ? (
+              <InputTypeFile
+                addPhoto={addPhoto}
+                photo={'avatar'}
+                preViewAvatar={addAvatarForPreView}
+              />
+            ) : (
+              <CloseDialog asChild>
+                <Button style={{ width: '86px' }} variant={'tertiary'}>
+                  Save
+                </Button>
+              </CloseDialog>
+            )}
           </div>
+          <button onClick={() => changePhotoSize('+')}>+</button>
+          <button onClick={() => changePhotoSize('-')}>-</button>
         </div>
       </Modal>
     </div>

@@ -7,9 +7,26 @@
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 50px;
+  overflow: hidden;
+  position: relative;
+
+
 }
 
 .addPhotoCard {
   width: 492px;
   height: 564px;
+}
+
+.photoPlaceHolderWithAvatar {
+  width: 332px;
+  height: 340px;
+  background-color: var(--color-dark-500);
+  margin-top: 0;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0px;
+  overflow: hidden;
+  position: relative;
 }

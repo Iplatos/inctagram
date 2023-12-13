@@ -1,3 +1,5 @@
+import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
+import { AddPhoto } from '@/features/addPhoto/addPhoto';
 import { useGetMeQuery } from '@/shared/api/auth.service';
 import { useGetFeedQuery } from '@/shared/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
@@ -24,9 +26,9 @@ function Home() {
       <HeadMeta title={'main'} />
       {/* <div style={{ visibility: 'hidden' }}>adf</div> */}
 
-      {/*     <DatePickerContainer />
+      <DatePickerContainer />
 
-      <AddPhoto />*/}
+      <AddPhoto />
 
       {/*  <div>
         {error?.status} {JSON.stringify(error)}

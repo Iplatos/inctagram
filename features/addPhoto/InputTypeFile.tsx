@@ -7,6 +7,7 @@ import { Button } from '@/shared/ui/Button';
 type AddPhotoProps = {
   addPhoto: (a: any) => void;
   photo: string;
+  preViewAvatar: (photo: string) => void;
 };
 
 export const InputTypeFile = (props: AddPhotoProps) => {
@@ -20,7 +21,7 @@ export const InputTypeFile = (props: AddPhotoProps) => {
       if (allowedFormats.includes(file.type)) {
         // Файл имеет правильный формат, продолжаем обработку
         convertFileToBase64(file, (file64: string) => {
-          props.addPhoto(file);
+          props.preViewAvatar(file64);
         });
 
         if (file.size < 4000000) {
