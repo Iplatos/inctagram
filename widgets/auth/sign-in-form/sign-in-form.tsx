@@ -8,7 +8,6 @@ import { Button } from '@/shared/ui/Button/button';
 import { Card } from '@/shared/ui/Card/Card';
 import { TextField } from '@/shared/ui/textField/TextField';
 import { Typography } from '@/shared/ui/typography';
-import { setIsLoggedIn } from '@/widgets/auth/slices/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -60,7 +59,6 @@ export const SignInForm = () => {
 
   if (loginData) {
     setTokenToLocalStorage(loginData.accessToken);
-    dispatch(setIsLoggedIn(true));
     router.push(`/`);
   }
   if (meData) {

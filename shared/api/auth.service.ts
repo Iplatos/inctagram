@@ -1,8 +1,18 @@
 import { baseApi, getTokenFromLocalStorage } from '@/shared/api/base-api';
+import {
+  ChangePasswordRequestType,
+  ConfirmCodeRequestType,
+  LoginRequestType,
+  LoginResponseType,
+  MeResponseType,
+  PasswordRecoveryRequestType,
+  SignUpRequestType,
+  UploadPhotoResponseType,
+} from '@/shared/types/auth.types';
 
 const authService = baseApi.injectEndpoints({
   endpoints: builder => ({
-    changePassword: builder.mutation<any, any>({
+    changePassword: builder.mutation<void, ChangePasswordRequestType>({
       query: params => {
         return {
           body: params,
@@ -11,7 +21,7 @@ const authService = baseApi.injectEndpoints({
         };
       },
     }),
-    confirmCode: builder.mutation<any, any>({
+    confirmCode: builder.mutation<void, ConfirmCodeRequestType>({
       query: params => {
         return {
           body: params,
@@ -20,7 +30,7 @@ const authService = baseApi.injectEndpoints({
         };
       },
     }),
-    forgotPassword: builder.mutation<any, any>({
+    forgotPassword: builder.mutation<void, PasswordRecoveryRequestType>({
       query: params => {
         return {
           body: params,
@@ -29,10 +39,10 @@ const authService = baseApi.injectEndpoints({
         };
       },
     }),
-    getMe: builder.query<any, void>({
+    getMe: builder.query<MeResponseType, void>({
       query: () => `/api/v1/auth/me`,
     }),
-    login: builder.mutation<any, any>({
+    login: builder.mutation<LoginResponseType, LoginRequestType>({
       invalidatesTags: ['Me'],
       query: data => ({
         body: data,
@@ -50,7 +60,7 @@ const authService = baseApi.injectEndpoints({
         url: '/api/v1/auth/logout',
       }),
     }),
-    signUp: builder.mutation<any, any>({
+    signUp: builder.mutation<SignUpRequestType, any>({
       query: params => {
         return {
           body: params,
@@ -59,7 +69,7 @@ const authService = baseApi.injectEndpoints({
         };
       },
     }),
-    uploadPhoto: builder.mutation<any, any>({
+    uploadPhoto: builder.mutation<UploadPhotoResponseType, any>({
       query: params => {
         return {
           body: params,
