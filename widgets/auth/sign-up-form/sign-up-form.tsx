@@ -3,7 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 import GitHubLogo from '@/assets/icons/gitHubLogo.svg';
 import GoogleLogo from '@/assets/icons/googleLogo.svg';
-import { useSignUpMutation } from '@/shared/api/auth.service';
+import { useGetMeQuery, useSignUpMutation } from '@/shared/api/auth.service';
 import { baseUrl } from '@/shared/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Card, TextField, Typography } from '@/shared/ui';
@@ -46,6 +46,7 @@ const schema = z
 type FormValues = z.input<typeof schema>;
 
 export const SignUpForm = () => {
+  const { data: meData } = useGetMeQuery();
   const router = useRouter();
   const { t } = useTranslation();
   const [signUp, { data: signUpData, error }] = useSignUpMutation();
@@ -67,6 +68,10 @@ export const SignUpForm = () => {
     router.push(`/email-sent`);
   }
   const handleFormSubmitted = handleSubmit(data => signUp(omit(data, ['confirm'])));
+
+  if (meData) {
+    router.push(`/`);
+  }
 
   return (
     <div className={s.outerContainer}>

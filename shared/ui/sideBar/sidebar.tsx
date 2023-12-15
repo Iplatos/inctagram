@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { CloseDialog, Modal } from '@/features/modal';
-import { useLogoutMutation } from '@/shared/api/auth.service';
+import { useGetMeQuery, useLogoutMutation } from '@/shared/api/auth.service';
 import { setTokenToLocalStorage } from '@/shared/api/base-api';
 import { useAppSelector } from '@/shared/api/store';
 import { Button } from '@/shared/ui/Button';
@@ -26,6 +26,7 @@ export const SideBar = () => {
   const [logout] = useLogoutMutation();
   const { isLoggedIn } = useAppSelector(state => state.authReducer);
   const dispatch = useDispatch();
+  const { data: meData } = useGetMeQuery();
 
   function handleModalClosed() {
     setOpen(false);
@@ -42,7 +43,7 @@ export const SideBar = () => {
     setTokenToLocalStorage(null);
   };
 
-  if (!isLoggedIn) {
+  if (!meData) {
     return;
   }
 

@@ -1,5 +1,4 @@
 import { useGetMeQuery } from '@/shared/api/auth.service';
-import { useGetFeedQuery } from '@/shared/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
@@ -7,15 +6,15 @@ import { useRouter } from 'next/navigation';
 
 function Home() {
   const { t } = useTranslation();
-  const { data: feed, error } = useGetFeedQuery();
-  const { data } = useGetMeQuery();
+  /*const { data: feed, error } = useGetFeedQuery();*/
+  const { data: meData, error: meError } = useGetMeQuery();
   /*const { data, error } = useFilteredPostsQuery();*/
   const router = useRouter();
-  /*const { getMe } = useGetMeQuery();*/
 
-  if (error) {
-    if ('status' in error) {
-      error.status === 401 && router.push('/signIn');
+  /*const { getMe } = useGetMeQuery();*/
+  if (meError) {
+    if ('status' in meError) {
+      meError.status === 401 && router.push('/signIn');
     }
   }
 

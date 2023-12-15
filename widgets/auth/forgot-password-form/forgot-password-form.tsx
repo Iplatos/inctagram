@@ -3,7 +3,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { Controller, useForm } from 'react-hook-form';
 
 import { CloseDialog, Modal } from '@/features';
-import { useForgotPasswordMutation } from '@/shared/api/auth.service';
+import { useForgotPasswordMutation, useGetMeQuery } from '@/shared/api/auth.service';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
 import { Button } from '@/shared/ui/Button/button';
@@ -12,15 +12,16 @@ import { TextField } from '@/shared/ui/textField/TextField';
 import { Trans } from '@/widgets/Trans/Trans';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 
 import style from './forgot-password.module.scss';
 
 export const ForgotPasswordForm = () => {
   const recaptchaRef = useRef<ReCAPTCHA | null>(null);
-
+  const { data: meData } = useGetMeQuery();
   const { t } = useTranslation();
-
+  const router = useRouter();
   const signInSchema = z.object({
     captcha: z.string(),
     email: z.string().email(t.auth.forgotPasswordPage.invalidEmail).nonempty('Enter email'),
@@ -67,6 +68,10 @@ export const ForgotPasswordForm = () => {
 
   const SITE_KEY = '6Lek3hEpAAAAACzSq5KIvkUdoGZYl579JldVdZs-'; //for incubator-icta-trainee.uk
   const LOCALHOST_KEY = '6Lfm4xEpAAAAAD8LnoqR-DwtFEgFJiiOHaWhAg22'; //for localhost:3000
+
+  if (meData) {
+    router.push(`/`);
+  }
 
   return (
     /* eslint-disable */
