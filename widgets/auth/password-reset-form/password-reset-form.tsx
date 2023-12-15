@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 // import { Trans } from '@/widgets/Trans/Trans';
+import { useChangePasswordMutation } from '@/shared/api/auth.service';
 // import { Modal } from '@/features';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
@@ -9,12 +10,10 @@ import { Button } from '@/shared/ui/Button/button';
 import { Card } from '@/shared/ui/Card/Card';
 import { TextField } from '@/shared/ui/textField/TextField';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Link from 'next/link';
+import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
 import { z } from 'zod';
 
 import style from './password-reset-form.module.scss';
-import { useChangePasswordMutation } from '@/shared/api/auth.service';
-import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
 
 export const PasswordResetForm = () => {
   const { t } = useTranslation();
@@ -75,11 +74,13 @@ export const PasswordResetForm = () => {
       const code: null | string = searchParams.get('code');
       const userId: null | string = searchParams.get('userId');
 
-      changePassword({
-        code: code,
-        password: data.password,
-        userId: userId,
-      });
+      if (code && userId) {
+        changePassword({
+          code: code,
+          password: data.password,
+          userId: userId,
+        });
+      }
     }
   };
 

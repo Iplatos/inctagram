@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 
 type AvatarType = {
   disabled?: boolean;
@@ -11,7 +11,7 @@ export const Avatar = (props: AvatarType) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
   const { disabled } = props;
-  const handleMouseDown = e => {
+  const handleMouseDown: MouseEventHandler<HTMLDivElement> = e => {
     if (disabled) {
       return;
     }
@@ -22,11 +22,11 @@ export const Avatar = (props: AvatarType) => {
     });
   };
 
-  const handleMouseUp = () => {
+  const handleMouseUp: MouseEventHandler<HTMLDivElement> = () => {
     setIsDragging(false);
   };
 
-  const handleMouseMove = e => {
+  const handleMouseMove: MouseEventHandler<HTMLDivElement> = e => {
     if (!isDragging) {
       return;
     }
@@ -48,11 +48,7 @@ export const Avatar = (props: AvatarType) => {
         top: `${position.y}px`,
       }}
     >
-      <img
-        alt={'Avatar'}
-        src={props.photo}
-        style={{ backGroundClip: 'paddingBox', width: props.size, zIndex: -121 }}
-      />
+      <img alt={'Avatar'} src={props.photo} style={{ width: props.size, zIndex: -121 }} />
     </div>
   );
 };

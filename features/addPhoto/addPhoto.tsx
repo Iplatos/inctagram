@@ -46,7 +46,7 @@ export const AddPhoto = () => {
     setOpen(true);
   }
 
-  const addAvatarForPreView = photo => {
+  const addAvatarForPreView = (photo: string) => {
     dispatch(showPreViewAvatar(photo));
   };
   const changePhotoSize = (param: string) => {

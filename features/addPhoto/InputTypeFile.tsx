@@ -23,7 +23,7 @@ export const InputTypeFile = (props: AddPhotoProps) => {
       if (allowedFormats.includes(file.type)) {
         // Файл имеет правильный формат, продолжаем обработку
         convertFileToBase64(file, (file64: string) => {
-          preViewAvatar(file64);
+          preViewAvatar && preViewAvatar(file64);
           setUploadFile(file);
         });
 

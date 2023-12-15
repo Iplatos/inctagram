@@ -8,7 +8,6 @@ import { useAppSelector } from '@/shared/api/store';
 import { Button } from '@/shared/ui/Button';
 import { Typography } from '@/shared/ui/typography';
 import { Trans } from '@/widgets/Trans/Trans';
-import { setIsLoggedIn } from '@/widgets/auth/slices/auth';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
 import HomeOutline from 'assets/icons/home-outline.svg';
 import LogOutOutline from 'assets/icons/log-out-outline.svg';
@@ -38,8 +37,6 @@ export const SideBar = () => {
 
   const logOut = () => {
     logout();
-    console.log('log out');
-    dispatch(setIsLoggedIn(false));
     setTokenToLocalStorage(null);
   };
 

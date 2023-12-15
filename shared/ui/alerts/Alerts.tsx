@@ -11,5 +11,5 @@ export const Alerts = (props: PropsType) => {
 type PropsType = {
   children: ReactNode;
   className?: string;
-  isError?: boolean;
+  isError?: string;
 };
