@@ -24,7 +24,7 @@ function Home() {
       <HeadMeta title={'main'} />
       {/* <div style={{ visibility: 'hidden' }}>adf</div> */}
 
-      {/*     <DatePickerContainer />
+      {/*   <DatePickerContainer />
 
       */}
       <AddPhoto />
