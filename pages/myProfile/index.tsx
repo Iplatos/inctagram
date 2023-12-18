@@ -1,5 +1,11 @@
+import { Button } from '@/shared/ui';
 import { AvatarRadix } from '@/shared/ui/avatar';
 
-export const myProfile = () => {
-  return <AvatarRadix urlAdress={'https://'} />;
+export const MyProfile = () => {
+  return (
+    <>
+      <AvatarRadix urlAdress={'https://'} />
+      <Button>Profile Settings</Button>
+    </>
+  );
 };
