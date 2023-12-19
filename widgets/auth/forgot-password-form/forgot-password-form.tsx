@@ -2,13 +2,13 @@ import React, { useRef, useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { Controller, useForm } from 'react-hook-form';
 
-import { CloseDialog, Modal } from '@/features';
+import { CloseDialog, Modal } from '@/features/modal';
 import { useForgotPasswordMutation, useGetMeQuery } from '@/shared/api/auth.service';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Typography } from '@/shared/ui';
 import { Button } from '@/shared/ui/Button/button';
 import { Card } from '@/shared/ui/Card/Card';
 import { TextField } from '@/shared/ui/textField/TextField';
+import { Typography } from '@/shared/ui/typography';
 import { Trans } from '@/widgets/Trans/Trans';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
@@ -69,7 +69,6 @@ export const ForgotPasswordForm = () => {
   const SITE_KEY = '6Lek3hEpAAAAACzSq5KIvkUdoGZYl579JldVdZs-'; //for incubator-icta-trainee.uk
   const LOCALHOST_KEY = '6Lfm4xEpAAAAAD8LnoqR-DwtFEgFJiiOHaWhAg22'; //for localhost:3000
 
-  console.log(forgotPassError);
   if (meData) {
     router.push(`/`);
   }
