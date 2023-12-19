@@ -1,2 +1,2 @@
 export * from './agreement-content';
-export * from './pagination-items';
+export * from './pagination';

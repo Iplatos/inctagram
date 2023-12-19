@@ -91,7 +91,7 @@ const data = [
   },
 ];
 
-export const PaginationItems = () => {
+export const Pagination = () => {
   const [itemOffset, setItemOffset] = useState(0);
   const [selectValue, setSelectValue] = useState<number>(10);
 
