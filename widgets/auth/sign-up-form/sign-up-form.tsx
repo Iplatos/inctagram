@@ -1,14 +1,12 @@
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import GitHubLogo from '@/assets/icons/gitHubLogo.svg';
-import GoogleLogo from '@/assets/icons/googleLogo.svg';
 import { useGetMeQuery, useSignUpMutation } from '@/shared/api/auth.service';
-import { baseUrl } from '@/shared/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Card, TextField, Typography } from '@/shared/ui';
 import { ControlledCheckbox } from '@/shared/ui/checkbox/controlled-checkbox';
 import { Trans } from '@/widgets/Trans/Trans';
+import { GitHubGoogleContainer } from '@/widgets/auth/gitHubGoogleContainer/gitHubGoogleContainer';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { clsx } from 'clsx';
 import { omit } from 'next/dist/shared/lib/router/utils/omit';
@@ -50,9 +48,7 @@ export const SignUpForm = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const [signUp, { data: signUpData, error }] = useSignUpMutation();
-  const onGoogle = () => {
-    router.push(`${baseUrl}/api/v1/auth/google`);
-  };
+
   const {
     clearErrors,
     control,
@@ -78,10 +74,7 @@ export const SignUpForm = () => {
       <Card className={s.card}>
         <Typography.H1>{t.auth.signUpPage.title}</Typography.H1>
 
-        <div className={s.gitHubGoogleContainer}>
-          <GoogleLogo onClick={onGoogle} />
-          <GitHubLogo />
-        </div>
+        <GitHubGoogleContainer />
 
         <form onSubmit={handleFormSubmitted}>
           <div className={s.values}>
@@ -96,7 +89,7 @@ export const SignUpForm = () => {
                   label={t.auth.signUpPage.labelName}
                   onChange={field.onChange}
                   onFocus={() => clearErrors('username')}
-                  placeholder={'username'}
+                  placeholder={t.auth.signUpPage.labelName}
                   value={field.value}
                 />
               )}
@@ -113,6 +106,7 @@ export const SignUpForm = () => {
                   label={t.auth.signUpPage.labelEmail}
                   onChange={field.onChange}
                   onFocus={() => clearErrors('email')}
+                  placeholder={t.auth.signInPage.email}
                   value={field.value}
                 />
               )}
@@ -129,7 +123,7 @@ export const SignUpForm = () => {
                   label={t.auth.signUpPage.labelPassword}
                   onChange={field.onChange}
                   onFocus={() => clearErrors('password')}
-                  placeholder={'password'}
+                  placeholder={t.auth.signInPage.password}
                 />
               )}
             />
@@ -145,7 +139,7 @@ export const SignUpForm = () => {
                   label={t.auth.signUpPage.labelСonfirm}
                   onChange={field.onChange}
                   onFocus={() => clearErrors('password')}
-                  placeholder={'password'}
+                  placeholder={t.auth.signUpPage.labelСonfirm}
                 />
               )}
             />

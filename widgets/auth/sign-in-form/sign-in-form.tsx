@@ -1,13 +1,13 @@
 import { Controller, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 
 import { useGetMeQuery, useLoginMutation } from '@/shared/api/auth.service';
-import { baseUrl, setTokenToLocalStorage } from '@/shared/api/base-api';
+import { setTokenToLocalStorage } from '@/shared/api/base-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button/button';
 import { Card } from '@/shared/ui/Card/Card';
 import { TextField } from '@/shared/ui/textField/TextField';
 import { Typography } from '@/shared/ui/typography';
+import { GitHubGoogleContainer } from '@/widgets/auth/gitHubGoogleContainer/gitHubGoogleContainer';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -15,19 +15,11 @@ import { z } from 'zod';
 
 import s from 'widgets/auth/sign-in-form/sign-in-form.module.scss';
 
-import GitHubLogo from '../../../assets/icons/gitHubLogo.svg';
-import GoogleLogo from '../../../assets/icons/googleLogo.svg';
-
 export const SignInForm = () => {
-  const dispatch = useDispatch;
   const { data: meData } = useGetMeQuery();
   const { t } = useTranslation();
   const signInSchema = z.object({
-    email: z
-      .string()
-
-      .email(t.auth.signInPage.invalidEmail)
-      .nonempty('Enter email'),
+    email: z.string().email(t.auth.signInPage.invalidEmail).nonempty('Enter email'),
     password: z
       .string()
       .min(6, { message: t.auth.signInPage.invalidPass })
@@ -38,11 +30,9 @@ export const SignInForm = () => {
       })
     /* eslint-enable */
   });
+
   const router = useRouter();
   const [login, { data: loginData }] = useLoginMutation();
-  const onGoogle = () => {
-    router.push(`${baseUrl}/api/v1/auth/google`);
-  };
 
   type FormValuesType = z.infer<typeof signInSchema>;
   const onSubmit = (data: FormValuesType) => {
@@ -71,10 +61,7 @@ export const SignInForm = () => {
       <div>
         <Typography.H1>{t.navbar.signIn}</Typography.H1>
       </div>
-      <div className={s.gitHubGoogleContainer}>
-        <GoogleLogo onClick={onGoogle} />
-        <GitHubLogo />
-      </div>
+      <GitHubGoogleContainer />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={s.textFieldsContainer}>
           <Controller

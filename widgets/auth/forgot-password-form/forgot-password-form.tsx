@@ -46,7 +46,7 @@ export const ForgotPasswordForm = () => {
     resolver: zodResolver(signInSchema),
   });
 
-  const [forgotPassword] = useForgotPasswordMutation();
+  const [forgotPassword, { error: forgotPassError }] = useForgotPasswordMutation();
 
   const onSubmit = (data: FormValuesType) => {
     forgotPassword({
@@ -69,8 +69,12 @@ export const ForgotPasswordForm = () => {
   const SITE_KEY = '6Lek3hEpAAAAACzSq5KIvkUdoGZYl579JldVdZs-'; //for incubator-icta-trainee.uk
   const LOCALHOST_KEY = '6Lfm4xEpAAAAAD8LnoqR-DwtFEgFJiiOHaWhAg22'; //for localhost:3000
 
+  console.log(forgotPassError);
   if (meData) {
     router.push(`/`);
+  }
+  if (forgotPassError?.originalStatus === 200) {
+    router.push(`/signIn`);
   }
 
   return (
@@ -140,7 +144,7 @@ export const ForgotPasswordForm = () => {
               /* errors={fieldState?.error?.message}*/
               onChange={field.onChange}
               ref={recaptchaRef}
-              sitekey={SITE_KEY}
+              sitekey={LOCALHOST_KEY}
               theme={"dark"}
               /*     value={field.value}*/
             />

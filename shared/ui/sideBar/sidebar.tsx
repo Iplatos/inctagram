@@ -5,6 +5,7 @@ import { CloseDialog, Modal } from '@/features/modal';
 import { useGetMeQuery, useLogoutMutation } from '@/shared/api/auth.service';
 import { setTokenToLocalStorage } from '@/shared/api/base-api';
 import { useAppSelector } from '@/shared/api/store';
+import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button';
 import { Typography } from '@/shared/ui/typography';
 import { Trans } from '@/widgets/Trans/Trans';
@@ -26,6 +27,7 @@ export const SideBar = () => {
   const { isLoggedIn } = useAppSelector(state => state.authReducer);
   const dispatch = useDispatch();
   const { data: meData } = useGetMeQuery();
+  const { t } = useTranslation();
 
   function handleModalClosed() {
     setOpen(false);
@@ -88,9 +90,9 @@ export const SideBar = () => {
           <Typography.Regular16>
             <Trans
               tags={{
-                '1': () => <b>{`${email}`}</b>,
+                '1': () => <b>{`${meData.email}`}</b>,
               }}
-              text={`Are you really want to log out of your account "${email}?"`}
+              text={t.logOut.reallyWantToLogOut + ` ${meData.email}?`}
             />
           </Typography.Regular16>
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 25 }}>
