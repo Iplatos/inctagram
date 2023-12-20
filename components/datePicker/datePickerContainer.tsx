@@ -43,6 +43,10 @@ export const DatePickerContainer = () => {
     setValues(date);
   };
 
+  if (values) {
+    console.log((new Date() - values[0]?.toDate()) / (1000 * 60 * 60 * 24 * 365.25));
+  }
+
   return (
     <div
       className={s.datePickerContainer}
@@ -58,7 +62,7 @@ export const DatePickerContainer = () => {
         className={'bg-dark'}
         containerClassName={s.cont}
         dateSeparator={' - '}
-        format={'DD/MM/YYYY'}
+        format={'DD.MM.YYYY'}
         headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
         locale={changeLocale()}
         mapDays={({ date }) => {
