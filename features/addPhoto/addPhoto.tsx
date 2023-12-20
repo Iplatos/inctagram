@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
+import AvatarEditor from 'react-avatar-editor';
 import { useDispatch } from 'react-redux';
 
-import { Avatar } from '@/components/Avatar/Avatar';
 import { InputTypeFile } from '@/features/addPhoto/InputTypeFile';
 import { showErrorMessage, showPreViewAvatar } from '@/features/addPhoto/addPhoto.slice';
 import { Modal } from '@/features/modal';
 import { useUploadPhotoMutation } from '@/shared/api/auth.service';
 import { useAppSelector } from '@/shared/api/store';
-import { Button } from '@/shared/ui/Button';
 import { Alerts } from '@/shared/ui/alerts/Alerts';
 import { Typography } from '@/shared/ui/typography';
 import { Trans } from '@/widgets/Trans/Trans';
@@ -18,7 +17,8 @@ import s from './addPhoto.module.scss';
 export const AddPhoto = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('someEmail');
-  const [size, setSize] = useState<number>(100);
+  const [scale, setScale] = useState<number>(1);
+  const [pos, setPos] = useState({ x: 0.1, y: 0.1 });
   const [uploadPhoto] = useUploadPhotoMutation();
   const dispatch = useDispatch();
   const { avatar, errorMessage } = useAppSelector(state => state.addPhotoReducer);
@@ -49,8 +49,11 @@ export const AddPhoto = () => {
   const addAvatarForPreView = (photo: string) => {
     dispatch(showPreViewAvatar(photo));
   };
-  const changePhotoSize = (param: string) => {
-    param === '+' ? setSize(size + 5) : setSize(size - 5);
+  const changePhotoSize = (e: React.WheelEvent<HTMLDivElement>) => {
+    e.deltaY < 0 ? setScale(scale + 0.1) : setScale(scale - 0.1);
+  };
+  const changePos = (position: { x: number; y: number }) => {
+    setPos(position);
   };
 
   return (
@@ -79,10 +82,25 @@ export const AddPhoto = () => {
           </Typography.Regular14>
         </Alerts>
 
-        <div className={s.border}>
-          <div className={avatar ? s.photoPlaceHolderWithAvatar : s.photoPlaceHolder}>
-            {avatar ? <Avatar photo={avatar} size={size} /> : ''}
-          </div>
+        <div
+          className={avatar ? s.photoPlaceHolderWithAvatar : s.photoPlaceHolder}
+          onWheel={e => changePhotoSize(e)}
+        >
+          {avatar ? (
+            <AvatarEditor
+              border={50}
+              borderRadius={120}
+              color={[255, 255, 255, 0.3]} // RGBA
+              height={250}
+              image={avatar}
+              onPositionChange={changePos} // Update this line
+              position={pos}
+              scale={scale}
+              width={250}
+            />
+          ) : (
+            ''
+          )}
         </div>
         <div style={{ display: 'flex', height: '100px', justifyContent: 'center' }}>
           <div
@@ -97,12 +115,6 @@ export const AddPhoto = () => {
           >
             <InputTypeFile addPhoto={addPhoto} photo={avatar} preViewAvatar={addAvatarForPreView} />
           </div>
-          {avatar && (
-            <div style={{ position: 'absolute' }}>
-              <Button onClick={() => changePhotoSize('+')}>+</Button>
-              <Button onClick={() => changePhotoSize('-')}>-</Button>
-            </div>
-          )}
         </div>
       </Modal>
     </div>

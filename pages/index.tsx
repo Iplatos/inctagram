@@ -1,3 +1,6 @@
+import React from 'react';
+
+import { AddPhoto } from '@/features/addPhoto/addPhoto';
 import { useGetMeQuery } from '@/shared/api/auth.service';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
@@ -26,7 +29,9 @@ function Home() {
       {/*   <DatePickerContainer />
 
       */}
-      {/* <AddPhoto />*/}
+      <div style={{ marginLeft: '300px' }}>
+        <AddPhoto />
+      </div>
       {/*  <div>
         {error?.status} {JSON.stringify(error)}
       </div>*/}
