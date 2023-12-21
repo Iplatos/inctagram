@@ -1,0 +1,66 @@
+%alert {
+  display: flex;
+  padding: 12px 24px;
+  border-radius: 2px;
+}
+
+// TODO: add flex mixin and em, rem helpers
+.error {
+  @extend %alert;
+
+  background-color: var(--color-danger-900);
+  border: 1px solid var(--color-danger-500);
+}
+
+.success {
+  @extend %alert;
+
+  background-color: var(--color-success-900);
+  border: 1px solid var(--color-success-500);
+}
+
+.message {
+  align-self: center;
+}
+
+.action {
+  margin-left: auto;
+  padding-left: 20px;
+}
+
+%close {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  border-radius: 3px;
+}
+
+.closeSuccess {
+  @extend %close;
+
+  &:hover {
+    background-color: var(--color-success-700);
+  }
+
+  &:active {
+    background-color: var(--color-success-500);
+  }
+}
+
+.closeError {
+  @extend %close;
+
+  &:hover {
+    background-color: var(--color-danger-700);
+  }
+
+  &:active {
+    background-color: var(--color-danger-500);
+  }
+}
