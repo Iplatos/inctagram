@@ -9,7 +9,6 @@ import { NextPage } from 'next';
 import { Sidebar } from '../sidebar';
 
 import style from './Layout.module.scss';
-import { Content } from '@radix-ui/react-select';
 
 export const Layout: NextPage<PropsWithChildren> = props => {
   const { children } = props;
@@ -21,7 +20,8 @@ export const Layout: NextPage<PropsWithChildren> = props => {
 
         <main>
           <Sidebar />
-          {/* <NavBar /> */}
+          <NavBar />
+          {children}
         </main>
       </Provider>
     </>
