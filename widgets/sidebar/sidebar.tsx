@@ -20,7 +20,7 @@ import TrendingUpOutline from 'assets/icons/trending-up-outline.svg';
 
 import s from './sidebar.module.scss';
 
-export const SideBar = () => {
+export const Sidebar = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('someEmail');
   const [logout] = useLogoutMutation();
@@ -49,43 +49,45 @@ export const SideBar = () => {
   return (
     <div className={s.sidebarContainer}>
       <div className={s.buttonContainer}>
-        <button>
+        <div className={s.button} tabIndex={1}>
           <HomeOutline className={s.svgAsComponent} />
           Home
-        </button>
+        </div>
 
-        <button>
+        <div className={s.button} tabIndex={1}>
           <PlusSquareOutline className={s.svgAsComponent} />
           Create
-        </button>
-        <button>
+        </div>
+        <div className={s.button} tabIndex={1}>
           <PersonOutline className={s.svgAsComponent} />
           My Profile
-        </button>
-        <button>
+        </div>
+        <div className={s.button} tabIndex={1}>
           <MessageCircleOutline className={s.svgAsComponent} />
           Messenger
-        </button>
-        <button>
+        </div>
+        <div className={s.button} tabIndex={1}>
           <SearchOutline className={s.svgAsComponent} />
           Search
-        </button>
+        </div>
       </div>
+
       <div className={s.buttonContainer}>
-        <button>
+        <div className={s.button} tabIndex={1}>
           <TrendingUpOutline className={s.svgAsComponent} />
           Statistics
-        </button>
-        <button>
+        </div>
+        <div className={s.button} tabIndex={1}>
           <BookmarkOutline className={s.svgAsComponent} />
           Favorites
-        </button>
+        </div>
       </div>
-      <div className={s.logOutButtonContainer}>
-        <button onClick={handleModalOpened}>
+
+      <div className={s.buttonContainer}>
+        <div className={s.button} onClick={handleModalOpened} tabIndex={1}>
           <LogOutOutline className={s.svgAsComponent} />
           Log Out
-        </button>
+        </div>
         <Modal onClose={handleModalClosed} open={open} showCloseButton title={'Log Out'}>
           <Typography.Regular16>
             <Trans

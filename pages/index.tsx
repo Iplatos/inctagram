@@ -2,6 +2,8 @@ import { useGetMeQuery } from '@/shared/api/auth.service';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
+import { ProfileSettingsContent } from '@/widgets/profile';
+import { Sidebar } from '@/widgets/sidebar';
 import { useRouter } from 'next/navigation';
 
 function Home() {
@@ -31,6 +33,9 @@ function Home() {
         {error?.status} {JSON.stringify(error)}
       </div>*/}
       {/*<button onClick={logOut}>logout</button>*/}
+
+      {/* <Sidebar />
+      <ProfileSettingsContent /> */}
     </>
   );
 }
