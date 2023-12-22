@@ -21,6 +21,7 @@ export type TextFieldProps<T extends TextFieldType = 'input'> = {
   onChange: (e: string) => void;
   onFocus?: () => void;
   placeholder?: string;
+  required?: boolean;
   value: string;
 };
 
@@ -34,6 +35,7 @@ export const TextField = forwardRef((props: TextFieldProps, ref) => {
     label,
     onChange,
     placeholder = 'email',
+    required,
     value,
   } = props;
 
@@ -51,7 +53,10 @@ export const TextField = forwardRef((props: TextFieldProps, ref) => {
 
   return (
     <div className={s.inputContainer}>
-      <Typography.Regular14 color={'var(--color-light-900)'}>{label}</Typography.Regular14>
+      <Typography.Regular14 color={'var(--color-light-900)'}>
+        {label}
+        {required && <Typography.Regular14 color={'red'}>*</Typography.Regular14>}
+      </Typography.Regular14>
       <Component
         {...rest}
         className={`${isSearchInput ? `${s.input} ${s.inputSearch}` : s.input} ${

@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { ProfileSettingsContent } from './profile-settings';
+import { EditProfile } from './edit-profile';
 
 const meta = {
   argTypes: {},
-  component: ProfileSettingsContent,
+  component: EditProfile,
   parameters: {
     nextRouter: {
       appDirectory: true,
     },
   },
   tags: ['autodocs'],
-  title: 'Profile/ProfileSettingsContent',
-} satisfies Meta<typeof ProfileSettingsContent>;
+  title: 'Accounts/Edit/EditProfile',
+} satisfies Meta<typeof EditProfile>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

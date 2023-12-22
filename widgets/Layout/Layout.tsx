@@ -17,7 +17,6 @@ export const Layout: NextPage<PropsWithChildren> = props => {
     <>
       <Provider store={store}>
         <Header />
-
         <main>
           <Sidebar />
           <NavBar />

@@ -1,0 +1,16 @@
+.photoContainer {
+    display: flex;
+    flex-direction: column;
+    padding-top: 24px;
+    gap: 30px;
+}
+
+.imageBlock {
+    width: 192px;
+    height: 192px;
+    border-radius: 50%;
+    background-color: var(--color-dark-500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

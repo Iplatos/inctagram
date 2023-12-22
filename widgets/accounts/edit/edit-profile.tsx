@@ -2,9 +2,15 @@ import React from 'react';
 
 import { TabContent, Tabs } from '@/shared/ui';
 
-import style from './profile-settings.module.scss';
+import style from './edit-profile.module.scss';
+import {
+  AccountManagement,
+  Devices,
+  GeneralInformation,
+  MyPayments,
+} from '@/entities/accounts/edit';
 
-export const ProfileSettingsContent = () => {
+export const EditProfile = () => {
   return (
     <div className={style.profileContainer}>
       <Tabs
@@ -21,11 +27,17 @@ export const ProfileSettingsContent = () => {
         ]}
       >
         <TabContent value={'general information'}>
-          Контент 1<div>ertnbertn</div>
+          <GeneralInformation />
         </TabContent>
-        <TabContent value={'devices'}>Контент 2</TabContent>
-        <TabContent value={'account management'}>Контент 3</TabContent>
-        <TabContent value={'my payments'}>Контент 4</TabContent>
+        <TabContent value={'devices'}>
+          <Devices />
+        </TabContent>
+        <TabContent value={'account management'}>
+          <AccountManagement />
+        </TabContent>
+        <TabContent value={'my payments'}>
+          <MyPayments />
+        </TabContent>
       </Tabs>
     </div>
   );
