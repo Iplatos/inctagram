@@ -5,8 +5,8 @@ import Image from 'next/image';
 
 import style from './pagination.module.scss';
 
-import paginationForwardImg from '../../assets/icons/pagination-forward.svg?url';
-import paginationPrevImg from '../../assets/icons/pagination-prev.svg?url';
+import paginationForwardImg from '../../../assets/icons/pagination-forward.svg?url';
+import paginationPrevImg from '../../../assets/icons/pagination-prev.svg?url';
 
 const data = [
   {
