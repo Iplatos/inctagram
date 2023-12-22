@@ -58,6 +58,111 @@ export const ProfileForm = () => {
             />
           )}
         />
+
+        <Controller
+          control={control}
+          name={'firstname'}
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              errors={fieldState?.error?.message}
+              inputtype={'text'}
+              label={'First Name'}
+              onChange={field.onChange}
+              onFocus={() => clearErrors('firstname')}
+              placeholder={''}
+              required
+              value={field.value}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name={'lastname'}
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              errors={fieldState?.error?.message}
+              inputtype={'text'}
+              label={'Last Name'}
+              onChange={field.onChange}
+              onFocus={() => clearErrors('lastname')}
+              placeholder={''}
+              required
+              value={field.value}
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name={'dateofbirth'}
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              errors={fieldState?.error?.message}
+              inputtype={'text'}
+              label={'Date of birth'}
+              onChange={field.onChange}
+              onFocus={() => clearErrors('dateofbirth')}
+              placeholder={'00.00.00'}
+              value={field.value}
+            />
+          )}
+        />
+
+        <div className={style.selectBlock}>
+          <Controller
+            control={control}
+            name={'country'}
+            render={({ field, fieldState }) => (
+              <TextField
+                {...field}
+                errors={fieldState?.error?.message}
+                inputtype={'text'}
+                label={'Country'}
+                onChange={field.onChange}
+                onFocus={() => clearErrors('country')}
+                placeholder={''}
+                value={field.value}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name={'city'}
+            render={({ field, fieldState }) => (
+              <TextField
+                {...field}
+                errors={fieldState?.error?.message}
+                inputtype={'text'}
+                label={'City'}
+                onChange={field.onChange}
+                onFocus={() => clearErrors('city')}
+                placeholder={''}
+                value={field.value}
+              />
+            )}
+          />
+        </div>
+
+        <Controller
+          control={control}
+          name={'aboutme'}
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              errors={fieldState?.error?.message}
+              inputtype={'text'}
+              label={'About me'}
+              onChange={field.onChange}
+              onFocus={() => clearErrors('aboutme')}
+              placeholder={''}
+              value={field.value}
+            />
+          )}
+        />
       </form>
     </div>
   );
