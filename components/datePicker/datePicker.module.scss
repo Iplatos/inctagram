@@ -8,9 +8,18 @@
   }
 }
 
+
 .datePickerContainer {
+
+
   height: 60px;
   width: max-content;
+
+  :global {
+    .bg-dark.rmdp-wrapper {
+      background-color: #ff8099;
+    }
+  }
 }
 
 .cont button {

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { CloseDialog, Modal } from '@/features/modal';
 import { useGetMeQuery, useLogoutMutation } from '@/shared/api/auth.service';
@@ -17,17 +16,17 @@ import PersonOutline from 'assets/icons/person-outline.svg';
 import PlusSquareOutline from 'assets/icons/plus-square-outline.svg';
 import SearchOutline from 'assets/icons/searchOutline.svg';
 import TrendingUpOutline from 'assets/icons/trending-up-outline.svg';
+import { useRouter } from 'next/navigation';
 
 import s from './sidebar.module.scss';
 
 export const SideBar = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>('someEmail');
   const [logout] = useLogoutMutation();
   const { isLoggedIn } = useAppSelector(state => state.authReducer);
-  const dispatch = useDispatch();
   const { data: meData } = useGetMeQuery();
   const { t } = useTranslation();
+  const router = useRouter();
 
   function handleModalClosed() {
     setOpen(false);
@@ -40,6 +39,7 @@ export const SideBar = () => {
   const logOut = () => {
     logout();
     setTokenToLocalStorage(null);
+    router.push('/signIn');
   };
 
   if (!meData) {

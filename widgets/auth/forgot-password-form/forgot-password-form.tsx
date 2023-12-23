@@ -46,7 +46,7 @@ export const ForgotPasswordForm = () => {
     resolver: zodResolver(signInSchema),
   });
 
-  const [forgotPassword, { error: forgotPassError }] = useForgotPasswordMutation();
+  const [forgotPassword, { error }] = useForgotPasswordMutation();
 
   const onSubmit = (data: FormValuesType) => {
     forgotPassword({
@@ -72,8 +72,10 @@ export const ForgotPasswordForm = () => {
   if (meData) {
     router.push(`/`);
   }
-  if (forgotPassError?.originalStatus === 200) {
-    router.push(`/signIn`);
+  if (error) {
+    if ('data' in error) {
+      error.data === 'OK' && router.push(`/signIn`);
+    }
   }
 
   return (

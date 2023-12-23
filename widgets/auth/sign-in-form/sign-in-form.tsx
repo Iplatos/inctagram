@@ -16,7 +16,7 @@ import { z } from 'zod';
 import s from 'widgets/auth/sign-in-form/sign-in-form.module.scss';
 
 export const SignInForm = () => {
-  const { data: meData } = useGetMeQuery();
+  const { data: meData, error: meError } = useGetMeQuery();
   const { t } = useTranslation();
   const signInSchema = z.object({
     email: z.string().email(t.auth.signInPage.invalidEmail).nonempty('Enter email'),
@@ -54,6 +54,7 @@ export const SignInForm = () => {
   if (meData) {
     router.push(`/`);
   }
+  console.log(meData);
 
   return (
     /* eslint-disable */

@@ -19,7 +19,6 @@ export const DatePickerContainer = () => {
     new DateObject(new Date().getTime() - 4 * 24 * 60 * 60 * 1000),
     new DateObject(new Date().getTime() + 4 * 24 * 60 * 60 * 1000),
   ]);
-  const [open, setOpen] = useState(false);
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -43,9 +42,9 @@ export const DatePickerContainer = () => {
     setValues(date);
   };
 
-  if (values) {
-    console.log((new Date() - values[0]?.toDate()) / (1000 * 60 * 60 * 24 * 365.25));
-  }
+  /*  if (values) {
+      console.log((new Date() - values[0]?.toDate()) / (1000 * 60 * 60 * 24 * 365.25));
+    }*/
 
   return (
     <div
@@ -76,7 +75,7 @@ export const DatePickerContainer = () => {
           return props;
         }}
         onChange={handleDateChange}
-        range
+        /* range*/
         render={<InputIcon />}
         value={values}
         weekStartDayIndex={1}

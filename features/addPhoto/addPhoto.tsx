@@ -10,6 +10,7 @@ import { useAppSelector } from '@/shared/api/store';
 import { Alerts } from '@/shared/ui/alerts/Alerts';
 import { Typography } from '@/shared/ui/typography';
 import { Trans } from '@/widgets/Trans/Trans';
+import ImageSVG from 'assets/icons/image.svg';
 
 import s from './addPhoto.module.scss';
 
@@ -27,7 +28,10 @@ export const AddPhoto = () => {
     const formData = new FormData();
 
     formData.append('file', photo);
-    formData.append('userId', '245a822d-796a-4bcf-9d69-6c3e246271c9');
+    /*
+        formData.append('fileProps', JSON.stringify({ pos: { x: 1, y: 1 }, scale: 12 }));
+    */
+    formData.append('userId', '42cf740f-6e4e-4e0e-8541-873c2bd6ae7d');
     formData.append('firstName', 'Jonh');
     formData.append('familyName', 'Doe');
     formData.append('dateOfBirth', '12.12.1999');
@@ -99,7 +103,7 @@ export const AddPhoto = () => {
               width={250}
             />
           ) : (
-            ''
+            <ImageSVG />
           )}
         </div>
         <div style={{ display: 'flex', height: '100px', justifyContent: 'center' }}>

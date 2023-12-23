@@ -30,7 +30,7 @@ const authService = baseApi.injectEndpoints({
         };
       },
     }),
-    forgotPassword: builder.mutation<void, PasswordRecoveryRequestType>({
+    forgotPassword: builder.mutation<any, PasswordRecoveryRequestType>({
       query: params => {
         return {
           body: params,
@@ -40,10 +40,11 @@ const authService = baseApi.injectEndpoints({
       },
     }),
     getMe: builder.query<MeResponseType, void>({
+      /* providesTags: ['Me'],*/
       query: () => `/api/v1/auth/me`,
     }),
     login: builder.mutation<LoginResponseType, LoginRequestType>({
-      invalidatesTags: ['Me'],
+      /*  invalidatesTags: ['Me'],*/
       query: data => ({
         body: data,
         headers: {
@@ -54,7 +55,7 @@ const authService = baseApi.injectEndpoints({
       }),
     }),
     logout: builder.mutation<any, void>({
-      invalidatesTags: ['Me'],
+      /*invalidatesTags: ['Me'],*/
       query: () => ({
         method: 'GET',
         url: '/api/v1/auth/logout',
