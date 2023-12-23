@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 function Home() {
   const { t } = useTranslation();
   /*const { data: feed, error } = useGetFeedQuery();*/
-  const { data: meData, error: meError } = useGetMeQuery();
+  const { data: meData, error: meError, isLoading: isMeLoading } = useGetMeQuery();
   /*const { data, error } = useFilteredPostsQuery();*/
   const router = useRouter();
 
@@ -20,6 +20,9 @@ function Home() {
     if ('status' in meError) {
       meError.status === 401 && router.push('/signIn');
     }
+  }
+  if (isMeLoading) {
+    return <div>hello</div>;
   }
 
   return (

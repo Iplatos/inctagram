@@ -16,7 +16,7 @@ import { z } from 'zod';
 import s from 'widgets/auth/sign-in-form/sign-in-form.module.scss';
 
 export const SignInForm = () => {
-  const { data: meData, error: meError } = useGetMeQuery();
+  const { data: meData, error: meError, isLoading: isMeLoading } = useGetMeQuery();
   const { t } = useTranslation();
   const signInSchema = z.object({
     email: z.string().email(t.auth.signInPage.invalidEmail).nonempty('Enter email'),
@@ -47,11 +47,15 @@ export const SignInForm = () => {
     resolver: zodResolver(signInSchema),
   });
 
+  if (isMeLoading) {
+    return <div>hello</div>;
+  }
+
   if (loginData) {
     setTokenToLocalStorage(loginData.accessToken);
     router.push(`/`);
   }
-  if (meData) {
+  if (!meError) {
     router.push(`/`);
   }
   console.log(meData);

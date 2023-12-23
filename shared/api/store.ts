@@ -20,4 +20,9 @@ export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 // а это, чтобы можно было в консоли браузера обращаться к store в любой момент
-// @ts-ignore
+
+if (globalThis?.window) {
+  // @ts-ignore
+
+  window.store = store;
+}
