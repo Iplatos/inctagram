@@ -6,8 +6,8 @@ import { clsx } from 'clsx';
 
 import s from './alert.module.scss';
 
-type AlertSeverity = 'error' | 'success';
-export type AlertSlot = 'action' | 'close' | 'message' | 'root';
+export type AlertSeverity = 'error' | 'success';
+export type AlertSlot = 'action' | 'alertRoot' | 'close' | 'message';
 export type AlertClasses = { [P in AlertSlot]?: string };
 
 export type AlertProps = PropsWithChildren<{
@@ -30,17 +30,21 @@ export const Alert = forwardRef<ElementRef<'div'>, AlertProps>(
     const showAction = onClose ?? action;
 
     return (
-      <div className={cls.root} ref={ref}>
-        <div className={cls.message}>{children}</div>
-        <div className={cls.action}>{showAction && resolvedAction}</div>
+      <div className={cls.alertRoot} data-test-id={'alert'} ref={ref}>
+        <div className={cls.message} data-test-id={'message'}>
+          {children}
+        </div>
+        <div className={cls.action} data-test-id={'action'}>
+          {showAction && resolvedAction}
+        </div>
       </div>
     );
   }
 );
 
-const getClassNames = (classes: AlertClasses, severity: AlertSeverity) => ({
+const getClassNames = (classes: AlertClasses, severity: AlertSeverity): AlertClasses => ({
   action: clsx(s.action, classes.action),
+  alertRoot: clsx(s[`alertRoot${capitalise(severity)}`], classes.alertRoot),
   close: clsx(s[`close${capitalise(severity)}`], classes.close),
   message: clsx(s.message, classes.message),
-  root: clsx(s[`root${capitalise(severity)}`], classes.root),
 });

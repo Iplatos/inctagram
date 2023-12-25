@@ -1,19 +1,19 @@
-%alert {
+%alert-root {
   display: flex;
   padding: 12px 24px;
   border-radius: 2px;
 }
 
 // TODO: add flex mixin and em, rem helpers
-.rootError {
-  @extend %alert;
+.alertRootError {
+  @extend %alert-root;
 
   background-color: var(--color-danger-900);
   border: 1px solid var(--color-danger-500);
 }
 
-.rootSuccess {
-  @extend %alert;
+.alertRootSuccess {
+  @extend %alert-root;
 
   background-color: var(--color-success-900);
   border: 1px solid var(--color-success-500);
