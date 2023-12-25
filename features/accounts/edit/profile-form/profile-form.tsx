@@ -5,7 +5,8 @@ import style from './profile-form.module.scss';
 import { z } from 'zod';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TextField } from '@/shared/ui';
+import { SelectBox, TextField } from '@/shared/ui';
+import { useRouter } from 'next/router';
 
 const schema = z.object({
   aboutme: z.string(),
@@ -36,6 +37,28 @@ export const ProfileForm = () => {
 
   const onSubmit = (data: FormValuesType) => {
     ////data
+  };
+
+  const selectOptions = [
+    { label: 'English', value: 'en' },
+    { label: 'Русский', value: 'ru' },
+    { label: 'french', value: 'france' },
+    { label: '1', value: '1' },
+    { label: '2', value: '2' },
+    { label: '3', value: '3' },
+    { label: '4', value: '4' },
+  ];
+
+  // const defaultIdx = selectOptions.findIndex(item => item.value === locale);
+
+  const changeCountry = (value: string) => {
+    // push(value);
+
+    console.log(value);
+  };
+
+  const changeCity = (value: string) => {
+    // push(value);
   };
 
   return (
@@ -113,38 +136,34 @@ export const ProfileForm = () => {
         />
 
         <div className={style.selectBlock}>
-          <Controller
-            control={control}
-            name={'country'}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                errors={fieldState?.error?.message}
-                inputtype={'text'}
-                label={'Country'}
-                onChange={field.onChange}
-                onFocus={() => clearErrors('country')}
-                placeholder={''}
-                value={field.value}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name={'city'}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                errors={fieldState?.error?.message}
-                inputtype={'text'}
-                label={'City'}
-                onChange={field.onChange}
-                onFocus={() => clearErrors('city')}
-                placeholder={''}
-                value={field.value}
-              />
-            )}
-          />
+          <div className={style.select}>
+            <Controller
+              control={control}
+              name={'country'}
+              render={({ field, fieldState }) => (
+                <SelectBox
+                  labelField={'Country'}
+                  onChangeFn={changeCountry}
+                  options={selectOptions}
+                  placeholder={'Country'}
+                />
+              )}
+            />
+          </div>
+          <div className={style.select}>
+            <Controller
+              control={control}
+              name={'city'}
+              render={({ field, fieldState }) => (
+                <SelectBox
+                  labelField={'City'}
+                  onChangeFn={changeCity}
+                  options={selectOptions}
+                  placeholder={'City'}
+                />
+              )}
+            />
+          </div>
         </div>
 
         <Controller
@@ -152,6 +171,7 @@ export const ProfileForm = () => {
           name={'aboutme'}
           render={({ field, fieldState }) => (
             <TextField
+              as={'textarea'}
               {...field}
               errors={fieldState?.error?.message}
               inputtype={'text'}

@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { useArgs } from '@storybook/preview-api';
+
 import { useState } from 'react';
 
 import { Checkbox } from '.';
@@ -31,11 +33,21 @@ export const Default: Story = {
     label: 'hello world',
   },
 
-  render: args => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [checked, setChecked] = useState(false);
+  // render: args => {
+  //   // eslint-disable-next-line react-hooks/rules-of-hooks
+  //   const [checked, setChecked] = useState(false);
 
-    return <Checkbox {...args} checked={checked} onChange={() => setChecked(!checked)} />;
+  //   return <Checkbox {...args} checked={checked} onChange={() => setChecked(!checked)} />;
+  // },
+
+  render: function Render(args) {
+    const [{ checked }, updateArgs] = useArgs();
+
+    function onChange() {
+      updateArgs({ checked: !checked });
+    }
+
+    return <Checkbox {...args} checked={checked} onChange={onChange} />;
   },
 };
 
@@ -64,6 +76,7 @@ export const CheckedDisabled: Story = {
     disabled: true,
   },
 };
+
 export const CheckedDisabledWithLabel: Story = {
   args: {
     checked: true,
