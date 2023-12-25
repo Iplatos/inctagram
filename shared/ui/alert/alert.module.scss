@@ -1,10 +1,11 @@
+@use '../../../styles/helpers' as *;
+
 %alert-root {
   display: flex;
-  padding: 12px 24px;
+  padding: em(12) em(24);
   border-radius: 2px;
 }
 
-// TODO: add flex mixin and em, rem helpers
 .alertRootError {
   @extend %alert-root;
 
@@ -25,7 +26,7 @@
 
 .action {
   margin-left: auto;
-  padding-left: 20px;
+  padding-left: em(20);
 }
 
 %close {
@@ -35,8 +36,8 @@
   align-items: center;
   justify-content: center;
 
-  width: 32px;
-  height: 32px;
+  width: em(32);
+  height: em(32);
 
   border-radius: 3px;
 }
