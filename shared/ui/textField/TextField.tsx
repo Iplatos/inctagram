@@ -8,25 +8,29 @@ import Image from 'next/image';
 
 import s from 'shared/ui/textField/TextField.module.scss';
 
-type TextFieldType = 'input' | 'textarea';
+// type TextFieldType = 'input' | 'textarea';
 
-export type TextFieldProps<T extends TextFieldType = 'input'> = {
-  as?: T;
-  className?: string;
-  disabled?: boolean;
-  errors?: string;
-  inputtype?: 'password' | 'text';
-  isSearchInput?: boolean;
-  label?: string;
-  onChange: (e: string) => void;
-  onFocus?: () => void;
-  placeholder?: string;
-  required?: boolean;
-  value: string;
-};
+export type TextFieldProps =
+  // <T extends TextFieldType = 'input'>
+
+  {
+    as?: 'input' | 'textarea';
+    className?: string;
+    disabled?: boolean;
+    errors?: string;
+    inputtype?: 'password' | 'text';
+    isSearchInput?: boolean;
+    label?: string;
+    onChange: (e: string) => void;
+    onFocus?: () => void;
+    placeholder?: string;
+    required?: boolean;
+    value: string;
+  };
 
 export const TextField = forwardRef((props: TextFieldProps, ref) => {
   const {
+    as,
     className,
     disabled,
     errors,

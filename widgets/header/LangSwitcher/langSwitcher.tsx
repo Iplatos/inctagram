@@ -19,11 +19,8 @@ export const LangSwitcher = () => {
   };
 
   return (
-    <SelectBox
-      defaultValue={defaultIdx}
-      onChangeFn={changeLangHandler}
-      options={selectOptions}
-      width={'small'}
-    />
+    <div style={{ width: '163px' }}>
+      <SelectBox defaultValue={defaultIdx} onChangeFn={changeLangHandler} options={selectOptions} />
+    </div>
   );
 };
