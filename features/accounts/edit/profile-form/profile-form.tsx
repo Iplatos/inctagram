@@ -1,12 +1,12 @@
 import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
+
+import { SelectBox } from '@/shared/ui/SelectBox';
+import { TextField } from '@/shared/ui/textField';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 import style from './profile-form.module.scss';
-
-import { z } from 'zod';
-import { Controller, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { SelectBox, TextField } from '@/shared/ui';
-import { useRouter } from 'next/router';
 
 const schema = z.object({
   aboutme: z.string(),
