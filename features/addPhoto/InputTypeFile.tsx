@@ -6,7 +6,7 @@ import { CloseDialog } from '@/features/modal';
 import { Button } from '@/shared/ui/Button';
 
 type AddPhotoProps = {
-  addPhoto: (a: any) => void;
+  addPhoto: (a: any, pos: { x: number; y: number }, scale: number) => void;
   photo?: string;
   preViewAvatar?: (photo: string) => void;
 };
