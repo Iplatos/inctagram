@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { CloseDialog, Modal } from '@/features/modal';
 import { useGetMeQuery, useLogoutMutation } from '@/shared/api/auth.service';
-import { setTokenToLocalStorage } from '@/shared/api/base-api';
+import { baseApi, setTokenToLocalStorage } from '@/shared/api/base-api';
 import { useAppSelector } from '@/shared/api/store';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button';
@@ -23,10 +24,11 @@ import s from './sidebar.module.scss';
 export const Sidebar = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [logout] = useLogoutMutation();
-  const { isLoggedIn } = useAppSelector(state => state.authReducer);
+  const { isLoggedIn } = useAppSelector(state => state.auth);
   const { data: meData } = useGetMeQuery();
   const { t } = useTranslation();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   function handleModalClosed() {
     setOpen(false);
@@ -39,6 +41,7 @@ export const Sidebar = () => {
   const logOut = () => {
     logout();
     setTokenToLocalStorage(null);
+    dispatch(baseApi.util.resetApiState());
     router.push('/signIn');
   };
 

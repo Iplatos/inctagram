@@ -2,12 +2,12 @@ import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
 import { addPhotoReducer } from '@/features/addPhoto/addPhoto.slice';
 import { baseApi } from '@/shared/api/base-api';
-import authReducer from '@/widgets/auth/slices/auth';
+import { authSlice } from '@/widgets/auth/slices/auth';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 const rootReducer = combineReducers({
   [addPhotoReducer.name]: addPhotoReducer.reducer,
-  authReducer,
+  [authSlice.name]: authSlice.reducer,
   [baseApi.reducerPath]: baseApi.reducer,
 });
 
