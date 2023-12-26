@@ -19,18 +19,22 @@ export const AddPhoto = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('someEmail');
   const [scale, setScale] = useState<number>(1);
-  const [pos, setPos] = useState({ x: 0.1, y: 0.1 });
+  const [pos, setPos] = useState({ x: 0.5, y: 0.5 });
   const [uploadPhoto] = useUploadPhotoMutation();
   const dispatch = useDispatch();
   const { avatar, errorMessage } = useAppSelector(state => state.addPhotoReducer);
 
   const addPhoto = (photo: File) => {
+    addPhotoWithParams(photo, pos, scale);
+  };
+  const addPhotoWithParams = (photo: File, pos: { x: number; y: number }, scale: number) => {
     const formData = new FormData();
 
-    formData.append('file', photo);
     /*
         formData.append('fileProps', JSON.stringify({ pos: { x: 1, y: 1 }, scale: 12 }));
     */
+    formData.append('file', photo);
+    formData.append('fileProps', JSON.stringify({ pos, scale }));
     formData.append('userId', '42cf740f-6e4e-4e0e-8541-873c2bd6ae7d');
     formData.append('firstName', 'Jonh');
     formData.append('familyName', 'Doe');

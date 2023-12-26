@@ -26,8 +26,8 @@ export const SignInForm = () => {
       .max(20, { message: t.auth.signInPage.invalidPass })
       /* eslint-disable */
       .regex(/^[0-9A-Za-z!"#$%&'()*+,\-.\/:;<=>?@[\\\]^_`{|}~]+$/, {
-        message: t.auth.signInPage.invalidPass,
-      }),
+        message: t.auth.signInPage.invalidPass
+      })
     /* eslint-enable */
   });
 
@@ -55,7 +55,7 @@ export const SignInForm = () => {
     setTokenToLocalStorage(loginData.accessToken);
     router.push(`/`);
   }
-  if (!meError) {
+  if (meData) {
     router.push(`/`);
   }
   console.log(meData);
@@ -76,13 +76,13 @@ export const SignInForm = () => {
           render={({ field, fieldState }) => (
             <TextField
               {...field}
-              onFocus={() => clearErrors('email')}
+              onFocus={() => clearErrors("email")}
               errors={fieldState?.error?.message}
               onChange={field.onChange}
               value={field.value}
               label={t.auth.signInPage.email}
               placeholder={t.auth.signInPage.email}
-              inputtype={'text'}
+              inputtype={"text"}
             />
           )}
         />
@@ -92,11 +92,11 @@ export const SignInForm = () => {
           render={({ field, fieldState }) => (
             <TextField
               {...field}
-              onFocus={() => clearErrors('password')}
+              onFocus={() => clearErrors("password")}
               onChange={field.onChange}
               placeholder={t.auth.signInPage.password}
               label={t.auth.signInPage.password}
-              inputtype={'password'}
+              inputtype={"password"}
               errors={fieldState?.error?.message}
             />
           )}
@@ -105,14 +105,14 @@ export const SignInForm = () => {
 
         {/* <div className={s.linksAndButtonsContainer}> */}
         <div className={s.forgotPasswordLink}>
-          <Link href={'/forgot-password'}>
-            <Typography.Regular14 color={'var(--color-light-900)'}>
+          <Link href={"/forgot-password"}>
+            <Typography.Regular14 color={"var(--color-light-900)"}>
               {t.navbar.forgotPassword}
             </Typography.Regular14>
           </Link>
         </div>
 
-        <Button style={{ width: '100%' }} type={'submit'}>
+        <Button style={{ width: "100%" }} type={"submit"}>
           {t.navbar.signIn}
         </Button>
 
@@ -120,7 +120,7 @@ export const SignInForm = () => {
         <Typography.Regular16>{t.auth.signInPage.dontHaveAcc}</Typography.Regular16>
 
         <Button variant="text">
-          <Link href={'/signUp'}>{t.navbar.signUp}</Link>
+          <Link href={"/signUp"}>{t.navbar.signUp}</Link>
         </Button>
         {/* </div> */}
 
