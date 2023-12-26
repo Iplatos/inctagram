@@ -1,0 +1,24 @@
+.formContainer {
+  width: 100%;
+//   background-color: pink;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 24px;
+//   background-color: red;
+}
+
+.selectBlock {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  width: 100%;
+}
+
+.select {
+  width: 50%;
+  z-index: 1111;
+}

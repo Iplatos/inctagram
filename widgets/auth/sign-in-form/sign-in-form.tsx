@@ -26,8 +26,8 @@ export const SignInForm = () => {
       .max(20, { message: t.auth.signInPage.invalidPass })
       /* eslint-disable */
       .regex(/^[0-9A-Za-z!"#$%&'()*+,\-.\/:;<=>?@[\\\]^_`{|}~]+$/, {
-        message: t.auth.signInPage.invalidPass
-      })
+        message: t.auth.signInPage.invalidPass,
+      }),
     /* eslint-enable */
   });
 
@@ -63,59 +63,68 @@ export const SignInForm = () => {
   return (
     /* eslint-disable */
     <Card className={s.signInFormContainer}>
-      <div>
-        <Typography.H1>{t.navbar.signIn}</Typography.H1>
-      </div>
+      {/* <div> */}
+      <Typography.H1>{t.navbar.signIn}</Typography.H1>
+      {/* </div> */}
       <GitHubGoogleContainer />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={s.textFieldsContainer}>
-          <Controller
-            control={control}
-            name="email"
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                onFocus={() => clearErrors("email")}
-                errors={fieldState?.error?.message}
-                onChange={field.onChange}
-                value={field.value}
-                label={t.auth.signInPage.email}
-                placeholder={t.auth.signInPage.email}
-                inputtype={"text"}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name="password"
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                onFocus={() => clearErrors("password")}
-                onChange={field.onChange}
-                placeholder={t.auth.signInPage.password}
-                label={t.auth.signInPage.password}
-                inputtype={"password"}
-                errors={fieldState?.error?.message}
-              />
-            )}
-          />
+
+      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+        {/* <div className={s.textFieldsContainer}> */}
+        <Controller
+          control={control}
+          name="email"
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              onFocus={() => clearErrors('email')}
+              errors={fieldState?.error?.message}
+              onChange={field.onChange}
+              value={field.value}
+              label={t.auth.signInPage.email}
+              placeholder={t.auth.signInPage.email}
+              inputtype={'text'}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="password"
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              onFocus={() => clearErrors('password')}
+              onChange={field.onChange}
+              placeholder={t.auth.signInPage.password}
+              label={t.auth.signInPage.password}
+              inputtype={'password'}
+              errors={fieldState?.error?.message}
+            />
+          )}
+        />
+        {/* </div> */}
+
+        {/* <div className={s.linksAndButtonsContainer}> */}
+        <div className={s.forgotPasswordLink}>
+          <Link href={'/forgot-password'}>
+            <Typography.Regular14 color={'var(--color-light-900)'}>
+              {t.navbar.forgotPassword}
+            </Typography.Regular14>
+          </Link>
         </div>
 
-        <div className={s.linksAndButtonsContainer}>
-          <div className={s.forgotPasswordLink}>
-            <Link href={"/forgot-password"}>
-              <Typography.Regular14 color={"var(--color-light-900)"}>
-                {t.navbar.forgotPassword}
-              </Typography.Regular14>
-            </Link>
-          </div>
-          <Button style={{ width: "100%" }} type={"submit"}>
-            {t.navbar.signIn}
-          </Button>
-          <Typography.Regular16>{t.auth.signInPage.dontHaveAcc}</Typography.Regular16>
-          <Link href={"/signUp"}>{t.navbar.signUp}</Link>
-        </div>
+        <Button style={{ width: '100%' }} type={'submit'}>
+          {t.navbar.signIn}
+        </Button>
+
+        {/* <div className=''> */}
+        <Typography.Regular16>{t.auth.signInPage.dontHaveAcc}</Typography.Regular16>
+
+        <Button variant="text">
+          <Link href={'/signUp'}>{t.navbar.signUp}</Link>
+        </Button>
+        {/* </div> */}
+
+        {/* </div> */}
       </form>
     </Card>
     /* eslint-enable */
