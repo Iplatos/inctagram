@@ -58,7 +58,12 @@ const authService = baseApi.injectEndpoints({
       onQueryStarted: async (_, { dispatch, getState, queryFulfilled }) => {
         try {
           await queryFulfilled;
-          dispatch(baseApi.util.resetApiState());
+
+          /*     dispatch(
+                 baseApi.util.updateQueryData('getMe', undefined, () => {
+                   return {};
+                 })
+               );*/
         } catch (e) {
           console.log(e);
         }

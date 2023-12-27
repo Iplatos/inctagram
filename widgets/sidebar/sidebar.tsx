@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { CloseDialog, Modal } from '@/features/modal';
 import { useGetMeQuery, useLogoutMutation } from '@/shared/api/auth.service';
-import { setTokenToLocalStorage } from '@/shared/api/base-api';
+import { baseApi, setTokenToLocalStorage } from '@/shared/api/base-api';
 import { useAppSelector } from '@/shared/api/store';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button';
@@ -41,9 +41,7 @@ export const Sidebar = () => {
   const logOut = () => {
     logout();
     setTokenToLocalStorage(null);
-    /*
-        dispatch(baseApi.util.resetApiState());
-    */
+    dispatch(baseApi.util.resetApiState());
     router.push('/signIn');
   };
 
