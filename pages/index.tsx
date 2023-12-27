@@ -6,8 +6,6 @@ import { useGetMeQuery } from '@/shared/api/auth.service';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
-import { ProfileSettingsContent } from '@/widgets/accounts/edit';
-import { Sidebar } from '@/widgets/sidebar';
 import { useRouter } from 'next/navigation';
 
 function Home() {
@@ -17,6 +15,7 @@ function Home() {
   /*const { data, error } = useFilteredPostsQuery();*/
   const router = useRouter();
 
+  console.log(meData);
   /*const { getMe } = useGetMeQuery();*/
   if (meError) {
     if ('status' in meError) {

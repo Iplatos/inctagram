@@ -1,21 +1,24 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { fetchBaseQuery } from '@reduxjs/toolkit/query';
+import { createApi } from '@reduxjs/toolkit/query/react';
 
 export const baseUrl = 'https://incubator-icta-trainee.uk';
+const baseQuery = fetchBaseQuery({
+  baseUrl,
+
+  prepareHeaders: (headers, { getState }) => {
+    const token = getTokenFromLocalStorage();
+
+    // If we have a token set in state, let's assume that we should be passing it.
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`);
+    }
+
+    return headers;
+  },
+});
+
 export const baseApi = createApi({
-  baseQuery: fetchBaseQuery({
-    baseUrl,
-
-    prepareHeaders: (headers, { getState }) => {
-      const token = getTokenFromLocalStorage();
-
-      // If we have a token set in state, let's assume that we should be passing it.
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-
-      return headers;
-    },
-  }),
+  baseQuery /*: baseQueryWithReauth*/,
   endpoints: builder => {
     return {
       createPost: builder.mutation<any, void>({
