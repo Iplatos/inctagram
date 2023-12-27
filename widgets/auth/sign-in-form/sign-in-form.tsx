@@ -55,7 +55,7 @@ export const SignInForm = () => {
     setTokenToLocalStorage(loginData.accessToken);
     router.push(`/`);
   }
-  if (meData) {
+  if (meData && !meError) {
     router.push(`/`);
   }
   console.log(meData);

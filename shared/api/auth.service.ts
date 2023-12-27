@@ -55,7 +55,19 @@ const authService = baseApi.injectEndpoints({
       }),
     }),
     logout: builder.mutation<any, void>({
-      invalidatesTags: ['Me'],
+      onQueryStarted: async (_, { dispatch, getState, queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+
+          /*     dispatch(
+                 baseApi.util.updateQueryData('getMe', undefined, () => {
+                   return {};
+                 })
+               );*/
+        } catch (e) {
+          console.log(e);
+        }
+      },
       query: () => ({
         method: 'GET',
         url: '/api/v1/auth/logout',
