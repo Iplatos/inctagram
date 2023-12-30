@@ -15,11 +15,27 @@
   height: 60px;
   width: max-content;
 
+
+}
+
+.errorMessage {
+  color: var(--color-danger-500)
+}
+
+.error {
   :global {
-    .bg-dark.rmdp-wrapper {
-      background-color: #ff8099;
+    .rmdp-input {
+      border: 2px solid var(--color-danger-500);
+      color: red
     }
   }
+}
+
+.svgAsComponent {
+  & * {
+    fill: red;
+  }
+
 }
 
 .cont button {
