@@ -42,7 +42,6 @@ export const DatePickerContainer = () => {
         )} лет`
       );
     }*/
-  console.log(isValidData());
   const changeLocale = () => {
     return router.locale && router.locale === 'en' ? en_th : ru_th;
   };

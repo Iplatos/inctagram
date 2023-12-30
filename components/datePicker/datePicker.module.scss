@@ -1,6 +1,7 @@
 .cont input {
   background-color: var(--color-dark-700);
   height: 36px;
+  width: 300px;
 
   &:focus {
     border: 1px solid var(--color-accent-500);
@@ -13,7 +14,7 @@
 
 
   height: 60px;
-  width: max-content;
+  width: 90%;
 
 
 }
