@@ -1,0 +1,13 @@
+.alert {
+  width: 100%;
+  text-align: center;
+  position: relative;
+  top: 12px;
+  height: 36px;
+  line-height: 32px;
+
+  &.error {
+    background-color: var(--color-danger-900);
+    border: 1px solid var(--color-danger-500);
+  }
+}

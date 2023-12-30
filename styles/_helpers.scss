@@ -1,0 +1,13 @@
+@use 'sass:math';
+
+@function em($number, $root-font-size: 16) {
+  $temp: math.round(math.div($number, $root-font-size) * 1000);
+
+  @return math.div($temp, 1000) + em;
+}
+
+@function rem($number, $root-font-size: 16) {
+  $temp: math.round(math.div($number, $root-font-size) * 1000);
+
+  @return math.div($temp, 1000) + rem;
+}

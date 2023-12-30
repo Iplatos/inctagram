@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 
 import Close from '@/assets/icons/close.svg?url';
 import Eye from '@/assets/icons/eye-outline.svg?url';
@@ -8,23 +8,29 @@ import Image from 'next/image';
 
 import s from 'shared/ui/textField/TextField.module.scss';
 
-type TextFieldType = 'input' | 'textarea';
+// type TextFieldType = 'input' | 'textarea';
 
-export type TextFieldProps<T extends TextFieldType = 'input'> = {
-  as?: T;
-  className?: string;
-  disabled?: boolean;
-  errors?: string;
-  inputtype?: 'password' | 'text';
-  isSearchInput?: boolean;
-  label?: string;
-  onChange: (e: string) => void;
-  placeholder?: string;
-  value: string;
-};
+export type TextFieldProps =
+  // <T extends TextFieldType = 'input'>
 
-export const TextField = (props: TextFieldProps) => {
+  {
+    as?: 'input' | 'textarea';
+    className?: string;
+    disabled?: boolean;
+    errors?: string;
+    inputtype?: 'password' | 'text';
+    isSearchInput?: boolean;
+    label?: string;
+    onChange: (e: string) => void;
+    onFocus?: () => void;
+    placeholder?: string;
+    required?: boolean;
+    value: string;
+  };
+
+export const TextField = forwardRef((props: TextFieldProps, ref) => {
   const {
+    as,
     className,
     disabled,
     errors,
@@ -33,6 +39,7 @@ export const TextField = (props: TextFieldProps) => {
     label,
     onChange,
     placeholder = 'email',
+    required,
     value,
   } = props;
 
@@ -50,7 +57,10 @@ export const TextField = (props: TextFieldProps) => {
 
   return (
     <div className={s.inputContainer}>
-      <Typography.Regular14 color={'var(--color-light-900)'}>{label}</Typography.Regular14>
+      <Typography.Regular14 color={'var(--color-light-900)'}>
+        {label}
+        {required && <Typography.Regular14 color={'red'}>*</Typography.Regular14>}
+      </Typography.Regular14>
       <Component
         {...rest}
         className={`${isSearchInput ? `${s.input} ${s.inputSearch}` : s.input} ${
@@ -89,4 +99,4 @@ export const TextField = (props: TextFieldProps) => {
       <div className={s.errorMessage}>{errors}</div>
     </div>
   );
-};
+});

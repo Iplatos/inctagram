@@ -5,6 +5,7 @@ import * as Select from '@radix-ui/react-select';
 import Image from 'next/image';
 
 import styles from './SelectBox.module.scss';
+import { Typography } from '..';
 
 type Option = {
   image?: string;
@@ -14,9 +15,9 @@ type Option = {
 
 type SelectProps = Select.SelectValueProps & {
   disabled?: boolean;
+  labelField?: string;
   onChangeFn?: (value: string) => void;
   options?: Option[];
-  width?: 'medium' | 'small' | 'tiny';
 };
 
 const DefaultFieldCreator = ({ image, label }: Option) => {
@@ -29,9 +30,8 @@ const DefaultFieldCreator = ({ image, label }: Option) => {
 };
 
 export const SelectBox = (props: SelectProps) => {
-  const { defaultValue, disabled, onChangeFn, options, placeholder, width } = props;
+  const { defaultValue, disabled, onChangeFn, options, placeholder, labelField } = props;
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
-  const widthClassName = !width ? 'width-medium' : `width-${width}`;
   const defaultField =
     typeof defaultValue === 'number' && options?.[defaultValue]
       ? DefaultFieldCreator(options[defaultValue])
@@ -45,34 +45,39 @@ export const SelectBox = (props: SelectProps) => {
   };
 
   return (
-    <Select.Root onValueChange={handleValueChange}>
-      <div>
+    <div>
+      <Typography.Regular14 color={'var(--color-light-900)'}>{labelField}</Typography.Regular14>
+      <Select.Root onValueChange={handleValueChange}>
         <Select.Trigger
           aria-label={selectedOption?.label ?? ''}
-          className={`${styles.selectBtn} ${styles[widthClassName]}`}
+          className={styles.selectTrigger}
           disabled={disabled}
         >
           <div className={styles.valueWrapper}>
             {selectedOption && selectedOption.image && (
-              <Image alt={'Select arrow'} src={selectedOption.image} />
+              <Image alt={'image'} src={selectedOption.image} />
             )}
             <Select.Value placeholder={defaultField ?? placeholder} />
           </div>
+
           <Image alt={'Select arrow'} src={Arrow} />
         </Select.Trigger>
-        <Select.Content className={styles.viewport}>
-          {options?.map((option, i) => (
-            <Select.Item
-              className={`${styles.option} ${styles[widthClassName]}`}
-              key={i}
-              value={option.value}
-            >
-              {option.image && <Image alt={'Option image'} src={option.image} />}
-              {option.label && <Select.ItemText>{option.label}</Select.ItemText>}
-            </Select.Item>
-          ))}
+
+        <Select.Content className={styles.selectContent} position={'popper'}>
+          <Select.ScrollUpButton />
+
+          <Select.Viewport className={styles.selectViewport}>
+            {options?.map((option, i) => (
+              <Select.Item className={styles.selectItem} key={i} value={option.value}>
+                {option.image && <Image alt={'Option image'} src={option.image} />}
+                {option.label && <Select.ItemText>{option.label}</Select.ItemText>}
+              </Select.Item>
+            ))}
+          </Select.Viewport>
+
+          <Select.ScrollDownButton />
         </Select.Content>
-      </div>
-    </Select.Root>
+      </Select.Root>
+    </div>
   );
 };

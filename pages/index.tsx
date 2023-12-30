@@ -1,42 +1,50 @@
-import { HeadMeta } from '@/components/HeadMeta/HeadMeta';
-import { getLayout } from '@/components/Layout/Layout';
-import {
-  setTokenToLocalStorage,
-  useFilteredPostsQuery,
-  useGetFeedQuery,
-} from '@/pages/api/base-api';
+import React from 'react';
+
+import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
+import { AddPhoto } from '@/features/addPhoto/addPhoto';
+import { useGetMeQuery } from '@/shared/api/auth.service';
 import { useTranslation } from '@/shared/hooks/useTranslation';
+import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
+import { getLayout } from '@/widgets/Layout/Layout';
 import { useRouter } from 'next/navigation';
 
 function Home() {
   const { t } = useTranslation();
-  const { data: feed } = useGetFeedQuery();
-  const { data, error } = useFilteredPostsQuery();
+  /*const { data: feed, error } = useGetFeedQuery();*/
+  const { data: meData, error: meError, isLoading: isMeLoading } = useGetMeQuery();
+  /*const { data, error } = useFilteredPostsQuery();*/
   const router = useRouter();
+
+  console.log(meData);
   /*const { getMe } = useGetMeQuery();*/
-
-  //   console.log('router.locales: ', router.locales);
-  //   console.log('router.locale: ', router.locale);
-  //   console.log('router.defaultLocale: ', router.defaultLocale);
-
-  const logOut = () => {
-    setTokenToLocalStorage(null);
-  };
-
-  /*  if (error) {
-      if ('status' in error) {
-        error.status === 401 && router.push('/signIn');
-      }
-    }*/
+  if (meError) {
+    if ('status' in meError) {
+      meError.status === 401 && router.push('/signIn');
+    }
+  }
+  if (isMeLoading) {
+    return <div>hello</div>;
+  }
 
   return (
     <>
       <HeadMeta title={'main'} />
-      <div>adf</div>
+      {/* <div style={{ visibility: 'hidden' }}>adf</div> */}
+
+      {/*
+
+      */}
+      <div style={{ marginLeft: '300px' }}>
+        <AddPhoto />
+        <DatePickerContainer />
+      </div>
       {/*  <div>
         {error?.status} {JSON.stringify(error)}
       </div>*/}
-      <button onClick={logOut}>logout</button>
+      {/*<button onClick={logOut}>logout</button>*/}
+
+      {/* <Sidebar />
+      <ProfileSettingsContent /> */}
     </>
   );
 }

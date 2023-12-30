@@ -1,0 +1,67 @@
+@use '../../../styles/helpers' as *;
+
+%alert-root {
+  display: flex;
+  padding: em(12) em(24);
+  border-radius: 2px;
+}
+
+.alertRootError {
+  @extend %alert-root;
+
+  background-color: var(--color-danger-900);
+  border: 1px solid var(--color-danger-500);
+}
+
+.alertRootSuccess {
+  @extend %alert-root;
+
+  background-color: var(--color-success-900);
+  border: 1px solid var(--color-success-500);
+}
+
+.message {
+  align-self: center;
+}
+
+.action {
+  margin-left: auto;
+  padding-left: em(20);
+}
+
+%close {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: em(32);
+  height: em(32);
+
+  border-radius: 3px;
+}
+
+.closeSuccess {
+  @extend %close;
+
+  &:hover {
+    background-color: var(--color-success-700);
+  }
+
+  &:active {
+    background-color: var(--color-success-500);
+  }
+}
+
+.closeError {
+  @extend %close;
+
+  &:hover {
+    background-color: var(--color-danger-700);
+  }
+
+  &:active {
+    background-color: var(--color-danger-500);
+  }
+}

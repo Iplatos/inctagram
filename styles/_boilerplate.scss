@@ -1,9 +1,9 @@
 html {
-  box-sizing: border-box;
   font-size: 100%;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
 }
 
 *,
@@ -25,11 +25,17 @@ option {
   color: inherit;
 }
 
+button {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
 a {
   text-decoration: none;
 }
 
-a:visited {
+:where(a:visited) {
   color: inherit;
 }
 

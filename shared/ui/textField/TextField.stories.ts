@@ -1,4 +1,4 @@
-import { Meta, Story, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { TextField } from './TextField';
 
@@ -28,6 +28,7 @@ export const Default: Story = {
     isSearchInput: false,
     label: 'password',
     placeholder: 'password',
+    value: '',
   },
 };
 
