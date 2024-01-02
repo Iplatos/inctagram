@@ -94,6 +94,7 @@ export const ForgotPasswordForm = () => {
               errors={fieldState?.error?.message}
               inputtype={"text"}
               label={"Email"}
+              inputType={'text'}
               onChange={field.onChange}
               value={field.value}
             />

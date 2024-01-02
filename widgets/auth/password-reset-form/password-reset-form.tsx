@@ -99,6 +99,7 @@ export const PasswordResetForm = () => {
               {...field}
               errors={fieldState?.error?.message}
               inputtype={'password'}
+              inputType={'password'}
               label={t.auth.passwordResetPage.newPassword}
               onChange={field.onChange}
               onFocus={() => clearErrors('password')}
@@ -116,6 +117,7 @@ export const PasswordResetForm = () => {
               {...field}
               errors={fieldState?.error?.message}
               inputtype={'password'}
+              inputType={'password'}
               label={t.auth.passwordResetPage.passwordConfirmation}
               onChange={field.onChange}
               onFocus={() => clearErrors('password')}

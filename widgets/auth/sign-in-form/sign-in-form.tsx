@@ -82,7 +82,7 @@ export const SignInForm = () => {
               value={field.value}
               label={t.auth.signInPage.email}
               placeholder={t.auth.signInPage.email}
-              inputtype={"text"}
+              inputType={'text'}
             />
           )}
         />
@@ -98,6 +98,7 @@ export const SignInForm = () => {
               label={t.auth.signInPage.password}
               inputtype={"password"}
               errors={fieldState?.error?.message}
+              inputType={'password'}
             />
           )}
         />

@@ -86,6 +86,7 @@ export const SignUpForm = () => {
                   {...field}
                   errors={fieldState?.error?.message}
                   inputtype={'text'}
+                  inputType={'text'}
                   label={t.auth.signUpPage.labelName}
                   onChange={field.onChange}
                   onFocus={() => clearErrors('username')}
@@ -103,6 +104,7 @@ export const SignUpForm = () => {
                   {...field}
                   errors={fieldState?.error?.message}
                   inputtype={'text'}
+                  inputType={'text'}
                   label={t.auth.signUpPage.labelEmail}
                   onChange={field.onChange}
                   onFocus={() => clearErrors('email')}
@@ -120,6 +122,7 @@ export const SignUpForm = () => {
                   {...field}
                   errors={fieldState?.error?.message}
                   inputtype={'password'}
+                  inputType={'password'}
                   label={t.auth.signUpPage.labelPassword}
                   onChange={field.onChange}
                   onFocus={() => clearErrors('password')}
@@ -136,6 +139,7 @@ export const SignUpForm = () => {
                   {...field}
                   errors={fieldState?.error?.message}
                   inputtype={'password'}
+                  inputType={'password'}
                   label={t.auth.signUpPage.labelСonfirm}
                   onChange={field.onChange}
                   onFocus={() => clearErrors('password')}
