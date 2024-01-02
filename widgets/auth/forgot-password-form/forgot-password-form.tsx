@@ -81,7 +81,7 @@ export const ForgotPasswordForm = () => {
   return (
     /* eslint-disable */
     <Card className={style.card}>
-      <Typography.H1 style={{ paddingBottom: "37px" }}>
+      <Typography.H1 style={{ paddingBottom: '37px' }}>
         {t.auth.forgotPasswordPage.title}
       </Typography.H1>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
@@ -91,10 +91,9 @@ export const ForgotPasswordForm = () => {
           render={({ field, fieldState }) => (
             <TextField
               {...field}
-              errors={fieldState?.error?.message}
-              inputtype={"text"}
-              label={"Email"}
+              error={fieldState?.error?.message}
               inputType={'text'}
+              label={'Email'}
               onChange={field.onChange}
               value={field.value}
             />
@@ -107,7 +106,7 @@ export const ForgotPasswordForm = () => {
           disabled={dirtyFields.captcha && dirtyFields.email ? false : true}
           fullWidth
           onClick={handleModalOpened}
-          type={"submit"}
+          type={'submit'}
         >
           {t.auth.forgotPasswordPage.sendLink}
         </Button>
@@ -120,21 +119,21 @@ export const ForgotPasswordForm = () => {
           <Typography.Regular16 className={style.dialogDescription}>
             <Trans
               tags={{
-                "1": () => <b>{`${getValues().email}`}</b>
+                '1': () => <b>{`${getValues().email}`}</b>,
               }}
               text={t.auth.forgotPasswordPage.messageModal}
             />
           </Typography.Regular16>
-          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 25 }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 25 }}>
             <CloseDialog asChild>
-              <Button className={style.dialogButton} variant={"primary"}>
+              <Button className={style.dialogButton} variant={'primary'}>
                 OK
               </Button>
             </CloseDialog>
           </div>
         </Modal>
-        <Button className={style.buttonBack} fullWidth variant={"tertiary"}>
-          <Link href={"/signIn"}>{t.auth.forgotPasswordPage.backToSignIn}</Link>
+        <Button className={style.buttonBack} fullWidth variant={'tertiary'}>
+          <Link href={'/signIn'}>{t.auth.forgotPasswordPage.backToSignIn}</Link>
         </Button>
 
         <Controller
@@ -147,7 +146,7 @@ export const ForgotPasswordForm = () => {
               onChange={field.onChange}
               ref={recaptchaRef}
               sitekey={LOCALHOST_KEY}
-              theme={"dark"}
+              theme={'dark'}
               /*     value={field.value}*/
             />
           )}
