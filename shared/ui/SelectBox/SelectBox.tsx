@@ -5,6 +5,7 @@ import * as Select from '@radix-ui/react-select';
 import Image from 'next/image';
 
 import styles from './SelectBox.module.scss';
+
 import { Typography } from '..';
 
 type Option = {
@@ -30,7 +31,7 @@ const DefaultFieldCreator = ({ image, label }: Option) => {
 };
 
 export const SelectBox = (props: SelectProps) => {
-  const { defaultValue, disabled, onChangeFn, options, placeholder, labelField } = props;
+  const { defaultValue, disabled, labelField, onChangeFn, options, placeholder } = props;
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const defaultField =
     typeof defaultValue === 'number' && options?.[defaultValue]

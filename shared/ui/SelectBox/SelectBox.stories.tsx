@@ -23,9 +23,6 @@ const meta = {
       control: 'string',
       defaultValue: mockedPlaceHolder,
     },
-    width: {
-      control: 'string',
-    },
   },
   component: SelectBox,
   tags: ['autodocs'],
@@ -63,7 +60,6 @@ export const SmallPlaceholderAndOptions: Story = {
   args: {
     options: mockedOptions,
     placeholder: mockedPlaceHolder,
-    width: 'small',
   },
 };
 
@@ -72,7 +68,6 @@ export const SmallWithDefaultStringValue: Story = {
     defaultValue: 'a value',
     options: mockedOptions,
     placeholder: mockedPlaceHolder,
-    width: 'small',
   },
 };
 
@@ -81,7 +76,6 @@ export const SmallWithDefaultOptionValue: Story = {
     defaultValue: 1,
     options: mockedOptions,
     placeholder: mockedPlaceHolder,
-    width: 'small',
   },
 };
 
@@ -90,7 +84,6 @@ export const SmallWithDefaultNumberValue: Story = {
     defaultValue: 123,
     options: mockedOptions,
     placeholder: mockedPlaceHolder,
-    width: 'small',
   },
 };
 
@@ -99,7 +92,6 @@ export const SmallDisabledWithPlaceHolder: Story = {
     disabled: true,
     options: mockedOptions,
     placeholder: mockedPlaceHolder,
-    width: 'small',
   },
 };
 
@@ -109,14 +101,12 @@ export const TinyPlaceholderAndImages: Story = {
       { image: FlagEn, value: '1111' },
       { image: FlagRu, value: '2222' },
     ],
-    width: 'tiny',
   },
 };
 
-export const TinyWithDefultStringDisabled: Story = {
+export const TinyWithDefaultStringDisabled: Story = {
   args: {
     defaultValue: 'sad :(',
     disabled: true,
-    width: 'tiny',
   },
 };

@@ -64,7 +64,7 @@ export const InputTypeFile = (props: AddPhotoProps) => {
             <Button
               onClick={() => {
                 if (uploadFile) {
-                  addPhoto(uploadFile);
+                  addPhoto(uploadFile, { x: 0, y: 0 }, 1);
                 }
               }}
               style={{ marginLeft: '270px', width: '86px' }}

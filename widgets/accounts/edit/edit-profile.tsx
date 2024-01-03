@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { TabContent, Tabs } from '@/shared/ui';
-
-import style from './edit-profile.module.scss';
 import {
   AccountManagement,
   Devices,
   GeneralInformation,
   MyPayments,
 } from '@/entities/accounts/edit';
+import { TabContent, Tabs } from '@/shared/ui';
+
+import style from './edit-profile.module.scss';
 
 export const EditProfile = () => {
   return (
