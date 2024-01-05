@@ -14,15 +14,13 @@ export const LangSwitcher = () => {
   const defaultIdx = selectOptions.findIndex(option => option.value === locale);
 
   const changeLangHandler = (value: string) => {
-    push({ pathname, query }, asPath, { locale: value });
+    // push({ pathname, query }, asPath, { locale: value });
+    push(value);
   };
 
   return (
-    <SelectBox
-      defaultValue={defaultIdx}
-      onChangeFn={changeLangHandler}
-      options={selectOptions}
-      width={'small'}
-    />
+    <div style={{ width: '163px' }}>
+      <SelectBox defaultValue={defaultIdx} onChangeFn={changeLangHandler} options={selectOptions} />
+    </div>
   );
 };

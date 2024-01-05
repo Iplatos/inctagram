@@ -1,8 +1,18 @@
 import { baseApi, getTokenFromLocalStorage } from '@/shared/api/base-api';
+import {
+  ChangePasswordRequestType,
+  ConfirmCodeRequestType,
+  LoginRequestType,
+  LoginResponseType,
+  MeResponseType,
+  PasswordRecoveryRequestType,
+  SignUpRequestType,
+  UploadPhotoResponseType,
+} from '@/shared/types/auth.types';
 
 const authService = baseApi.injectEndpoints({
   endpoints: builder => ({
-    changePassword: builder.mutation<any, any>({
+    changePassword: builder.mutation<void, ChangePasswordRequestType>({
       query: params => {
         return {
           body: params,
@@ -11,7 +21,7 @@ const authService = baseApi.injectEndpoints({
         };
       },
     }),
-    confirmCode: builder.mutation<any, any>({
+    confirmCode: builder.mutation<void, ConfirmCodeRequestType>({
       query: params => {
         return {
           body: params,
@@ -20,7 +30,7 @@ const authService = baseApi.injectEndpoints({
         };
       },
     }),
-    forgotPassword: builder.mutation<any, any>({
+    forgotPassword: builder.mutation<any, PasswordRecoveryRequestType>({
       query: params => {
         return {
           body: params,
@@ -29,24 +39,12 @@ const authService = baseApi.injectEndpoints({
         };
       },
     }),
-    getMe: builder.query<any, void>({
-      extraOptions: { maxRetries: 0 },
+    getMe: builder.query<MeResponseType, void>({
       providesTags: ['Me'],
-      // @ts-ignore
-      async queryFn(_name, _api, _extraOptions, baseQuery) {
-        const result = await baseQuery({
-          method: 'GET',
-          url: '/api/v1/auth/me',
-        });
-
-        if (result.error) {
-          return { data: { success: false } };
-        }
-
-        return { data: result.data };
-      },
+      query: () => `/api/v1/auth/me`,
     }),
-    login: builder.mutation<any, any>({
+    login: builder.mutation<LoginResponseType, LoginRequestType>({
+      invalidatesTags: ['Me'],
       query: data => ({
         body: data,
         headers: {
@@ -57,12 +55,25 @@ const authService = baseApi.injectEndpoints({
       }),
     }),
     logout: builder.mutation<any, void>({
+      onQueryStarted: async (_, { dispatch, getState, queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+
+          /*     dispatch(
+                 baseApi.util.updateQueryData('getMe', undefined, () => {
+                   return {};
+                 })
+               );*/
+        } catch (e) {
+          console.log(e);
+        }
+      },
       query: () => ({
         method: 'GET',
         url: '/api/v1/auth/logout',
       }),
     }),
-    signUp: builder.mutation<any, any>({
+    signUp: builder.mutation<SignUpRequestType, any>({
       query: params => {
         return {
           body: params,
@@ -71,7 +82,7 @@ const authService = baseApi.injectEndpoints({
         };
       },
     }),
-    uploadPhoto: builder.mutation<any, any>({
+    uploadPhoto: builder.mutation<UploadPhotoResponseType, any>({
       query: params => {
         return {
           body: params,
@@ -84,6 +95,7 @@ const authService = baseApi.injectEndpoints({
 });
 
 export const {
+  useChangePasswordMutation,
   useConfirmCodeMutation,
   useForgotPasswordMutation,
   useGetMeQuery,

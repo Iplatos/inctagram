@@ -49,6 +49,7 @@ export const Tabs = (props: TabsProps) => {
             className={`${style.trigger} ${fullWidth && style.fullWidth} `}
             disabled={tab.disabled}
             key={tab.value}
+            tabIndex={1}
             value={tab.value}
           >
             {tab.title}
@@ -63,5 +64,9 @@ export const Tabs = (props: TabsProps) => {
 export const TabContent = (props: TabContentProps) => {
   const { children, value } = props;
 
-  return <TabsRadix.Content value={value}>{children}</TabsRadix.Content>;
+  return (
+    <TabsRadix.Content className={style.content} value={value}>
+      {children}
+    </TabsRadix.Content>
+  );
 };

@@ -1,14 +1,12 @@
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import GitHubLogo from '@/assets/icons/gitHubLogo.svg';
-import GoogleLogo from '@/assets/icons/googleLogo.svg';
-import { useSignUpMutation } from '@/shared/api/auth.service';
-import { baseUrl } from '@/shared/api/base-api';
+import { useGetMeQuery, useSignUpMutation } from '@/shared/api/auth.service';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Card, TextField, Typography } from '@/shared/ui';
 import { ControlledCheckbox } from '@/shared/ui/checkbox/controlled-checkbox';
 import { Trans } from '@/widgets/Trans/Trans';
+import { GitHubGoogleContainer } from '@/widgets/auth/gitHubGoogleContainer/gitHubGoogleContainer';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { clsx } from 'clsx';
 import { omit } from 'next/dist/shared/lib/router/utils/omit';
@@ -46,13 +44,13 @@ const schema = z
 type FormValues = z.input<typeof schema>;
 
 export const SignUpForm = () => {
+  const { data: meData } = useGetMeQuery();
   const router = useRouter();
   const { t } = useTranslation();
   const [signUp, { data: signUpData, error }] = useSignUpMutation();
-  const onGoogle = () => {
-    router.push(`${baseUrl}/api/v1/auth/google`);
-  };
+
   const {
+    clearErrors,
     control,
     formState: { errors },
     handleSubmit,
@@ -67,15 +65,16 @@ export const SignUpForm = () => {
   }
   const handleFormSubmitted = handleSubmit(data => signUp(omit(data, ['confirm'])));
 
+  if (meData) {
+    router.push(`/`);
+  }
+
   return (
     <div className={s.outerContainer}>
       <Card className={s.card}>
         <Typography.H1>{t.auth.signUpPage.title}</Typography.H1>
 
-        <div className={s.gitHubGoogleContainer}>
-          <GoogleLogo onClick={onGoogle} />
-          <GitHubLogo />
-        </div>
+        <GitHubGoogleContainer />
 
         <form onSubmit={handleFormSubmitted}>
           <div className={s.values}>
@@ -89,7 +88,8 @@ export const SignUpForm = () => {
                   inputtype={'text'}
                   label={t.auth.signUpPage.labelName}
                   onChange={field.onChange}
-                  placeholder={'username'}
+                  onFocus={() => clearErrors('username')}
+                  placeholder={t.auth.signUpPage.labelName}
                   value={field.value}
                 />
               )}
@@ -105,6 +105,8 @@ export const SignUpForm = () => {
                   inputtype={'text'}
                   label={t.auth.signUpPage.labelEmail}
                   onChange={field.onChange}
+                  onFocus={() => clearErrors('email')}
+                  placeholder={t.auth.signInPage.email}
                   value={field.value}
                 />
               )}
@@ -120,7 +122,8 @@ export const SignUpForm = () => {
                   inputtype={'password'}
                   label={t.auth.signUpPage.labelPassword}
                   onChange={field.onChange}
-                  placeholder={'password'}
+                  onFocus={() => clearErrors('password')}
+                  placeholder={t.auth.signInPage.password}
                 />
               )}
             />
@@ -135,48 +138,49 @@ export const SignUpForm = () => {
                   inputtype={'password'}
                   label={t.auth.signUpPage.labelСonfirm}
                   onChange={field.onChange}
-                  placeholder={'password'}
+                  onFocus={() => clearErrors('password')}
+                  placeholder={t.auth.signUpPage.labelСonfirm}
                 />
               )}
             />
-          </div>
+            {/*</div>*/}
 
-          <div className={s.checkbox}>
-            <ControlledCheckbox
-              control={control}
-              label={
-                <Typography.Regular12>
-                  <Trans
-                    tags={{
-                      '1': () => (
-                        <Link href={'/terms-of-service'}>
-                          <span className={s.link}>Пользовательским соглашением</span>
-                        </Link>
-                      ),
-                      '2': () => (
-                        <Link className={s.link} href={'/privacy-policy'}>
-                          <span className={s.link}>Политикой конфиденциальности</span>
-                        </Link>
-                      ),
-                      '3': () => (
-                        <Link className={s.link} href={'/terms-of-service'}>
-                          <span className={s.link}>Terms of service</span>
-                        </Link>
-                      ),
-                      '4': () => (
-                        <Link className={s.link} href={'/privacy-policy'}>
-                          <span className={s.link}>Privacy policy</span>
-                        </Link>
-                      ),
-                    }}
-                    text={t.auth.signUpPage.agreement}
-                  />
-                </Typography.Regular12>
-              }
-              name={'checkbox'}
-            />
+            <div className={s.checkbox}>
+              <ControlledCheckbox
+                control={control}
+                label={
+                  <Typography.Regular12>
+                    <Trans
+                      tags={{
+                        '1': () => (
+                          <Link href={'/terms-of-service'}>
+                            <span className={s.link}>Пользовательским соглашением</span>
+                          </Link>
+                        ),
+                        '2': () => (
+                          <Link className={s.link} href={'/privacy-policy'}>
+                            <span className={s.link}>Политикой конфиденциальности</span>
+                          </Link>
+                        ),
+                        '3': () => (
+                          <Link className={s.link} href={'/terms-of-service'}>
+                            <span className={s.link}>Terms of service</span>
+                          </Link>
+                        ),
+                        '4': () => (
+                          <Link className={s.link} href={'/privacy-policy'}>
+                            <span className={s.link}>Privacy policy</span>
+                          </Link>
+                        ),
+                      }}
+                      text={t.auth.signUpPage.agreement}
+                    />
+                  </Typography.Regular12>
+                }
+                name={'checkbox'}
+              />
+            </div>
           </div>
-
           <Button className={s.button} fullWidth type={'submit'}>
             {t.auth.signUpPage.signUp}
           </Button>

@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { CloseDialog, Modal } from '@/features/modal';
-import { useLogoutMutation } from '@/shared/api/auth.service';
-import { setTokenToLocalStorage } from '@/shared/api/base-api';
+import { useGetMeQuery, useLogoutMutation } from '@/shared/api/auth.service';
+import { baseApi, setTokenToLocalStorage } from '@/shared/api/base-api';
 import { useAppSelector } from '@/shared/api/store';
+import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button';
 import { Typography } from '@/shared/ui/typography';
 import { Trans } from '@/widgets/Trans/Trans';
-import { setIsLoggedIn } from '@/widgets/auth/slices/auth';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
 import HomeOutline from 'assets/icons/home-outline.svg';
 import LogOutOutline from 'assets/icons/log-out-outline.svg';
@@ -17,14 +17,17 @@ import PersonOutline from 'assets/icons/person-outline.svg';
 import PlusSquareOutline from 'assets/icons/plus-square-outline.svg';
 import SearchOutline from 'assets/icons/searchOutline.svg';
 import TrendingUpOutline from 'assets/icons/trending-up-outline.svg';
+import { useRouter } from 'next/navigation';
 
 import s from './sidebar.module.scss';
 
-export const SideBar = () => {
+export const Sidebar = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>('someEmail');
   const [logout] = useLogoutMutation();
-  const { isLoggedIn } = useAppSelector(state => state.authReducer);
+  const { isLoggedIn } = useAppSelector(state => state.auth);
+  const { data: meData } = useGetMeQuery();
+  const { t } = useTranslation();
+  const router = useRouter();
   const dispatch = useDispatch();
 
   function handleModalClosed() {
@@ -37,62 +40,64 @@ export const SideBar = () => {
 
   const logOut = () => {
     logout();
-    console.log('log out');
-    dispatch(setIsLoggedIn(false));
     setTokenToLocalStorage(null);
+    dispatch(baseApi.util.resetApiState());
+    router.push('/signIn');
   };
 
-  if (!isLoggedIn) {
+  if (!meData) {
     return;
   }
 
   return (
     <div className={s.sidebarContainer}>
       <div className={s.buttonContainer}>
-        <button>
+        <div className={s.button} tabIndex={1}>
           <HomeOutline className={s.svgAsComponent} />
           Home
-        </button>
+        </div>
 
-        <button>
+        <div className={s.button} tabIndex={1}>
           <PlusSquareOutline className={s.svgAsComponent} />
           Create
-        </button>
-        <button>
+        </div>
+        <div className={s.button} tabIndex={1}>
           <PersonOutline className={s.svgAsComponent} />
           My Profile
-        </button>
-        <button>
+        </div>
+        <div className={s.button} tabIndex={1}>
           <MessageCircleOutline className={s.svgAsComponent} />
           Messenger
-        </button>
-        <button>
+        </div>
+        <div className={s.button} tabIndex={1}>
           <SearchOutline className={s.svgAsComponent} />
           Search
-        </button>
+        </div>
       </div>
+
       <div className={s.buttonContainer}>
-        <button>
+        <div className={s.button} tabIndex={1}>
           <TrendingUpOutline className={s.svgAsComponent} />
           Statistics
-        </button>
-        <button>
+        </div>
+        <div className={s.button} tabIndex={1}>
           <BookmarkOutline className={s.svgAsComponent} />
           Favorites
-        </button>
+        </div>
       </div>
-      <div className={s.logOutButtonContainer}>
-        <button onClick={handleModalOpened}>
+
+      <div className={s.buttonContainer}>
+        <div className={s.button} onClick={handleModalOpened} tabIndex={1}>
           <LogOutOutline className={s.svgAsComponent} />
           Log Out
-        </button>
+        </div>
         <Modal onClose={handleModalClosed} open={open} showCloseButton title={'Log Out'}>
           <Typography.Regular16>
             <Trans
               tags={{
-                '1': () => <b>{`${email}`}</b>,
+                '1': () => <b>{`${meData.email}`}</b>,
               }}
-              text={`Are you really want to log out of your account "${email}?"`}
+              text={t.logOut.reallyWantToLogOut + ` ${meData.email}?`}
             />
           </Typography.Regular16>
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 25 }}>

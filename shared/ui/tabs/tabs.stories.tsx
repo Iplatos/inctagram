@@ -13,7 +13,7 @@ export default {
         <TabContent value={'val3'}>Контент 3</TabContent>
       </>
     ),
-    defaultValue: 'sprints',
+    defaultValue: 'val1',
     tabs: [
       { title: 'title 1', value: 'val1' },
       { title: 'title 2', value: 'val2' },

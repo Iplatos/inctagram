@@ -2,11 +2,6 @@ import { LocaleType } from './ru';
 
 export const en: LocaleType = {
   auth: {
-    createNewPasswordPage: {
-      message: 'Your password must be between 6 and 20 characters',
-      textLink: 'Create new password',
-      title: 'Create New Password',
-    },
     emailConfirmedPage: {
       text: 'Your email has been confirmed',
       textButton: 'Sign In',
@@ -25,6 +20,18 @@ export const en: LocaleType = {
       text: 'Looks like the verification link has expired. Not to worry, we can send the link again',
       textButton: 'Resend verification link',
       title: 'Email verification link expired',
+    },
+    passwordResetPage: {
+      confirmPasswordZod: 'Confirm password is required',
+      message: 'Your password must be between 6 and 20 characters',
+      newPassword: 'New Password',
+      passwordConfirmation: 'Password Confirmation',
+      passwordMaxZod: 'Maximum number of characters is 20',
+      passwordMinZod: 'Password must be at least 6 characters',
+      passwordRefineZod:
+        'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~',
+      textLink: 'Create new password',
+      title: 'Create New Password',
     },
     privacyPolicy: {
       backSignUp: 'Back to Sign Up',
@@ -180,6 +187,9 @@ export const en: LocaleType = {
     DataSelect: 'Date select',
   },
 
+  logOut: {
+    reallyWantToLogOut: 'Are you really want to log out of your account',
+  },
   navbar: {
     forgotPassword: 'Forgot Password',
     main: 'Main',

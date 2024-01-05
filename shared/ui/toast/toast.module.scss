@@ -1,0 +1,40 @@
+.toastRoot {
+  position: fixed;
+  bottom: 24px;
+  left: min(170px, 13%);
+
+  display: flex;
+
+  max-width: 40ch;
+  max-height: 40vh;
+
+  .alertRoot {
+    width: 100%;
+  }
+
+  .message {
+    scrollbar-width: thin;
+    overflow: auto;
+    max-height: 100%;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+      background-color: hsl(0deg 50% 0% / 35%);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: hsl(0deg 50% 100% / 45%);
+    }
+  }
+
+  @media (width <= 768px) {
+    bottom: 20px;
+    left: 20px;
+  }
+
+  @media (width <= 600px) {
+    right: 20px;
+    max-width: none;
+  }
+}

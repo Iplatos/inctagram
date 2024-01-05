@@ -1,4 +1,4 @@
-import { useAppSelector } from '@/shared/api/store';
+import { useGetMeQuery } from '@/shared/api/auth.service';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button';
 import { ExpandBtn } from '@/widgets/header/ExpandBtn';
@@ -18,15 +18,16 @@ export type Notification = {
 
 export const Header = () => {
   const { t } = useTranslation();
-
-  const { isLoggedIn } = useAppSelector(state => state.authReducer);
+  const { data: meData } = useGetMeQuery();
 
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <div className={styles.logo}>Inctagram</div>
+        <div className={styles.logo}>
+          <Link href={'/'}>Inctagram</Link>
+        </div>
         <div className={styles.flex}>
-          {isLoggedIn ? (
+          {meData ? (
             <>
               <NotificationMenu notifications={mockedNotifications} />
               <LangSwitcher />

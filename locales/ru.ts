@@ -1,10 +1,5 @@
 export const ru = {
   auth: {
-    createNewPasswordPage: {
-      message: 'Ваш пароль должен содержать от 6 до 20 символов',
-      textLink: 'Создать новый пароль',
-      title: 'Создать новый пароль',
-    },
     emailConfirmedPage: {
       text: 'Ваша почта подтверждена',
       textButton: 'Войти',
@@ -23,6 +18,18 @@ export const ru = {
       text: 'Похоже, срок действия ссылки для подтверждения истек. Не волнуйтесь, мы можем отправить ссылку еще раз.',
       textButton: 'Отправить еще раз',
       title: 'Срок действия ссылки истек',
+    },
+    passwordResetPage: {
+      confirmPasswordZod: 'Подтверждение пароля обязательно',
+      message: 'Ваш пароль должен содержать от 6 до 20 символов',
+      newPassword: 'Новый пароль',
+      passwordConfirmation: 'Подтверждение пароля',
+      passwordMaxZod: 'Пароль должен содержать не более 20 символов',
+      passwordMinZod: 'Пароль должен содержать минимум 6 символов',
+      passwordRefineZod:
+        'Пароль должен содержать 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~',
+      textLink: 'Создать новый пароль',
+      title: 'Создать новый пароль',
     },
     privacyPolicy: {
       backSignUp: 'Назад к регистрации',
@@ -178,6 +185,9 @@ export const ru = {
     DataSelect: 'Выбор даты',
   },
 
+  logOut: {
+    reallyWantToLogOut: 'Вы действительно хотите выйти из аккаунта',
+  },
   navbar: {
     forgotPassword: 'Забыл пароль',
     main: 'Главная страница',
