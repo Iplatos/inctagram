@@ -1,5 +1,5 @@
-import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import React, { FC } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 import { SelectBox } from '@/shared/ui/SelectBox';
 import { TextField } from '@/shared/ui/textField';
@@ -7,12 +7,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import style from './profile-form.module.scss';
+import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
+import { Button } from '@/shared/ui';
 
 const schema = z.object({
-  aboutme: z.string(),
-  city: z.string(),
+  // aboutme: z.string(),
+  // city: z.string(),
   country: z.string(),
-  dateofbirth: z.date(),
+  // dateofbirth: z.string(),
   firstname: z.string(),
   lastname: z.string(),
   username: z.string(),
@@ -23,7 +25,17 @@ const schema = z.object({
 
 type FormValuesType = z.input<typeof schema>;
 
+// type ProfileFormProps = {
+//   onSubmit: SubmitHandler<FormValuesType>;
+// };
+
+// type FormIdType = {
+//   formId: string;
+// };
+
 export const ProfileForm = () => {
+  // const { formId } = props;
+
   const {
     clearErrors,
     control,
@@ -31,35 +43,40 @@ export const ProfileForm = () => {
     handleSubmit,
     setError,
   } = useForm<FormValuesType>({
+    defaultValues: {
+      // aboutme: '',
+      // city: '',
+      // country: '',
+      // dateofbirth: '',
+      firstname: '',
+      lastname: '',
+      username: '',
+    },
     mode: 'onBlur',
     resolver: zodResolver(schema),
   });
 
   const onSubmit = (data: FormValuesType) => {
-    ////data
+    console.log(data);
   };
 
   const selectOptions = [
-    { label: 'English', value: 'en' },
-    { label: 'Русский', value: 'ru' },
-    { label: 'french', value: 'france' },
-    { label: '1', value: '1' },
-    { label: '2', value: '2' },
-    { label: '3', value: '3' },
-    { label: '4', value: '4' },
+    { label: 'England', value: 'England' },
+    { label: 'Belarus', value: 'Belarus' },
+    { label: 'France', value: 'France' },
+    { label: 'Poland', value: 'Poland' },
   ];
 
   // const defaultIdx = selectOptions.findIndex(item => item.value === locale);
 
-  const changeCountry = (value: string) => {
-    // push(value);
+  // const changeCountry = (value: string) => {
+  //   // push(value);
+  //   // console.log(value);
+  // };
 
-    console.log(value);
-  };
-
-  const changeCity = (value: string) => {
-    // push(value);
-  };
+  // const changeCity = (value: string) => {
+  //   // push(value);
+  // };
 
   return (
     <div className={style.formContainer}>
@@ -118,22 +135,23 @@ export const ProfileForm = () => {
           )}
         />
 
-        <Controller
+        {/* <Controller
           control={control}
           name={'dateofbirth'}
           render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
-              label={'Date of birth'}
-              onChange={field.onChange}
-              onFocus={() => clearErrors('dateofbirth')}
-              placeholder={'00.00.00'}
-              value={field.value}
-            />
+            // <TextField
+            //   {...field}
+            //   errors={fieldState?.error?.message}
+            //   inputtype={'text'}
+            //   label={'Date of birth'}
+            //   onChange={field.onChange}
+            //   onFocus={() => clearErrors('dateofbirth')}
+            //   placeholder={'00.00.00'}
+            //   value={field.value}
+            // />
+            <DatePickerContainer />
           )}
-        />
+        /> */}
 
         <div className={style.selectBlock}>
           <div className={style.select}>
@@ -142,15 +160,18 @@ export const ProfileForm = () => {
               name={'country'}
               render={({ field, fieldState }) => (
                 <SelectBox
+                  {...field}
                   labelField={'Country'}
-                  onChangeFn={changeCountry}
+                  onChangeFn={value => field.onChange(value)}
                   options={selectOptions}
                   placeholder={'Country'}
+                  // value={field.value}
                 />
               )}
             />
           </div>
-          <div className={style.select}>
+
+          {/* <div className={style.select}>
             <Controller
               control={control}
               name={'city'}
@@ -163,10 +184,10 @@ export const ProfileForm = () => {
                 />
               )}
             />
-          </div>
+          </div> */}
         </div>
 
-        <Controller
+        {/* <Controller
           control={control}
           name={'aboutme'}
           render={({ field, fieldState }) => (
@@ -182,7 +203,9 @@ export const ProfileForm = () => {
               value={field.value}
             />
           )}
-        />
+        /> */}
+
+        <Button type={'submit'}>submit</Button>
       </form>
     </div>
   );
