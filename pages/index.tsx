@@ -7,6 +7,7 @@ import { useTranslation } from '@/shared/hooks/useTranslation';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
 import { useRouter } from 'next/navigation';
+import { EditProfile } from '@/widgets/accounts';
 
 function Home() {
   const { t } = useTranslation();
@@ -35,8 +36,10 @@ function Home() {
 
       */}
       <div style={{ marginLeft: '300px' }}>
-        <AddPhoto />
-        <DatePickerContainer />
+        {/* <AddPhoto /> */}
+        {/* <DatePickerContainer /> */}
+
+        <EditProfile />
       </div>
       {/*  <div>
         {error?.status} {JSON.stringify(error)}
