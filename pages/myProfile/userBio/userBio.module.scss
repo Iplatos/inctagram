@@ -1,0 +1,31 @@
+.userBioRoot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userBioAvatar {
+  margin-right: 35px;
+}
+.userBioRootInfo {
+  margin: 10px;
+}
+
+.userBioInfo {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.userBioRow {
+  display: flex;
+  align-items: center;
+}
+
+.userBioName {
+  margin-right: 10px;
+}
+
+.userBioCounter {
+  margin-right: 10px;
+}
