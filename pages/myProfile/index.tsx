@@ -1,11 +1,13 @@
-import { Button } from '@/shared/ui';
-import { AvatarRadix } from '@/shared/ui/avatar';
+import { UserBio } from '@/pages/myProfile/userBio/userBio';
+
+import s from './profilePage.module.scss';
 
 export const MyProfile = () => {
   return (
     <>
-      <AvatarRadix urlAdress={'https://'} />
-      <Button>Profile Settings</Button>
+      <div className={s.userPageRoot}>
+        <UserBio />
+      </div>
     </>
   );
 };
