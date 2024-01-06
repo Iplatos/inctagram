@@ -1,8 +1,15 @@
 import React, { FC } from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
+import { Controller, useForm } from 'react-hook-form';
+import { DateObject } from 'react-multi-date-picker';
+
+
+import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
+import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
+import { Button } from '@/shared/ui';
 import { SelectBox } from '@/shared/ui/SelectBox';
 import { TextField } from '@/shared/ui/textField';
+import { DevTool } from '@hookform/devtools';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
@@ -10,54 +17,31 @@ import style from './profile-form.module.scss';
 import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
 import { Button } from '@/shared/ui';
 
-const schema = z.object({
-  // aboutme: z.string(),
-  // city: z.string(),
-  country: z.string(),
-  // dateofbirth: z.string(),
-  firstname: z.string(),
-  lastname: z.string(),
-  username: z.string(),
-  // .min(6, { message: 'Minimum number of characters 6' })
-  // .max(30, { message: 'Maximum number of characters 30' })
-  // .regex(/^[0-9A-Za-z_-]+$/),
-});
 
-type FormValuesType = z.input<typeof schema>;
+type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
 
-// type ProfileFormProps = {
-//   onSubmit: SubmitHandler<FormValuesType>;
-// };
+export const ProfileForm: FC = () => {
+  const schema = useProfileFormSchema();
 
-// type FormIdType = {
-//   formId: string;
-// };
-
-export const ProfileForm = () => {
-  // const { formId } = props;
-
-  const {
-    clearErrors,
-    control,
-    formState: { errors },
-    handleSubmit,
-    setError,
-  } = useForm<FormValuesType>({
+  const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: {
-      // aboutme: '',
-      // city: '',
-      // country: '',
-      // dateofbirth: '',
-      firstname: '',
-      lastname: '',
-      username: '',
+      aboutMe: '',
+      birthDate: new DateObject().valueOf(),
+      city: '',
+      country: '',
+      firstName: '',
+      lastName: '',
+      userName: '',
     },
-    mode: 'onBlur',
+    mode: 'onTouched',
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: FormValuesType) => {
-    console.log(data);
+  const onSubmit = (data: FormValues) => {
+    // Use data.birthData.format() to bring the data to the format requested by the backend.
+    ////data
+
+
   };
 
   const selectOptions = [
@@ -81,77 +65,66 @@ export const ProfileForm = () => {
   return (
     <div className={style.formContainer}>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+        {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />}
         <Controller
           control={control}
-          name={'username'}
+          name={'userName'}
           render={({ field, fieldState }) => (
             <TextField
-              {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
-              label={'Username'}
-              onChange={field.onChange}
-              onFocus={() => clearErrors('username')}
-              placeholder={''}
+              error={fieldState?.error?.message}
+              inputType={'text'}
+              label={'User Name'}
               required
-              value={field.value}
+              {...field}
             />
           )}
         />
-
         <Controller
           control={control}
-          name={'firstname'}
+          name={'firstName'}
           render={({ field, fieldState }) => (
             <TextField
-              {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
+              error={fieldState?.error?.message}
               label={'First Name'}
-              onChange={field.onChange}
-              onFocus={() => clearErrors('firstname')}
-              placeholder={''}
               required
-              value={field.value}
+              {...field}
             />
           )}
         />
+        <Controller
+          control={control}
+          name={'lastName'}
+          render={({ field, fieldState }) => (
+            <TextField error={fieldState?.error?.message} label={'Last Name'} required {...field} />
+          )}
+        />
+        
+        
 
         <Controller
           control={control}
-          name={'lastname'}
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
-              label={'Last Name'}
-              onChange={field.onChange}
-              onFocus={() => clearErrors('lastname')}
-              placeholder={''}
-              required
-              value={field.value}
+          name={'birthDate'}
+          render={({ field: { onBlur, onChange, value }, fieldState }) => (
+            // TODO: think about min and max dates
+            // TODO: consider validating the input format by changing the input field manually
+            // https://shahabyazdi.github.io/react-multi-date-picker/validation/#validating-input-value
+            <DatePickerContainer
+              error={fieldState?.error?.message}
+              format={'DD.MM.YYYY'}
+              label={'Birth Date'}
+              onChange={date => {
+                // Temporary solution until there is no logic to validate user manual input
+                if (date instanceof DateObject) {
+                  onChange(date.valueOf());
+                } else {
+                  onChange(new DateObject().valueOf());
+                }
+              }}
+              onClose={onBlur}
+              value={value}
             />
           )}
         />
-
-        {/* <Controller
-          control={control}
-          name={'dateofbirth'}
-          render={({ field, fieldState }) => (
-            // <TextField
-            //   {...field}
-            //   errors={fieldState?.error?.message}
-            //   inputtype={'text'}
-            //   label={'Date of birth'}
-            //   onChange={field.onChange}
-            //   onFocus={() => clearErrors('dateofbirth')}
-            //   placeholder={'00.00.00'}
-            //   value={field.value}
-            // />
-            <DatePickerContainer />
-          )}
-        /> */}
 
         <div className={style.selectBlock}>
           <div className={style.select}>
@@ -187,25 +160,23 @@ export const ProfileForm = () => {
           </div> */}
         </div>
 
-        {/* <Controller
+        <Controller
+
           control={control}
-          name={'aboutme'}
+          name={'aboutMe'}
           render={({ field, fieldState }) => (
             <TextField
               as={'textarea'}
+              error={fieldState?.error?.message}
+              label={'About Me'}
               {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
-              label={'About me'}
-              onChange={field.onChange}
-              onFocus={() => clearErrors('aboutme')}
-              placeholder={''}
-              value={field.value}
             />
           )}
-        /> */}
 
-        <Button type={'submit'}>submit</Button>
+        />
+        {/*// TODO: Consider disabling the submit button if the form is invalid */}
+        <Button type={'submit'}>Save Changes</Button>
+
       </form>
     </div>
   );

@@ -91,8 +91,8 @@ export const ForgotPasswordForm = () => {
           render={({ field, fieldState }) => (
             <TextField
               {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
+              error={fieldState?.error?.message}
+              inputType={'text'}
               label={'Email'}
               onChange={field.onChange}
               value={field.value}
