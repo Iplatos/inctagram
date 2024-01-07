@@ -1,7 +1,7 @@
 .cont input {
   background-color: var(--color-dark-700);
   height: 36px;
-  width: 300px;
+
 
   &:focus {
     border: 1px solid var(--color-accent-500);
@@ -11,11 +11,17 @@
 
 
 .datePickerContainer {
-
+  display: flex;
+  flex-direction: column;
 
   height: 60px;
-  width: 90%;
+  width: 100%;
 
+  :global {
+    .rmdp-input {
+      width: 100%;
+    }
+  }
 
 }
 
@@ -27,7 +33,7 @@
   :global {
     .rmdp-input {
       border: 2px solid var(--color-danger-500);
-      color: red
+      color: red;
     }
   }
 }

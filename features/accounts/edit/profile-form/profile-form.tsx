@@ -33,6 +33,7 @@ export const ProfileForm: FC = () => {
   });
 
   const onSubmit = (data: FormValues) => {
+    console.log(data);
     // Use data.birthData.format() to bring the data to the format requested by the backend.
     ////data
   };
@@ -57,6 +58,15 @@ export const ProfileForm: FC = () => {
 
   const changeCity = (value: string) => {
     // push(value);
+  };
+
+  console.log(control);
+  const handleInputChange = event => {
+    const inputValue = event.target.value;
+    // Разрешаем вводить только цифры и специальные символы (как запятая, точка и т.д.)
+    const filteredValue = inputValue.replace(/[^\d,-./]/g, '');
+
+    setValue(filteredValue);
   };
 
   return (
@@ -104,8 +114,7 @@ export const ProfileForm: FC = () => {
             // https://shahabyazdi.github.io/react-multi-date-picker/validation/#validating-input-value
             <DatePickerContainer
               error={fieldState?.error?.message}
-              format={'DD.MM.YYYY'}
-              label={'Birth Date'}
+              label={'Date of birth'}
               onChange={date => {
                 // Temporary solution until there is no logic to validate user manual input
                 if (date instanceof DateObject) {
@@ -115,6 +124,7 @@ export const ProfileForm: FC = () => {
                 }
               }}
               onClose={onBlur}
+              onKeyPress={handleInputChange}
               value={value}
             />
           )}
