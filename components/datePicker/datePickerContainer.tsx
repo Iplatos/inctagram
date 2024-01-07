@@ -33,7 +33,7 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({ error, label
         className={'bg-dark'}
         containerClassName={s.cont}
         dateSeparator={' - '}
-        format={router.locale === 'en' ? 'DD/MM/YYYY' : 'MM.DD.YYYY'}
+        format={router.locale === 'en' ? 'MM/DD/YYYY' : 'DD.MM.YYYY'}
         headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
         locale={t.datePicker.locale}
         mapDays={({ date }) => {
