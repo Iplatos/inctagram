@@ -1,8 +1,6 @@
 import { ComponentPropsWithoutRef, FC } from 'react';
 import DatePicker from 'react-multi-date-picker';
 
-import en_th from '@/components/datePicker/en_th';
-import ru_th from '@/components/datePicker/ru_th';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui/typography';
 import { clsx } from 'clsx';
@@ -24,9 +22,6 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({ error, label
   const router = useRouter();
 
   // TODO: Move locale setting in global file
-  const getLocale = () => {
-    return router.locale && router.locale === 'en' ? en_th : ru_th;
-  };
 
   return (
     <div className={clsx(s.datePickerContainer, error && s.error)}>
@@ -40,7 +35,7 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({ error, label
         dateSeparator={' - '}
         format={router.locale === 'en' ? 'DD/MM/YYYY' : 'MM.DD.YYYY'}
         headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
-        locale={getLocale()}
+        locale={t.datePicker.locale}
         mapDays={({ date }) => {
           const props = { className: '' };
           const isWeekend = [0, 6].includes(date.weekDay.index);

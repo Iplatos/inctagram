@@ -1,3 +1,5 @@
+import rus_th from '@/components/datePicker/ru_th';
+
 export const ru = {
   auth: {
     emailConfirmedPage: {
@@ -183,6 +185,7 @@ export const ru = {
 
   datePicker: {
     DataSelect: 'Выбор даты',
+    locale: rus_th,
   },
 
   logOut: {

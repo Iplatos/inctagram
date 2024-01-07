@@ -1,3 +1,5 @@
+import gregorian_en from 'react-date-object/locales/gregorian_en';
+
 import { LocaleType } from './ru';
 
 export const en: LocaleType = {
@@ -185,6 +187,7 @@ export const en: LocaleType = {
 
   datePicker: {
     DataSelect: 'Date select',
+    locale: gregorian_en,
   },
 
   logOut: {

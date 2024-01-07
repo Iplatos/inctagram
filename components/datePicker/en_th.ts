@@ -1,3 +1,4 @@
+/*
 const en_th = {
   digits: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
   meridiems: [
@@ -31,3 +32,4 @@ const en_th = {
 };
 
 export default en_th;
+*/
