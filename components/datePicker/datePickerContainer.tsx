@@ -1,13 +1,11 @@
 import { ComponentPropsWithoutRef, FC } from 'react';
 import DatePicker from 'react-multi-date-picker';
 
-import en_th from '@/components/datePicker/en_th';
-import ru_th from '@/components/datePicker/ru_th';
+import { useDatePickerFormat } from '@/shared/hooks/useDatePickerFormat';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui/typography';
 import { clsx } from 'clsx';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import InputIcon from 'react-multi-date-picker/components/input_icon';
 
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
@@ -21,12 +19,9 @@ type DatePickerContainerProps = ComponentPropsWithoutRef<typeof DatePicker> & {
 
 export const DatePickerContainer: FC<DatePickerContainerProps> = ({ error, label, ...props }) => {
   const { t } = useTranslation();
-  const router = useRouter();
+  const { localeFormat } = useDatePickerFormat();
 
   // TODO: Move locale setting in global file
-  const getLocale = () => {
-    return router.locale && router.locale === 'en' ? en_th : ru_th;
-  };
 
   return (
     <div className={clsx(s.datePickerContainer, error && s.error)}>
@@ -38,8 +33,9 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({ error, label
         className={'bg-dark'}
         containerClassName={s.cont}
         dateSeparator={' - '}
+        format={localeFormat}
         headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
-        locale={getLocale()}
+        locale={t.datePicker.locale}
         mapDays={({ date }) => {
           const props = { className: '' };
           const isWeekend = [0, 6].includes(date.weekDay.index);
@@ -55,12 +51,12 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({ error, label
       />
       {/*TODO: extract error message to the profile-form level*/}
       {error && (
-        <div className={s.errorMessage}>
+        <Typography.SmallLink className={s.errorMessage}>
           A user under 13 cannot create a profile.{' '}
           <Link href={'/privacy-policy'} style={{ textDecoration: 'underLine' }}>
             {t.navbar.privacyPolicy}
           </Link>
-        </div>
+        </Typography.SmallLink>
       )}
     </div>
   );
