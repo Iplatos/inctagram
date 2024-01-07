@@ -10,13 +10,10 @@ import { useRouter } from 'next/navigation';
 
 function Home() {
   const { t } = useTranslation();
-  /*const { data: feed, error } = useGetFeedQuery();*/
   const { data: meData, error: meError, isLoading: isMeLoading } = useGetMeQuery();
-  /*const { data, error } = useFilteredPostsQuery();*/
   const router = useRouter();
 
   console.log(meData);
-  /*const { getMe } = useGetMeQuery();*/
   if (meError) {
     if ('status' in meError) {
       meError.status === 401 && router.push('/signIn');
@@ -29,22 +26,10 @@ function Home() {
   return (
     <>
       <HeadMeta title={'main'} />
-      {/* <div style={{ visibility: 'hidden' }}>adf</div> */}
-
-      {/*
-
-      */}
       <div style={{ marginLeft: '300px' }}>
         <AddPhoto />
         <DatePickerContainer />
       </div>
-      {/*  <div>
-        {error?.status} {JSON.stringify(error)}
-      </div>*/}
-      {/*<button onClick={logOut}>logout</button>*/}
-
-      {/* <Sidebar />
-      <ProfileSettingsContent /> */}
     </>
   );
 }
