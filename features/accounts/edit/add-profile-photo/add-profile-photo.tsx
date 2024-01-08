@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 import style from './add-profile-photo.module.scss';
 
-import AccounPhotoImage from '../../../../assets/icons/account-photo.svg?url';
+import AccountPhotoImage from '../../../../assets/icons/account-photo.svg?url';
 
 export const AddProfilePhoto = () => {
   function addProfilePhoto() {
@@ -15,7 +15,7 @@ export const AddProfilePhoto = () => {
   return (
     <div className={style.photoContainer}>
       <div className={style.imageBlock}>
-        <Image alt={'profile photo'} src={AccounPhotoImage} />
+        <Image alt={'profile photo'} src={AccountPhotoImage} />
       </div>
       <Button onClick={addProfilePhoto} variant={'tertiary'}>
         Add a Profile Photo

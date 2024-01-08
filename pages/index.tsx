@@ -35,7 +35,7 @@ function Home() {
       {/*
 
       */}
-      <div style={{ marginLeft: '300px' }}>
+      <div style={{ marginLeft: '220px' }}>
         {/* <AddPhoto /> */}
         {/* <DatePickerContainer /> */}
 

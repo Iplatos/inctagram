@@ -14,7 +14,7 @@ export const GeneralInformation = () => {
         <ProfileForm />
       </div>
 
-      {/* <SaveChangesButton formId={'generalInfo'} /> */}
+      <SaveChangesButton />
     </>
   );
 };

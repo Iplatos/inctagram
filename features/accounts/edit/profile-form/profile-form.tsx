@@ -1,8 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import { Controller, useForm } from 'react-hook-form';
 import { DateObject } from 'react-multi-date-picker';
-
 
 import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
 import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
@@ -14,16 +13,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import style from './profile-form.module.scss';
-import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
-import { Button } from '@/shared/ui';
-
+import { AddProfilePhoto } from '..';
+import { fetchCountries } from './fetch-countries';
+import { countrySelectType, countryType } from './pofile-form-types';
 
 type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
 
 export const ProfileForm: FC = () => {
   const schema = useProfileFormSchema();
 
-  const { control, handleSubmit } = useForm<FormValues>({
+  const { control, handleSubmit, watch, useWatch } = useForm<FormValues>({
     defaultValues: {
       aboutMe: '',
       birthDate: new DateObject().valueOf(),
@@ -41,15 +40,8 @@ export const ProfileForm: FC = () => {
     // Use data.birthData.format() to bring the data to the format requested by the backend.
     ////data
 
-
+    console.log(data);
   };
-
-  const selectOptions = [
-    { label: 'England', value: 'England' },
-    { label: 'Belarus', value: 'Belarus' },
-    { label: 'France', value: 'France' },
-    { label: 'Poland', value: 'Poland' },
-  ];
 
   // const defaultIdx = selectOptions.findIndex(item => item.value === locale);
 
@@ -62,10 +54,34 @@ export const ProfileForm: FC = () => {
   //   // push(value);
   // };
 
+  const [countries, setCountries] = useState<countrySelectType[]>([]);
+  const [cities, setCities] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchCountries();
+
+      await setCountries(
+        data.map(
+          (country: countryType): countrySelectType => ({
+            id: `${country.iso2}${country.iso3}`,
+            label: country.country,
+            value: country.country,
+          })
+        )
+      );
+
+      // const cities = await data.find((c: countryType): any => c.country === country);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className={style.formContainer}>
-      <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={style.form} id={'generalInformation'} onSubmit={handleSubmit(onSubmit)}>
         {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />}
+
         <Controller
           control={control}
           name={'userName'}
@@ -98,8 +114,6 @@ export const ProfileForm: FC = () => {
             <TextField error={fieldState?.error?.message} label={'Last Name'} required {...field} />
           )}
         />
-        
-        
 
         <Controller
           control={control}
@@ -131,37 +145,35 @@ export const ProfileForm: FC = () => {
             <Controller
               control={control}
               name={'country'}
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <SelectBox
                   {...field}
                   labelField={'Country'}
-                  onChangeFn={value => field.onChange(value)}
-                  options={selectOptions}
+                  onChangeFn={field.onChange}
+                  options={countries}
                   placeholder={'Country'}
-                  // value={field.value}
                 />
               )}
             />
           </div>
 
-          {/* <div className={style.select}>
+          <div className={style.select}>
             <Controller
               control={control}
               name={'city'}
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <SelectBox
                   labelField={'City'}
-                  onChangeFn={changeCity}
-                  options={selectOptions}
+                  onChangeFn={field.onChange}
+                  // options={}
                   placeholder={'City'}
                 />
               )}
             />
-          </div> */}
+          </div>
         </div>
 
         <Controller
-
           control={control}
           name={'aboutMe'}
           render={({ field, fieldState }) => (
@@ -172,11 +184,9 @@ export const ProfileForm: FC = () => {
               {...field}
             />
           )}
-
         />
         {/*// TODO: Consider disabling the submit button if the form is invalid */}
-        <Button type={'submit'}>Save Changes</Button>
-
+        {/* <Button type={'submit'}>Save Changes</Button> */}
       </form>
     </div>
   );
