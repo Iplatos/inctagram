@@ -1,0 +1,54 @@
+@use '../../../styles/helpers' as *;
+
+%avatar-root {
+  user-select: none;
+
+  position: relative;
+
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--color-dark-500);
+  border-radius: 100%;
+}
+
+.avatarRootSmall {
+  @extend %avatar-root;
+
+  width: em(30);
+  height: em(30);
+}
+
+.avatarRootMedium {
+  @extend %avatar-root;
+
+  width: em(48);
+  height: em(48);
+}
+
+.avatarRootLarge {
+  @extend %avatar-root;
+
+  width: em(60);
+  height: em(60);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--color-dark-500);
+}
