@@ -1,1 +1,1 @@
-export * from './avatarRadix';
+export * from './avatar';
