@@ -1,7 +1,13 @@
-/** svg imports with a ?url suffix can be used as the src value in Image components */
-declare module "*.svg?url" {
-  import { StaticImport } from "next/image";
+declare module '*.svg?url' {
+  import { StaticImageData } from 'next/image';
 
-  const defaultExport: StaticImport | string;
-  export default defaultExport;
+  const content: StaticImageData;
+  export default content;
+}
+
+declare module '*.svg' {
+  import * as React from 'react';
+
+  const component: React.FC<React.SVGProps<SVGSVGElement>>;
+  export default component;
 }

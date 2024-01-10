@@ -1,7 +1,9 @@
+import UserPhotoFallbackIcon from '@/assets/icons/account-photo.svg?url';
 import { UserCounter } from '@/pages/myProfile/userCounter/userCounter';
 import { Button } from '@/shared/ui';
-import { AvatarRadix } from '@/shared/ui/avatar';
+import { Avatar } from '@/shared/ui/avatar';
 import { Typography } from '@/shared/ui/typography';
+import Image from 'next/image';
 
 import s from './userBio.module.scss';
 
@@ -34,7 +36,17 @@ export const UserBio = () => {
   return (
     <div className={s.userBioRoot}>
       <div className={s.userBioAvatar}>
-        <AvatarRadix urlAdress={profile.photos[0].url} />
+        <Avatar
+          classes={{ avatarRoot: s.userBioAvatar }}
+          fallback={
+            <Image
+              alt={'avatar fallback'}
+              className={s.userBioAvatarFallback}
+              src={UserPhotoFallbackIcon}
+            />
+          }
+          src={profile.photos[0].url}
+        />
       </div>
       <div className={s.userBioRootInfo}>
         <div className={s.userBioInfo}>
