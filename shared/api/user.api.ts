@@ -7,8 +7,10 @@ export const userApi = baseApi.injectEndpoints({
       changeUserProfile: build.mutation<any, ChangeProfileType>({
         query: userInfo => {
           return {
+            body: {
+              userInfo,
+            },
             method: 'PUT',
-            params: userInfo,
             url: '/api/v1/user/profile',
           };
         },
@@ -25,5 +27,4 @@ export const userApi = baseApi.injectEndpoints({
   },
 });
 
-export const { useChangeUserProfileMutation, useGetUserProfileQuery }
- = userApi;
+export const { useChangeUserProfileMutation, useGetUserProfileQuery } = userApi;

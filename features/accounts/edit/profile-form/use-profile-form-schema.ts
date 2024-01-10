@@ -57,18 +57,18 @@ const getValidationSchema = (locale: LocaleType) => {
 
   return z.object({
     aboutMe: getFieldSchema({ field: 'About Me', max: 200 }),
-    birthDate: z.number().refine(timestamp => {
+    city: z.string(),
+    country: z.string(),
+    dateOfBirth: z.number().refine(timestamp => {
       const minDate = new DateObject()
         .set({ hour: 0, millisecond: 0, minute: 0, second: 0 })
         .subtract(13, 'years');
 
       return timestamp <= minDate.valueOf();
     }),
-    city: z.string(),
-    country: z.string(),
-    firstName: getNameFieldSchema({ field: 'First Name' }),
-    lastName: getNameFieldSchema({ field: 'Last Name' }),
-    userName: getFieldSchema({
+    firstname: getNameFieldSchema({ field: 'First Name' }),
+    lastname: getNameFieldSchema({ field: 'Last Name' }),
+    username: getFieldSchema({
       field: 'User Name',
       max: 30,
       min: 6,

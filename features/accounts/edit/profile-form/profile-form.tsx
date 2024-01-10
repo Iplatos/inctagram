@@ -15,7 +15,9 @@ import { z } from 'zod';
 import style from './profile-form.module.scss';
 import { AddProfilePhoto } from '..';
 import { fetchCountries } from './fetch-countries';
-import { countrySelectType, countryType } from './pofile-form-types';
+import { countrySelectType, countryType, selectType } from './pofile-form-types';
+import axios from 'axios';
+import { useChangeUserProfileMutation } from '@/shared/api/user.api';
 
 type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
 
@@ -36,13 +38,6 @@ export const ProfileForm: FC = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: FormValues) => {
-    // Use data.birthData.format() to bring the data to the format requested by the backend.
-    ////data
-
-    console.log(data);
-  };
-
   // const defaultIdx = selectOptions.findIndex(item => item.value === locale);
 
   // const changeCountry = (value: string) => {
@@ -54,28 +49,53 @@ export const ProfileForm: FC = () => {
   //   // push(value);
   // };
 
-  const [countries, setCountries] = useState<countrySelectType[]>([]);
-  const [cities, setCities] = useState([]);
+  const [countries, setCountries] = useState<countryType[]>([]);
+  const [country, setCountry] = useState<string>('');
+  const [countriesOptions, setCountriesOptions] = useState<selectType[]>();
+  const [citiesOptions, setCitiesOptions] = useState<selectType[]>();
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchCountries();
+      const data = await axios
+        .get('https://countriesnow.space/api/v0.1/countries')
+        .then(response => response.data.data);
 
-      await setCountries(
-        data.map(
-          (country: countryType): countrySelectType => ({
-            id: `${country.iso2}${country.iso3}`,
-            label: country.country,
-            value: country.country,
-          })
-        )
+      setCountries(data);
+
+      const options = countries.map(
+        (country: countryType): selectType => ({
+          id: `${country.iso2 + country.country}`,
+          label: country.country,
+          value: country.country,
+        })
       );
 
-      // const cities = await data.find((c: countryType): any => c.country === country);
+      setCountriesOptions(options);
     };
 
     fetchData();
   }, []);
+
+  const getCitiesOfCountry = (event: string) => {
+    const countryInfo: countryType = countries.find(c => c.country === event);
+
+    const cities = countryInfo.cities.map((i, index) => ({
+      id: `${index + i}`,
+      label: i,
+      value: i,
+    }));
+
+    setCitiesOptions(cities);
+  };
+
+  const [saveChanges] = useChangeUserProfileMutation();
+
+  const onSubmit = (data: FormValues) => {
+    // Use data.birthData.format() to bring the data to the format requested by the backend.
+
+    console.log(data);
+    saveChanges({ ...data, dateOfBirth: String(data.dateOfBirth) });
+  };
 
   return (
     <div className={style.formContainer}>
@@ -84,12 +104,12 @@ export const ProfileForm: FC = () => {
 
         <Controller
           control={control}
-          name={'userName'}
+          name={'username'}
           render={({ field, fieldState }) => (
             <TextField
               error={fieldState?.error?.message}
               inputType={'text'}
-              label={'User Name'}
+              label={'Username'}
               required
               {...field}
             />
@@ -97,7 +117,7 @@ export const ProfileForm: FC = () => {
         />
         <Controller
           control={control}
-          name={'firstName'}
+          name={'firstname'}
           render={({ field, fieldState }) => (
             <TextField
               error={fieldState?.error?.message}
@@ -109,7 +129,7 @@ export const ProfileForm: FC = () => {
         />
         <Controller
           control={control}
-          name={'lastName'}
+          name={'lastname'}
           render={({ field, fieldState }) => (
             <TextField error={fieldState?.error?.message} label={'Last Name'} required {...field} />
           )}
@@ -117,7 +137,7 @@ export const ProfileForm: FC = () => {
 
         <Controller
           control={control}
-          name={'birthDate'}
+          name={'dateOfBirth'}
           render={({ field: { onBlur, onChange, value }, fieldState }) => (
             // TODO: think about min and max dates
             // TODO: consider validating the input format by changing the input field manually
@@ -125,7 +145,7 @@ export const ProfileForm: FC = () => {
             <DatePickerContainer
               error={fieldState?.error?.message}
               format={'DD.MM.YYYY'}
-              label={'Birth Date'}
+              label={'Date of birth'}
               onChange={date => {
                 // Temporary solution until there is no logic to validate user manual input
                 if (date instanceof DateObject) {
@@ -148,9 +168,13 @@ export const ProfileForm: FC = () => {
               render={({ field }) => (
                 <SelectBox
                   {...field}
-                  labelField={'Country'}
-                  onChangeFn={field.onChange}
-                  options={countries}
+                  labelField={'Select your country'}
+                  onChangeFn={event => {
+                    // setCountry(event);
+                    field.onChange(event);
+                    getCitiesOfCountry(event);
+                  }}
+                  options={countriesOptions}
                   placeholder={'Country'}
                 />
               )}
@@ -163,9 +187,9 @@ export const ProfileForm: FC = () => {
               name={'city'}
               render={({ field }) => (
                 <SelectBox
-                  labelField={'City'}
+                  labelField={'Select your city'}
                   onChangeFn={field.onChange}
-                  // options={}
+                  options={citiesOptions}
                   placeholder={'City'}
                 />
               )}
@@ -185,8 +209,6 @@ export const ProfileForm: FC = () => {
             />
           )}
         />
-        {/*// TODO: Consider disabling the submit button if the form is invalid */}
-        {/* <Button type={'submit'}>Save Changes</Button> */}
       </form>
     </div>
   );

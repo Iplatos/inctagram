@@ -11,7 +11,7 @@
   justify-content: center;
 
   box-sizing: border-box;
-  padding: 6px 24px 6px 24px;
+  padding: 6px 24px;
 
   font-size: 16px;
   font-weight: 600;
@@ -31,6 +31,7 @@
     cursor: default;
     opacity: 0.5;
   }
+
   &.fullWidth {
     justify-content: center;
     width: 100%;
@@ -90,9 +91,9 @@
 
 .text {
   @include button;
+
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-m);
-
   color: var(--color-accent-500);
 
   &:hover:enabled {

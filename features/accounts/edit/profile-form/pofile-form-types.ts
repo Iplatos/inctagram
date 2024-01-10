@@ -5,7 +5,7 @@ export type countryType = {
   iso3: string;
 };
 
-export type countrySelectType = {
+export type selectType = {
   id: string;
   label: string;
   value: string;
