@@ -24,6 +24,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@types/react-google-recaptcha": "^2.1.8",
     "async-mutex": "^0.4.0",
+    "axios": "^1.6.5",
     "clsx": "^2.0.0",
     "env-cmd": "^10.1.0",
     "next": "13.5.4",
@@ -40,6 +41,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@hookform/devtools": "^4.3.1",
     "@it-incubator/eslint-config": "^1.0.1",
     "@it-incubator/prettier-config": "^0.1.2",
     "@it-incubator/stylelint-config": "^0.1.5",

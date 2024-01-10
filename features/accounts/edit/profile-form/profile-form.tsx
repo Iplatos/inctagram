@@ -1,136 +1,161 @@
-import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import React, { FC, useEffect, useState } from 'react';
 
+import { Controller, useForm } from 'react-hook-form';
+import { DateObject } from 'react-multi-date-picker';
+
+import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
+import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
+import { Button } from '@/shared/ui';
 import { SelectBox } from '@/shared/ui/SelectBox';
 import { TextField } from '@/shared/ui/textField';
+import { DevTool } from '@hookform/devtools';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import style from './profile-form.module.scss';
+import { AddProfilePhoto } from '..';
+import { fetchCountries } from './fetch-countries';
+import { countrySelectType, countryType, selectType } from './pofile-form-types';
+import axios from 'axios';
+import { useChangeUserProfileMutation } from '@/shared/api/user.api';
 
-const schema = z.object({
-  aboutme: z.string(),
-  city: z.string(),
-  country: z.string(),
-  dateofbirth: z.date(),
-  firstname: z.string(),
-  lastname: z.string(),
-  username: z.string(),
-  // .min(6, { message: 'Minimum number of characters 6' })
-  // .max(30, { message: 'Maximum number of characters 30' })
-  // .regex(/^[0-9A-Za-z_-]+$/),
-});
+type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
 
-type FormValuesType = z.input<typeof schema>;
+export const ProfileForm: FC = () => {
+  const schema = useProfileFormSchema();
 
-export const ProfileForm = () => {
-  const {
-    clearErrors,
-    control,
-    formState: { errors },
-    handleSubmit,
-    setError,
-  } = useForm<FormValuesType>({
-    mode: 'onBlur',
+  const { control, handleSubmit, watch, useWatch } = useForm<FormValues>({
+    defaultValues: {
+      aboutMe: '',
+      birthDate: new DateObject().valueOf(),
+      city: '',
+      country: '',
+      firstName: '',
+      lastName: '',
+      userName: '',
+    },
+    mode: 'onTouched',
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: FormValuesType) => {
-    ////data
-  };
-
-  const selectOptions = [
-    { label: 'English', value: 'en' },
-    { label: 'Русский', value: 'ru' },
-    { label: 'french', value: 'france' },
-    { label: '1', value: '1' },
-    { label: '2', value: '2' },
-    { label: '3', value: '3' },
-    { label: '4', value: '4' },
-  ];
-
   // const defaultIdx = selectOptions.findIndex(item => item.value === locale);
 
-  const changeCountry = (value: string) => {
-    // push(value);
+  // const changeCountry = (value: string) => {
+  //   // push(value);
+  //   // console.log(value);
+  // };
 
-    console.log(value);
+  // const changeCity = (value: string) => {
+  //   // push(value);
+  // };
+
+  const [countries, setCountries] = useState<countryType[]>([]);
+  const [country, setCountry] = useState<string>('');
+  const [countriesOptions, setCountriesOptions] = useState<selectType[]>();
+  const [citiesOptions, setCitiesOptions] = useState<selectType[]>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await axios
+        .get('https://countriesnow.space/api/v0.1/countries')
+        .then(response => response.data.data);
+
+      setCountries(data);
+
+      const options = countries.map(
+        (country: countryType): selectType => ({
+          id: `${country.iso2 + country.country}`,
+          label: country.country,
+          value: country.country,
+        })
+      );
+
+      setCountriesOptions(options);
+    };
+
+    fetchData();
+  }, []);
+
+  const getCitiesOfCountry = (event: string) => {
+    const countryInfo: countryType = countries.find(c => c.country === event);
+
+    const cities = countryInfo.cities.map((i, index) => ({
+      id: `${index + i}`,
+      label: i,
+      value: i,
+    }));
+
+    setCitiesOptions(cities);
   };
 
-  const changeCity = (value: string) => {
-    // push(value);
+  const [saveChanges] = useChangeUserProfileMutation();
+
+  const onSubmit = (data: FormValues) => {
+    // Use data.birthData.format() to bring the data to the format requested by the backend.
+
+    console.log(data);
+    saveChanges({ ...data, dateOfBirth: String(data.dateOfBirth) });
   };
 
   return (
     <div className={style.formContainer}>
-      <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={style.form} id={'generalInformation'} onSubmit={handleSubmit(onSubmit)}>
+        {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />}
+
         <Controller
           control={control}
           name={'username'}
           render={({ field, fieldState }) => (
             <TextField
-              {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
+              error={fieldState?.error?.message}
+              inputType={'text'}
               label={'Username'}
-              onChange={field.onChange}
-              onFocus={() => clearErrors('username')}
-              placeholder={''}
               required
-              value={field.value}
+              {...field}
             />
           )}
         />
-
         <Controller
           control={control}
           name={'firstname'}
           render={({ field, fieldState }) => (
             <TextField
-              {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
+              error={fieldState?.error?.message}
               label={'First Name'}
-              onChange={field.onChange}
-              onFocus={() => clearErrors('firstname')}
-              placeholder={''}
               required
-              value={field.value}
+              {...field}
             />
           )}
         />
-
         <Controller
           control={control}
           name={'lastname'}
           render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
-              label={'Last Name'}
-              onChange={field.onChange}
-              onFocus={() => clearErrors('lastname')}
-              placeholder={''}
-              required
-              value={field.value}
-            />
+            <TextField error={fieldState?.error?.message} label={'Last Name'} required {...field} />
           )}
         />
 
         <Controller
           control={control}
-          name={'dateofbirth'}
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
+          name={'dateOfBirth'}
+          render={({ field: { onBlur, onChange, value }, fieldState }) => (
+            // TODO: think about min and max dates
+            // TODO: consider validating the input format by changing the input field manually
+            // https://shahabyazdi.github.io/react-multi-date-picker/validation/#validating-input-value
+            <DatePickerContainer
+              error={fieldState?.error?.message}
+              format={'DD.MM.YYYY'}
               label={'Date of birth'}
-              onChange={field.onChange}
-              onFocus={() => clearErrors('dateofbirth')}
-              placeholder={'00.00.00'}
-              value={field.value}
+              onChange={date => {
+                // Temporary solution until there is no logic to validate user manual input
+                if (date instanceof DateObject) {
+                  onChange(date.valueOf());
+                } else {
+                  onChange(new DateObject().valueOf());
+                }
+              }}
+              onClose={onBlur}
+              value={value}
             />
           )}
         />
@@ -140,25 +165,31 @@ export const ProfileForm = () => {
             <Controller
               control={control}
               name={'country'}
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <SelectBox
-                  labelField={'Country'}
-                  onChangeFn={changeCountry}
-                  options={selectOptions}
+                  {...field}
+                  labelField={'Select your country'}
+                  onChangeFn={event => {
+                    // setCountry(event);
+                    field.onChange(event);
+                    getCitiesOfCountry(event);
+                  }}
+                  options={countriesOptions}
                   placeholder={'Country'}
                 />
               )}
             />
           </div>
+
           <div className={style.select}>
             <Controller
               control={control}
               name={'city'}
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <SelectBox
-                  labelField={'City'}
-                  onChangeFn={changeCity}
-                  options={selectOptions}
+                  labelField={'Select your city'}
+                  onChangeFn={field.onChange}
+                  options={citiesOptions}
                   placeholder={'City'}
                 />
               )}
@@ -168,18 +199,13 @@ export const ProfileForm = () => {
 
         <Controller
           control={control}
-          name={'aboutme'}
+          name={'aboutMe'}
           render={({ field, fieldState }) => (
             <TextField
               as={'textarea'}
+              error={fieldState?.error?.message}
+              label={'About Me'}
               {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
-              label={'About me'}
-              onChange={field.onChange}
-              onFocus={() => clearErrors('aboutme')}
-              placeholder={''}
-              value={field.value}
             />
           )}
         />
