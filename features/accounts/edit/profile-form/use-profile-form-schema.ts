@@ -66,9 +66,9 @@ const getValidationSchema = (locale: LocaleType) => {
 
       return timestamp <= minDate.valueOf();
     }),
-    firstname: getNameFieldSchema({ field: 'First Name' }),
-    lastname: getNameFieldSchema({ field: 'Last Name' }),
-    username: getFieldSchema({
+    firstName: getNameFieldSchema({ field: 'First Name' }),
+    lastName: getNameFieldSchema({ field: 'Last Name' }),
+    userName: getFieldSchema({
       field: 'User Name',
       max: 30,
       min: 6,

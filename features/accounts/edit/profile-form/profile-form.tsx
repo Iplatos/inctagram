@@ -1,35 +1,64 @@
 import React, { FC, useEffect, useState } from 'react';
-
 import { Controller, useForm } from 'react-hook-form';
 import { DateObject } from 'react-multi-date-picker';
 
 import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
 import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
-import { Button } from '@/shared/ui';
 import { SelectBox } from '@/shared/ui/SelectBox';
 import { TextField } from '@/shared/ui/textField';
 import { DevTool } from '@hookform/devtools';
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
 import { z } from 'zod';
 
 import style from './profile-form.module.scss';
-import { AddProfilePhoto } from '..';
-import { fetchCountries } from './fetch-countries';
-import { countrySelectType, countryType, selectType } from './pofile-form-types';
-import axios from 'axios';
-import { useChangeUserProfileMutation } from '@/shared/api/user.api';
+
+import { CountriesApiResponse, CountryWithFlagApiData } from './pofile-form-types';
 
 type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
+
+const useCountries = () => {
+  const [countries, setCountries] = useState<string[]>([]);
+
+  useEffect(() => {
+    axios
+      .get<CountriesApiResponse<CountryWithFlagApiData[]>>(
+        'https://countriesnow.space/api/v0.1/countries/flag/unicode'
+      )
+      .then(({ data: response }) => setCountries(response.data.map(({ name }) => name)));
+  }, []);
+
+  return countries;
+};
+
+const useCities = (country: string) => {
+  const [cities, setCities] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!country) {
+      return;
+    }
+
+    axios
+      .post<CountriesApiResponse<string[]>>(
+        'https://countriesnow.space/api/v0.1/countries/cities',
+        { country }
+      )
+      .then(({ data: response }) => setCities(response.data));
+  }, [country]);
+
+  return cities;
+};
 
 export const ProfileForm: FC = () => {
   const schema = useProfileFormSchema();
 
-  const { control, handleSubmit, watch, useWatch } = useForm<FormValues>({
+  const { control, handleSubmit, setValue, watch } = useForm<FormValues>({
     defaultValues: {
       aboutMe: '',
-      birthDate: new DateObject().valueOf(),
       city: '',
       country: '',
+      dateOfBirth: new DateObject().valueOf(),
       firstName: '',
       lastName: '',
       userName: '',
@@ -38,63 +67,17 @@ export const ProfileForm: FC = () => {
     resolver: zodResolver(schema),
   });
 
-  // const defaultIdx = selectOptions.findIndex(item => item.value === locale);
+  const country = watch('country');
 
-  // const changeCountry = (value: string) => {
-  //   // push(value);
-  //   // console.log(value);
-  // };
+  const countries = useCountries();
+  const cities = useCities(country);
 
-  // const changeCity = (value: string) => {
-  //   // push(value);
-  // };
-
-  const [countries, setCountries] = useState<countryType[]>([]);
-  const [country, setCountry] = useState<string>('');
-  const [countriesOptions, setCountriesOptions] = useState<selectType[]>();
-  const [citiesOptions, setCitiesOptions] = useState<selectType[]>();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await axios
-        .get('https://countriesnow.space/api/v0.1/countries')
-        .then(response => response.data.data);
-
-      setCountries(data);
-
-      const options = countries.map(
-        (country: countryType): selectType => ({
-          id: `${country.iso2 + country.country}`,
-          label: country.country,
-          value: country.country,
-        })
-      );
-
-      setCountriesOptions(options);
-    };
-
-    fetchData();
-  }, []);
-
-  const getCitiesOfCountry = (event: string) => {
-    const countryInfo: countryType = countries.find(c => c.country === event);
-
-    const cities = countryInfo.cities.map((i, index) => ({
-      id: `${index + i}`,
-      label: i,
-      value: i,
-    }));
-
-    setCitiesOptions(cities);
-  };
-
-  const [saveChanges] = useChangeUserProfileMutation();
+  // IMPORTANT: It will not work. You need to configure the redux provider!
+  // And don't forget to pass the userApi to redux's combineReducers API!
+  // const [saveChanges] = useChangeUserProfileMutation();
 
   const onSubmit = (data: FormValues) => {
     // Use data.birthData.format() to bring the data to the format requested by the backend.
-
-    console.log(data);
-    saveChanges({ ...data, dateOfBirth: String(data.dateOfBirth) });
   };
 
   return (
@@ -104,7 +87,7 @@ export const ProfileForm: FC = () => {
 
         <Controller
           control={control}
-          name={'username'}
+          name={'userName'}
           render={({ field, fieldState }) => (
             <TextField
               error={fieldState?.error?.message}
@@ -117,7 +100,7 @@ export const ProfileForm: FC = () => {
         />
         <Controller
           control={control}
-          name={'firstname'}
+          name={'firstName'}
           render={({ field, fieldState }) => (
             <TextField
               error={fieldState?.error?.message}
@@ -129,7 +112,7 @@ export const ProfileForm: FC = () => {
         />
         <Controller
           control={control}
-          name={'lastname'}
+          name={'lastName'}
           render={({ field, fieldState }) => (
             <TextField error={fieldState?.error?.message} label={'Last Name'} required {...field} />
           )}
@@ -165,19 +148,22 @@ export const ProfileForm: FC = () => {
             <Controller
               control={control}
               name={'country'}
-              render={({ field }) => (
-                <SelectBox
-                  {...field}
-                  labelField={'Select your country'}
-                  onChangeFn={event => {
-                    // setCountry(event);
-                    field.onChange(event);
-                    getCitiesOfCountry(event);
-                  }}
-                  options={countriesOptions}
-                  placeholder={'Country'}
-                />
-              )}
+              render={({ field: { onChange } }) => {
+                const handleChange = (country: string) => {
+                  onChange(country);
+                  // TODO: Find the optimal solution for resetting 'cities'
+                  setValue('city', '');
+                };
+
+                return (
+                  <SelectBox
+                    labelField={'Select your country'}
+                    onChangeFn={handleChange}
+                    options={countries.map(c => ({ label: c, value: c }))}
+                    placeholder={'Country'}
+                  />
+                );
+              }}
             />
           </div>
 
@@ -189,7 +175,7 @@ export const ProfileForm: FC = () => {
                 <SelectBox
                   labelField={'Select your city'}
                   onChangeFn={field.onChange}
-                  options={citiesOptions}
+                  options={cities.map(c => ({ label: c, value: c }))}
                   placeholder={'City'}
                 />
               )}
