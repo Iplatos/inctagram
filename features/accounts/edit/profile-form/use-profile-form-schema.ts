@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { DateObject } from 'react-multi-date-picker';
 
 import { LocaleType } from '@/locales/ru';
 import { useTranslation } from '@/shared/hooks/useTranslation';
@@ -15,13 +14,20 @@ type FieldSchemaOptions = {
   };
   required?: boolean;
 };
+
 export const useProfileFormSchema = () => {
   // TODO: add description of errors in locale objects in Russian and English languages
   const { t } = useTranslation();
 
   return useMemo(() => getValidationSchema(t), [t]);
 };
-
+const currentDate = new Date();
+const minDate = new Date('1900-01-01');
+const maxDate = new Date(
+  currentDate.getFullYear() - 13,
+  currentDate.getMonth(),
+  currentDate.getDate()
+);
 const getValidationSchema = (locale: LocaleType) => {
   const getFieldSchema = ({ field, max, min, regex, required }: FieldSchemaOptions) => {
     let schema = z.string().trim();
@@ -57,13 +63,25 @@ const getValidationSchema = (locale: LocaleType) => {
 
   return z.object({
     aboutMe: getFieldSchema({ field: 'About Me', max: 200 }),
-    birthDate: z.number().refine(timestamp => {
-      const minDate = new DateObject()
-        .set({ hour: 0, millisecond: 0, minute: 0, second: 0 })
-        .subtract(13, 'years');
+    birthDate: z
+      .date()
+      .refine(date => date instanceof Date && !isNaN(date.getTime()), {
+        message: 'Invalid date format. Please enter a valid date.',
+      })
+      .refine(date => date >= minDate, {
+        message: 'Too old',
+      })
+      .refine(
+        date => {
+          const today = new Date();
+          const age = today.getFullYear() - date.getFullYear();
 
-      return timestamp <= minDate.valueOf();
-    }),
+          return age >= 13;
+        },
+        {
+          message: 'Must be at least 13 years old',
+        }
+      ),
     city: z.string(),
     country: z.string(),
     firstName: getNameFieldSchema({ field: 'First Name' }),

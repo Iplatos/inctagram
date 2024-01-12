@@ -21,7 +21,7 @@ export const ProfileForm: FC = () => {
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: {
       aboutMe: '',
-      birthDate: new DateObject().valueOf(),
+      birthDate: new DateObject().toDate(),
       city: '',
       country: '',
       firstName: '',
@@ -33,9 +33,13 @@ export const ProfileForm: FC = () => {
   });
 
   const onSubmit = (data: FormValues) => {
-    console.log(data);
-    // Use data.birthData.format() to bring the data to the format requested by the backend.
-    ////data
+    const day = String(data.birthDate.getDate()).padStart(2, '0');
+    const month = String(data.birthDate.getMonth() + 1).padStart(2, '0'); // Месяцы в JavaScript начинаются с 0
+    const year = data.birthDate.getFullYear();
+
+    const formattedDate = `${day}.${month}.${year}`;
+
+    console.log({ ...data, birthDate: formattedDate });
   };
 
   const selectOptions = [
@@ -52,21 +56,10 @@ export const ProfileForm: FC = () => {
 
   const changeCountry = (value: string) => {
     // push(value);
-
-    console.log(value);
   };
 
   const changeCity = (value: string) => {
     // push(value);
-  };
-
-  console.log(control);
-  const handleInputChange = event => {
-    const inputValue = event.target.value;
-    // Разрешаем вводить только цифры и специальные символы (как запятая, точка и т.д.)
-    const filteredValue = inputValue.replace(/[^\d,-./]/g, '');
-
-    setValue(filteredValue);
   };
 
   return (
@@ -109,22 +102,20 @@ export const ProfileForm: FC = () => {
           control={control}
           name={'birthDate'}
           render={({ field: { onBlur, onChange, value }, fieldState }) => (
-            // TODO: think about min and max dates
-            // TODO: consider validating the input format by changing the input field manually
-            // https://shahabyazdi.github.io/react-multi-date-picker/validation/#validating-input-value
             <DatePickerContainer
               error={fieldState?.error?.message}
               label={'Date of birth'}
-              onChange={date => {
-                // Temporary solution until there is no logic to validate user manual input
+              onChange={(date, { validatedValue }) => {
+                if (!validatedValue) {
+                  return false;
+                }
                 if (date instanceof DateObject) {
-                  onChange(date.valueOf());
+                  onChange(date.toDate());
                 } else {
-                  onChange(new DateObject().valueOf());
+                  onChange(new DateObject().toDate());
                 }
               }}
               onClose={onBlur}
-              onKeyPress={handleInputChange}
               value={value}
             />
           )}

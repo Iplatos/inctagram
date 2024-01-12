@@ -1,33 +1,31 @@
-.cont input {
-  background-color: var(--color-dark-700);
-  height: 36px;
-
-
-  &:focus {
-    border: 1px solid var(--color-accent-500);
-    color: var(--color-ligth-100);
-  }
-}
-
-
 .datePickerContainer {
   display: flex;
   flex-direction: column;
 
-  height: 60px;
+
   width: 100%;
 
   :global {
     .rmdp-input {
+
       width: 100%;
+      background-color: var(--color-dark-700);
+      height: 36px;
+
+
+      &:focus {
+        border: 1px solid var(--color-accent-500);
+      }
     }
   }
+  .errorMessage {
+    color: var(--color-danger-500)
+  }
+
 
 }
 
-.errorMessage {
-  color: var(--color-danger-500)
-}
+
 
 .error {
   :global {
@@ -56,8 +54,4 @@
   border-width: 0 2px 2px 0;
 }
 
-.calendar {
-  position: relative;
-  right: 22.5px;
-  top: 4px
-}
+

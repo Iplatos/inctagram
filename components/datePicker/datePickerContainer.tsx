@@ -21,8 +21,6 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({ error, label
   const { t } = useTranslation();
   const { localeFormat } = useDatePickerFormat();
 
-  // TODO: Move locale setting in global file
-
   return (
     <div className={clsx(s.datePickerContainer, error && s.error)}>
       <Typography.Regular14 className={s.label} color={'var(--color-light-900)'}>
@@ -46,13 +44,14 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({ error, label
 
           return props;
         }}
+        maxDate={new Date()}
         render={<InputIcon />}
         weekStartDayIndex={1}
       />
       {/*TODO: extract error message to the profile-form level*/}
       {error && (
         <Typography.SmallLink className={s.errorMessage}>
-          A user under 13 cannot create a profile.{' '}
+          {error}
           <Link href={'/privacy-policy'} style={{ textDecoration: 'underLine' }}>
             {t.navbar.privacyPolicy}
           </Link>

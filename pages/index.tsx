@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
-import { AddPhoto } from '@/features/addPhoto/addPhoto';
 import { useGetMeQuery } from '@/shared/api/auth.service';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
@@ -27,7 +26,6 @@ function Home() {
     <>
       <HeadMeta title={'main'} />
       <div style={{ marginLeft: '300px' }}>
-        <AddPhoto />
         <DatePickerContainer />
       </div>
     </>
