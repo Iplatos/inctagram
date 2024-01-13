@@ -1,0 +1,135 @@
+.container [data-headlessui-state='open'] .icon {
+    transform: rotate(180deg);
+  }
+
+.boxContainer {
+    position: relative;
+}
+
+.inputField {
+  display: flex;
+  
+  width: 100%;
+  height: 36px;
+  padding-left: 12px;
+
+  background-color: inherit;
+  border: 1px solid var(--color-dark-300);
+  border-radius: 2px;
+  outline: none;
+
+  &::placeholder {
+    color: var(--color-light-100);
+  }
+
+  &:focus::placeholder {
+    color: transparent;
+  }
+  
+  &:disabled {
+    color: var(--color-dark-300);
+  }
+  
+  &:focus {
+    border: 2px solid var(--color-accent-500);
+  }
+
+  &:active {
+    border: 2px solid var(--color-light-100);
+  }
+}
+
+.input[data-headlessui-state='open'] {
+  padding-right: 32px;
+  
+  &.hasClearButton {
+    padding-right: 52px;
+  }
+}
+
+.error {
+  border-color: var(--color-danger-500);
+}
+
+.button {
+  cursor: pointer;
+  
+  position: absolute;
+  right: 5px;
+  bottom: 18px;
+  transform: translateY(50%);
+  
+  width: 24px;
+  height: 24px;
+  
+  &[data-headlessui-state='disabled'] {
+    cursor: initial;
+    color: var(--color-dark-100);
+  }
+}
+  
+.clearButton {
+  cursor: pointer;
+  
+  position: absolute;
+  right: 29px;
+  bottom: 18px;
+  transform: translateY(50%);
+  
+  width: 18px;
+  height: 18px;
+  
+  &[data-headlessui-state='disabled'] {
+    cursor: initial;
+    color: var(--color-dark-100);
+  }
+}
+
+.content {
+  overflow: hidden;
+
+  background-color: var(--color-dark-700);
+  border: 1px solid var(--color-light-100);
+  border-radius: 2px;
+  outline: none;
+}
+
+.empty {
+  border: none;
+}
+
+.item {
+  cursor: pointer;
+  
+  display: flex;
+  
+  width: 100%;
+  padding: 6px 12px;
+  
+  text-align: start;
+  
+  background: none; 
+  border: none;
+  outline: none;
+  
+  transition: 200ms background-color, 200ms color;
+  
+  &[data-headlessui-state='active'],
+  &[data-headlessui-state='active selected'] {
+    background-color: var(--color-dark-300);
+  }
+  
+  &[data-headlessui-state='selected'],
+  &[data-headlessui-state='active selected'] {
+    color: var(--color-accent-500);
+  }
+  
+  &[data-headlessui-state='disabled'] {
+    cursor: auto;
+    color: var(--color-dark-100);
+  }
+}
+
+.viewport {
+  max-height: 200px;
+}

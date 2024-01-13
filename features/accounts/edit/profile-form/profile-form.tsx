@@ -6,7 +6,7 @@ import { DatePickerContainer } from '@/components/datePicker/datePickerContainer
 import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
 import { SelectBox } from '@/shared/ui/SelectBox';
 import { TextField } from '@/shared/ui/textField';
-import { DevTool } from '@hookform/devtools';
+// import { DevTool } from '@hookform/devtools';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { z } from 'zod';
@@ -83,8 +83,7 @@ export const ProfileForm: FC = () => {
   return (
     <div className={style.formContainer}>
       <form className={style.form} id={'generalInformation'} onSubmit={handleSubmit(onSubmit)}>
-        {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />}
-
+        {/* {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />} */}
         <Controller
           control={control}
           name={'userName'}
@@ -117,7 +116,6 @@ export const ProfileForm: FC = () => {
             <TextField error={fieldState?.error?.message} label={'Last Name'} required {...field} />
           )}
         />
-
         <Controller
           control={control}
           name={'dateOfBirth'}
@@ -142,7 +140,6 @@ export const ProfileForm: FC = () => {
             />
           )}
         />
-
         <div className={style.selectBlock}>
           <div className={style.select}>
             <Controller
@@ -182,7 +179,6 @@ export const ProfileForm: FC = () => {
             />
           </div>
         </div>
-
         <Controller
           control={control}
           name={'aboutMe'}
