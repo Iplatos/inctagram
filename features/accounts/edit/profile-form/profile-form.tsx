@@ -14,6 +14,7 @@ import { z } from 'zod';
 import style from './profile-form.module.scss';
 
 import { CountriesApiResponse, CountryWithFlagApiData } from './pofile-form-types';
+import { Combobox } from '@/shared/ui/combobox';
 
 type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
 
@@ -78,7 +79,11 @@ export const ProfileForm: FC = () => {
 
   const onSubmit = (data: FormValues) => {
     // Use data.birthData.format() to bring the data to the format requested by the backend.
+
+    console.log(data);
   };
+
+  const [inputValue, setInputValue] = useState('');
 
   return (
     <div className={style.formContainer}>
@@ -142,7 +147,7 @@ export const ProfileForm: FC = () => {
         />
         <div className={style.selectBlock}>
           <div className={style.select}>
-            <Controller
+            {/* <Controller
               control={control}
               name={'country'}
               render={({ field: { onChange } }) => {
@@ -150,22 +155,64 @@ export const ProfileForm: FC = () => {
                   onChange(country);
                   // TODO: Find the optimal solution for resetting 'cities'
                   setValue('city', '');
+
+                  // setCountryValue(country);
                 };
 
                 return (
-                  <SelectBox
-                    labelField={'Select your country'}
-                    onChangeFn={handleChange}
+                  <Combobox
+                    label={'Select your country'}
+                    onChange={handleChange}
                     options={countries.map(c => ({ label: c, value: c }))}
                     placeholder={'Country'}
+                    value={field.value}
                   />
                 );
               }}
+            /> */}
+
+            <Controller
+              control={control}
+              name={'country'}
+              render={({ field, fieldState }) => (
+                <Combobox
+                  {...field}
+                  errorMessage={fieldState?.error?.message}
+                  inputValue={inputValue}
+                  label={'Select your country'}
+                  onChange={field.onChange}
+                  onInputChange={setInputValue}
+                  options={[
+                    {
+                      label: 'label_1',
+                      value: 'value_1',
+                    },
+                    {
+                      label: 'label_2',
+                      value: 'value_2',
+                    },
+                    {
+                      label: 'label_3',
+                      value: 'value_3',
+                    },
+                    {
+                      label: 'label_4',
+                      value: 'value_4',
+                    },
+                    {
+                      label: 'label_5',
+                      value: 'value_5',
+                    },
+                  ]}
+                  placeholder={'Country'}
+                  value={field.value}
+                />
+              )}
             />
           </div>
 
           <div className={style.select}>
-            <Controller
+            {/* <Controller
               control={control}
               name={'city'}
               render={({ field }) => (
@@ -174,6 +221,45 @@ export const ProfileForm: FC = () => {
                   onChangeFn={field.onChange}
                   options={cities.map(c => ({ label: c, value: c }))}
                   placeholder={'City'}
+                />
+              )}
+            /> */}
+
+            <Controller
+              control={control}
+              name={'city'}
+              render={({ field, fieldState }) => (
+                <Combobox
+                  {...field}
+                  errorMessage={fieldState?.error?.message}
+                  inputValue={inputValue}
+                  label={'Select your city'}
+                  onChange={field.onChange}
+                  onInputChange={setInputValue}
+                  options={[
+                    {
+                      label: 'label_1',
+                      value: 'value_1',
+                    },
+                    {
+                      label: 'label_2',
+                      value: 'value_2',
+                    },
+                    {
+                      label: 'label_3',
+                      value: 'value_3',
+                    },
+                    {
+                      label: 'label_4',
+                      value: 'value_4',
+                    },
+                    {
+                      label: 'label_5',
+                      value: 'value_5',
+                    },
+                  ]}
+                  placeholder={'City'}
+                  value={field.value}
                 />
               )}
             />

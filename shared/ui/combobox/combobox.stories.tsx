@@ -39,34 +39,6 @@ const options = [
   },
 ];
 
-// export const Default: Story = {
-//   args: {
-//     options,
-//     disabled: false,
-//   },
-
-//   render: args => {
-//     const [value, setValue] = useState(null);
-//     const [inputValue, setInputValue] = useState('');
-
-//     return (
-//       <div>
-//         <div style={{ width: 200 }}>
-//           <Combobox
-//             {...args}
-//             value={value}
-//             onChange={setValue}
-//             inputValue={inputValue}
-//             onInputChange={setInputValue}
-//             placeholder={'Country'}
-//           />
-//         </div>
-//         <div>Selected value: {value}</div>
-//       </div>
-//     );
-//   },
-// };
-
 export const Simple: Story = {
   args: {
     options,

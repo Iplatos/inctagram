@@ -17,58 +17,16 @@ function Home() {
   /*const { data, error } = useFilteredPostsQuery();*/
   const router = useRouter();
 
-  // console.log(meData);
-  // /*const { getMe } = useGetMeQuery();*/
-  // if (meError) {
-  //   if ('status' in meError) {
-  //     meError.status === 401 && router.push('/signIn');
-  //   }
-  // }
-  // if (isMeLoading) {
-  //   return <div>hello</div>;
-  // }
-
-  const [value, setValue] = useState(null);
-  const [inputValue, setInputValue] = useState('');
-
-  const options = [
-    {
-      value: 'apple',
-      label: 'Apple',
-    },
-    {
-      value: 'banana',
-      label: 'Banana',
-    },
-    {
-      value: 'blueberry',
-      label: 'Blueberry',
-    },
-    {
-      value: 'grapes',
-      label: 'Grapes',
-    },
-    {
-      value: 'pineapple',
-      label: 'Pineapple',
-    },
-    {
-      value: 'cherry',
-      label: 'Cherry',
-    },
-    {
-      value: 'grapefruit',
-      label: 'Grapefruit',
-    },
-    {
-      value: 'lemon',
-      label: 'Lemon',
-    },
-    {
-      value: 'mango',
-      label: 'Mango',
-    },
-  ];
+  console.log(meData);
+  /*const { getMe } = useGetMeQuery();*/
+  if (meError) {
+    if ('status' in meError) {
+      meError.status === 401 && router.push('/signIn');
+    }
+  }
+  if (isMeLoading) {
+    return <div>hello</div>;
+  }
 
   return (
     <>
