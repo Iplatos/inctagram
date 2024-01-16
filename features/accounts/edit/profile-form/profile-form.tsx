@@ -6,7 +6,7 @@ import { DatePickerContainer } from '@/components/datePicker/datePickerContainer
 import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
 import { Button } from '@/shared/ui';
 import { SelectBox } from '@/shared/ui/SelectBox';
-import { TextField } from '@/shared/ui/textField';
+import { ControlledTextField } from '@/shared/ui/controlled';
 import { DevTool } from '@hookform/devtools';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -35,6 +35,7 @@ export const ProfileForm: FC = () => {
   const onSubmit = (data: FormValues) => {
     // Use data.birthData.format() to bring the data to the format requested by the backend.
     ////data
+    console.log(data);
   };
 
   const selectOptions = [
@@ -63,38 +64,12 @@ export const ProfileForm: FC = () => {
     <div className={style.formContainer}>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />}
-        <Controller
-          control={control}
-          name={'userName'}
-          render={({ field, fieldState }) => (
-            <TextField
-              error={fieldState?.error?.message}
-              inputType={'text'}
-              label={'User Name'}
-              required
-              {...field}
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name={'firstName'}
-          render={({ field, fieldState }) => (
-            <TextField
-              error={fieldState?.error?.message}
-              label={'First Name'}
-              required
-              {...field}
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name={'lastName'}
-          render={({ field, fieldState }) => (
-            <TextField error={fieldState?.error?.message} label={'Last Name'} required {...field} />
-          )}
-        />
+        <ControlledTextField control={control} label={'User Name'} name={'userName'} />
+
+        <ControlledTextField control={control} label={'First Name'} name={'firstName'} required />
+
+        <ControlledTextField control={control} label={'Last Name'} name={'lastName'} required />
+
         <Controller
           control={control}
           name={'birthDate'}
@@ -149,18 +124,13 @@ export const ProfileForm: FC = () => {
             />
           </div>
         </div>
-        <Controller
+        <ControlledTextField
+          as={'textarea'}
           control={control}
+          label={'About Me'}
           name={'aboutMe'}
-          render={({ field, fieldState }) => (
-            <TextField
-              as={'textarea'}
-              error={fieldState?.error?.message}
-              label={'About Me'}
-              {...field}
-            />
-          )}
         />
+
         {/*// TODO: Consider disabling the submit button if the form is invalid */}
         <Button type={'submit'}>Save Changes</Button>
       </form>
