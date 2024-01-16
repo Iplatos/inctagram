@@ -82,7 +82,6 @@ export const ProfileForm: FC = () => {
               format={'DD.MM.YYYY'}
               label={'Birth Date'}
               onChange={date => {
-                // Temporary solution until there is no logic to validate user manual input
                 if (date instanceof DateObject) {
                   onChange(date.valueOf());
                 } else {
