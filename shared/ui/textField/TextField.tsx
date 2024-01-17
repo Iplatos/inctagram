@@ -9,7 +9,7 @@ import Image from 'next/image';
 
 import s from 'shared/ui/textField/TextField.module.scss';
 
-export type SharedProps = {
+type SharedProps = {
   className?: string;
   disabled?: boolean;
   error?: string;

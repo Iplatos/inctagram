@@ -64,10 +64,8 @@ export const ProfileForm: FC = () => {
     <div className={style.formContainer}>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />}
-        <ControlledTextField control={control} label={'User Name'} name={'userName'} />
-
+        <ControlledTextField control={control} label={'User Name'} name={'userName'} required />
         <ControlledTextField control={control} label={'First Name'} name={'firstName'} required />
-
         <ControlledTextField control={control} label={'Last Name'} name={'lastName'} required />
 
         <Controller

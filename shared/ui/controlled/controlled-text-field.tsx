@@ -1,22 +1,42 @@
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 
+import { assertUnreachable } from '@/shared/helpers/assertUnreachable';
 import { TextField, TextFieldProps } from '@/shared/ui/textField';
 
-export type ControlledTextFieldProps<TFieldValues extends FieldValues> = {
+type ControllerProps<TFieldValues extends FieldValues> = {
   control: Control<TFieldValues>;
   name: FieldPath<TFieldValues>;
-} & Omit<TextFieldProps, 'onChange' | 'value'>;
+};
+type FilteredTextFieldProps<T extends TextFieldProps> = Omit<
+  T,
+  'error' | 'onBlur' | 'onChange' | 'value'
+>;
 
-export const ControlledTextField = <TFieldValues extends FieldValues>(
-  props: ControlledTextFieldProps<TFieldValues>
-) => {
+// prettier-ignore
+export type ControlledTextFieldProps<TFieldValues extends FieldValues> =
+  | (ControllerProps<TFieldValues> &
+      FilteredTextFieldProps<Extract<TextFieldProps, { as: 'textarea' }>>)
+  | (ControllerProps<TFieldValues> &
+      FilteredTextFieldProps<Extract<TextFieldProps, { as?: 'input' }>>);
+
+export const ControlledTextField = <TFieldValues extends FieldValues = FieldValues>({
+  control,
+  disabled,
+  name,
+  ...props
+}: ControlledTextFieldProps<TFieldValues>) => {
   const {
     field,
     fieldState: { error },
-  } = useController({
-    control: props.control,
-    name: props.name,
-  });
+  } = useController({ control, disabled, name });
 
-  return <TextField {...props} {...field} error={error?.message} />;
+  if (!props.as || props.as === 'input') {
+    return <TextField {...props} error={error?.message} {...field} />;
+  }
+
+  if (props.as === 'textarea') {
+    return <TextField {...props} error={error?.message} {...field} />;
+  }
+
+  assertUnreachable(props.as);
 };
