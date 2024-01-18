@@ -63,7 +63,10 @@ const getValidationSchema = (locale: LocaleType) => {
 
   return z.object({
     aboutMe: getFieldSchema({ field: 'About Me', max: 200 }),
-    birthDate: z.date().min(minDate, 'too'),
+    birthDate: z
+      .date()
+      .min(minDate, 'Дата рождения не может быть раньше 1900 года')
+      .max(maxDate, 'Дата рождения не может быть позже 13 лет назад'),
     city: z.string(),
     country: z.string(),
     firstName: getNameFieldSchema({ field: 'First Name' }),
