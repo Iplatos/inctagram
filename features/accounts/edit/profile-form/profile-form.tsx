@@ -106,13 +106,9 @@ export const ProfileForm: FC = () => {
               error={fieldState?.error?.message}
               label={'Date of birth'}
               onChange={(date, { validatedValue }) => {
-                if (!validatedValue) {
-                  return false;
-                }
+                console.log(validatedValue);
                 if (date instanceof DateObject) {
                   onChange(date.toDate());
-                } else {
-                  onChange(new DateObject().toDate());
                 }
               }}
               onClose={onBlur}

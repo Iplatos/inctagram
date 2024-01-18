@@ -22,7 +22,7 @@ export const useProfileFormSchema = () => {
   return useMemo(() => getValidationSchema(t), [t]);
 };
 const currentDate = new Date();
-const minDate = new Date('1900-01-01');
+const minDate = new Date(1900, 0, 1);
 const maxDate = new Date(
   currentDate.getFullYear() - 13,
   currentDate.getMonth(),
@@ -63,25 +63,7 @@ const getValidationSchema = (locale: LocaleType) => {
 
   return z.object({
     aboutMe: getFieldSchema({ field: 'About Me', max: 200 }),
-    birthDate: z
-      .date()
-      .refine(date => date instanceof Date && !isNaN(date.getTime()), {
-        message: 'Invalid date format. Please enter a valid date.',
-      })
-      .refine(date => date >= minDate, {
-        message: 'Too old',
-      })
-      .refine(
-        date => {
-          const today = new Date();
-          const age = today.getFullYear() - date.getFullYear();
-
-          return age >= 13;
-        },
-        {
-          message: 'Must be at least 13 years old',
-        }
-      ),
+    birthDate: z.date().min(minDate, 'too'),
     city: z.string(),
     country: z.string(),
     firstName: getNameFieldSchema({ field: 'First Name' }),

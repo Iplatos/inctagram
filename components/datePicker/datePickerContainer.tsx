@@ -44,7 +44,8 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({ error, label
 
           return props;
         }}
-        maxDate={new Date()}
+        /* maxDate={new Date()}
+         minDate={new Date(1900, 0, 1)}*/
         render={<InputIcon />}
         weekStartDayIndex={1}
       />
