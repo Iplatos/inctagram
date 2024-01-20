@@ -66,7 +66,7 @@ const getValidationSchema = (locale: LocaleType) => {
     birthDate: z
       .date()
       .min(minDate, 'Дата рождения не может быть раньше 1900 года')
-      .max(maxDate, 'Дата рождения не может быть позже 13 лет назад'),
+      .max(maxDate, 'Вы слишком молоды для этого сайта'),
     city: z.string(),
     country: z.string(),
     firstName: getNameFieldSchema({ field: 'First Name' }),

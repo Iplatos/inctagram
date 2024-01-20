@@ -6,8 +6,8 @@ import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui/typography';
 import { clsx } from 'clsx';
 import Link from 'next/link';
-import InputIcon from 'react-multi-date-picker/components/input_icon';
 
+/*import InputIcon from 'react-multi-date-picker/components/input_icon';*/
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
 
 import s from 'components/datePicker/datePicker.module.scss';
@@ -44,9 +44,7 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({ error, label
 
           return props;
         }}
-        maxDate={new Date()}
         minDate={new Date(1900, 0, 1)}
-        render={<InputIcon />}
         weekStartDayIndex={1}
       />
       {/*TODO: extract error message to the profile-form level*/}

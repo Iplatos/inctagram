@@ -61,6 +61,7 @@ export const ProfileForm: FC = () => {
   const changeCity = (value: string) => {
     // push(value);
   };
+  let errorValid = null;
 
   return (
     <div className={style.formContainer}>
@@ -103,11 +104,15 @@ export const ProfileForm: FC = () => {
           name={'birthDate'}
           render={({ field: { onBlur, onChange, value }, fieldState }) => (
             <DatePickerContainer
-              error={fieldState?.error?.message}
+              error={errorValid || fieldState?.error?.message}
               label={'Date of birth'}
-              onChange={(date, { validatedValue }) => {
+              onChange={(date, { input, validatedValue }) => {
                 console.log(validatedValue);
+                if (!validatedValue) {
+                  onChange(new Date(1911212121212, 0, 1));
+                }
                 if (date instanceof DateObject) {
+                  errorValid = null;
                   onChange(date.toDate());
                 }
               }}
