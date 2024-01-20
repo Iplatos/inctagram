@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { DateObject } from 'react-multi-date-picker';
 
-import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
+import { ControlledDatePicker } from '@/components/controlled-date-picker/ControlledDatePicker';
 import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
 import { Button } from '@/shared/ui';
 import { SelectBox } from '@/shared/ui/SelectBox';
@@ -18,7 +18,11 @@ type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
 export const ProfileForm: FC = () => {
   const schema = useProfileFormSchema();
 
-  const { control, handleSubmit } = useForm<FormValues>({
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<FormValues>({
     defaultValues: {
       aboutMe: '',
       birthDate: new DateObject().toDate(),
@@ -28,7 +32,7 @@ export const ProfileForm: FC = () => {
       lastName: '',
       userName: '',
     },
-    mode: 'onTouched',
+    mode: 'all',
     resolver: zodResolver(schema),
   });
 
@@ -98,7 +102,7 @@ export const ProfileForm: FC = () => {
             <TextField error={fieldState?.error?.message} label={'Last Name'} required {...field} />
           )}
         />
-        <Controller
+        {/*  <Controller
           control={control}
           name={'birthDate'}
           render={({ field: { onBlur, onChange, value }, fieldState }) => (
@@ -117,7 +121,8 @@ export const ProfileForm: FC = () => {
               value={value}
             />
           )}
-        />
+        />*/}
+        <ControlledDatePicker control={control} errors={errors} name={'birthDate'} />
         <div className={style.selectBlock}>
           <div className={style.select}>
             <Controller

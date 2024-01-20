@@ -21,6 +21,8 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({ error, label
   const { t } = useTranslation();
   const { localeFormat } = useDatePickerFormat();
 
+  console.log(error);
+
   return (
     <div className={clsx(s.datePickerContainer, error && s.error)}>
       <Typography.Regular14 className={s.label} color={'var(--color-light-900)'}>
