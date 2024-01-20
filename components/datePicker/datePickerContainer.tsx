@@ -44,7 +44,6 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({ error, label
 
           return props;
         }}
-        minDate={new Date(1900, 0, 1)}
         weekStartDayIndex={1}
       />
       {/*TODO: extract error message to the profile-form level*/}
