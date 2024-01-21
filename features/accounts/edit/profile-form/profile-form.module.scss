@@ -21,3 +21,13 @@
   z-index: 1111;
   width: 50%;
 }
+
+.saveButton {
+  display: block;
+  margin-top: 24px;
+  margin-left: auto;
+}
+
+.separator {
+  border: 1px solid var(--color-dark-300);
+}

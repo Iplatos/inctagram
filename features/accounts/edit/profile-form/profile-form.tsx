@@ -4,52 +4,50 @@ import { DateObject } from 'react-multi-date-picker';
 
 import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
 import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
-import { SelectBox } from '@/shared/ui/SelectBox';
+import { useGetCitiesMutation, useGetCountriesQuery } from '@/shared/api/countries.api';
+import { Button } from '@/shared/ui';
+import { Combobox } from '@/shared/ui/combobox';
 import { TextField } from '@/shared/ui/textField';
 // import { DevTool } from '@hookform/devtools';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
 import { z } from 'zod';
 
 import style from './profile-form.module.scss';
 
-import { CountriesApiResponse, CountryWithFlagApiData } from './pofile-form-types';
-import { Combobox } from '@/shared/ui/combobox';
-
 type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
 
-const useCountries = () => {
-  const [countries, setCountries] = useState<string[]>([]);
+// const useCountries = () => {
+//   const [countries, setCountries] = useState<string[]>([]);
 
-  useEffect(() => {
-    axios
-      .get<CountriesApiResponse<CountryWithFlagApiData[]>>(
-        'https://countriesnow.space/api/v0.1/countries/flag/unicode'
-      )
-      .then(({ data: response }) => setCountries(response.data.map(({ name }) => name)));
-  }, []);
+//   useEffect(() => {
+//     axios
+//       .get<CountriesApiResponse<CountryWithFlagApiData[]>>(
+//         'https://countriesnow.space/api/v0.1/countries/flag/unicode'
+//       )
+//       .then(({ data: response }) => setCountries(response.data.map(({ name }) => name)));
+//   }, []);
 
-  return countries;
-};
+//   return countries;
+// };
 
-const useCities = (country: string) => {
-  const [cities, setCities] = useState<string[]>([]);
+// const useCities = (country: string) => {
+//   const [cities, setCities] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (!country) {
-      return;
-    }
+//   useEffect(() => {
+//     if (!country) {
+//       return;
+//     }
 
-    axios
-      .post<CountriesApiResponse<string[]>>(
-        'https://countriesnow.space/api/v0.1/countries/cities',
-        { country }
-      )
-      .then(({ data: response }) => setCities(response.data));
-  }, [country]);
+//     axios
+//       .post<CountriesApiResponse<string[]>>(
+//         'https://countriesnow.space/api/v0.1/countries/cities',
+//         { country }
+//       )
+//       .then(({ data: response }) => setCities(response.data));
+//   }, [country]);
 
-  return cities;
-};
+//   return cities;
+// };
 
 export const ProfileForm: FC = () => {
   const schema = useProfileFormSchema();
@@ -70,24 +68,50 @@ export const ProfileForm: FC = () => {
 
   const country = watch('country');
 
-  const countries = useCountries();
-  const cities = useCities(country);
+  type OptionsType = {
+    label: string;
+    value: string;
+  };
 
-  // IMPORTANT: It will not work. You need to configure the redux provider!
-  // And don't forget to pass the userApi to redux's combineReducers API!
+  const [countriesOptions, setCountriesOptions] = useState<OptionsType[]>([]);
+  const [citiesOptions, setCitiesOptions] = useState<OptionsType[]>([]);
+
+  const { data } = useGetCountriesQuery();
+
+  useEffect(() => {
+    if (data !== undefined) {
+      setCountriesOptions(data.data.map(({ name }) => ({ label: name, value: name })));
+    }
+  }, []);
+
+  const [getCities, { data: cities }] = useGetCitiesMutation();
+
+  console.log(cities);
+
+  useEffect(() => {
+    if (!country) {
+      return;
+    }
+
+    getCities(country);
+
+    if (cities !== undefined) {
+      setCitiesOptions(cities.data.map(name => ({ label: name, value: name })));
+    }
+  }, [country]);
+
   // const [saveChanges] = useChangeUserProfileMutation();
 
   const onSubmit = (data: FormValues) => {
     // Use data.birthData.format() to bring the data to the format requested by the backend.
-
-    console.log(data);
+    // console.log(data);
   };
 
   const [inputValue, setInputValue] = useState('');
 
   return (
     <div className={style.formContainer}>
-      <form className={style.form} id={'generalInformation'} onSubmit={handleSubmit(onSubmit)}>
+      <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         {/* {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />} */}
         <Controller
           control={control}
@@ -147,30 +171,6 @@ export const ProfileForm: FC = () => {
         />
         <div className={style.selectBlock}>
           <div className={style.select}>
-            {/* <Controller
-              control={control}
-              name={'country'}
-              render={({ field: { onChange } }) => {
-                const handleChange = (country: string) => {
-                  onChange(country);
-                  // TODO: Find the optimal solution for resetting 'cities'
-                  setValue('city', '');
-
-                  // setCountryValue(country);
-                };
-
-                return (
-                  <Combobox
-                    label={'Select your country'}
-                    onChange={handleChange}
-                    options={countries.map(c => ({ label: c, value: c }))}
-                    placeholder={'Country'}
-                    value={field.value}
-                  />
-                );
-              }}
-            /> */}
-
             <Controller
               control={control}
               name={'country'}
@@ -182,28 +182,7 @@ export const ProfileForm: FC = () => {
                   label={'Select your country'}
                   onChange={field.onChange}
                   onInputChange={setInputValue}
-                  options={[
-                    {
-                      label: 'label_1',
-                      value: 'value_1',
-                    },
-                    {
-                      label: 'label_2',
-                      value: 'value_2',
-                    },
-                    {
-                      label: 'label_3',
-                      value: 'value_3',
-                    },
-                    {
-                      label: 'label_4',
-                      value: 'value_4',
-                    },
-                    {
-                      label: 'label_5',
-                      value: 'value_5',
-                    },
-                  ]}
+                  options={countriesOptions}
                   placeholder={'Country'}
                   value={field.value}
                 />
@@ -212,19 +191,6 @@ export const ProfileForm: FC = () => {
           </div>
 
           <div className={style.select}>
-            {/* <Controller
-              control={control}
-              name={'city'}
-              render={({ field }) => (
-                <SelectBox
-                  labelField={'Select your city'}
-                  onChangeFn={field.onChange}
-                  options={cities.map(c => ({ label: c, value: c }))}
-                  placeholder={'City'}
-                />
-              )}
-            /> */}
-
             <Controller
               control={control}
               name={'city'}
@@ -236,28 +202,7 @@ export const ProfileForm: FC = () => {
                   label={'Select your city'}
                   onChange={field.onChange}
                   onInputChange={setInputValue}
-                  options={[
-                    {
-                      label: 'label_1',
-                      value: 'value_1',
-                    },
-                    {
-                      label: 'label_2',
-                      value: 'value_2',
-                    },
-                    {
-                      label: 'label_3',
-                      value: 'value_3',
-                    },
-                    {
-                      label: 'label_4',
-                      value: 'value_4',
-                    },
-                    {
-                      label: 'label_5',
-                      value: 'value_5',
-                    },
-                  ]}
+                  options={citiesOptions}
                   placeholder={'City'}
                   value={field.value}
                 />
@@ -277,6 +222,14 @@ export const ProfileForm: FC = () => {
             />
           )}
         />
+
+        <div className={style.separator} role={'separator'}></div>
+
+        <div className={style.saveButton}>
+          <Button type={'submit'} variant={'primary'}>
+            Save Changes
+          </Button>
+        </div>
       </form>
     </div>
   );
