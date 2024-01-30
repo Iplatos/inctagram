@@ -1,47 +1,67 @@
-import { useController } from 'react-hook-form';
+import { useState } from 'react';
+import { Control, FieldPath, FieldValues, UseFormResetField, useController } from 'react-hook-form';
 import { DateObject } from 'react-multi-date-picker';
 
-import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
+import {
+  DatePickerContainer,
+  DatePickerContainerProps,
+} from '@/components/datePicker/datePickerContainer';
+import { useDatePickerFormat } from '@/shared/hooks/useDatePickerFormat';
 
-export type ControlledDatePickerProps = {
-  control: any;
-  error: any;
-  name: any;
-};
-/*  <DatePickerContainer
-    error={fieldState?.error?.message}
-    label={'Date of birth'}
-    onChange={(date, { input, validatedValue }) => {
-      if (!validatedValue) {
-        onChange(new Date(1911212121212, 0, 1));
-      }
-      if (date instanceof DateObject) {
-        onChange(date.toDate());
-      }
-    }}*/
-export const ControlledDatePicker = (props: ControlledDatePickerProps) => {
-  const { field, fieldState } = useController({
-    control: props.control,
-    name: props.name,
-  });
+export type ControlledDatePickerProps<TFieldValues extends FieldValues> = {
+  control?: Control<TFieldValues>;
+  name: FieldPath<TFieldValues>;
+  resetField: UseFormResetField<TFieldValues>;
+} & Omit<DatePickerContainerProps, 'calendarError' | 'inputError' | 'onChange' | 'value'>;
 
-  console.log(props.error);
-  console.log(fieldState.error);
+export const ControlledDatePicker = <TFieldValues extends FieldValues = FieldValues>({
+  control,
+  disabled,
+  name,
+  resetField,
+  ...props
+}: ControlledDatePickerProps<TFieldValues>) => {
+  const {
+    field: { onBlur, onChange, value },
+    fieldState: { error },
+  } = useController({ control, disabled, name });
+
+  const { localeFormat } = useDatePickerFormat();
+  const [dateFormatError, setDateFormatError] = useState<string | undefined>(undefined);
+
+  const handleChange = (
+    date: DateObject | DateObject[] | null,
+    { isTyping }: { isTyping: boolean }
+  ) => {
+    if (date === null && isTyping) {
+      setDateFormatError(`Неверный формат даты. Введите дату в указанном формате: ${localeFormat}`);
+    } else {
+      setDateFormatError(undefined);
+    }
+
+    onChange(date instanceof DateObject ? date.toDate() : null);
+  };
+
+  const handleClose = () => {
+    if (dateFormatError) {
+      setDateFormatError(undefined);
+      resetField(name);
+    }
+    onBlur();
+  };
 
   return (
     <DatePickerContainer
+      calendarError={dateFormatError}
+      fixMainPosition
+      format={localeFormat}
+      inputError={error?.message}
+      onClose={handleClose}
+      value={value}
       {...props}
       {...field}
       error={fieldState?.error?.message}
       label={'Date of birth'}
-      onChange={(date, { input, validatedValue }) => {
-        if (!validatedValue) {
-          field.onChange(new Date(1911212121212, 0, 1));
-        }
-        if (date instanceof DateObject) {
-          field.onChange(date.toDate());
-        }
-      }}
     />
   );
 };
