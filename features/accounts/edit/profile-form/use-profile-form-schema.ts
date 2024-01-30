@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { DateObject } from 'react-multi-date-picker';
 
 import { LocaleType } from '@/locales/ru';
 import { useTranslation } from '@/shared/hooks/useTranslation';
@@ -21,13 +22,7 @@ export const useProfileFormSchema = () => {
 
   return useMemo(() => getValidationSchema(t), [t]);
 };
-const currentDate = new Date();
-const minDate = new Date(1900, 0, 1);
-const maxDate = new Date(
-  currentDate.getFullYear() - 13,
-  currentDate.getMonth(),
-  currentDate.getDate()
-);
+
 const getValidationSchema = (locale: LocaleType) => {
   const getFieldSchema = ({ field, max, min, regex, required }: FieldSchemaOptions) => {
     let schema = z.string().trim();
@@ -63,12 +58,26 @@ const getValidationSchema = (locale: LocaleType) => {
 
   return z.object({
     aboutMe: getFieldSchema({ field: 'About Me', max: 200 }),
-    birthDate: z
-      .date()
-      .min(minDate, 'Дата рождения не может быть раньше 1900 года')
-      .max(maxDate, 'Вы слишком молоды для этого сайта'),
     city: z.string(),
     country: z.string(),
+    dateOfBirth: z
+      .date()
+      .nullable()
+      // It is assumed that 'null' is a valid value because the 'dateOfBirth' field is optional.
+      .refine(date => {
+        if (date) {
+          return date >= new Date(1900, 0, 1);
+        }
+
+        return true;
+      }, 'Дата рождения не может быть раньше 1900 года')
+      .refine(date => {
+        if (date) {
+          return date.valueOf() <= new DateObject().subtract(13, 'years').valueOf();
+        }
+
+        return true;
+      }, 'Вы слишком молоды для этого сайта'),
     firstName: getNameFieldSchema({ field: 'First Name' }),
     lastName: getNameFieldSchema({ field: 'Last Name' }),
     userName: getFieldSchema({

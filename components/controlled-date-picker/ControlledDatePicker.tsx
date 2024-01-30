@@ -56,12 +56,10 @@ export const ControlledDatePicker = <TFieldValues extends FieldValues = FieldVal
       fixMainPosition
       format={localeFormat}
       inputError={error?.message}
+      onChange={handleChange}
       onClose={handleClose}
       value={value}
       {...props}
-      {...field}
-      error={fieldState?.error?.message}
-      label={'Date of birth'}
     />
   );
 };
