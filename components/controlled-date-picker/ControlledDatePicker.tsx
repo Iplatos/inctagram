@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Control, FieldPath, FieldValues, UseFormResetField, useController } from 'react-hook-form';
 import { DateObject } from 'react-multi-date-picker';
 
-import { DatePicker, DatePickerProps } from '@/components/datePicker/datePicker';
 import { useDatePickerFormat } from '@/shared/hooks/useDatePickerFormat';
+import { DatePicker, DatePickerProps } from '@/shared/ui/datePicker';
 
 export type ControlledDatePickerProps<TFieldValues extends FieldValues> = {
   control?: Control<TFieldValues>;

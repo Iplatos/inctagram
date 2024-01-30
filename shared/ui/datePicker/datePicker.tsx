@@ -9,7 +9,7 @@ import InputIcon from 'react-multi-date-picker/components/input_icon';
 
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
 
-import s from 'components/datePicker/datePicker.module.scss';
+import s from './datePicker.module.scss';
 
 export type DatePickerProps = ComponentPropsWithoutRef<typeof ReactMultiDatePicker> & {
   calendarError?: string;
