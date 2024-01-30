@@ -2,17 +2,14 @@ import { useState } from 'react';
 import { Control, FieldPath, FieldValues, UseFormResetField, useController } from 'react-hook-form';
 import { DateObject } from 'react-multi-date-picker';
 
-import {
-  DatePickerContainer,
-  DatePickerContainerProps,
-} from '@/components/datePicker/datePickerContainer';
+import { DatePicker, DatePickerProps } from '@/components/datePicker/datePicker';
 import { useDatePickerFormat } from '@/shared/hooks/useDatePickerFormat';
 
 export type ControlledDatePickerProps<TFieldValues extends FieldValues> = {
   control?: Control<TFieldValues>;
   name: FieldPath<TFieldValues>;
   resetField: UseFormResetField<TFieldValues>;
-} & Omit<DatePickerContainerProps, 'calendarError' | 'inputError' | 'onChange' | 'value'>;
+} & Omit<DatePickerProps, 'calendarError' | 'inputError' | 'onChange' | 'value'>;
 
 export const ControlledDatePicker = <TFieldValues extends FieldValues = FieldValues>({
   control,
@@ -51,7 +48,7 @@ export const ControlledDatePicker = <TFieldValues extends FieldValues = FieldVal
   };
 
   return (
-    <DatePickerContainer
+    <DatePicker
       calendarError={dateFormatError}
       fixMainPosition
       format={localeFormat}

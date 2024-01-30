@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, FC, useState } from 'react';
-import DatePicker, { DateObject } from 'react-multi-date-picker';
+import ReactMultiDatePicker, { DateObject } from 'react-multi-date-picker';
 
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui/typography';
@@ -11,13 +11,13 @@ import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
 
 import s from 'components/datePicker/datePicker.module.scss';
 
-export type DatePickerContainerProps = ComponentPropsWithoutRef<typeof DatePicker> & {
+export type DatePickerProps = ComponentPropsWithoutRef<typeof ReactMultiDatePicker> & {
   calendarError?: string;
   inputError?: string;
   label?: string;
 };
 
-export const DatePickerContainer: FC<DatePickerContainerProps> = ({
+export const DatePicker: FC<DatePickerProps> = ({
   calendarError,
   children,
   inputError,
@@ -34,7 +34,7 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({
     return { className: isWeekend ? 'highlight highlight-red' : '' };
   };
 
-  const handlePositionChange: DatePickerContainerProps['onPositionChange'] = data => {
+  const handlePositionChange: DatePickerProps['onPositionChange'] = data => {
     const newPos = data.popper.top < data.element.top ? 'bottom' : 'top';
 
     if (newPos !== calendarErrorPos) {
@@ -50,7 +50,7 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({
       <Typography.Regular14 className={s.label} color={'var(--color-light-900)'}>
         {label}
       </Typography.Regular14>
-      <DatePicker
+      <ReactMultiDatePicker
         arrow={false}
         className={'bg-dark'}
         containerClassName={s.cont}
@@ -75,7 +75,7 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({
             {calendarError}
           </Typography.Regular12>
         )}
-      </DatePicker>
+      </ReactMultiDatePicker>
 
       {/*TODO: extract error message to the profile-form level*/}
       {inputError && (
