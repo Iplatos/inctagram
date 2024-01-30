@@ -52,10 +52,11 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({ error, label
       {error && (
         <Typography.SmallLink className={s.errorMessage}>
           {error}
+        <Typography.Regular12 className={s.errorMessage}>
           <Link href={'/privacy-policy'} style={{ textDecoration: 'underLine' }}>
             {t.navbar.privacyPolicy}
           </Link>
-        </Typography.SmallLink>
+        </Typography.Regular12>
       )}
     </div>
   );
