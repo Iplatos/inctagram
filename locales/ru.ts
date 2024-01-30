@@ -1,4 +1,4 @@
-import rus_th from '@/components/datePicker/ru_th';
+import gregorian_ru from '@/locales/gregorian_ru';
 
 export const ru = {
   auth: {
@@ -185,7 +185,7 @@ export const ru = {
 
   datePicker: {
     DataSelect: 'Выбор даты',
-    locale: rus_th,
+    locale: gregorian_ru,
   },
 
   logOut: {
