@@ -1,14 +1,12 @@
 import { ComponentPropsWithoutRef, FC, useState } from 'react';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
 
-import { useDatePickerFormat } from '@/shared/hooks/useDatePickerFormat';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui/typography';
 import { clsx } from 'clsx';
 import Link from 'next/link';
 import InputIcon from 'react-multi-date-picker/components/input_icon';
 
-/*import InputIcon from 'react-multi-date-picker/components/input_icon';*/
 import 'react-multi-date-picker/styles/backgrounds/bg-dark.css';
 
 import s from 'components/datePicker/datePicker.module.scss';
@@ -53,27 +51,18 @@ export const DatePickerContainer: FC<DatePickerContainerProps> = ({
         {label}
       </Typography.Regular14>
       <DatePicker
-        {...props}
+        arrow={false}
         className={'bg-dark'}
         containerClassName={s.cont}
-        dateSeparator={' - '}
         headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
         locale={t.datePicker.locale}
-        mapDays={({ date }) => {
-          const props = { className: '' };
-          const isWeekend = [0, 6].includes(date.weekDay.index);
-
-          if (isWeekend) {
-            props.className = 'highlight highlight-red';
-          }
-
-          return props;
-        }}
         mapDays={mapWeekends}
+        monthYearSeparator={' '}
         onPositionChange={handlePositionChange}
         render={<InputIcon />}
+        shadow={false}
         weekStartDayIndex={1}
-      />
+        zIndex={1200}
         {...props}
       >
         {children}
