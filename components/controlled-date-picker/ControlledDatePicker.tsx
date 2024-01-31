@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Control, FieldPath, FieldValues, UseFormResetField, useController } from 'react-hook-form';
 import { DateObject } from 'react-multi-date-picker';
 
-import { useDatePickerFormat } from '@/shared/hooks/useDatePickerFormat';
+import { useDateFormat } from '@/shared/hooks/useDateFormat';
 import { DatePicker, DatePickerProps } from '@/shared/ui/datePicker';
 
 export type ControlledDatePickerProps<TFieldValues extends FieldValues> = {
@@ -23,7 +23,7 @@ export const ControlledDatePicker = <TFieldValues extends FieldValues = FieldVal
     fieldState: { error },
   } = useController({ control, disabled, name });
 
-  const { localeFormat } = useDatePickerFormat();
+  const { stringDateFormat } = useDateFormat();
   const [dateFormatError, setDateFormatError] = useState<string | undefined>(undefined);
 
   const handleChange = (
@@ -31,7 +31,9 @@ export const ControlledDatePicker = <TFieldValues extends FieldValues = FieldVal
     { isTyping }: { isTyping: boolean }
   ) => {
     if (date === null && isTyping) {
-      setDateFormatError(`Неверный формат даты. Введите дату в указанном формате: ${localeFormat}`);
+      setDateFormatError(
+        `Неверный формат даты. Введите дату в указанном формате: ${stringDateFormat}`
+      );
     } else {
       setDateFormatError(undefined);
     }
@@ -51,7 +53,7 @@ export const ControlledDatePicker = <TFieldValues extends FieldValues = FieldVal
     <DatePicker
       calendarError={dateFormatError}
       fixMainPosition
-      format={localeFormat}
+      format={stringDateFormat}
       inputError={error?.message}
       onChange={handleChange}
       onClose={handleClose}
