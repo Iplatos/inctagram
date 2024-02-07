@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { DateObject } from 'react-multi-date-picker';
 
 import { LocaleType } from '@/locales/ru';
+import { TaggedStringMappers, transformTaggedString } from '@/shared/helpers/transformTaggedString';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { z } from 'zod';
 
@@ -10,54 +11,69 @@ type FieldSchemaOptions = {
   max?: number;
   min?: number;
   regex?: {
-    message?: string;
+    message: string;
     value: RegExp;
   };
   required?: boolean;
 };
 
+const { interpolate } = transformTaggedString;
+
 export const useProfileFormSchema = () => {
-  // TODO: add description of errors in locale objects in Russian and English languages
   const { t } = useTranslation();
 
   return useMemo(() => getValidationSchema(t), [t]);
 };
 
+const getCommonMappers = ({
+  field,
+  max,
+  min,
+}: FieldSchemaOptions): TaggedStringMappers<string> => ({
+  field: () => field,
+  max: () => String(max),
+  min: () => String(min),
+});
+
 const getValidationSchema = (locale: LocaleType) => {
+  const {
+    generalInformation: { commonFieldErrors, ...t },
+  } = locale;
+
   const getFieldSchema = ({ field, max, min, regex, required }: FieldSchemaOptions) => {
     let schema = z.string().trim();
+    const commonMappers = getCommonMappers({ field, max, min });
 
     if (required) {
-      schema = schema.min(1, `${field} is required`);
+      schema = schema.min(1, interpolate(commonFieldErrors.required, commonMappers));
     }
     if (min) {
-      schema = schema.min(min, `${field} must contain at least ${min} characters`);
+      schema = schema.min(min, interpolate(commonFieldErrors.min, commonMappers));
     }
     if (max) {
-      schema = schema.max(max, `${field} must contain at most ${max} characters`);
+      schema = schema.max(max, interpolate(commonFieldErrors.max, commonMappers));
     }
     if (regex) {
-      schema = schema.regex(regex.value, regex.message);
+      schema = schema.regex(regex.value, interpolate(regex.message, commonMappers));
     }
 
     return schema;
   };
 
-  const getNameFieldSchema = (
-    options: Omit<FieldSchemaOptions, 'max' | 'min' | 'regex' | 'required'>
-  ) =>
-    getFieldSchema({
+  const getNameFieldSchema = ({ field }: { field: string }) => {
+    return getFieldSchema({
+      field,
       max: 50,
       regex: {
-        message: `${options.field} must contain only letters`,
+        message: commonFieldErrors.onlyLetters,
         value: /^[a-zа-я]+$/i,
       },
       required: true,
-      ...options,
     });
+  };
 
   return z.object({
-    aboutMe: getFieldSchema({ field: 'About Me', max: 200 }),
+    aboutMe: getFieldSchema({ field: t.aboutMe.label, max: 200 }),
     city: z.string(),
     country: z.string(),
     dateOfBirth: z
@@ -70,22 +86,22 @@ const getValidationSchema = (locale: LocaleType) => {
         }
 
         return true;
-      }, 'Дата рождения не может быть раньше 1900 года')
+      }, t.dateOfBirth.errors.under1900)
       .refine(date => {
         if (date) {
           return date.valueOf() <= new DateObject().subtract(13, 'years').valueOf();
         }
 
         return true;
-      }, 'Вы слишком молоды для этого сайта'),
-    firstName: getNameFieldSchema({ field: 'First Name' }),
-    lastName: getNameFieldSchema({ field: 'Last Name' }),
+      }, t.dateOfBirth.errors.toYoung),
+    firstName: getNameFieldSchema({ field: t.firstName.label }),
+    lastName: getNameFieldSchema({ field: t.lastName.label }),
     userName: getFieldSchema({
-      field: 'User Name',
+      field: t.userName.label,
       max: 30,
       min: 6,
       regex: {
-        message: 'User Name must contain only letters, numbers, underscores or hyphens',
+        message: t.userName.errors.regexp,
         value: /^[\wа-я-]+$/i,
       },
       required: true,
