@@ -1,8 +1,8 @@
 .error {
   :global {
     .rmdp-input {
-      color: red;
-      border: 2px solid var(--color-danger-500);
+      color: var(--color-danger-300);
+      border: 2px solid var(--color-danger-300);
     }
   }
 }
@@ -36,7 +36,7 @@
 }
 
 .errorMessage {
-  color: var(--color-danger-500);
+  color: var(--color-danger-300);
 }
 
 .svgAsComponent {
