@@ -185,9 +185,55 @@ export const en: LocaleType = {
     },
   },
 
-  datePicker: {
-    DataSelect: 'Date select',
-    locale: gregorian_en,
+  common: {
+    datePicker: {
+      locale: gregorian_en,
+    },
+  },
+
+  generalInformation: {
+    aboutMe: {
+      label: 'About Me',
+    },
+    addProfilePhoto: {
+      submitButton: 'add a profile photo',
+    },
+    city: {
+      label: 'Select your city',
+      placeholder: 'City',
+    },
+    commonFieldErrors: {
+      max: '<field></field> must contain at most <max></max> characters',
+      min: '<field></field> must contain at least <min></min> characters',
+      onlyLetters: '<field></field> must contain only letters',
+      required: '<field></field> is required',
+    },
+    country: {
+      label: 'Select your country',
+      placeholder: 'Country',
+    },
+    dateOfBirth: {
+      errors: {
+        invalidDateFormat:
+          'Invalid date format. Enter the date in the specified format: <format></format>',
+        toYoung: 'A user under 13 cannot create a profile. <link>Privacy Policy</link>',
+        under1900: "The date of birth can't be before 1900",
+      },
+      label: 'Date of Birth',
+    },
+    firstName: {
+      label: 'First Name',
+    },
+    lastName: {
+      label: 'Last Name',
+    },
+    submitButton: 'save changes',
+    userName: {
+      errors: {
+        regexp: 'User Name must contain only letters, numbers, underscores or hyphens',
+      },
+      label: 'Username',
+    },
   },
 
   logOut: {
