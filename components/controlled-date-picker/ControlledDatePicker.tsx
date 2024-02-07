@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Control, FieldPath, FieldValues, UseFormResetField, useController } from 'react-hook-form';
 import { DateObject } from 'react-multi-date-picker';
 
+import { transformTaggedString } from '@/shared/helpers/transformTaggedString';
 import { useDateFormat } from '@/shared/hooks/useDateFormat';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { DatePicker, DatePickerProps } from '@/shared/ui/datePicker';
@@ -11,6 +12,8 @@ export type ControlledDatePickerProps<TFieldValues extends FieldValues> = {
   name: FieldPath<TFieldValues>;
   resetField: UseFormResetField<TFieldValues>;
 } & Omit<DatePickerProps, 'calendarError' | 'inputError' | 'onChange' | 'value'>;
+
+const { interpolate } = transformTaggedString;
 
 export const ControlledDatePicker = <TFieldValues extends FieldValues = FieldValues>({
   control,
@@ -29,26 +32,28 @@ export const ControlledDatePicker = <TFieldValues extends FieldValues = FieldVal
   } = useController({ control, disabled, name });
 
   const { stringDateFormat } = useDateFormat();
-  const [dateFormatError, setDateFormatError] = useState<string | undefined>(undefined);
+  const [calendarError, setCalendarError] = useState<string | undefined>(undefined);
+
+  const dateFormatError = interpolate(t.dateOfBirth.errors.invalidDateFormat, {
+    format: () => stringDateFormat,
+  });
 
   const handleChange = (
     date: DateObject | DateObject[] | null,
     { isTyping }: { isTyping: boolean }
   ) => {
     if (date === null && isTyping) {
-      setDateFormatError(
-        `Неверный формат даты. Введите дату в указанном формате: ${stringDateFormat}`
-      );
+      setCalendarError(dateFormatError);
     } else {
-      setDateFormatError(undefined);
+      setCalendarError(undefined);
     }
 
     onChange(date instanceof DateObject ? date.toDate() : null);
   };
 
   const handleClose = () => {
-    if (dateFormatError) {
-      setDateFormatError(undefined);
+    if (calendarError) {
+      setCalendarError(undefined);
       resetField(name);
     }
     onBlur();
@@ -56,7 +61,7 @@ export const ControlledDatePicker = <TFieldValues extends FieldValues = FieldVal
 
   return (
     <DatePicker
-      calendarError={dateFormatError}
+      calendarError={calendarError}
       fixMainPosition
       format={stringDateFormat}
       inputError={error?.message}

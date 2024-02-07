@@ -2,6 +2,7 @@ import { ComponentPropsWithoutRef, FC, useState } from 'react';
 import ReactMultiDatePicker, { DateObject } from 'react-multi-date-picker';
 
 import { Typography } from '@/shared/ui/typography';
+import { Trans } from '@/widgets/Trans/Trans';
 import { clsx } from 'clsx';
 import Link from 'next/link';
 import InputIcon from 'react-multi-date-picker/components/input_icon';
@@ -74,13 +75,18 @@ export const DatePicker: FC<DatePickerProps> = ({
         )}
       </ReactMultiDatePicker>
 
-      {/*TODO: extract error message to the profile-form level*/}
       {inputError && (
         <Typography.Regular12 className={s.errorMessage}>
-          {inputError}
-          <Link href={'/privacy-policy'} style={{ textDecoration: 'underLine' }}>
-            {t.navbar.privacyPolicy}
-          </Link>
+          <Trans
+            tags={{
+              link: ({ content }) => (
+                <Link href={'/privacy-policy'} style={{ textDecoration: 'underLine' }}>
+                  {content}
+                </Link>
+              ),
+            }}
+            text={inputError}
+          />
         </Typography.Regular12>
       )}
     </div>

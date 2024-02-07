@@ -3,6 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 import { ControlledDatePicker } from '@/components/controlled-date-picker/ControlledDatePicker';
 import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
+import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
 import { SelectBox } from '@/shared/ui/SelectBox';
 import { TextField } from '@/shared/ui/textField';
@@ -15,6 +16,9 @@ import style from './profile-form.module.scss';
 type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
 
 export const ProfileForm: FC = () => {
+  const {
+    t: { generalInformation: t },
+  } = useTranslation();
   const schema = useProfileFormSchema();
 
   const { control, handleSubmit, resetField } = useForm<FormValues>({
@@ -64,7 +68,7 @@ export const ProfileForm: FC = () => {
             <TextField
               error={fieldState?.error?.message}
               inputType={'text'}
-              label={'User Name'}
+              label={t.userName.label}
               required
               {...field}
             />
@@ -76,7 +80,7 @@ export const ProfileForm: FC = () => {
           render={({ field, fieldState }) => (
             <TextField
               error={fieldState?.error?.message}
-              label={'First Name'}
+              label={t.firstName.label}
               required
               {...field}
             />
@@ -86,12 +90,17 @@ export const ProfileForm: FC = () => {
           control={control}
           name={'lastName'}
           render={({ field, fieldState }) => (
-            <TextField error={fieldState?.error?.message} label={'Last Name'} required {...field} />
+            <TextField
+              error={fieldState?.error?.message}
+              label={t.lastName.label}
+              required
+              {...field}
+            />
           )}
         />
         <ControlledDatePicker
           control={control}
-          label={'Date of birth'}
+          label={t.dateOfBirth.label}
           name={'dateOfBirth'}
           resetField={resetField}
         />
@@ -102,10 +111,10 @@ export const ProfileForm: FC = () => {
               name={'country'}
               render={({ field, fieldState }) => (
                 <SelectBox
-                  labelField={'Country'}
+                  labelField={t.country.label}
                   onChangeFn={changeCountry}
                   options={selectOptions}
-                  placeholder={'Country'}
+                  placeholder={t.country.placeholder}
                 />
               )}
             />
@@ -116,10 +125,10 @@ export const ProfileForm: FC = () => {
               name={'city'}
               render={({ field, fieldState }) => (
                 <SelectBox
-                  labelField={'City'}
+                  labelField={t.city.label}
                   onChangeFn={changeCity}
                   options={selectOptions}
-                  placeholder={'City'}
+                  placeholder={t.city.placeholder}
                 />
               )}
             />
@@ -132,13 +141,13 @@ export const ProfileForm: FC = () => {
             <TextField
               as={'textarea'}
               error={fieldState?.error?.message}
-              label={'About Me'}
+              label={t.aboutMe.label}
               {...field}
             />
           )}
         />
         {/*// TODO: Consider disabling the submit button if the form is invalid */}
-        <Button type={'submit'}>Save Changes</Button>
+        <Button type={'submit'}>{t.submitButton}</Button>
       </form>
     </div>
   );
