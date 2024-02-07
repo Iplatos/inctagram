@@ -8,9 +8,9 @@ type MatchParams = {
   matchIndex: number;
   tag: string;
 };
-type MappersObj<T> = Record<string, (matchParams: MatchParams) => T>;
+export type TaggedStringMappers<T> = Record<string, (matchParams: MatchParams) => T>;
 
-const mapTaggedString = <T>(input: string, mappersObj: MappersObj<T>): (T | string)[] =>
+const mapTaggedString = <T>(input: string, mappersObj: TaggedStringMappers<T>): (T | string)[] =>
   input
     .split(taggedSegmentRegex)
     // filter <tag> capturing group, spliced into the output array
