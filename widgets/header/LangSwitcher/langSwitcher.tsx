@@ -14,8 +14,7 @@ export const LangSwitcher = () => {
   const defaultIdx = selectOptions.findIndex(option => option.value === locale);
 
   const changeLangHandler = (value: string) => {
-    // push({ pathname, query }, asPath, { locale: value });
-    push(value);
+    push({ pathname, query }, asPath, { locale: value });
   };
 
   return (
