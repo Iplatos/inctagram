@@ -3,6 +3,7 @@ import { Control, FieldPath, FieldValues, UseFormResetField, useController } fro
 import { DateObject } from 'react-multi-date-picker';
 
 import { useDateFormat } from '@/shared/hooks/useDateFormat';
+import { useTranslation } from '@/shared/hooks/useTranslation';
 import { DatePicker, DatePickerProps } from '@/shared/ui/datePicker';
 
 export type ControlledDatePickerProps<TFieldValues extends FieldValues> = {
@@ -18,6 +19,10 @@ export const ControlledDatePicker = <TFieldValues extends FieldValues = FieldVal
   resetField,
   ...props
 }: ControlledDatePickerProps<TFieldValues>) => {
+  const {
+    t: { common: commonT, generalInformation: t },
+  } = useTranslation();
+
   const {
     field: { onBlur, onChange, value },
     fieldState: { error },
@@ -55,6 +60,7 @@ export const ControlledDatePicker = <TFieldValues extends FieldValues = FieldVal
       fixMainPosition
       format={stringDateFormat}
       inputError={error?.message}
+      locale={commonT.datePicker.locale}
       onChange={handleChange}
       onClose={handleClose}
       value={value}

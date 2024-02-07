@@ -1,7 +1,6 @@
 import { ComponentPropsWithoutRef, FC, useState } from 'react';
 import ReactMultiDatePicker, { DateObject } from 'react-multi-date-picker';
 
-import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui/typography';
 import { clsx } from 'clsx';
 import Link from 'next/link';
@@ -25,7 +24,6 @@ export const DatePicker: FC<DatePickerProps> = ({
   onPositionChange,
   ...props
 }) => {
-  const { t } = useTranslation();
   const [calendarErrorPos, setCalendarErrorPos] = useState<'bottom' | 'top'>('top');
 
   const mapWeekends = ({ date }: { date: DateObject }) => {
@@ -55,7 +53,6 @@ export const DatePicker: FC<DatePickerProps> = ({
         className={'bg-dark'}
         containerClassName={s.cont}
         headerOrder={['MONTH_YEAR', 'LEFT_BUTTON', 'RIGHT_BUTTON']}
-        locale={t.datePicker.locale}
         mapDays={mapWeekends}
         monthYearSeparator={' '}
         onPositionChange={handlePositionChange}
