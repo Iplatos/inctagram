@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import { ControlledDatePicker } from '@/components/controlled-date-picker/ControlledDatePicker';
+import { ControlledDatePicker } from '@/features/accounts/edit/controlled-date-picker/ControlledDatePicker';
 import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
