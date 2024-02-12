@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import { ControlledDatePicker } from '@/features/accounts/edit/controlled-date-picker/ControlledDatePicker';
 import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
+import { ProfileFormDatePicker } from '@/features/accounts/edit/profile-form-date-picker/ProfileFormDatePicker';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
 import { SelectBox } from '@/shared/ui/SelectBox';
@@ -98,7 +98,7 @@ export const ProfileForm: FC = () => {
             />
           )}
         />
-        <ControlledDatePicker
+        <ProfileFormDatePicker
           control={control}
           label={t.dateOfBirth.label}
           name={'dateOfBirth'}

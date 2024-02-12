@@ -15,7 +15,7 @@ export type ControlledDatePickerProps<TFieldValues extends FieldValues> = {
 
 const { interpolate } = transformTaggedString;
 
-export const ControlledDatePicker = <TFieldValues extends FieldValues = FieldValues>({
+export const ProfileFormDatePicker = <TFieldValues extends FieldValues = FieldValues>({
   control,
   disabled,
   name,
