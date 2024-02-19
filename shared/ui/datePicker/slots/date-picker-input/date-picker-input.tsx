@@ -12,7 +12,8 @@ import { InputAdornment } from '@/shared/ui/input-adornment';
 
 type OwnProps = RMDPCustomInputProps & {
   date?: RMDPValue;
-  format?: string | undefined;
+  format?: string;
+  omitInputChange: boolean;
   open: boolean;
 };
 
@@ -30,7 +31,7 @@ export const DatePickerInput = forwardRef<ElementRef<'input'>, DatePickerInputPr
       format,
       handleValueChange, // unused RMDP-specific prop
       locale, // unused RMDP-specific prop
-      onChange,
+      omitInputChange,
       onFocus,
       open,
       openCalendar, // unused RMDP-specific prop
@@ -40,17 +41,16 @@ export const DatePickerInput = forwardRef<ElementRef<'input'>, DatePickerInputPr
     },
     ref
   ) => {
-    /*Fix 'wrong source of truth' error when DatePicker is used in a controlled manner:
+    /* RMDP documentation says that if the DatePicker's 'onChange' handler returns 'false',
+      its internal state will not be changed.
+      But despite this, the input value is always changed, regardless of the DatePicker's internal state.
+      To get around this behavior, in 'controlled mode' (when the date is explicitly passed to DatePicker),
+      if DatePicker 'onChange' handler returns 'false' then the value of the input will be taken from the provided date.
 
-      If the user enters an invalid value into an input element,
-      the DatePicker's 'onChange' handler gets 'null' as the date value.
-      In this case, the input value will be set to an empty string after the calendar is closed,
-      even if the DatePicker was passed a valid value prop.
-      This error persists even if the DatePicker 'onChange' handler returns 'false'
-      to prevent the DatePicker from changing its internal state.*/
+      IMPORTANT: the DatePicker's 'onChange' handler should not change the external state if the input value has not pass validation. */
     let resolvedInputValue = value;
 
-    if (!value && date) {
+    if (date && omitInputChange) {
       if (Array.isArray(date)) {
         resolvedInputValue = date.join(separator);
       } else if (date instanceof DateObject) {
@@ -70,7 +70,6 @@ export const DatePickerInput = forwardRef<ElementRef<'input'>, DatePickerInputPr
           </InputAdornment>
         }
         error={error}
-        onChange={onChange}
         onFocus={onFocus}
         ref={ref}
         value={resolvedInputValue}

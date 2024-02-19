@@ -47,6 +47,7 @@ export const DatePicker: FC<DatePickerProps> = ({
 }) => {
   const [calendarErrorPos, setCalendarErrorPos] = useState<'bottom' | 'top'>('top');
   const [isOpen, setIsOpen] = useState(false);
+  const [omitInputChange, setOmitInputChange] = useState(false);
   const inputRef = useRef<ElementRef<'input'>>(null);
 
   const mapWeekends = ({ date }: { date: DateObject }) => {
@@ -58,7 +59,11 @@ export const DatePicker: FC<DatePickerProps> = ({
   // A wrapper used to provide the consumer with a ref targeting a custom input element
   // https://shahabyazdi.github.io/react-multi-date-picker/validation/#validating-input-value
   const handleChange: RMDPProps['onChange'] = (date, { input, ...options }) => {
-    return onChange?.(date, { ...options, input: inputRef.current });
+    const result = onChange?.(date, { ...options, input: inputRef.current });
+
+    setOmitInputChange(result === false ? true : false);
+
+    return result;
   };
 
   const handleOpen = () => {
@@ -105,6 +110,7 @@ export const DatePicker: FC<DatePickerProps> = ({
             date={props.value}
             error={isAnyError}
             format={props.format}
+            omitInputChange={omitInputChange}
             open={isOpen}
             ref={inputRef}
             {...inputProps}
