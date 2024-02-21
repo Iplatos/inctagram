@@ -41,16 +41,21 @@ export const DatePickerInput = forwardRef<ElementRef<'input'>, DatePickerInputPr
     },
     ref
   ) => {
-    /* RMDP documentation says that if the DatePicker's 'onChange' handler returns 'false',
-      its internal state will not be changed.
-      But despite this, the input value is always changed, regardless of the DatePicker's internal state.
-      To get around this behavior, in 'controlled mode' (when the date is explicitly passed to DatePicker),
-      if DatePicker 'onChange' handler returns 'false' then the value of the input will be taken from the provided date.
+    /* After the DatePicker's 'onClose' event, the value of the input always depends on whether the DatePicker was able to parse correctly:
+      when manually entering a date via input, it can be an empty string if it fails, or a new date string if it succeeds.
+      The value of the input is always changed based on the parsing of the entered string, regardless of the internal state of the DatePicker or the external state of the parent component.
+      To get around this behavior, in 'controlled mode' (where the date is explicitly passed to the DatePicker):
+        * if the DatePicker's 'onChange' handler returns 'false',
+        * or the parsing of the input failed (an empty string was passed),
+      the input value will be taken from the provided date.
 
       IMPORTANT: the DatePicker's 'onChange' handler should not change the external state if the input value has not pass validation. */
     let resolvedInputValue = value;
 
-    if (date && omitInputChange) {
+    const isEmptyValue = (Array.isArray(value) && !value[0].length) || !value;
+    const shouldOmitInputValue = omitInputChange || isEmptyValue;
+
+    if (date && shouldOmitInputValue) {
       if (Array.isArray(date)) {
         resolvedInputValue = date.join(separator);
       } else if (date instanceof DateObject) {

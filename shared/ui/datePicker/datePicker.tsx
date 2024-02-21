@@ -61,7 +61,7 @@ export const DatePicker: FC<DatePickerProps> = ({
   const handleChange: RMDPProps['onChange'] = (date, { input, ...options }) => {
     const result = onChange?.(date, { ...options, input: inputRef.current });
 
-    setOmitInputChange(result === false ? true : false);
+    setOmitInputChange(result === false);
 
     return result;
   };

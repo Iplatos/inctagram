@@ -21,13 +21,12 @@ const checkInputPartsValue = (
   const tokenSchemaEnhancers: Record<string, ZodType<any, any, any>> = {
     DD: z.coerce.number().refine(v => (date ? v <= date.day : true)),
     MM: z.coerce.number().max(12),
-    YYYY: z.coerce.number().min(1).max(new DateObject().year),
+    YYYY: z.coerce.number().min(1).max(9999),
   };
 
   return inputParts.every((part, i) => {
     const token = formatTokens[i];
     const enhancer = tokenSchemaEnhancers[token];
-    let result: boolean;
 
     if (enhancer) {
       return baseTokenSchema.pipe(enhancer).safeParse(part).success;
