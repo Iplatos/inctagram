@@ -4,7 +4,7 @@ import { DateObject } from 'react-multi-date-picker';
 
 import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
 import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
-import { useGetCitiesMutation, useGetCountriesQuery } from '@/shared/api/countries.api';
+import { useGetCitiesQuery, useGetCountriesQuery } from '@/shared/api/countries.api';
 import { Button } from '@/shared/ui';
 import { Combobox } from '@/shared/ui/combobox';
 import { TextField } from '@/shared/ui/textField';
@@ -13,6 +13,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import style from './profile-form.module.scss';
+import { useChangeUserProfileMutation } from '@/shared/api/user.api';
+import { useTranslation } from '@/shared/hooks/useTranslation';
+import { OptionsType } from './pofile-form-types';
+import { skipToken } from '@reduxjs/toolkit/query';
 
 type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
 
@@ -52,7 +56,16 @@ type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
 export const ProfileForm: FC = () => {
   const schema = useProfileFormSchema();
 
-  const { control, handleSubmit, setValue, watch } = useForm<FormValues>({
+  const { t } = useTranslation();
+
+  const {
+    control,
+    formState: { dirtyFields, isValid },
+    handleSubmit,
+    setValue,
+    watch,
+    resetField,
+  } = useForm<FormValues>({
     defaultValues: {
       aboutMe: '',
       city: '',
@@ -75,30 +88,10 @@ export const ProfileForm: FC = () => {
 
   const [countriesOptions, setCountriesOptions] = useState<OptionsType[]>([]);
   const [citiesOptions, setCitiesOptions] = useState<OptionsType[]>([]);
+  const selectedCountry = watch('country');
 
-  const { data } = useGetCountriesQuery();
-
-  useEffect(() => {
-    if (data !== undefined) {
-      setCountriesOptions(data.data.map(({ name }) => ({ label: name, value: name })));
-    }
-  }, []);
-
-  const [getCities, { data: cities }] = useGetCitiesMutation();
-
-  console.log(cities);
-
-  useEffect(() => {
-    if (!country) {
-      return;
-    }
-
-    getCities(country);
-
-    if (cities !== undefined) {
-      setCitiesOptions(cities.data.map(name => ({ label: name, value: name })));
-    }
-  }, [country]);
+  const { data: countries } = useGetCountriesQuery();
+  const { data: cities } = useGetCitiesQuery(selectedCountry || skipToken);
 
   // const [saveChanges] = useChangeUserProfileMutation();
 
@@ -180,9 +173,15 @@ export const ProfileForm: FC = () => {
                   errorMessage={fieldState?.error?.message}
                   inputValue={inputValue}
                   label={'Select your country'}
-                  onChange={field.onChange}
+                  onChange={value => {
+                    resetField('city');
+                    field.onChange(value);
+                  }}
                   onInputChange={setInputValue}
-                  options={countriesOptions}
+                  options={(countries?.data ?? []).map(({ name }) => ({
+                    label: name,
+                    value: name,
+                  }))}
                   placeholder={'Country'}
                   value={field.value}
                 />
@@ -202,7 +201,7 @@ export const ProfileForm: FC = () => {
                   label={'Select your city'}
                   onChange={field.onChange}
                   onInputChange={setInputValue}
-                  options={citiesOptions}
+                  options={(cities?.data ?? []).map(name => ({ label: name, value: name }))}
                   placeholder={'City'}
                   value={field.value}
                 />
@@ -226,7 +225,7 @@ export const ProfileForm: FC = () => {
         <div className={style.separator} role={'separator'}></div>
 
         <div className={style.saveButton}>
-          <Button type={'submit'} variant={'primary'}>
+          <Button disabled={!isValid} type={'submit'} variant={'primary'}>
             Save Changes
           </Button>
         </div>

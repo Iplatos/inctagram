@@ -10,7 +10,7 @@ export const countriesApi = createApi({
   }),
   endpoints: build => {
     return {
-      getCities: build.mutation<CountriesApiResponse<string[]>, string>({
+      getCities: build.query<CountriesApiResponse<string[]>, string>({
         query: country => {
           return {
             body: { country },
@@ -32,4 +32,4 @@ export const countriesApi = createApi({
   reducerPath: 'countriesApi',
 });
 
-export const { useGetCitiesMutation, useGetCountriesQuery } = countriesApi;
+export const { useGetCitiesQuery, useGetCountriesQuery } = countriesApi;
