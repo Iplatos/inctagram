@@ -7,10 +7,12 @@ import style from './general-information.module.scss';
 
 export const GeneralInformation = () => {
   return (
-    <div className={style.container}>
-      <AddProfilePhoto />
+    <>
+      <div className={style.container}>
+        <AddProfilePhoto />
 
-      <ProfileForm />
-    </div>
+        <ProfileForm />
+      </div>
+    </>
   );
 };

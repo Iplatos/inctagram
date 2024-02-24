@@ -47,15 +47,9 @@ export const SignUpForm = () => {
   const { data: meData } = useGetMeQuery();
   const router = useRouter();
   const { t } = useTranslation();
-  const [signUp, { data: signUpData, error }] = useSignUpMutation();
+  const [signUp, { data: signUpData }] = useSignUpMutation();
 
-  const {
-    clearErrors,
-    control,
-    formState: { errors },
-    handleSubmit,
-    setError,
-  } = useForm<FormValues>({
+  const { clearErrors, control, handleSubmit } = useForm<FormValues>({
     mode: 'onBlur',
     resolver: zodResolver(schema),
   });
@@ -84,8 +78,8 @@ export const SignUpForm = () => {
               render={({ field, fieldState }) => (
                 <TextField
                   {...field}
-                  errors={fieldState?.error?.message}
-                  inputtype={'text'}
+                  error={fieldState?.error?.message}
+                  inputType={'text'}
                   label={t.auth.signUpPage.labelName}
                   onChange={field.onChange}
                   onFocus={() => clearErrors('username')}
@@ -101,8 +95,8 @@ export const SignUpForm = () => {
               render={({ field, fieldState }) => (
                 <TextField
                   {...field}
-                  errors={fieldState?.error?.message}
-                  inputtype={'text'}
+                  error={fieldState?.error?.message}
+                  inputType={'text'}
                   label={t.auth.signUpPage.labelEmail}
                   onChange={field.onChange}
                   onFocus={() => clearErrors('email')}
@@ -118,8 +112,8 @@ export const SignUpForm = () => {
               render={({ field, fieldState }) => (
                 <TextField
                   {...field}
-                  errors={fieldState?.error?.message}
-                  inputtype={'password'}
+                  error={fieldState?.error?.message}
+                  inputType={'password'}
                   label={t.auth.signUpPage.labelPassword}
                   onChange={field.onChange}
                   onFocus={() => clearErrors('password')}
@@ -134,16 +128,15 @@ export const SignUpForm = () => {
               render={({ field, fieldState }) => (
                 <TextField
                   {...field}
-                  errors={fieldState?.error?.message}
-                  inputtype={'password'}
-                  label={t.auth.signUpPage.labelСonfirm}
+                  error={fieldState?.error?.message}
+                  inputType={'password'}
+                  label={t.auth.signUpPage.labelConfirm}
                   onChange={field.onChange}
                   onFocus={() => clearErrors('password')}
-                  placeholder={t.auth.signUpPage.labelСonfirm}
+                  placeholder={t.auth.signUpPage.labelConfirm}
                 />
               )}
             />
-            {/*</div>*/}
 
             <div className={s.checkbox}>
               <ControlledCheckbox

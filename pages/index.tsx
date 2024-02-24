@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
 import { AddPhoto } from '@/features/addPhoto/addPhoto';
@@ -7,6 +7,8 @@ import { useTranslation } from '@/shared/hooks/useTranslation';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
 import { useRouter } from 'next/navigation';
+import { EditProfile } from '@/widgets/accounts';
+import { Combobox } from '@/shared/ui/combobox';
 
 function Home() {
   const { t } = useTranslation();
@@ -34,9 +36,20 @@ function Home() {
       {/*
 
       */}
-      <div style={{ marginLeft: '300px' }}>
-        <AddPhoto />
-        <DatePickerContainer />
+      <div style={{ marginLeft: '220px' }}>
+        {/* <AddPhoto /> */}
+        {/* <DatePickerContainer /> */}
+
+        <EditProfile />
+        {/* <Combobox
+          label="select country"
+          options={options}
+          value={value}
+          onChange={setValue}
+          inputValue={inputValue}
+          onInputChange={setInputValue}
+          placeholder={'Country'}
+        /> */}
       </div>
       {/*  <div>
         {error?.status} {JSON.stringify(error)}
