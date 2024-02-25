@@ -1,3 +1,5 @@
+import { UserProfileType } from "@/shared/types/user.types";
+
 export type CountriesApiResponse<T> = {
   data: T;
   error: boolean;
@@ -22,4 +24,15 @@ export type SelectType = {
   id: string;
   label: string;
   value: string;
+};
+
+export type OptionsType = {
+  label: string;
+  value: string;
+};
+
+type ProfileFormProps = {
+  onSubmitChanges: () => void;
+  profile: UserProfileType;
+  username: string;
 };

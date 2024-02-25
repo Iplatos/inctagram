@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import { DateObject } from 'react-multi-date-picker';
 
 import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
@@ -20,40 +20,9 @@ import { skipToken } from '@reduxjs/toolkit/query';
 
 type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
 
-// const useCountries = () => {
-//   const [countries, setCountries] = useState<string[]>([]);
+export const ProfileForm: FC = props => {
+  // const { onSubmitChanges, profile, username } = props;
 
-//   useEffect(() => {
-//     axios
-//       .get<CountriesApiResponse<CountryWithFlagApiData[]>>(
-//         'https://countriesnow.space/api/v0.1/countries/flag/unicode'
-//       )
-//       .then(({ data: response }) => setCountries(response.data.map(({ name }) => name)));
-//   }, []);
-
-//   return countries;
-// };
-
-// const useCities = (country: string) => {
-//   const [cities, setCities] = useState<string[]>([]);
-
-//   useEffect(() => {
-//     if (!country) {
-//       return;
-//     }
-
-//     axios
-//       .post<CountriesApiResponse<string[]>>(
-//         'https://countriesnow.space/api/v0.1/countries/cities',
-//         { country }
-//       )
-//       .then(({ data: response }) => setCities(response.data));
-//   }, [country]);
-
-//   return cities;
-// };
-
-export const ProfileForm: FC = () => {
   const schema = useProfileFormSchema();
 
   const { t } = useTranslation();
@@ -79,32 +48,50 @@ export const ProfileForm: FC = () => {
     resolver: zodResolver(schema),
   });
 
-  const country = watch('country');
-
-  type OptionsType = {
-    label: string;
-    value: string;
-  };
-
   const [countriesOptions, setCountriesOptions] = useState<OptionsType[]>([]);
   const [citiesOptions, setCitiesOptions] = useState<OptionsType[]>([]);
+
+  // useEffect(() => {
+  // setValue('country', '');
+
+  // }, []);
+
   const selectedCountry = watch('country');
 
   const { data: countries } = useGetCountriesQuery();
   const { data: cities } = useGetCitiesQuery(selectedCountry || skipToken);
 
-  // const [saveChanges] = useChangeUserProfileMutation();
+  // if (data !== undefined) {
+  //   setCountriesOptions(data.data.map(({ name }) => ({ label: name, value: name })));
+  // }
 
-  const onSubmit = (data: FormValues) => {
+  // useEffect(() => {
+  // if (selectedCountry) {
+  // resetField('city', { defaultValue: '' });
+  //   getCities(selectedCountry);
+  // }
+
+  // if (cities !== undefined) {
+  //   setCitiesOptions(cities.data.map(name => ({ label: name, value: name })));
+  // }
+  // }, [selectedCountry, resetField]);
+
+  const [saveChanges] = useChangeUserProfileMutation();
+
+  const onSubmit: SubmitHandler<FormValues> = data => {
     // Use data.birthData.format() to bring the data to the format requested by the backend.
-    // console.log(data);
+    console.log(data);
+  };
+
+  const onErrorSubmit: SubmitErrorHandler<FormValues> = data => {
+    console.log(data);
   };
 
   const [inputValue, setInputValue] = useState('');
 
   return (
     <div className={style.formContainer}>
-      <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={style.form} onSubmit={handleSubmit(onSubmit, onErrorSubmit)}>
         {/* {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />} */}
         <Controller
           control={control}

@@ -6,6 +6,10 @@
     position: relative;
 }
 
+.container {
+  position: relative;
+}
+
 .inputField {
   display: flex;
   
@@ -86,7 +90,11 @@
 }
 
 .content {
+  position: absolute;
+
   overflow: hidden;
+
+  width: 100%;
 
   background-color: var(--color-dark-700);
   border: 1px solid var(--color-light-100);

@@ -6,11 +6,11 @@ import Image from 'next/image';
 import style from './add-profile-photo.module.scss';
 
 import AccountPhotoImage from '../../../../assets/icons/account-photo.svg?url';
-import { AddPhoto } from '@/features/addPhoto/addPhoto';
 
 export const AddProfilePhoto = () => {
   function addProfilePhoto() {
     //open modal upload photo
+    alert('photo editor');
   }
 
   return (
@@ -23,8 +23,6 @@ export const AddProfilePhoto = () => {
           Add a Profile Photo
         </Button>
       </div>
-
-      {/* <AddPhoto /> */}
     </>
   );
 };
