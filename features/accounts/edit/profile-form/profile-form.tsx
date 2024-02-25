@@ -6,7 +6,7 @@ import { ProfileFormDatePicker } from '@/features/accounts/edit/profile-form-dat
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
 import { SelectBox } from '@/shared/ui/SelectBox';
-import { TextField } from '@/shared/ui/textField';
+import { ControlledTextField } from '@/shared/ui/controlled';
 import { DevTool } from '@hookform/devtools';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -61,42 +61,23 @@ export const ProfileForm: FC = () => {
     <div className={style.formContainer}>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />}
-        <Controller
+        <ControlledTextField
           control={control}
+          label={t.userName.label}
           name={'userName'}
-          render={({ field, fieldState }) => (
-            <TextField
-              error={fieldState?.error?.message}
-              inputType={'text'}
-              label={t.userName.label}
-              required
-              {...field}
-            />
-          )}
+          required
         />
-        <Controller
+        <ControlledTextField
           control={control}
+          label={t.firstName.label}
           name={'firstName'}
-          render={({ field, fieldState }) => (
-            <TextField
-              error={fieldState?.error?.message}
-              label={t.firstName.label}
-              required
-              {...field}
-            />
-          )}
+          required
         />
-        <Controller
+        <ControlledTextField
           control={control}
+          label={t.lastName.label}
           name={'lastName'}
-          render={({ field, fieldState }) => (
-            <TextField
-              error={fieldState?.error?.message}
-              label={t.lastName.label}
-              required
-              {...field}
-            />
-          )}
+          required
         />
         <ProfileFormDatePicker
           control={control}
@@ -134,17 +115,11 @@ export const ProfileForm: FC = () => {
             />
           </div>
         </div>
-        <Controller
+        <ControlledTextField
+          as={'textarea'}
           control={control}
+          label={'About Me'}
           name={'aboutMe'}
-          render={({ field, fieldState }) => (
-            <TextField
-              as={'textarea'}
-              error={fieldState?.error?.message}
-              label={t.aboutMe.label}
-              {...field}
-            />
-          )}
         />
         {/*// TODO: Consider disabling the submit button if the form is invalid */}
         <Button type={'submit'}>{t.submitButton}</Button>
