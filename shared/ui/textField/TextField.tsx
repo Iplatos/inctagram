@@ -1,59 +1,114 @@
-import { forwardRef, useState } from 'react';
+import { ChangeEvent, ForwardedRef, ReactNode, forwardRef, useState } from 'react';
 
 import Close from '@/assets/icons/close.svg?url';
 import Eye from '@/assets/icons/eye-outline.svg?url';
 import SearchOutline from '@/assets/icons/searchOutline.svg?url';
 import { Typography } from '@/shared/ui/typography';
+import { clsx } from 'clsx';
 import Image from 'next/image';
 
 import s from 'shared/ui/textField/TextField.module.scss';
 
-// type TextFieldType = 'input' | 'textarea';
+type SharedProps = {
+  className?: string;
+  disabled?: boolean;
+  error?: string;
+  label?: string;
+  onBlur?: () => void;
+  onChange: (value: string) => void;
+  onFocus?: () => void;
+  placeholder?: string;
+  required?: boolean;
+  value: string;
+};
 
+// If you pass this type as a generic parameter, TS will prevent you from using props specific to union members.
+// To be able to pass these props, you can extract the desired union member using the Extract utility type.
+// https://www.typescriptlang.org/docs/handbook/utility-types.html#extracttype-union
 export type TextFieldProps =
-  // <T extends TextFieldType = 'input'>
+  | (SharedProps & {
+      as?: 'input';
+      inputType?: 'password' | 'search' | 'text';
+    })
+  | (SharedProps & { as: 'textarea' });
 
-  {
-    as?: 'input' | 'textarea';
-    className?: string;
-    disabled?: boolean;
-    errors?: string;
-    inputtype?: 'password' | 'text';
-    isSearchInput?: boolean;
-    label?: string;
-    onChange: (e: string) => void;
-    onFocus?: () => void;
-    placeholder?: string;
-    required?: boolean;
-    value: string;
-  };
+// Forces the 'ref' type match the 'as' prop type. You should not specify the 'as' props dynamically.
+// Use only the literal value to avoid possible errors with non-existent properties of the target element pointed by the 'ref'.
+// prettier-ignore
+export type TextFieldComponent = {
+  (props: Extract<TextFieldProps, { as: "textarea" }> & { ref?: ForwardedRef<HTMLTextAreaElement> }): ReactNode;
+  (props: Extract<TextFieldProps, { as?: "input" }> & { ref?: ForwardedRef<HTMLInputElement> }): ReactNode;
+}
 
-export const TextField = forwardRef((props: TextFieldProps, ref) => {
-  const {
-    as,
-    className,
-    disabled,
-    errors,
-    inputtype = 'text',
-    isSearchInput,
-    label,
-    onChange,
-    placeholder = 'email',
-    required,
-    value,
-  } = props;
+export const TextField: TextFieldComponent = forwardRef<
+  HTMLInputElement | HTMLTextAreaElement,
+  TextFieldProps
+>(({ className, error, label, onChange, required, ...props }, ref) => {
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [type, setType] = useState(inputtype);
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    onChange(e.currentTarget.value);
 
-  const changeInputType = () => {
-    type === 'password' ? setType('text') : setType('password');
-  };
+  const sharedClassName = clsx(s.input, error && s.error, className);
+  let resolvedFragment: ReactNode;
 
-  const clearTextField = () => {
-    onChange('');
-  };
+  // Do not destructure the 'as' prop before 'if' statement
+  // because TS will lose the connection between the 'as' prop and type of the remaining props
+  if (!props.as || props.as === 'input') {
+    const { as, inputType, ...restProps } = props;
+    const isSearch = inputType === 'search';
+    const isPassword = inputType === 'password';
+    const passwordFieldNextType = showPassword ? 'text' : 'password';
 
-  const { as: Component = 'input', ...rest } = props;
+    resolvedFragment = (
+      <>
+        <input
+          className={clsx(sharedClassName, isSearch && s.inputSearch)}
+          onChange={handleChange}
+          ref={ref as unknown as ForwardedRef<HTMLInputElement>}
+          type={isPassword ? passwordFieldNextType : inputType}
+          {...restProps}
+        />
+        {isPassword && (
+          <button
+            className={clsx(s.button, label && s.buttonWithLabel)}
+            onClick={() => setShowPassword(prev => !prev)}
+            type={'button'}
+          >
+            <Image alt={'bell'} src={Eye} />
+          </button>
+        )}
+        {isSearch && props.value && (
+          <button
+            className={clsx(s.button, label && s.buttonWithLabel)}
+            onClick={() => onChange('')}
+          >
+            <Image alt={'close Logo'} src={Close} />
+          </button>
+        )}
+        {isSearch && (
+          <Image
+            alt={'searchOutline logo'}
+            className={clsx(s.searchOutline, label && s.searchOutlineWithLabel)}
+            src={SearchOutline}
+          />
+        )}
+      </>
+    );
+  }
+
+  if (props.as === 'textarea') {
+    const { as, ...restProps } = props;
+
+    resolvedFragment = (
+      <textarea
+        className={sharedClassName}
+        onChange={handleChange}
+        ref={ref as unknown as ForwardedRef<HTMLTextAreaElement>}
+        {...restProps}
+      />
+    );
+  }
 
   return (
     <div className={s.inputContainer}>
@@ -61,42 +116,8 @@ export const TextField = forwardRef((props: TextFieldProps, ref) => {
         {label}
         {required && <Typography.Regular14 color={'red'}>*</Typography.Regular14>}
       </Typography.Regular14>
-      <Component
-        {...rest}
-        className={`${isSearchInput ? `${s.input} ${s.inputSearch}` : s.input} ${
-          errors ? `${s.input} ${s.error}` : s.input
-        } ${className}`}
-        disabled={disabled}
-        onChange={e => onChange(e.currentTarget.value)}
-        placeholder={placeholder}
-        type={type}
-        value={value}
-      />
-      {inputtype !== 'text' && (
-        <button
-          className={!label ? s.button : `${s.buttonWithLabel} ${s.button}`}
-          onClick={changeInputType}
-          type={'button'}
-        >
-          <Image alt={'bell'} src={Eye} />
-        </button>
-      )}
-      {isSearchInput && value && (
-        <button
-          className={!label ? s.button : `${s.buttonWithLabel} ${s.button}`}
-          onClick={clearTextField}
-        >
-          <Image alt={'close Logo'} src={Close} />
-        </button>
-      )}
-      {isSearchInput && (
-        <Image
-          alt={'searchOutline logo'}
-          className={!label ? s.searchOutline : `${s.searchOutline} ${s.searchOutlineWithLabel} `}
-          src={SearchOutline}
-        />
-      )}
-      <div className={s.errorMessage}>{errors}</div>
+      {resolvedFragment}
+      <div className={s.errorMessage}>{error}</div>
     </div>
   );
 });

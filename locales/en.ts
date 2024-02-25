@@ -1,3 +1,5 @@
+import gregorian_en from 'react-date-object/locales/gregorian_en';
+
 import { LocaleType } from './ru';
 
 export const en: LocaleType = {
@@ -108,10 +110,10 @@ export const en: LocaleType = {
     signUpPage: {
       account: 'Do you have an account?',
       agreement: 'I agree to the <3>text</3> and <4>text</4>',
+      labelConfirm: 'Password confirmation',
       labelEmail: 'Email',
       labelName: 'Username',
       labelPassword: 'Password',
-      labelСonfirm: 'Password confirmation',
       signIn: 'Sign In',
       signUp: 'Sign Up',
       title: 'Sign Up',
@@ -183,8 +185,55 @@ export const en: LocaleType = {
     },
   },
 
-  datePicker: {
-    DataSelect: 'Date select',
+  common: {
+    datePicker: {
+      locale: gregorian_en,
+    },
+  },
+
+  generalInformation: {
+    aboutMe: {
+      label: 'About Me',
+    },
+    addProfilePhoto: {
+      submitButton: 'add a profile photo',
+    },
+    city: {
+      label: 'Select your city',
+      placeholder: 'City',
+    },
+    commonFieldErrors: {
+      max: '<field></field> must contain at most <max></max> characters',
+      min: '<field></field> must contain at least <min></min> characters',
+      onlyLetters: '<field></field> must contain only letters',
+      required: '<field></field> is required',
+    },
+    country: {
+      label: 'Select your country',
+      placeholder: 'Country',
+    },
+    dateOfBirth: {
+      errors: {
+        invalidDateFormat:
+          'Invalid date format. Enter the date in the specified format: <format></format>',
+        toYoung: 'A user under 13 cannot create a profile. <link>Privacy Policy</link>',
+        under1900: "The date of birth can't be before 1900",
+      },
+      label: 'Date of Birth',
+    },
+    firstName: {
+      label: 'First Name',
+    },
+    lastName: {
+      label: 'Last Name',
+    },
+    submitButton: 'save changes',
+    userName: {
+      errors: {
+        regexp: 'User Name must contain only letters, numbers, underscores or hyphens',
+      },
+      label: 'Username',
+    },
   },
 
   logOut: {

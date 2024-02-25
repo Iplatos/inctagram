@@ -1,43 +1,41 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
+import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
+import { ProfileFormDatePicker } from '@/features/accounts/edit/profile-form-date-picker/ProfileFormDatePicker';
+import { useTranslation } from '@/shared/hooks/useTranslation';
+import { Button } from '@/shared/ui';
 import { SelectBox } from '@/shared/ui/SelectBox';
-import { TextField } from '@/shared/ui/textField';
+import { ControlledTextField } from '@/shared/ui/controlled';
+import { DevTool } from '@hookform/devtools';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import style from './profile-form.module.scss';
 
-const schema = z.object({
-  aboutme: z.string(),
-  city: z.string(),
-  country: z.string(),
-  dateofbirth: z.date(),
-  firstname: z.string(),
-  lastname: z.string(),
-  username: z.string(),
-  // .min(6, { message: 'Minimum number of characters 6' })
-  // .max(30, { message: 'Maximum number of characters 30' })
-  // .regex(/^[0-9A-Za-z_-]+$/),
-});
+type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
 
-type FormValuesType = z.input<typeof schema>;
-
-export const ProfileForm = () => {
+export const ProfileForm: FC = () => {
   const {
-    clearErrors,
-    control,
-    formState: { errors },
-    handleSubmit,
-    setError,
-  } = useForm<FormValuesType>({
-    mode: 'onBlur',
+    t: { generalInformation: t },
+  } = useTranslation();
+  const schema = useProfileFormSchema();
+
+  const { control, handleSubmit, resetField } = useForm<FormValues>({
+    defaultValues: {
+      aboutMe: '',
+      city: '',
+      country: '',
+      dateOfBirth: new Date(),
+      firstName: '',
+      lastName: '',
+      userName: '',
+    },
+    mode: 'onTouched',
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: FormValuesType) => {
-    ////data
-  };
+  const onSubmit = (data: FormValues) => {};
 
   const selectOptions = [
     { label: 'English', value: 'en' },
@@ -53,8 +51,6 @@ export const ProfileForm = () => {
 
   const changeCountry = (value: string) => {
     // push(value);
-
-    console.log(value);
   };
 
   const changeCity = (value: string) => {
@@ -64,77 +60,31 @@ export const ProfileForm = () => {
   return (
     <div className={style.formContainer}>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
-        <Controller
+        {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />}
+        <ControlledTextField
           control={control}
-          name={'username'}
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
-              label={'Username'}
-              onChange={field.onChange}
-              onFocus={() => clearErrors('username')}
-              placeholder={''}
-              required
-              value={field.value}
-            />
-          )}
+          label={t.userName.label}
+          name={'userName'}
+          required
         />
-
-        <Controller
+        <ControlledTextField
           control={control}
-          name={'firstname'}
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
-              label={'First Name'}
-              onChange={field.onChange}
-              onFocus={() => clearErrors('firstname')}
-              placeholder={''}
-              required
-              value={field.value}
-            />
-          )}
+          label={t.firstName.label}
+          name={'firstName'}
+          required
         />
-
-        <Controller
+        <ControlledTextField
           control={control}
-          name={'lastname'}
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
-              label={'Last Name'}
-              onChange={field.onChange}
-              onFocus={() => clearErrors('lastname')}
-              placeholder={''}
-              required
-              value={field.value}
-            />
-          )}
+          label={t.lastName.label}
+          name={'lastName'}
+          required
         />
-
-        <Controller
+        <ProfileFormDatePicker
           control={control}
-          name={'dateofbirth'}
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
-              label={'Date of birth'}
-              onChange={field.onChange}
-              onFocus={() => clearErrors('dateofbirth')}
-              placeholder={'00.00.00'}
-              value={field.value}
-            />
-          )}
+          label={t.dateOfBirth.label}
+          name={'dateOfBirth'}
+          resetField={resetField}
         />
-
         <div className={style.selectBlock}>
           <div className={style.select}>
             <Controller
@@ -142,10 +92,10 @@ export const ProfileForm = () => {
               name={'country'}
               render={({ field, fieldState }) => (
                 <SelectBox
-                  labelField={'Country'}
+                  labelField={t.country.label}
                   onChangeFn={changeCountry}
                   options={selectOptions}
-                  placeholder={'Country'}
+                  placeholder={t.country.placeholder}
                 />
               )}
             />
@@ -156,33 +106,23 @@ export const ProfileForm = () => {
               name={'city'}
               render={({ field, fieldState }) => (
                 <SelectBox
-                  labelField={'City'}
+                  labelField={t.city.label}
                   onChangeFn={changeCity}
                   options={selectOptions}
-                  placeholder={'City'}
+                  placeholder={t.city.placeholder}
                 />
               )}
             />
           </div>
         </div>
-
-        <Controller
+        <ControlledTextField
+          as={'textarea'}
           control={control}
-          name={'aboutme'}
-          render={({ field, fieldState }) => (
-            <TextField
-              as={'textarea'}
-              {...field}
-              errors={fieldState?.error?.message}
-              inputtype={'text'}
-              label={'About me'}
-              onChange={field.onChange}
-              onFocus={() => clearErrors('aboutme')}
-              placeholder={''}
-              value={field.value}
-            />
-          )}
+          label={'About Me'}
+          name={'aboutMe'}
         />
+        {/*// TODO: Consider disabling the submit button if the form is invalid */}
+        <Button type={'submit'}>{t.submitButton}</Button>
       </form>
     </div>
   );
