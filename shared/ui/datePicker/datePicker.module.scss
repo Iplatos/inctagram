@@ -1,0 +1,42 @@
+.datePickerContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  :global {
+    .bg-dark.rmdp-wrapper {
+      background-color: var(--color-dark-500);
+    }
+
+    .rmdp-wrapper {
+      display: flex;
+      flex-direction: column;
+      width: min-content;
+    }
+  }
+}
+
+.errorMessage {
+  color: var(--color-danger-300);
+}
+
+.svgAsComponent {
+  & * {
+    fill: red;
+  }
+}
+
+.cont button {
+  padding-top: 2px;
+
+  // background-color: var(--color-dark-100);
+}
+
+.cont button > i {
+  border: solid white;
+  border-width: 0 2px 2px 0;
+}
+
+.formatError {
+  padding: 8px;
+}

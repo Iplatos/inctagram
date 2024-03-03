@@ -1,5 +1,7 @@
 export type UserProfileType = {
   aboutMe: string;
+  city: string;
+  country: string;
   dateOfBirth: string;
   familyName: string;
   firstName: string;
@@ -17,12 +19,12 @@ export type UserProfileType = {
   userId: string;
 };
 
-export type ChangeProfileType = {
+export type UpdateProfileType = {
   aboutMe: string;
   city: string;
   country: string;
   dateOfBirth: string;
-  firstname: string;
-  lastname: string;
-  username: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
 };

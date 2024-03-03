@@ -2,152 +2,134 @@ import React, { FC, useEffect, useState } from 'react';
 import { Controller, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import { DateObject } from 'react-multi-date-picker';
 
-import { DatePickerContainer } from '@/components/datePicker/datePickerContainer';
 import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
+import { ProfileFormDatePicker } from '@/features/accounts/edit/profile-form-date-picker/ProfileFormDatePicker';
 import { useGetCitiesQuery, useGetCountriesQuery } from '@/shared/api/countries.api';
+import {
+  useGetUserProfileQuery,
+  useLazyGetUserProfileQuery,
+  useUpdateProfileMutation,
+} from '@/shared/api/user.api';
+import { useTranslation } from '@/shared/hooks/useTranslation';
+import { UpdateProfileType, UserProfileType } from '@/shared/types/user.types';
 import { Button } from '@/shared/ui';
 import { Combobox } from '@/shared/ui/combobox';
-import { TextField } from '@/shared/ui/textField';
-// import { DevTool } from '@hookform/devtools';
+import { ControlledTextField } from '@/shared/ui/controlled';
+import { DevTool } from '@hookform/devtools';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { skipToken } from '@reduxjs/toolkit/query';
 import { z } from 'zod';
 
 import style from './profile-form.module.scss';
-import { useChangeUserProfileMutation } from '@/shared/api/user.api';
-import { useTranslation } from '@/shared/hooks/useTranslation';
+
 import { OptionsType } from './pofile-form-types';
-import { skipToken } from '@reduxjs/toolkit/query';
 
-type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
+export type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
 
-export const ProfileForm: FC = props => {
-  // const { onSubmitChanges, profile, username } = props;
+type ProfileFormProps = {
+  onSubmit: SubmitHandler<FormValues>;
+  onSubmitError: SubmitErrorHandler<FormValues>;
+};
 
+export const ProfileForm = (props: ProfileFormProps) => {
+  const { onSubmit, onSubmitError } = props;
+
+  const {
+    t: { generalInformation: t },
+  } = useTranslation();
   const schema = useProfileFormSchema();
-
-  const { t } = useTranslation();
 
   const {
     control,
-    formState: { dirtyFields, isValid },
+    formState: { isValid },
     handleSubmit,
-    setValue,
-    watch,
     resetField,
+    watch,
   } = useForm<FormValues>({
-    defaultValues: {
-      aboutMe: '',
-      city: '',
-      country: '',
-      dateOfBirth: new DateObject().valueOf(),
-      firstName: '',
-      lastName: '',
-      userName: '',
+    defaultValues: async () => {
+      const { data } = await trigger();
+
+      const mappedData = {
+        ...data,
+        lastName: data?.familyName,
+        userName: data?.firstName,
+      };
+
+      const formFields: (keyof FormValues)[] = [
+        'aboutMe',
+        'city',
+        'country',
+        'dateOfBirth',
+        'firstName',
+        'lastName',
+        'userName',
+      ];
+
+      type FilteredUserKeys = Exclude<keyof UserProfileType, 'photos'>;
+
+      return formFields.reduce((defaultValue, field) => {
+        if (field === 'dateOfBirth') {
+          defaultValue[field] = mappedData?.[field]?.length
+            ? new Date(mappedData[field] as string)
+            : null;
+        } else {
+          defaultValue[field] = mappedData?.[field] ?? '';
+        }
+
+        return defaultValue;
+      }, {} as FormValues);
     },
     mode: 'onTouched',
     resolver: zodResolver(schema),
   });
 
-  const [countriesOptions, setCountriesOptions] = useState<OptionsType[]>([]);
-  const [citiesOptions, setCitiesOptions] = useState<OptionsType[]>([]);
-
   // useEffect(() => {
-  // setValue('country', '');
+  //   setUser(profileData);
+  //   reset({
+  //     ...profileData,
+  //     dateOfBirth: profileData.dateOfBirth
+  //       ? new Date(Date.parse(profileData.dateOfBirth))
+  //       : new Date(),
+  //     userName: profileData.userId,
+  //   });
+  // }, [reset, profileData]);
 
-  // }, []);
+  const [inputValue, setInputValue] = useState('');
 
   const selectedCountry = watch('country');
 
   const { data: countries } = useGetCountriesQuery();
   const { data: cities } = useGetCitiesQuery(selectedCountry || skipToken);
 
-  // if (data !== undefined) {
-  //   setCountriesOptions(data.data.map(({ name }) => ({ label: name, value: name })));
-  // }
-
-  // useEffect(() => {
-  // if (selectedCountry) {
-  // resetField('city', { defaultValue: '' });
-  //   getCities(selectedCountry);
-  // }
-
-  // if (cities !== undefined) {
-  //   setCitiesOptions(cities.data.map(name => ({ label: name, value: name })));
-  // }
-  // }, [selectedCountry, resetField]);
-
-  const [saveChanges] = useChangeUserProfileMutation();
-
-  const onSubmit: SubmitHandler<FormValues> = data => {
-    // Use data.birthData.format() to bring the data to the format requested by the backend.
-    console.log(data);
-  };
-
-  const onErrorSubmit: SubmitErrorHandler<FormValues> = data => {
-    console.log(data);
-  };
-
-  const [inputValue, setInputValue] = useState('');
+  const [trigger] = useLazyGetUserProfileQuery();
 
   return (
     <div className={style.formContainer}>
-      <form className={style.form} onSubmit={handleSubmit(onSubmit, onErrorSubmit)}>
-        {/* {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />} */}
-        <Controller
+      <form className={style.form} onSubmit={handleSubmit(onSubmit, onSubmitError)}>
+        {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />}
+        <ControlledTextField
           control={control}
+          label={t.userName.label}
           name={'userName'}
-          render={({ field, fieldState }) => (
-            <TextField
-              error={fieldState?.error?.message}
-              inputType={'text'}
-              label={'Username'}
-              required
-              {...field}
-            />
-          )}
+          required
         />
-        <Controller
+        <ControlledTextField
           control={control}
+          label={t.firstName.label}
           name={'firstName'}
-          render={({ field, fieldState }) => (
-            <TextField
-              error={fieldState?.error?.message}
-              label={'First Name'}
-              required
-              {...field}
-            />
-          )}
+          required
         />
-        <Controller
+        <ControlledTextField
           control={control}
+          label={t.lastName.label}
           name={'lastName'}
-          render={({ field, fieldState }) => (
-            <TextField error={fieldState?.error?.message} label={'Last Name'} required {...field} />
-          )}
+          required
         />
-        <Controller
+        <ProfileFormDatePicker
           control={control}
+          label={t.dateOfBirth.label}
           name={'dateOfBirth'}
-          render={({ field: { onBlur, onChange, value }, fieldState }) => (
-            // TODO: think about min and max dates
-            // TODO: consider validating the input format by changing the input field manually
-            // https://shahabyazdi.github.io/react-multi-date-picker/validation/#validating-input-value
-            <DatePickerContainer
-              error={fieldState?.error?.message}
-              format={'DD.MM.YYYY'}
-              label={'Date of birth'}
-              onChange={date => {
-                // Temporary solution until there is no logic to validate user manual input
-                if (date instanceof DateObject) {
-                  onChange(date.valueOf());
-                } else {
-                  onChange(new DateObject().valueOf());
-                }
-              }}
-              onClose={onBlur}
-              value={value}
-            />
-          )}
+          resetField={resetField}
         />
         <div className={style.selectBlock}>
           <div className={style.select}>
@@ -159,7 +141,7 @@ export const ProfileForm: FC = props => {
                   {...field}
                   errorMessage={fieldState?.error?.message}
                   inputValue={inputValue}
-                  label={'Select your country'}
+                  label={t.country.label}
                   onChange={value => {
                     resetField('city');
                     field.onChange(value);
@@ -169,7 +151,7 @@ export const ProfileForm: FC = props => {
                     label: name,
                     value: name,
                   }))}
-                  placeholder={'Country'}
+                  placeholder={t.country.placeholder}
                   value={field.value}
                 />
               )}
@@ -185,35 +167,29 @@ export const ProfileForm: FC = props => {
                   {...field}
                   errorMessage={fieldState?.error?.message}
                   inputValue={inputValue}
-                  label={'Select your city'}
+                  label={t.city.label}
                   onChange={field.onChange}
                   onInputChange={setInputValue}
                   options={(cities?.data ?? []).map(name => ({ label: name, value: name }))}
-                  placeholder={'City'}
+                  placeholder={t.city.placeholder}
                   value={field.value}
                 />
               )}
             />
           </div>
         </div>
-        <Controller
+        <ControlledTextField
+          as={'textarea'}
           control={control}
+          label={'About Me'}
           name={'aboutMe'}
-          render={({ field, fieldState }) => (
-            <TextField
-              as={'textarea'}
-              error={fieldState?.error?.message}
-              label={'About Me'}
-              {...field}
-            />
-          )}
         />
 
         <div className={style.separator} role={'separator'}></div>
 
         <div className={style.saveButton}>
-          <Button disabled={!isValid} type={'submit'} variant={'primary'}>
-            Save Changes
+          <Button type={'submit'} variant={'primary'}>
+            {t.submitButton}
           </Button>
         </div>
       </form>

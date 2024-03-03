@@ -3,6 +3,7 @@
     "scss.validate": false,
     "stylelint.validate": ["css", "scss"],
     "editor.codeActionsOnSave": {
-      "source.fixAll.stylelint": "always"
+      "source.fixAll.stylelint": "always",
+      "source.fixAll.eslint": "always"
     }
   }

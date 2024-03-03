@@ -1,3 +1,5 @@
+import gregorian_ru from '@/locales/gregorian_ru';
+
 export const ru = {
   auth: {
     emailConfirmedPage: {
@@ -181,8 +183,56 @@ export const ru = {
     },
   },
 
-  datePicker: {
-    DataSelect: 'Выбор даты',
+  common: {
+    datePicker: {
+      locale: gregorian_ru,
+    },
+  },
+
+  generalInformation: {
+    aboutMe: {
+      label: 'Обо мне',
+    },
+    addProfilePhoto: {
+      submitButton: 'добавить фото профиля',
+    },
+    city: {
+      label: 'Выберите ваш город',
+      placeholder: 'Город',
+    },
+    commonFieldErrors: {
+      max: '<field></field> должно содержать не более <max></max> символов',
+      min: '<field></field> должно содержать не менее <min></min> символовов',
+      onlyLetters: '<field></field> может содержать только буквы',
+      required: '<field></field> обязательно для заполнения',
+    },
+    country: {
+      label: 'Выберите вашу страну',
+      placeholder: 'Страна',
+    },
+    dateOfBirth: {
+      errors: {
+        invalidDateFormat:
+          'Неверный формат даты. Введите дату в указанном формате: <format></format>',
+        toYoung:
+          'Пользователь младше 13 лет не может создать профиль. <link>Политика конфиденциальности</link>',
+        under1900: 'Дата рождения не может быть раньше 1900 года',
+      },
+      label: 'Дата Рождения',
+    },
+    firstName: {
+      label: 'Имя',
+    },
+    lastName: {
+      label: 'Фамилия',
+    },
+    submitButton: 'сохранить изменения',
+    userName: {
+      errors: {
+        regexp: 'Имя пользователя может содержать только буквы, цифры, подчеркивания и тире',
+      },
+      label: 'Имя Пользователя',
+    },
   },
 
   logOut: {

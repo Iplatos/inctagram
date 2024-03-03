@@ -36,8 +36,8 @@ export type TextFieldProps =
 // Use only the literal value to avoid possible errors with non-existent properties of the target element pointed by the 'ref'.
 // prettier-ignore
 export type TextFieldComponent = {
-  (props: Extract<TextFieldProps, { as: 'textarea'}> & { ref?: ForwardedRef<HTMLTextAreaElement> }): ReactNode;
-  (props: Extract<TextFieldProps, { as?: 'input'}> & { ref?: ForwardedRef<HTMLInputElement> }): ReactNode;
+  (props: Extract<TextFieldProps, { as: "textarea" }> & { ref?: ForwardedRef<HTMLTextAreaElement> }): ReactNode;
+  (props: Extract<TextFieldProps, { as?: "input" }> & { ref?: ForwardedRef<HTMLInputElement> }): ReactNode;
 }
 
 export const TextField: TextFieldComponent = forwardRef<

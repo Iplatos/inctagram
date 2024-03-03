@@ -1,0 +1,22 @@
+@use '../../../styles/helpers' as *;
+@use '../../../styles/mixins' as *;
+
+%adornment {
+  @include flex($justify: null);
+
+  height: 100%;
+}
+
+.startAdornment {
+  @extend %adornment;
+
+  margin-right: em(8);
+  margin-left: -#{em(4)};
+}
+
+.endAdornment {
+  @extend %adornment;
+
+  margin-right: -#{em(4)};
+  margin-left: em(8);
+}
