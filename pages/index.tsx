@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 
 import { ProfileForm } from '@/features/accounts/edit';
+import { AddPhoto } from '@/features/addPhoto/addPhoto';
 import { useGetMeQuery } from '@/shared/api/auth.service';
 import { useTranslation } from '@/shared/hooks/useTranslation';
+import { Combobox } from '@/shared/ui/combobox';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
-import { useRouter } from 'next/navigation';
 import { EditProfile } from '@/widgets/accounts';
-import { Combobox } from '@/shared/ui/combobox';
+import { useRouter } from 'next/navigation';
 
 function Home() {
   const { t } = useTranslation();

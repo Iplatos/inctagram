@@ -1,6 +1,5 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Controller, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
-import { DateObject } from 'react-multi-date-picker';
 
 import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
 import { ProfileFormDatePicker } from '@/features/accounts/edit/profile-form-date-picker/ProfileFormDatePicker';
@@ -172,6 +171,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
                   onInputChange={setInputValue}
                   options={(cities?.data ?? []).map(name => ({ label: name, value: name }))}
                   placeholder={t.city.placeholder}
+                  ref={field.ref}
                   value={field.value}
                 />
               )}
