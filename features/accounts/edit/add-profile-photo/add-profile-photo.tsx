@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 
 import { AddPhoto } from '@/features/addPhoto/addPhoto';
-import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button } from '@/shared/ui';
 import Image from 'next/image';
 
 import style from './add-profile-photo.module.scss';

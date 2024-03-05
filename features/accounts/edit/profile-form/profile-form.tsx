@@ -6,7 +6,6 @@ import { ProfileFormDatePicker } from '@/features/accounts/edit/profile-form-dat
 import { useGetCitiesQuery, useGetCountriesQuery } from '@/shared/api/countries.api';
 import { useLazyGetUserProfileQuery } from '@/shared/api/user.api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { UserProfileType } from '@/shared/types/user.types';
 import { Button } from '@/shared/ui';
 import { Combobox } from '@/shared/ui/combobox';
 import { ControlledTextField } from '@/shared/ui/controlled';

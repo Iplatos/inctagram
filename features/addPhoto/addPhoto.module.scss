@@ -1,5 +1,3 @@
-
-
 .photoPlaceHolder {
   position: relative;
 
@@ -17,6 +15,7 @@
 }
 
 .addPhotoCard {
+  z-index: 1000;
   width: 492px;
   height: 564px;
 }
