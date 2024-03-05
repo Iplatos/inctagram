@@ -7,6 +7,8 @@ import { showErrorMessage, showPreViewAvatar } from '@/features/addPhoto/addPhot
 import { Modal } from '@/features/modal';
 import { useUploadPhotoMutation } from '@/shared/api/auth.service';
 import { useAppSelector } from '@/shared/api/store';
+import { useTranslation } from '@/shared/hooks/useTranslation';
+import { Button } from '@/shared/ui';
 import { Alerts } from '@/shared/ui/alerts/Alerts';
 import { Typography } from '@/shared/ui/typography';
 import { Trans } from '@/widgets/Trans/Trans';
@@ -64,11 +66,14 @@ export const AddPhoto = () => {
     setPos(position);
   };
 
+  const { addProfilePhoto: t } = useTranslation().t.generalInformation;
+
   return (
     <div>
-      <button onClick={() => setOpen(true)} style={{ width: '200px' }}>
-        add
-      </button>
+      <Button onClick={handleModalOpened} variant={'tertiary'}>
+        {t.submitButton}
+      </Button>
+
       <Modal
         className={s.addPhotoCard}
         onClose={handleModalClosed}

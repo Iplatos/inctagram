@@ -1,16 +1,18 @@
+
+
 .photoPlaceHolder {
+  position: relative;
+
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: 222px;
   height: 228px;
+  margin: 50px auto;
+
   background-color: var(--color-dark-500);
-  margin-top: 50px;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50px;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  justify-content: center;
 
 }
 
@@ -20,18 +22,18 @@
 }
 
 .photoPlaceHolderWithAvatar {
+  position: relative;
+
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: 332px;
   height: 340px;
+  margin: 0 auto;
+
   background-color: var(--color-dark-500);
-  margin-top: 0;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 0px;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  justify-content: center;
 
 }
 

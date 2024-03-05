@@ -4,13 +4,9 @@ import { Controller, SubmitErrorHandler, SubmitHandler, useForm } from 'react-ho
 import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
 import { ProfileFormDatePicker } from '@/features/accounts/edit/profile-form-date-picker/ProfileFormDatePicker';
 import { useGetCitiesQuery, useGetCountriesQuery } from '@/shared/api/countries.api';
-import {
-  useGetUserProfileQuery,
-  useLazyGetUserProfileQuery,
-  useUpdateProfileMutation,
-} from '@/shared/api/user.api';
+import { useLazyGetUserProfileQuery } from '@/shared/api/user.api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { UpdateProfileType, UserProfileType } from '@/shared/types/user.types';
+import { UserProfileType } from '@/shared/types/user.types';
 import { Button } from '@/shared/ui';
 import { Combobox } from '@/shared/ui/combobox';
 import { ControlledTextField } from '@/shared/ui/controlled';
@@ -20,8 +16,6 @@ import { skipToken } from '@reduxjs/toolkit/query';
 import { z } from 'zod';
 
 import style from './profile-form.module.scss';
-
-import { OptionsType } from './pofile-form-types';
 
 export type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
 
@@ -38,13 +32,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
   } = useTranslation();
   const schema = useProfileFormSchema();
 
-  const {
-    control,
-    formState: { isValid },
-    handleSubmit,
-    resetField,
-    watch,
-  } = useForm<FormValues>({
+  const { control, handleSubmit, resetField, watch } = useForm<FormValues>({
     defaultValues: async () => {
       const { data } = await trigger();
 
@@ -64,8 +52,6 @@ export const ProfileForm = (props: ProfileFormProps) => {
         'userName',
       ];
 
-      type FilteredUserKeys = Exclude<keyof UserProfileType, 'photos'>;
-
       return formFields.reduce((defaultValue, field) => {
         if (field === 'dateOfBirth') {
           defaultValue[field] = mappedData?.[field]?.length
@@ -81,17 +67,6 @@ export const ProfileForm = (props: ProfileFormProps) => {
     mode: 'onTouched',
     resolver: zodResolver(schema),
   });
-
-  // useEffect(() => {
-  //   setUser(profileData);
-  //   reset({
-  //     ...profileData,
-  //     dateOfBirth: profileData.dateOfBirth
-  //       ? new Date(Date.parse(profileData.dateOfBirth))
-  //       : new Date(),
-  //     userName: profileData.userId,
-  //   });
-  // }, [reset, profileData]);
 
   const [inputValue, setInputValue] = useState('');
 
