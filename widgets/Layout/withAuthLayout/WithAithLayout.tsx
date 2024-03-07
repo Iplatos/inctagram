@@ -4,6 +4,8 @@ import { Layout } from '@/widgets/Layout/Layout';
 import { Sidebar } from '@/widgets/sidebar';
 import { NextPage } from 'next';
 
+import s from './WithAuthLayout.module.scss';
+
 export const WithAuthLayout: NextPage<PropsWithChildren> = props => {
   const { children } = props;
 
@@ -11,7 +13,7 @@ export const WithAuthLayout: NextPage<PropsWithChildren> = props => {
     <>
       <Layout>
         <Sidebar />
-        {children}
+        <div className={s.WithAuthLayout}>{children}</div>
       </Layout>
     </>
   );
