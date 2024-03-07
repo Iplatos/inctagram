@@ -2,13 +2,8 @@ import { PropsWithChildren, ReactElement } from 'react';
 import { Provider } from 'react-redux';
 
 import { store } from '@/shared/api/store';
-import { NavBar } from '@/widgets/NavBar/NavBar';
 import { Header } from '@/widgets/header';
 import { NextPage } from 'next';
-
-import { Sidebar } from '../sidebar';
-
-import style from './Layout.module.scss';
 
 export const Layout: NextPage<PropsWithChildren> = props => {
   const { children } = props;
@@ -18,8 +13,8 @@ export const Layout: NextPage<PropsWithChildren> = props => {
       <Provider store={store}>
         <Header />
         <main>
-          <Sidebar />
-          <NavBar />
+          {/* <Sidebar />
+          <NavBar />*/}
           {children}
         </main>
       </Provider>
