@@ -7,7 +7,7 @@ import { baseApi, setTokenToLocalStorage } from '@/shared/api/base-api';
 import { useAppSelector } from '@/shared/api/store';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button';
-import { Typography } from '@/shared/ui/typography';
+import { Typography } from '@/shared/ui/typography/typography';
 import { Trans } from '@/widgets/Trans/Trans';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
 import HomeOutline from 'assets/icons/home-outline.svg';
@@ -45,9 +45,9 @@ export const Sidebar = () => {
     router.push('/signIn');
   };
 
-  if (!meData) {
-    return;
-  }
+  /*  if (!meData) {
+      return;
+    }*/
 
   return (
     <div className={s.sidebarContainer}>
@@ -97,7 +97,7 @@ export const Sidebar = () => {
               tags={{
                 '1': () => <b>{`${meData.email}`}</b>,
               }}
-              text={t.logOut.reallyWantToLogOut + ` ${meData.email}?`}
+              text={t.logOut.reallyWantToLogOut + ' ${meData.email}?'}
             />
           </Typography.Regular16>
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 25 }}>
@@ -115,3 +115,5 @@ export const Sidebar = () => {
     </div>
   );
 };
+
+//TODO: maybe we should use state for the hundredth line?

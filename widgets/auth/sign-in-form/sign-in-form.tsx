@@ -47,10 +47,6 @@ export const SignInForm = () => {
     resolver: zodResolver(signInSchema),
   });
 
-  if (isMeLoading) {
-    return <div>hello</div>;
-  }
-
   if (loginData) {
     setTokenToLocalStorage(loginData.accessToken);
     router.push(`/`);
@@ -58,7 +54,6 @@ export const SignInForm = () => {
   if (meData && !meError) {
     router.push(`/`);
   }
-  console.log(meData);
 
   return (
     /* eslint-disable */

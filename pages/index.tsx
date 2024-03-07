@@ -5,7 +5,7 @@ import { AddPhoto } from '@/features/addPhoto/addPhoto';
 import { useGetMeQuery } from '@/shared/api/auth.service';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
+import { getWithAuthLayout } from '@/widgets/Layout/BaseLayout/BaseLayout';
 import { useRouter } from 'next/navigation';
 
 function Home() {
@@ -36,6 +36,7 @@ function Home() {
       */}
       <div style={{ marginLeft: '300px' }}>
         <AddPhoto />
+        asd
         <DatePickerContainer />
       </div>
       {/*  <div>
@@ -49,5 +50,5 @@ function Home() {
   );
 }
 
-Home.getLayout = getLayout;
+Home.getLayout = getWithAuthLayout;
 export default Home;
