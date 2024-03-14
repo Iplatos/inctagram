@@ -30,6 +30,8 @@ export const Sidebar = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  console.log(meData);
+
   function handleModalClosed() {
     setOpen(false);
   }
@@ -97,7 +99,7 @@ export const Sidebar = () => {
               tags={{
                 '1': () => <b>{`${meData.email}`}</b>,
               }}
-              text={t.logOut.reallyWantToLogOut + ' ${meData.email}?'}
+              text={`${t.logOut.reallyWantToLogOut}` + ' ' + `${meData.email}`}
             />
           </Typography.Regular16>
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 25 }}>

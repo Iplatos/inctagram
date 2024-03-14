@@ -1,20 +1,20 @@
 import { PropsWithChildren, ReactElement } from 'react';
 
-import { Layout } from '@/widgets/Layout/Layout';
+import { CommonLayout } from '@/widgets/Layout/Layout';
 import { Sidebar } from '@/widgets/sidebar';
 import { NextPage } from 'next';
 
-import s from './WithAuthLayout.module.scss';
+import s from 'widgets/withAuthLayout/WithAuthLayout.module.scss';
 
 export const WithAuthLayout: NextPage<PropsWithChildren> = props => {
   const { children } = props;
 
   return (
     <>
-      <Layout>
+      <CommonLayout>
         <Sidebar />
-        <div className={s.WithAuthLayout}>{children}</div>
-      </Layout>
+        <div className={s.contentWrapper}>{children}</div>
+      </CommonLayout>
     </>
   );
 };

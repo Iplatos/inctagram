@@ -1,6 +1,6 @@
 import React, { ComponentProps, ReactNode } from 'react';
 
-import { Typography } from '@/shared/ui/typography/typography';
+import { Typography } from '@/shared/ui/typography';
 import {
   Dialog,
   DialogClose,
