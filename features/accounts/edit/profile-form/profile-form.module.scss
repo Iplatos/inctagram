@@ -18,7 +18,7 @@
 }
 
 .select {
-  z-index: 100;
+  z-index: get-z-index(form);
   width: 50%;
 }
 

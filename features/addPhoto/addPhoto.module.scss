@@ -15,7 +15,7 @@
 }
 
 .addPhotoCard {
-  z-index: 1000;
+  z-index: get-z-index(modal);
   width: 492px;
   height: 564px;
 }

@@ -1,0 +1,8 @@
+$z-index: (
+  "form": 100,
+  "modal": 1000; 
+);
+
+@function get-z-index($key) {
+  @return map-get($z-index, $key);
+}
