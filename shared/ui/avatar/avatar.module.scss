@@ -52,3 +52,9 @@
 
   background-color: var(--color-dark-500);
 }
+
+.fallback > svg {
+  aspect-ratio: 1;
+  width: max(1.5rem, 50%);
+  height: auto;
+}

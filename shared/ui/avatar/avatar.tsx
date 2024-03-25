@@ -18,6 +18,7 @@ type OwnProps = {
   fallback?: ReactNode;
   fallbackDelayMs?: number;
   size?: AvatarSize;
+  src?: StaticImport | string;
 };
 
 export type AvatarProps = OwnProps & Omit<NextImageProps, 'className' | keyof OwnProps>;
@@ -36,7 +37,7 @@ export const Avatar: FC<AvatarProps> = ({
   return (
     <AvatarRadix.Root className={cls.avatarRoot}>
       <AvatarRadix.Image alt={alt} asChild src={resolveImageSrcToString(src)}>
-        <Image alt={alt} className={cls.image} src={src} {...props} />
+        {src && <Image alt={alt} className={cls.image} src={src} {...props} />}
       </AvatarRadix.Image>
       <AvatarRadix.Fallback className={cls.fallback} delayMs={fallbackDelayMs}>
         {fallback}
@@ -46,7 +47,7 @@ export const Avatar: FC<AvatarProps> = ({
 };
 
 // NextImage 'src' prop type is 'StaticImport', which is not applicable for AvatarRadix.Image
-const resolveImageSrcToString = (src: StaticImport | string): string => {
+const resolveImageSrcToString = (src?: StaticImport | string) => {
   const isStaticImportObject = typeof src === 'object';
   const isStaticRequire = isStaticImportObject && 'default' in src;
 

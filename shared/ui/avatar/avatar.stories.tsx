@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import UserPhotoFallbackIcon from '@/assets/icons/account-photo.svg?url';
+import { AvatarFallback } from '@/assets/icons/avatar-fallback';
 import UserAvatar from '@/assets/img/mock-user-avatar.jpg';
 import { Meta, StoryObj } from '@storybook/react';
-import Image from 'next/image';
 
 import { Avatar, AvatarProps } from './avatar';
 
@@ -44,24 +43,22 @@ const CustomRender = ({ delayMs, imageType, src, ...args }: AvatarPropsAndCustom
   const [url, setUrl] = useState('');
 
   useEffect(() => {
+    if (imageType === 'static') {
+      return;
+    }
+
     wait(delayMs)
       .then(() => fetch('https://jsonplaceholder.typicode.com/albums/1/photos?id=1'))
       .then(response => response.json())
       .then(json => setUrl(json[0].url));
-  }, [delayMs]);
+  }, [delayMs, imageType]);
 
   return <Avatar fill src={imageType === 'static' ? src : url} {...args} />;
 };
 
 export const StaticImage: Story = {
   args: {
-    fallback: (
-      <Image
-        alt={'avatar fallback'}
-        src={UserPhotoFallbackIcon}
-        style={{ height: '50%', width: '50%' }}
-      />
-    ),
+    fallback: <AvatarFallback />,
     imageType: 'static',
     src: UserAvatar,
   },
