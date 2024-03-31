@@ -237,7 +237,7 @@ export const en: LocaleType = {
   },
 
   logOut: {
-    reallyWantToLogOut: 'Are you really want to log out of your account',
+    reallyWantToLogOut: 'Are you really want to log out of your account <email></email>',
   },
   navbar: {
     forgotPassword: 'Forgot Password',

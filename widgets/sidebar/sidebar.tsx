@@ -25,7 +25,9 @@ export const Sidebar = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [logout] = useLogoutMutation();
   const { isLoggedIn } = useAppSelector(state => state.auth);
-  const { data: meData } = useGetMeQuery();
+  const { email } = useGetMeQuery(undefined, {
+    selectFromResult: res => ({ email: res.data?.email ?? '' }),
+  });
   const { t } = useTranslation();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -44,10 +46,6 @@ export const Sidebar = () => {
     dispatch(baseApi.util.resetApiState());
     router.push('/signIn');
   };
-
-  if (!meData) {
-    return;
-  }
 
   return (
     <div className={s.sidebarContainer}>
@@ -95,9 +93,9 @@ export const Sidebar = () => {
           <Typography.Regular16>
             <Trans
               tags={{
-                '1': () => <b>{`${meData.email}`}</b>,
+                email: () => <Typography.Bold16>&quot;{email} &quot;</Typography.Bold16>,
               }}
-              text={t.logOut.reallyWantToLogOut + ` ${meData.email}?`}
+              text={t.logOut.reallyWantToLogOut}
             />
           </Typography.Regular16>
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 25 }}>

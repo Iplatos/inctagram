@@ -236,7 +236,7 @@ export const ru = {
   },
 
   logOut: {
-    reallyWantToLogOut: 'Вы действительно хотите выйти из аккаунта',
+    reallyWantToLogOut: 'Вы действительно хотите выйти из аккаунта <email></email>',
   },
   navbar: {
     forgotPassword: 'Забыл пароль',
