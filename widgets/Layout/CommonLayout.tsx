@@ -6,14 +6,18 @@ import { NavBar } from '@/widgets/NavBar/NavBar';
 import { Header } from '@/widgets/header';
 import { NextPage } from 'next';
 
-export const AuthLayout: NextPage<PropsWithChildren> = props => {
+import { Sidebar } from '../sidebar';
+
+export const CommonLayout: NextPage<PropsWithChildren> = props => {
   const { children } = props;
 
   return (
     <Provider store={store}>
       <Header />
+
       <main>
         <NavBar />
+        <Sidebar />
         {children}
       </main>
     </Provider>

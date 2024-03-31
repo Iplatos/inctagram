@@ -1,18 +1,17 @@
-import React from 'react';
-
 import { ProfileForm } from '@/features/accounts/edit';
 import { useGetMeQuery } from '@/shared/api/auth.service';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
+import { CommonLayout } from '@/widgets/Layout/CommonLayout';
 import { useRouter } from 'next/navigation';
 
-function Home() {
+import { NextPageWithLayout } from './_app';
+
+const Home: NextPageWithLayout = () => {
   const { t } = useTranslation();
   const { data: meData, error: meError, isLoading: isMeLoading } = useGetMeQuery();
   const router = useRouter();
 
-  console.log(meData);
   if (meError) {
     if ('status' in meError) {
       meError.status === 401 && router.push('/signIn');
@@ -30,7 +29,7 @@ function Home() {
       </div>
     </>
   );
-}
+};
 
-Home.getLayout = getLayout;
+Home.getLayout = page => <CommonLayout>{page}</CommonLayout>;
 export default Home;
