@@ -1,17 +1,17 @@
-import React from 'react';
-
+import { AuthLayout } from '@/widgets/AuthLayout/AuthLayout';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
 import { SignInForm } from '@/widgets/auth/sign-in-form/sign-in-form';
 
-function LogIn() {
+import { NextPageWithLayout } from '../_app';
+
+const LogIn: NextPageWithLayout = () => {
   return (
     <>
       <HeadMeta title={'Sign in'} />
       <SignInForm />
     </>
   );
-}
+};
 
-LogIn.getLayout = getLayout;
+LogIn.getLayout = page => <AuthLayout>{page}</AuthLayout>;
 export default LogIn;

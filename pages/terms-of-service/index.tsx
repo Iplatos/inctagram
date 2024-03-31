@@ -1,17 +1,17 @@
-import React from 'react';
-
 import { AgreementContent } from '@/entities';
+import { AuthLayout } from '@/widgets/AuthLayout/AuthLayout';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
 
-function TermsOfService() {
+import { NextPageWithLayout } from '../_app';
+
+const TermsOfService: NextPageWithLayout = () => {
   return (
     <>
       <HeadMeta title={'Terms of Service'} />
       <AgreementContent termsOfService />
     </>
   );
-}
+};
 
-TermsOfService.getLayout = getLayout;
+TermsOfService.getLayout = page => <AuthLayout>{page}</AuthLayout>;
 export default TermsOfService;
