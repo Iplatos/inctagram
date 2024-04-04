@@ -1,27 +1,26 @@
-@mixin button {
-  all: unset;
+@use '../../../styles/helpers' as *;
+@use '../../../styles/mixins' as *;
+
+%button {
+  @include flex;
 
   cursor: pointer;
   user-select: none;
 
   display: inline-flex;
-  flex-shrink: 0;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
+  gap: em(10);
 
-  box-sizing: border-box;
-  padding: 6px 24px 6px 24px;
+  height: em(36);
+  padding-inline: em(24);
 
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
-  text-align: center;
-  text-decoration: none;
+  font-weight: var(--font-weight-bold);
+  text-transform: capitalize;
 
-  background-color: transparent;
-  border: none;
   border-radius: 2px;
+
+  &:focus {
+    outline: none;
+  }
 
   &:focus-visible {
     outline: 2px solid var(--color-accent-700);
@@ -31,14 +30,10 @@
     cursor: default;
     opacity: 0.5;
   }
-  &.fullWidth {
-    justify-content: center;
-    width: 100%;
-  }
 }
 
 .primary {
-  @include button;
+  @extend %button;
 
   color: var(--color-light-100);
   background-color: var(--color-accent-500);
@@ -53,7 +48,7 @@
 }
 
 .secondary {
-  @include button;
+  @extend %button;
 
   color: var(--color-light-100);
   background-color: var(--color-dark-300);
@@ -67,31 +62,19 @@
   }
 
   &:active:enabled {
-    background-color: var(--color-dark-500);
+    background-color: var(--color-dark-400);
   }
 }
 
 .tertiary {
-  @include button;
+  @extend %button;
+  @extend .text;
 
-  color: var(--color-accent-500);
-  border: 1px solid var(--color-accent-500);
-
-  &:hover:enabled {
-    color: var(--color-accent-100);
-    border: 1px solid var(--color-accent-100);
-  }
-
-  &:active:enabled {
-    color: var(--color-accent-700);
-    border: 1px solid var(--color-accent-700);
-  }
+  border: 1px solid currentcolor;
 }
 
 .text {
-  @include button;
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-m);
+  @extend %button;
 
   color: var(--color-accent-500);
 
@@ -102,4 +85,8 @@
   &:active:enabled {
     color: var(--color-accent-700);
   }
+}
+
+.fullWidth {
+  width: 100%;
 }

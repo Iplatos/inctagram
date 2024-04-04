@@ -5,16 +5,18 @@ const EMPTY_LINE = 'at-rule-empty-line-before';
 
 const finalConfig = {
   extends: '@it-incubator/stylelint-config',
-  rules: {},
+  rules: {
+    'scss/at-extend-no-missing-placeholder': null,
+    'scss/percent-placeholder-pattern': [
+      '^(-?[a-z][a-z0-9]*)((-[a-z0-9]+)|([a-zA-Z0-9]+))*$',
+      {
+        message: 'Expected placeholder to be either kebab-case or lowerCamelCase',
+      },
+    ],
+  },
 };
 
-const rules = Object.keys(config?.rules ?? {}).reduce((acc, key) => {
-  if ([ORDER, EMPTY_LINE].includes(key)) {
-    acc[key] = config.rules[key];
-  }
-
-  return acc;
-}, {});
+const rules = config?.rules ?? {};
 
 if (rules[ORDER]) {
   let [primaryOptions, secondaryOptions = {}] = rules[ORDER];
@@ -38,11 +40,9 @@ if (rules[ORDER]) {
 if (rules[EMPTY_LINE]) {
   const rule = Array.isArray(rules[EMPTY_LINE]) ? [...rules[EMPTY_LINE]] : [rules[EMPTY_LINE]];
 
-  const secondaryOptions = rule[1]
+  rule[1] = rule[1]
     ? { ...rule[1], ignoreAtRules: [...(rule[1]?.ignoreAtRules ?? []), 'else if', 'else'] }
     : { ignoreAtRules: ['else if', 'else'] };
-
-  rule[1] = secondaryOptions;
 
   finalConfig.rules[EMPTY_LINE] = rule;
 }
