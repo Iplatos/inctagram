@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import FlagRu from '../../../assets/icons/flag-ru.svg';
-import FlagEn from '../../../assets/icons/flag-uk.svg';
-import { SelectBox } from './SelectBox';
+import FlagRu from '../../../assets/icons/flag-ru.svg?url';
+import FlagEn from '../../../assets/icons/flag-uk.svg?url';
+import { SelectBox, SelectBoxOption } from './SelectBox';
 
 const mockedPlaceHolder = 'A placeholder';
-const mockedOptions = [
+const mockedOptions: SelectBoxOption[] = [
   { image: FlagEn, label: 'text111', value: '1111' },
   { image: FlagRu, label: 'text222', value: '2222' },
   { label: 'text333', value: '3333' },
