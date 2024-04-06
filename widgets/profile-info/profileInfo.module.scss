@@ -1,0 +1,148 @@
+@use '../../styles/helpers' as *;
+@use '../../styles/mixins' as *;
+@use 'sass:math';
+@use 'sass:meta';
+
+.container {
+  $adaptive-avatar-width: get-adaptive-size(
+    $min-size: 72,
+    $max-size: 204,
+    $min-device-size: get-breakpoint('mobile-m'),
+    $max-device-size: get-breakpoint('tablet-l'),
+    $unit: 1px,
+  );
+
+  // allow the avatar to shrink on devices with a width <= 360 to clear space for the summary block
+  $avatar-min-size: min(72px, 20vw);
+
+  display: grid;
+
+  // prettier-ignore -- keep the grid areas in a readable order
+  grid-template-areas:
+    'ava head'
+    'ava stat'
+    'ava me';
+
+  // stylelint-disable declaration-block-no-redundant-longhand-properties -- separate row and column properties to maintain readability
+  grid-template-columns: clamp($avatar-min-size, $adaptive-avatar-width, 204px) auto;
+  grid-template-rows: auto auto 1fr;
+  gap: em(20) em(38);
+
+  .statsGroup {
+    grid-area: stat;
+    min-width: fit-content;
+    max-width: 60%;
+
+    @include media-breakpoint('tablet-s') {
+      max-width: 80%;
+    }
+
+    @include media-breakpoint('mobile-l') {
+      gap: em(8);
+      justify-content: space-evenly;
+      max-width: none;
+    }
+  }
+
+  .statsItem {
+    @include media-breakpoint('mobile-l') {
+      flex-grow: 0;
+      gap: normal;
+      align-items: center;
+
+      &Name,
+      &Value {
+        font-size: var(--font-size-xs);
+      }
+    }
+  }
+
+  @include media-breakpoint('tablet-s') {
+    // prettier-ignore -- keep the grid areas in a readable order
+    grid-template-areas:
+      'ava  stat'
+      'head head'
+      'me   me';
+    align-items: center;
+  }
+
+  @include media-breakpoint('mobile-l') {
+    column-gap: 0;
+  }
+}
+
+.avatar {
+  grid-area: ava;
+  align-self: start;
+
+  aspect-ratio: 1;
+  width: 100%;
+  height: auto;
+}
+
+.header {
+  @include flex($justify: null, $wrap: wrap);
+
+  grid-area: head;
+  gap: em(12);
+
+  @include media-breakpoint('tablet-m') {
+    flex-direction: column;
+    align-items: normal;
+  }
+
+  @include media-breakpoint('mobile-l') {
+    width: auto;
+  }
+}
+
+.userName {
+  overflow: hidden;
+
+  max-width: 20ch;
+  margin-right: auto;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @include media-breakpoint('tablet-s') {
+    margin-top: em(8) * -1;
+    margin-bottom: em(6);
+  }
+
+  @include media-breakpoint('mobile-l') {
+    // TODO: add _typography helper file with all placeholder-classes or arbitrary typography classes
+    font-size: var(--font-size-m);
+    line-height: var(--line-height-m);
+  }
+}
+
+.about {
+  grid-area: me;
+  color: var(--color-light-500);
+}
+
+.actionsGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: em(12);
+
+  @include media-breakpoint('mobile-l') {
+    flex-direction: column;
+  }
+}
+
+.actionWrapper {
+  min-width: max-content;
+  max-width: 50%;
+  min-height: em(36);
+
+  @include media-breakpoint('tablet-m') {
+    flex: 1 1 0;
+  }
+
+  @include media-breakpoint('mobile-l') {
+    flex-basis: em(48);
+    max-width: none;
+  }
+}
