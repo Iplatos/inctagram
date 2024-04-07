@@ -3,6 +3,8 @@ import type { AppProps } from 'next/app';
 
 import type { ReactElement, ReactNode } from 'react';
 
+import { useLoader } from '@/features/hooks/progressLoader/useLoader';
+
 import '../styles/index.scss';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
@@ -20,6 +22,8 @@ type AppPropsWithLayout = AppProps & {
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? (page => page);
+
+  useLoader();
 
   return getLayout(<Component {...pageProps} />);
 }

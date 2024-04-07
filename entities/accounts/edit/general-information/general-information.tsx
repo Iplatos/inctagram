@@ -4,8 +4,13 @@ import { DateObject } from 'react-multi-date-picker';
 
 import { AddProfilePhoto } from '@/features/accounts/edit';
 import { FormValues, ProfileForm } from '@/features/accounts/edit/profile-form/profile-form';
+import { Loader } from '@/features/hooks/loader/loader';
 import { useGetMeQuery } from '@/shared/api/auth.service';
-import { useGetUserProfileQuery, useUpdateProfileMutation } from '@/shared/api/user.api';
+import {
+  useGetUserProfileQuery,
+  useLazyGetUserProfileQuery,
+  useUpdateProfileMutation,
+} from '@/shared/api/user.api';
 import { UpdateProfileType } from '@/shared/types/user.types';
 
 import style from './general-information.module.scss';
@@ -26,6 +31,11 @@ export const GeneralInformation = () => {
 
   const onSubmitError: SubmitErrorHandler<FormValues> = data => {};
 
+  const { data, isLoading } = useGetUserProfileQuery();
+
+  // if (isLoading) {
+  //   return <Loader />;
+  // } else {
   return (
     <>
       <div className={style.container}>
@@ -36,3 +46,4 @@ export const GeneralInformation = () => {
     </>
   );
 };
+// };

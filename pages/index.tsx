@@ -15,15 +15,15 @@ function Home() {
   const { data: meData, error: meError, isLoading: isMeLoading } = useGetMeQuery();
   const router = useRouter();
 
-  console.log(meData);
-  if (meError) {
-    if ('status' in meError) {
-      meError.status === 401 && router.push('/signIn');
-    }
-  }
-  if (isMeLoading) {
-    return <div>hello</div>;
-  }
+  // console.log(meData);
+  // if (meError) {
+  //   if ('status' in meError) {
+  //     meError.status === 401 && router.push('/signIn');
+  //   }
+  // }
+  // if (isMeLoading) {
+  //   return <div>hello</div>;
+  // }
 
   return (
     <>

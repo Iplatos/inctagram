@@ -1,4 +1,4 @@
-import { UserProfileType } from "@/shared/types/user.types";
+import { UserProfileType } from '@/shared/types/user.types';
 
 export type CountriesApiResponse<T> = {
   data: T;
