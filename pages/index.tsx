@@ -24,9 +24,6 @@ const Home: NextPageWithLayout = () => {
   return (
     <>
       <HeadMeta title={'main'} />
-      <div style={{ marginLeft: '300px' }}>
-        <ProfileForm />
-      </div>
     </>
   );
 };

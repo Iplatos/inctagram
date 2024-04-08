@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { log } from 'console';
+
 import {
   AccountManagement,
   Devices,
@@ -7,6 +9,7 @@ import {
   MyPayments,
 } from '@/entities/accounts/edit';
 import { TabContent, Tabs } from '@/shared/ui';
+import Link from 'next/link';
 
 import style from './edit-profile.module.scss';
 
@@ -16,6 +19,7 @@ export const EditProfile = () => {
       <Tabs
         defaultValue={'general information'}
         fullWidth
+        onValueChange={() => console.log("tab")}
         tabs={[
           {
             title: 'General information',

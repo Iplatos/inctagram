@@ -1,6 +1,7 @@
 import { FC, ReactNode } from 'react';
 
 import * as TabsRadix from '@radix-ui/react-tabs';
+import Link from 'next/link';
 
 import style from './tabs.module.scss';
 
@@ -45,15 +46,16 @@ export const Tabs = (props: TabsProps) => {
     >
       <TabsRadix.List className={style.list}>
         {tabs.map(tab => (
-          <TabsRadix.Trigger
-            className={`${style.trigger} ${fullWidth && style.fullWidth} `}
-            disabled={tab.disabled}
-            key={tab.value}
-            tabIndex={1}
-            value={tab.value}
-          >
-            {tab.title}
-          </TabsRadix.Trigger>
+          <Link href={`/$settings/{tab.value}`} key={tab.value}>
+            <TabsRadix.Trigger
+              className={`${style.trigger} ${fullWidth && style.fullWidth} `}
+              disabled={tab.disabled}
+              tabIndex={1}
+              value={tab.value}
+            >
+              {tab.title}
+            </TabsRadix.Trigger>
+          </Link>
         ))}
       </TabsRadix.List>
       {children}
