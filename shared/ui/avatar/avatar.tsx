@@ -1,6 +1,7 @@
 import { FC, ReactNode } from 'react';
 
 import { capitalise } from '@/shared/helpers/capitalise';
+import { resolveImageSrcToString } from '@/shared/helpers/resolveImageSrcToString';
 import * as AvatarRadix from '@radix-ui/react-avatar';
 import { clsx } from 'clsx';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
@@ -44,21 +45,6 @@ export const Avatar: FC<AvatarProps> = ({
       </AvatarRadix.Fallback>
     </AvatarRadix.Root>
   );
-};
-
-// NextImage 'src' prop type is 'StaticImport', which is not applicable for AvatarRadix.Image
-const resolveImageSrcToString = (src?: StaticImport | string) => {
-  const isStaticImportObject = typeof src === 'object';
-  const isStaticRequire = isStaticImportObject && 'default' in src;
-
-  if (isStaticRequire) {
-    return src.default.src;
-  }
-  if (isStaticImportObject) {
-    return src.src;
-  }
-
-  return src;
 };
 
 const getClassNames = (classes: AvatarClasses, size: AvatarSize): AvatarClasses => ({
