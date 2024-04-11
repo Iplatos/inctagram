@@ -11,7 +11,7 @@ import s from './profileInfo.module.scss';
 export type UserProfileProps = {
   aboutMe: string;
   avatarSrc?: StaticImport | string;
-  primaryAction: ReactElement;
+  primaryAction?: ReactElement;
   secondaryAction?: ReactElement;
   statistics: ProfileSummaryItem[];
   userName: string;
@@ -35,7 +35,7 @@ export const ProfileInfo: FC<UserProfileProps> = ({
     <div className={s.header}>
       <Typography.H2 className={s.userName}>{userName}</Typography.H2>
       <div className={s.actionsGroup}>
-        <div className={s.actionWrapper}>{primaryAction}</div>
+        {primaryAction && <div className={s.actionWrapper}>{primaryAction}</div>}
         {secondaryAction && <div className={s.actionWrapper}>{secondaryAction}</div>}
       </div>
     </div>

@@ -39,7 +39,7 @@ const getButtonsByActionCategory = (category: 'primary' | 'secondary'): ButtonsM
     {} as ButtonsMap
   );
 
-const primaryButtons = getButtonsByActionCategory('primary');
+const primaryButtons = { ...getButtonsByActionCategory('primary'), none: undefined };
 const secondaryButtons = { ...getButtonsByActionCategory('secondary'), none: undefined };
 
 type CustomStatisticItem = Omit<ProfileSummaryItem, 'action'> & { action?: boolean };
@@ -85,7 +85,9 @@ const meta = {
       description: `Used for basic contextual interaction with user profile.
         One of 2 possible interactions for this widget. If you need to place more than 2 actions in the widget,
         consider using a select-like component in place of \`PrimaryAction\` or placing the main action as
-        \`PrimaryAction\` and additional actions inside the select-like component as \`SecondaryAction\`.`,
+        \`PrimaryAction\` and additional actions inside the select-like component as \`SecondaryAction\`.\t
+        An action has a wrapper with explicit size settings. To match these settings, set
+        \`{ width: 100%; height: 100%; }\` css rule to the passed react element.`,
       mapping: primaryButtons,
       options: Object.keys(primaryButtons),
       table: { type: { summary: 'ReactElement' } },
@@ -94,7 +96,7 @@ const meta = {
     },
 
     secondaryAction: {
-      description: `Same as \`PrimaryAction\`, but optional.`,
+      description: `Same as \`PrimaryAction\`.`,
       mapping: secondaryButtons,
       options: Object.keys(secondaryButtons),
       table: { type: { summary: 'ReactNode' } },
