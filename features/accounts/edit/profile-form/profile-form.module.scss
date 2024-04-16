@@ -1,14 +1,13 @@
 .formContainer {
   width: 100%;
-//   background-color: pink;
+  padding-bottom: 23px;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  width: 100%;
   gap: 24px;
-//   background-color: red;
+  width: 100%;
 }
 
 .selectBlock {
@@ -19,6 +18,16 @@
 }
 
 .select {
+  z-index: get-z-index(form);
   width: 50%;
-  z-index: 1111;
+}
+
+.saveButton {
+  display: block;
+  margin-top: 24px;
+  margin-left: auto;
+}
+
+.separator {
+  border: 1px solid var(--color-dark-300);
 }

@@ -7,6 +7,8 @@ import { showErrorMessage, showPreViewAvatar } from '@/features/addPhoto/addPhot
 import { Modal } from '@/features/modal';
 import { useUploadPhotoMutation } from '@/shared/api/auth.service';
 import { useAppSelector } from '@/shared/api/store';
+import { useTranslation } from '@/shared/hooks/useTranslation';
+import { Button } from '@/shared/ui';
 import { Alerts } from '@/shared/ui/alerts/Alerts';
 import { Typography } from '@/shared/ui/typography';
 import { Trans } from '@/widgets/Trans/Trans';
@@ -27,6 +29,7 @@ export const AddPhoto = () => {
   const addPhoto = (photo: File) => {
     addPhotoWithParams(photo, pos, scale);
   };
+
   const addPhotoWithParams = (photo: File, pos: { x: number; y: number }, scale: number) => {
     const formData = new FormData();
 
@@ -34,14 +37,16 @@ export const AddPhoto = () => {
         formData.append('fileProps', JSON.stringify({ pos: { x: 1, y: 1 }, scale: 12 }));
     */
     formData.append('file', photo);
-    formData.append('fileProps', JSON.stringify({ pos, scale }));
-    formData.append('userId', '42cf740f-6e4e-4e0e-8541-873c2bd6ae7d');
-    formData.append('firstName', 'Jonh');
-    formData.append('familyName', 'Doe');
-    formData.append('dateOfBirth', '12.12.1999');
-    formData.append('aboutMe', 'about me any text');
+    formData.append('cropProps', JSON.stringify({ pos, scale }));
+    // formData.append('userId', '42cf740f-6e4e-4e0e-8541-873c2bd6ae7d');
+    // formData.append('firstName', 'Jonh');
+    // formData.append('familyName', 'Doe');
+    // formData.append('dateOfBirth', '12.12.1999');
+    // formData.append('aboutMe', 'about me any text');
 
     uploadPhoto(formData as unknown as any);
+
+    console.log(Object.fromEntries(formData.entries()));
   };
 
   function handleModalClosed() {
@@ -64,11 +69,14 @@ export const AddPhoto = () => {
     setPos(position);
   };
 
+  const { addProfilePhoto: t } = useTranslation().t.generalInformation;
+
   return (
     <div>
-      <button onClick={() => setOpen(true)} style={{ width: '200px' }}>
-        add
-      </button>
+      <Button onClick={handleModalOpened} variant={'tertiary'}>
+        {t.submitButton}
+      </Button>
+
       <Modal
         className={s.addPhotoCard}
         onClose={handleModalClosed}

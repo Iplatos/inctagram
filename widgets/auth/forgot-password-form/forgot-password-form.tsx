@@ -142,12 +142,10 @@ export const ForgotPasswordForm = () => {
           render={({ field }) => (
             <ReCAPTCHA
               {...field}
-              /* errors={fieldState?.error?.message}*/
               onChange={field.onChange}
               ref={recaptchaRef}
               sitekey={LOCALHOST_KEY}
               theme={'dark'}
-              /*     value={field.value}*/
             />
           )}
         />
