@@ -35,7 +35,7 @@ export const ProfileForm = (props: ProfileFormProps) => {
     defaultValues: async () => {
       const { data } = await trigger();
 
-      console.log(data);
+      // console.log(data);
 
       const mappedData = {
         ...data,

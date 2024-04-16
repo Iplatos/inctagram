@@ -36,7 +36,7 @@ export const AddPhoto = () => {
     /*
         formData.append('fileProps', JSON.stringify({ pos: { x: 1, y: 1 }, scale: 12 }));
     */
-    // formData.append('file', photo);
+    formData.append('file', photo);
     formData.append('cropProps', JSON.stringify({ pos, scale }));
     // formData.append('userId', '42cf740f-6e4e-4e0e-8541-873c2bd6ae7d');
     // formData.append('firstName', 'Jonh');
@@ -45,6 +45,8 @@ export const AddPhoto = () => {
     // formData.append('aboutMe', 'about me any text');
 
     uploadPhoto(formData as unknown as any);
+
+    console.log(Object.fromEntries(formData.entries()));
   };
 
   function handleModalClosed() {

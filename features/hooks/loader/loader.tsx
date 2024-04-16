@@ -10,7 +10,6 @@ export const Loader = () => {
       speed={2}
       viewBox={'0 0 972 600'}
       width={972}
-      //   {...props}
     >
       <circle cx={'96'} cy={'120'} r={'96'} />
       <rect height={'36'} rx={'2'} ry={'2'} width={'192'} x={'0'} y={'240'} />
