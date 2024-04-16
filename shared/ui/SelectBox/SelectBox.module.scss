@@ -1,15 +1,19 @@
 .selectTrigger {
   all: unset;
+
   cursor: pointer;
-  height: 36px;
-  width: 100%;
+
   display: inline-flex;
-  align-items: center;
   gap: 12px;
+  align-items: center;
   justify-content: space-between;
-  padding: 6px 12px 6px 12px;
-  background-color: var(--color-dark-700);
+
   box-sizing: border-box;
+  width: 100%;
+  height: 36px;
+  padding: 6px 12px;
+
+  background-color: var(--color-dark-700);
   border: solid 1px var(--color-dark-100);
   border-radius: 2px;
 
@@ -19,8 +23,8 @@
   }
 
   &:active {
-    border: var(--color-light-100) solid 1px;
     background-color: var(--color-dark-500);
+    border: var(--color-light-100) solid 1px;
   }
 
   &:focus-visible,
@@ -43,18 +47,20 @@
 .valueWrapper {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
   gap: 12px;
+  align-items: center;
+  justify-content: center;
 }
 
 .selectContent {
-  border-radius: 2px;
-  border: var(--color-light-900) solid 1px;
+  overflow: hidden;
+
   width: var(--radix-select-trigger-width);
   max-height: var(--radix-select-content-available-height);
+
   background-color: var(--color-dark-700);
-  overflow: hidden;
+  border: var(--color-light-900) solid 1px;
+  border-radius: 2px;
 
   &[data-state] {
     border: 1px solid  var(--color-light-900);
@@ -64,6 +70,7 @@
 .selectViewport {
   max-height: 108px;
 }
+
 .default {
   display: flex;
   gap: 12px;
@@ -71,10 +78,12 @@
 }
 
 .selectItem {
+  cursor: pointer;
+
   display: flex;
   gap: 12px;
   align-items: center;
-  cursor: pointer;
+
   padding: 6px 12px;
 
   &:hover {
