@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import { ProfileForm } from '@/features/accounts/edit';
-
 import { AddPhoto } from '@/features/addPhoto/addPhoto';
 import { useGetMeQuery } from '@/shared/api/auth.service';
 import { useTranslation } from '@/shared/hooks/useTranslation';
@@ -26,14 +25,10 @@ function Home() {
     return <div>hello</div>;
   }
 
-
   return (
     <>
       <HeadMeta title={'main'} />
-      <div style={{ marginLeft: '300px' }}>
-        <ProfileForm />
-
-      </div>
+      <div style={{ marginLeft: '300px' }}>{/* <EditProfile /> */}</div>
     </>
   );
 }

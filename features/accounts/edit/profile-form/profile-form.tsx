@@ -3,13 +3,11 @@ import { Controller, SubmitErrorHandler, SubmitHandler, useForm } from 'react-ho
 
 import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
 import { ProfileFormDatePicker } from '@/features/accounts/edit/profile-form-date-picker/ProfileFormDatePicker';
-import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button } from '@/shared/ui';
-import { SelectBox } from '@/shared/ui/SelectBox';
-
 import { useGetCitiesQuery, useGetCountriesQuery } from '@/shared/api/countries.api';
 import { useLazyGetUserProfileQuery } from '@/shared/api/user.api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
+import { Button } from '@/shared/ui';
+import { SelectBox } from '@/shared/ui/SelectBox';
 import { Combobox } from '@/shared/ui/combobox';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { DevTool } from '@hookform/devtools';
@@ -20,7 +18,6 @@ import { z } from 'zod';
 import style from './profile-form.module.scss';
 
 export type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
-
 
 type ProfileFormProps = {
   onSubmit: SubmitHandler<FormValues>;
@@ -34,7 +31,6 @@ export const ProfileForm = (props: ProfileFormProps) => {
     t: { generalInformation: t },
   } = useTranslation();
   const schema = useProfileFormSchema();
-
 
   const { control, handleSubmit, resetField, watch } = useForm<FormValues>({
     defaultValues: async () => {
@@ -73,7 +69,6 @@ export const ProfileForm = (props: ProfileFormProps) => {
     mode: 'onTouched',
     resolver: zodResolver(schema),
   });
-
 
   const [inputValue, setInputValue] = useState('');
 
@@ -118,7 +113,6 @@ export const ProfileForm = (props: ProfileFormProps) => {
               control={control}
               name={'country'}
               render={({ field, fieldState }) => (
-
                 <Combobox
                   {...field}
                   errorMessage={fieldState?.error?.message}
@@ -145,7 +139,6 @@ export const ProfileForm = (props: ProfileFormProps) => {
               control={control}
               name={'city'}
               render={({ field, fieldState }) => (
-
                 <Combobox
                   {...field}
                   errorMessage={fieldState?.error?.message}
@@ -168,7 +161,6 @@ export const ProfileForm = (props: ProfileFormProps) => {
           label={'About Me'}
           name={'aboutMe'}
         />
-
 
         <div className={style.separator} role={'separator'}></div>
 
