@@ -14,8 +14,8 @@ const DEFAULT_CROP_PROPS: CropProps = {
   scale: 1,
 } as const;
 
-type CroppedImageSlot = 'image' | 'viewBox';
-type CroppedImageClasses = { [P in CroppedImageSlot]?: string };
+export type CroppedImageSlot = 'image' | 'viewBox';
+export type CroppedImageClasses = { [P in CroppedImageSlot]?: string };
 
 // TODO: move the validation schema and `cropProps` type to separate files which can be used as a single source of truth
 
@@ -32,7 +32,7 @@ export type CropProps = {
   scale: number;
 };
 
-export type CroppedImageProps = ImageProps & {
+export type CroppedImageProps = Omit<ImageProps, 'className'> & {
   classes?: CroppedImageClasses;
 } & Partial<CropProps>;
 
@@ -74,6 +74,7 @@ export const CroppedImage: FC<CroppedImageProps> = ({
   const scalingBoxOffsetX = getScalingBoxOffset(offsetX, scale) * -1;
   const scalingBoxOffsetY = getScalingBoxOffset(offsetY, scale) * -1;
   const scalingBoxStyle: CSSProperties = {
+    display: 'block',
     height: toCSSPercentage(scale),
     position: 'relative',
     translate: toCSSPercentage(scalingBoxOffsetX, scalingBoxOffsetY),
@@ -90,8 +91,8 @@ export const CroppedImage: FC<CroppedImageProps> = ({
     size ? Number(size) * scale : size;
 
   return (
-    <div className={cls.viewBox} style={viewBoxStyle}>
-      <div className={s.scalingBox} style={scalingBoxStyle}>
+    <span className={cls.viewBox} style={viewBoxStyle}>
+      <span className={s.scalingBox} style={scalingBoxStyle}>
         <Image
           className={cls.image}
           fill={fill}
@@ -100,12 +101,12 @@ export const CroppedImage: FC<CroppedImageProps> = ({
           width={scaleImageSize(width)}
           {...props}
         />
-      </div>
-    </div>
+      </span>
+    </span>
   );
 };
 
-const getClassNames = (classes: CroppedImageClasses): CroppedImageClasses => ({
+const getClassNames = (classes: CroppedImageClasses): Required<CroppedImageClasses> => ({
   image: clsx(s.image, classes.image),
   viewBox: clsx(s.viewBox, classes.viewBox),
 });

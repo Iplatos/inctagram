@@ -3,7 +3,7 @@ import { Typography } from '@/shared/ui';
 import { Meta, ReactRenderer, StoryObj } from '@storybook/react';
 import { DecoratorFunction } from '@storybook/types';
 
-import { CroppedImage, CroppedImageProps } from './CroppedImage';
+import { CroppedImage, CroppedImageClasses, CroppedImageProps } from './CroppedImage';
 
 /**
  * This component is based on the Next.js [Image](https://nextjs.org/docs/pages/api-reference/components/image) component with the additional ability to scale and crop the image.
@@ -18,6 +18,21 @@ import { CroppedImage, CroppedImageProps } from './CroppedImage';
  * */
 const meta = {
   argTypes: {
+    classes: {
+      description: `An object containing the names of the classes corresponding to the
+        component slots. Provided classnames will be merged with default slots classnames.`,
+      table: {
+        type: {
+          detail: `Partial<${JSON.stringify(
+            { image: 'string', viewBox: 'string' } as CroppedImageClasses,
+            null,
+            2
+          )}>`,
+          summary: 'CroppedImageClasses',
+        },
+      },
+    },
+
     fill: {
       control: { type: 'boolean' },
       description: `Has [the same](https://nextjs.org/docs/pages/api-reference/components/image#fill) behaviour as Next.js \`fill\` prop.\t
@@ -87,7 +102,9 @@ const meta = {
       </>
     ),
   ],
-  parameters: { controls: { include: ['offsetX', 'offsetY', 'scale', 'fill', 'width', 'height'] } },
+  parameters: {
+    controls: { include: ['offsetX', 'offsetY', 'scale', 'fill', 'width', 'height', 'classes'] },
+  },
   tags: ['autodocs'],
   title: 'UI/CroppedImage',
 } satisfies Meta<typeof CroppedImage>;
