@@ -1,37 +1,34 @@
 import { FC, ReactElement } from 'react';
 
-import { AvatarFallback } from '@/assets/icons/avatar-fallback';
 import { ProfileSummary, ProfileSummaryItem } from '@/features/profile-info/profile-summary';
 import { Typography } from '@/shared/ui';
 import { Avatar } from '@/shared/ui/avatar';
+import { CropProps } from '@/shared/ui/croppedImage';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
 import s from './profileInfo.module.scss';
 
-export type UserProfileProps = {
+type AvatarProps = { src?: StaticImport | string } & Partial<CropProps>;
+
+export type ProfileInfoProps = {
   aboutMe: string;
-  avatarSrc?: StaticImport | string;
+  avatarProps: AvatarProps;
   primaryAction?: ReactElement;
   secondaryAction?: ReactElement;
   statistics: ProfileSummaryItem[];
   userName: string;
 };
 
-export const ProfileInfo: FC<UserProfileProps> = ({
+export const ProfileInfo: FC<ProfileInfoProps> = ({
   aboutMe,
-  avatarSrc,
+  avatarProps,
   primaryAction,
   secondaryAction,
   statistics,
   userName,
 }) => (
   <section className={s.container}>
-    <Avatar
-      classes={{ avatarRoot: s.avatar }}
-      fallback={<AvatarFallback />}
-      priority
-      src={avatarSrc}
-    />
+    <Avatar classes={{ avatarRoot: s.avatar }} priority {...avatarProps} />
     <div className={s.header}>
       <Typography.H2 className={s.userName}>{userName}</Typography.H2>
       <div className={s.actionsGroup}>

@@ -7,7 +7,7 @@ import { Button, ButtonProps } from '@/shared/ui';
 import { action, action as storybookAction } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { ProfileInfo, UserProfileProps } from './profileInfo';
+import { ProfileInfo, ProfileInfoProps } from './profileInfo';
 
 type ButtonVariant = {
   name: string;
@@ -43,14 +43,19 @@ const primaryButtons = { ...getButtonsByActionCategory('primary'), none: undefin
 const secondaryButtons = { ...getButtonsByActionCategory('secondary'), none: undefined };
 
 type CustomStatisticItem = Omit<ProfileSummaryItem, 'action'> & { action?: boolean };
-type UserProfilePropsAndCustomArgs = Omit<UserProfileProps, 'avatarSrc' | 'statistics'> & {
+type UserProfilePropsAndCustomArgs = Omit<ProfileInfoProps, 'statistics'> & {
   avatarSrc: boolean;
   statistics: CustomStatisticItem[];
 };
 
-const CustomRender: FC<UserProfilePropsAndCustomArgs> = ({ avatarSrc, statistics, ...props }) => (
+const CustomRender: FC<UserProfilePropsAndCustomArgs> = ({
+  avatarProps,
+  avatarSrc,
+  statistics,
+  ...props
+}) => (
   <ProfileInfo
-    avatarSrc={avatarSrc ? MockUserAvatar : undefined}
+    avatarProps={{ ...avatarProps, src: avatarSrc ? avatarProps.src : undefined }}
     statistics={statistics.map(s => ({
       ...s,
       action: s.action ? storybookAction(`on${capitalise(s.name)}Click`) : undefined,
@@ -141,6 +146,12 @@ export const PrimaryAction: Story = {
   args: {
     aboutMe:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    avatarProps: {
+      offsetX: 0.5,
+      offsetY: 0.5,
+      scale: 1,
+      src: MockUserAvatar,
+    },
     avatarSrc: true,
     primaryAction: primaryButtons['primary button'],
     secondaryAction: secondaryButtons.none,
