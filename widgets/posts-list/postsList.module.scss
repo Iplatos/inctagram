@@ -1,0 +1,12 @@
+@use '../../styles/helpers' as *;
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: em(12);
+
+  .post {
+    position: relative;
+    aspect-ratio: 1;
+  }
+}
