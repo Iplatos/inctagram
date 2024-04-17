@@ -1,0 +1,28 @@
+import { Controls, Description, Meta, Primary, Stories, Subtitle, Title } from '@storybook/blocks';
+
+import * as AvatarStories from './avatar.stories';
+
+import * as CroppedImageStories from '../croppedImage/croppedImage.stories';
+
+<Meta of={AvatarStories} />
+
+<Title />
+
+<Subtitle />
+
+<Description />
+
+<Primary />
+
+#### Avatar specific props
+
+<Controls
+  of={AvatarStories.StaticImage}
+  include={['classes', 'delayMs', 'fallback', 'fallbackDelayMs', 'imageType', 'size', 'src']}
+/>
+
+#### CroppedImage specific props
+
+<Controls of={CroppedImageStories.Primary} include={['offsetX', 'offsetY', 'scale']} />
+
+<Stories />
