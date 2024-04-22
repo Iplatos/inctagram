@@ -4,8 +4,6 @@ import { DateObject } from 'react-multi-date-picker';
 
 import { AddProfilePhoto } from '@/features/accounts/edit';
 import { FormValues, ProfileForm } from '@/features/accounts/edit/profile-form/profile-form';
-import { Loader } from '@/features/hooks/loader/loader';
-import { useGetMeQuery } from '@/shared/api/auth.service';
 import {
   useGetUserProfileQuery,
   useLazyGetUserProfileQuery,

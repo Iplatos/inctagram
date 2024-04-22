@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { useArgs } from '@storybook/preview-api';
+import { useState } from 'react';
+
+import { ComboboxOption } from '@/shared/ui/combobox/combobox';
 
 import { Combobox } from '.';
 
@@ -16,7 +16,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const options = [
+const options: ComboboxOption[] = [
   {
     label: 'label_1',
     value: 'value_1',
@@ -41,21 +41,23 @@ const options = [
 
 export const Simple: Story = {
   args: {
+    inputValue: '',
     options,
+    value: '',
   },
 
   render: function Render(args) {
-    const [value, setValue] = useState(null);
+    const [value, setValue] = useState<null | string>(null);
     const [inputValue, setInputValue] = useState('');
 
     return (
       <Combobox
         {...args}
         inputValue={inputValue}
-        value={value}
         onChange={setValue}
         onInputChange={setInputValue}
         placeholder={'Country'}
+        value={value ?? ''}
       />
     );
   },

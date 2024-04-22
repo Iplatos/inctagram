@@ -1,28 +1,18 @@
-export type MeResponseType = {
-  createdAt: string;
-  email: string;
-  emailConfirmed: boolean;
-  id: string;
-  updatedAt: string;
-  userProfile: {
-    aboutMe: string;
-    dateOfBirth: string;
-    familyName: string;
-    firstName: string;
-    photos: [
-      {
-        authorId: string;
-        createdAt: string;
-        id: string;
-        title: string;
-        updatedAt: string;
-        url: string;
-      },
-    ];
-    userId: string;
-  };
-  username: string;
+export type AppResponse<T = {}> = {
+  data: T;
+  errors: string[];
+  resultCode: number;
 };
+
+export type SignUpResponse = AppResponse<AppResponse<{ id: string }>>;
+
+export type LoginRequestData = {
+  email: string;
+  password: string;
+};
+
+export type LoginResponse = AppResponse<{ accessToken: string }>;
+
 export type ChangePasswordRequestType = {
   code: string;
   password: string;
@@ -35,34 +25,9 @@ export type ConfirmCodeRequestType = {
 export type PasswordRecoveryRequestType = {
   email: string;
 };
-export type LoginRequestType = {
-  email: string;
-  password: string;
-};
-export type LoginResponseType = {
-  accessToken: string;
-  refreshToken: string;
-};
-export type SignUpResponseType = {};
-export type SignUpRequestType = {
+
+export type SignUpRequestData = {
   email: string;
   password: string;
   username: string;
-};
-export type UploadPhotoResponseType = {
-  aboutMe: string;
-  dateOfBirth: string;
-  familyName: string;
-  firstName: string;
-  photos: [
-    {
-      authorId: string;
-      createdAt: string;
-      id: string;
-      title: string;
-      updatedAt: string;
-      url: string;
-    },
-  ];
-  userId: string;
 };

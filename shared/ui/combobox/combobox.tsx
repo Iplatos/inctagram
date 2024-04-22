@@ -19,7 +19,7 @@ import { Typography } from '..';
 import ArrowDown from '../../../assets/icons/arrow-down.svg?url';
 import Close from '../../../assets/icons/close.svg?url';
 
-type Option = {
+export type ComboboxOption = {
   label: string;
   value: number | string;
 };
@@ -33,7 +33,7 @@ export type ComboboxProps = {
   onChange: (value: null | string) => void;
   onClear?: () => void;
   onInputChange: (value: string) => void;
-  options: Option[];
+  options: ComboboxOption[];
   placeholder?: string;
   showClearButton?: boolean;
   value: string;

@@ -1,3 +1,5 @@
+@use '../../styles/z-index' as *;
+
 .photoPlaceHolder {
   position: relative;
 
@@ -11,11 +13,10 @@
   margin: 50px auto;
 
   background-color: var(--color-dark-500);
-
 }
 
 .addPhotoCard {
-  z-index: get-z-index(modal);
+  z-index: z-index('modal');
   width: 492px;
   height: 564px;
 }
@@ -33,8 +34,4 @@
   margin: 0 auto;
 
   background-color: var(--color-dark-500);
-
 }
-
-
-

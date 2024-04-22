@@ -1,44 +1,25 @@
+import type { RootState } from '@/shared/api/store';
+
+import { selectAccessToken } from '@/shared/api/app-slice';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { createApi } from '@reduxjs/toolkit/query/react';
 
-export const baseUrl = 'https://incubator-icta-trainee.uk';
 const baseQuery = fetchBaseQuery({
-  baseUrl,
-
+  baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
   prepareHeaders: (headers, { getState }) => {
-    const token = getTokenFromLocalStorage();
+    const token = selectAccessToken(getState() as RootState);
 
-    // If we have a token set in state, let's assume that we should be passing it.
     if (token) {
-      headers.set('authorization', `Bearer ${token}`);
+      headers.set('Authorization', `Bearer ${token}`);
     }
-
-    return headers;
   },
+  timeout: 10_000,
 });
 
 export const baseApi = createApi({
-  baseQuery /*: baseQueryWithReauth*/,
-  endpoints: builder => {
-    return {
-      createPost: builder.mutation<any, void>({
-        query: data => ({
-          body: data,
-          method: 'POST',
-          url: `/api/v1/post/post`,
-        }),
-      }),
-      /*   filteredPosts: builder.query<any, void>({
-           query: () => `/api/v1/post/filtered-posts/title`,
-         }),*/
-      getFeed: builder.query<any, void>({
-        query: () => `/api/v1/post/feed`,
-      }),
-    };
-  },
-
+  baseQuery,
+  endpoints: _builder => ({}),
   reducerPath: 'baseApi',
-  tagTypes: ['Me'],
 });
 
 export const getTokenFromLocalStorage = () => {
@@ -51,4 +32,3 @@ export const setTokenToLocalStorage = (token: null | string) => {
 
   return localStorage.setItem('X_auth_token', token);
 };
-export const { useGetFeedQuery } = baseApi;

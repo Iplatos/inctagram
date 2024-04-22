@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 
+import { useConfirmCodeMutation } from '@/shared/api/auth-api';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useConfirmCodeMutation } from 'shared/api/auth.service';
 
 function ConfirmRegistration() {
   const searchParams = useSearchParams();
@@ -15,10 +15,9 @@ function ConfirmRegistration() {
   useEffect(() => {
     if (code && userId) {
       confirmCode({ code, userId });
-      console.log(userId);
       router.push('/email-confirmed');
     }
-  }, [code, userId]);
+  }, [confirmCode, router, code, userId]);
 
   return (
     <>

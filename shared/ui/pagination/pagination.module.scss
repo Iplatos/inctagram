@@ -1,24 +1,27 @@
 .container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    gap: 24px;
     align-items: center;
-    gap: 24px; 
+    justify-content: center; 
 }
 
 .paginateBlock {
     display: flex;
     flex-direction: row;
-    align-items: center;
     gap: 12px;
+    align-items: center;
+
     list-style-type: none;
 
     li {
+        cursor: pointer;
+
         width: 24px;
         height: 24px;
-        text-align: center;
+
         line-height: 24px;
-        cursor: pointer;
+        text-align: center;
     }
 
     li:first-child, li:last-child {
@@ -29,6 +32,7 @@
     }
 
 }
+
 .selectContainer {
   display: flex;
   flex-direction: row;
@@ -36,20 +40,22 @@
 }
 
 .select {
-  background-color: var(--color-dark-300);
-  border-radius: 2px;
-  border: 1px solid var(--color-dark-300);
-  background: var(--color-dark-500);
   display: inline-flex;
-  padding: 0px 2px 0px 6px;
-  justify-content: flex-end;
-  align-items: center;
   gap: 2px;
+  align-items: center;
+  justify-content: flex-end;
+
+  padding: 0 2px 0 6px;
+
+  background: var(--color-dark-500);
+  background-color: var(--color-dark-300);
+  border: 1px solid var(--color-dark-300);
+  border-radius: 2px;
 }
 
 
 .activeLink {
-  background-color: var(--color-light-100);
   color: var(--color-dark-900);
+  background-color: var(--color-light-100);
   border-radius: 3px;
 }

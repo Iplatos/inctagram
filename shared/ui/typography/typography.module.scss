@@ -1,5 +1,6 @@
 @mixin typography($fontSize, $lineHeight, $fontWeight, $color: var(--color-light-100)) {
     margin: 0;
+
     font-size: $fontSize;
     font-weight: $fontWeight;
     line-height: $lineHeight;
