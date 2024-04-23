@@ -1,15 +1,19 @@
 import React from 'react';
 
-import { selectIsAuthenticated } from '@/shared/api/app-slice';
 import { useRefreshTokenQuery } from '@/shared/api/auth-api';
-import { useAppSelector } from '@/shared/api/pretyped-redux-hooks';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
 
 function Home() {
-  const isAuth = useAppSelector(selectIsAuthenticated);
+  const { error, isLoading } = useRefreshTokenQuery();
 
-  useRefreshTokenQuery(undefined, { skip: isAuth });
+  if (isLoading) {
+    return <div style={{ marginLeft: '300px' }}>Init loading...</div>;
+  }
+
+  if (error && 'status' in error && error.status === 401) {
+    return <div style={{ marginLeft: '300px' }}>Unauthorized</div>;
+  }
 
   return (
     <>

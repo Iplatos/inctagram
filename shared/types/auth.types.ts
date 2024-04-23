@@ -13,6 +13,10 @@ export type LoginRequestData = {
 
 export type LoginResponse = AppResponse<{ accessToken: string }>;
 
+export type LogoutResponse = AppResponse<true>;
+
+export type RefreshTokenResponse = AppResponse<{ accessToken: string }>;
+
 export type ChangePasswordRequestType = {
   code: string;
   password: string;

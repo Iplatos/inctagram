@@ -3,12 +3,14 @@ import type {
   ConfirmCodeRequestType,
   LoginRequestData,
   LoginResponse,
+  LogoutResponse,
   PasswordRecoveryRequestType,
+  RefreshTokenResponse,
   SignUpRequestData,
   SignUpResponse,
 } from '@/shared/types/auth.types';
 
-import { accessTokenReceived } from '@/shared/api/app-slice';
+import { accessTokenReceived, resetApp } from '@/shared/api/app-slice';
 import { baseApi } from '@/shared/api/base-api';
 
 export const authApi = baseApi.injectEndpoints({
@@ -41,14 +43,16 @@ export const authApi = baseApi.injectEndpoints({
         };
       },
     }),
+
     // Working (partially)
     login: builder.mutation<LoginResponse, LoginRequestData>({
-      async onCacheEntryAdded(_arg, { cacheDataLoaded, dispatch, getCacheEntry }) {
-        await cacheDataLoaded;
-        const cacheEntry = getCacheEntry().data;
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
 
-        if (cacheEntry) {
-          dispatch(accessTokenReceived(cacheEntry.data.accessToken));
+          dispatch(accessTokenReceived(data.data.accessToken));
+        } catch (e) {
+          console.log("Don't forget to handle async errors!", e);
         }
       },
       query: arg => ({
@@ -59,11 +63,29 @@ export const authApi = baseApi.injectEndpoints({
         url: 'auth/login',
       }),
     }),
-    // FIXME: Doesn't work for now. Execute app cleanup logic on log out.
-    logout: builder.mutation<any, void>({
-      query: () => 'auth/logout',
+    logout: builder.mutation<LogoutResponse, void>({
+      invalidatesTags: ['Auth'],
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(resetApp());
+        } catch (e) {
+          console.log("Don't forget to handle async errors!", e);
+        }
+      },
+      query: () => ({ method: 'POST', url: 'auth/logout' }),
     }),
-    refreshToken: builder.query<any, void>({
+    refreshToken: builder.query<RefreshTokenResponse, void>({
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+
+          dispatch(accessTokenReceived(data.data.accessToken));
+        } catch (e) {
+          console.log("Don't forget to handle async errors!", e);
+        }
+      },
+      providesTags: ['Auth'],
       query: () => ({
         // allow to send cross-site cookie 'refreshToken'
         credentials: 'include',
@@ -73,7 +95,6 @@ export const authApi = baseApi.injectEndpoints({
     signUp: builder.mutation<SignUpResponse, SignUpRequestData>({
       query: body => {
         return {
-          // FIXME: consider adding `credentials: "include"` to allow saving a new accessToken
           body,
           method: 'POST',
           url: 'auth/registration',

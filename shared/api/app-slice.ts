@@ -4,13 +4,16 @@ type InitialState = {
   accessToken?: string;
 };
 
+const initialState: InitialState = {};
+
 export const appSlice = createSlice({
-  initialState: {} as InitialState,
+  initialState,
   name: 'app',
   reducers: {
     accessTokenReceived: (state, action: PayloadAction<string>) => {
       state.accessToken = action.payload;
     },
+    resetApp: () => initialState,
   },
   selectors: {
     selectAccessToken: state => state.accessToken,
@@ -18,5 +21,5 @@ export const appSlice = createSlice({
   },
 });
 
-export const { accessTokenReceived } = appSlice.actions;
+export const { accessTokenReceived, resetApp } = appSlice.actions;
 export const { selectAccessToken, selectIsAuthenticated } = appSlice.selectors;
