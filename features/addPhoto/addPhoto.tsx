@@ -1,29 +1,23 @@
 import React, { useState } from 'react';
 import AvatarEditor from 'react-avatar-editor';
-import { useDispatch } from 'react-redux';
 
 import { InputTypeFile } from '@/features/addPhoto/InputTypeFile';
 import { showErrorMessage, showPreViewAvatar } from '@/features/addPhoto/addPhoto.slice';
 import { Modal } from '@/features/modal';
-import { useUploadPhotoMutation } from '@/shared/api/auth.service';
-import { useAppSelector } from '@/shared/api/store';
+import { useAppDispatch, useAppSelector } from '@/shared/api/pretyped-redux-hooks';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
 import { Alerts } from '@/shared/ui/alerts/Alerts';
 import { Typography } from '@/shared/ui/typography';
-import { Trans } from '@/widgets/Trans/Trans';
 import ImageSVG from 'assets/icons/image.svg';
 
 import s from './addPhoto.module.scss';
 
-// uhs47060@nezid.com pass 12Qwqw!    userId = "245a822d-796a-4bcf-9d69-6c3e246271c9"
 export const AddPhoto = () => {
-  const [open, setOpen] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>('someEmail');
-  const [scale, setScale] = useState<number>(1);
+  const [open, setOpen] = useState(false);
+  const [scale, setScale] = useState(1);
   const [pos, setPos] = useState({ x: 0.5, y: 0.5 });
-  const [uploadPhoto] = useUploadPhotoMutation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { avatar, errorMessage } = useAppSelector(state => state.addPhotoReducer);
 
   const addPhoto = (photo: File) => {
@@ -33,20 +27,10 @@ export const AddPhoto = () => {
   const addPhotoWithParams = (photo: File, pos: { x: number; y: number }, scale: number) => {
     const formData = new FormData();
 
-    /*
-        formData.append('fileProps', JSON.stringify({ pos: { x: 1, y: 1 }, scale: 12 }));
-    */
     formData.append('file', photo);
     formData.append('cropProps', JSON.stringify({ pos, scale }));
-    // formData.append('userId', '42cf740f-6e4e-4e0e-8541-873c2bd6ae7d');
-    // formData.append('firstName', 'Jonh');
-    // formData.append('familyName', 'Doe');
-    // formData.append('dateOfBirth', '12.12.1999');
-    // formData.append('aboutMe', 'about me any text');
 
-    uploadPhoto(formData as unknown as any);
-
-    console.log(Object.fromEntries(formData.entries()));
+    // uploadPhoto(formData as unknown as any);
   };
 
   function handleModalClosed() {
@@ -84,14 +68,7 @@ export const AddPhoto = () => {
         showCloseButton
         title={'Add a Profile Photo'}
       >
-        <Typography.Regular16>
-          <Trans
-            tags={{
-              '1': () => <b>{`${email}`}</b>,
-            }}
-            text={``}
-          />
-        </Typography.Regular16>
+        <Typography.Regular16>SomeEmail</Typography.Regular16>
         <Alerts isError={errorMessage}>
           <Typography.Regular14 color={'var(--color-light-900)'}>
             {errorMessage || ''}

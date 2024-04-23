@@ -51,7 +51,6 @@ export const InputTypeFile = (props: AddPhotoProps) => {
   };
   const errorHandler = () => {
     /*dispatch(setMe({ avatar: profDefaultPicture }));*/
-    console.log('error');
   };
 
   return (

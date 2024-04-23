@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
+import { ReCAPTCHA } from 'react-google-recaptcha';
 import { Controller, useForm } from 'react-hook-form';
 
 import { CloseDialog, Modal } from '@/features/modal';
-import { useForgotPasswordMutation, useGetMeQuery } from '@/shared/api/auth.service';
+import { useForgotPasswordMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button/button';
 import { Card } from '@/shared/ui/Card/Card';
@@ -18,13 +18,12 @@ import { z } from 'zod';
 import style from './forgot-password.module.scss';
 
 export const ForgotPasswordForm = () => {
-  const recaptchaRef = useRef<ReCAPTCHA | null>(null);
-  const { data: meData } = useGetMeQuery();
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
   const { t } = useTranslation();
   const router = useRouter();
   const signInSchema = z.object({
     captcha: z.string(),
-    email: z.string().email(t.auth.forgotPasswordPage.invalidEmail).nonempty('Enter email'),
+    email: z.string().email(t.auth.forgotPasswordPage.invalidEmail).min(1, 'Enter email'),
   });
 
   type FormValuesType = z.infer<typeof signInSchema>;
@@ -36,7 +35,6 @@ export const ForgotPasswordForm = () => {
     getValues,
     handleSubmit,
     reset,
-    trigger,
   } = useForm({
     defaultValues: {
       captcha: '',
@@ -66,12 +64,9 @@ export const ForgotPasswordForm = () => {
     }
   }
 
-  const SITE_KEY = '6Lek3hEpAAAAACzSq5KIvkUdoGZYl579JldVdZs-'; //for incubator-icta-trainee.uk
+  // const SITE_KEY = '6Lek3hEpAAAAACzSq5KIvkUdoGZYl579JldVdZs-'; //for incubator-icta-trainee.uk
   const LOCALHOST_KEY = '6Lfm4xEpAAAAAD8LnoqR-DwtFEgFJiiOHaWhAg22'; //for localhost:3000
 
-  if (meData) {
-    router.push(`/`);
-  }
   if (error) {
     if ('data' in error) {
       error.data === 'OK' && router.push(`/signIn`);
@@ -103,7 +98,7 @@ export const ForgotPasswordForm = () => {
           {t.auth.forgotPasswordPage.message}
         </Typography.Regular14>
         <Button
-          disabled={dirtyFields.captcha && dirtyFields.email ? false : true}
+          disabled={!(dirtyFields.captcha && dirtyFields.email)}
           fullWidth
           onClick={handleModalOpened}
           type={'submit'}

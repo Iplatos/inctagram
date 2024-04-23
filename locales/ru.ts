@@ -107,7 +107,8 @@ export const ru = {
     },
     signUpPage: {
       account: 'У Вас есть аккаунт?',
-      agreement: 'Я согласен с <1>text</1> и <2>text</2>',
+      agreement:
+        'Я согласен с <agreement>Пользовательским соглашением</agreement> и <policy>Политикой конфиденциальности</policy>',
       labelConfirm: 'Подтверждение пароля',
       labelEmail: 'Почта',
       labelName: 'Имя пользователя',

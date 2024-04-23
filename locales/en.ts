@@ -109,7 +109,8 @@ export const en: LocaleType = {
     },
     signUpPage: {
       account: 'Do you have an account?',
-      agreement: 'I agree to the <3>text</3> and <4>text</4>',
+      agreement:
+        'I agree to the <agreement>Terms of service</agreement> and <policy>Privacy policy</policy>',
       labelConfirm: 'Password confirmation',
       labelEmail: 'Email',
       labelName: 'Username',
