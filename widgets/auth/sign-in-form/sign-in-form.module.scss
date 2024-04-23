@@ -1,0 +1,53 @@
+.signInFormContainer {
+  display: flex;
+
+  // justify-content: center;
+  // align-items: center;
+  flex-direction: column;
+  gap: 24px;
+
+  box-sizing: border-box;
+  width: 378px;
+  margin: 72px auto;
+  padding: 24px;
+
+  background-color: var(--color-dark-500);
+  border: 1px solid var(--color-dark-300);
+  border-radius: 3px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+
+  width: 100%;
+}
+
+// .linksAndButtonsContainer {
+//   margin-top: 20px;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   align-items: center;
+//   gap: 24px;
+//   width: 100%;
+
+// }
+
+.forgotPasswordLink {
+  width: 100%;
+  text-align: end;
+
+  // padding: 36px 0 24px 0;
+}
+
+
+// .textFieldsContainer {
+//   display: flex;
+//   height: 144px;
+//   flex-direction: column;
+//   gap: 24px;
+//   width: 100%;
+// }

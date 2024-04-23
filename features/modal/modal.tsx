@@ -1,6 +1,6 @@
-import React, { ComponentProps, ReactNode, useState } from 'react';
+import React, { ComponentProps, ReactNode } from 'react';
 
-import { Button, Typography } from '@/shared/ui';
+import { Typography } from '@/shared/ui';
 import {
   Dialog,
   DialogClose,
@@ -17,6 +17,7 @@ import CloseUrl from '../../assets/icons/close.svg?url';
 
 export type ModalProps = {
   children?: ReactNode;
+  className?: string;
   onClose?: () => void;
   open: boolean;
   showCloseButton?: boolean;
@@ -24,7 +25,7 @@ export type ModalProps = {
 } & ComponentProps<'div'>;
 
 export const Modal = (props: ModalProps) => {
-  const { children, onClose, open, showCloseButton, title } = props;
+  const { children, className, onClose, open, showCloseButton, title } = props;
 
   function handleModalClosed() {
     onClose?.();
@@ -35,8 +36,11 @@ export const Modal = (props: ModalProps) => {
       {open && (
         <DialogPortal forceMount>
           <DialogOverlay asChild className={style.dialogOverlay} />
-
-          <DialogContent asChild className={style.dialogContent} forceMount>
+          <DialogContent
+            asChild
+            className={className ? `${style.dialogContent} ${className}` : style.dialogContent}
+            forceMount
+          >
             <div>
               <div className={style.titleBlock}>
                 <DialogTitle asChild>

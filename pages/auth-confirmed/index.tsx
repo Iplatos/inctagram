@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 
-import { setTokenToLocalStorage } from '@/pages/api/base-api';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export const AuthConfirmed = () => {
@@ -10,10 +9,10 @@ export const AuthConfirmed = () => {
   const accessToken = searchParams.get('accessToken');
 
   useEffect(() => {
-    setTokenToLocalStorage(accessToken);
+    // setTokenToLocalStorage(accessToken);
     router.push('/');
     //TODO : auth me query to setUser before redirect
-  }, [accessToken]);
+  }, [router, accessToken]);
   if (accessToken) {
     return <div>...</div>;
   }

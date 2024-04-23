@@ -1,0 +1,61 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    align-items: center;
+    justify-content: center; 
+}
+
+.paginateBlock {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+
+    list-style-type: none;
+
+    li {
+        cursor: pointer;
+
+        width: 24px;
+        height: 24px;
+
+        line-height: 24px;
+        text-align: center;
+    }
+
+    li:first-child, li:last-child {
+      width: 16px;
+      height: 16px;
+      line-height: 16px;
+      color: var(--color-dark-100);
+    }
+
+}
+
+.selectContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.select {
+  display: inline-flex;
+  gap: 2px;
+  align-items: center;
+  justify-content: flex-end;
+
+  padding: 0 2px 0 6px;
+
+  background: var(--color-dark-500);
+  background-color: var(--color-dark-300);
+  border: 1px solid var(--color-dark-300);
+  border-radius: 2px;
+}
+
+
+.activeLink {
+  color: var(--color-dark-900);
+  background-color: var(--color-light-100);
+  border-radius: 3px;
+}

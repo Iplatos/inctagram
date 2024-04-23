@@ -1,21 +1,18 @@
+import type { Preview } from '@storybook/react';
+
 import { Provider } from 'react-redux';
+
+import { AppRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+
+import '../styles/index.scss';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
-import '../styles/index.scss'
-import type { Preview } from '@storybook/react'
-import { AppRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 const preview: Preview = {
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
-    },
     backgrounds: {
       default: 'background',
       values: [
@@ -25,9 +22,16 @@ const preview: Preview = {
         },
       ],
     },
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/i,
+      },
+    },
+    docs: { toc: true },
     nextRouter: {
-      Provider: AppRouterContext.Provider
-    }
+      Provider: AppRouterContext.Provider,
+    },
   },
 };
 

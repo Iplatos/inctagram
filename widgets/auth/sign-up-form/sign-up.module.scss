@@ -1,0 +1,51 @@
+.outerContainer {
+  display: flex;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+.right {
+  justify-content: right;
+}
+
+.gitHubGoogleContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+  height: 36px;
+}
+
+.values {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.checkbox {
+  padding-bottom: 12px;
+}
+
+.bottom {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+  padding-top: 18px;
+
+  text-align: center;
+}
+
+.signUp {
+  color: var(--color-accent-500);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+
+  width: 100%;
+  max-width: 378px;
+  padding: 24px;
+}

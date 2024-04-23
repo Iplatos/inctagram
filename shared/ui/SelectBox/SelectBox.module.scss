@@ -1,14 +1,20 @@
-.selectBtn {
+.selectTrigger {
+  all: unset;
+
   cursor: pointer;
 
-  display: flex;
+  display: inline-flex;
+  gap: 12px;
   align-items: center;
   justify-content: space-between;
 
-  padding: 6px 6px 6px 12px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 36px;
+  padding: 6px 12px;
 
-  background-color: transparent;
-  border: var(--color-light-900) solid 1px;
+  background-color: var(--color-dark-700);
+  border: solid 1px var(--color-dark-100);
   border-radius: 2px;
 
   &:hover {
@@ -16,11 +22,15 @@
     border-color: var(--color-light-900);
   }
 
+  &:active {
+    background-color: var(--color-dark-500);
+    border: var(--color-light-100) solid 1px;
+  }
+
   &:focus-visible,
   &:focus {
-    border: var(--color-accent-500) solid 1px;
+    border: var(--color-accent-500) solid 2px;
     outline: none;
-    box-shadow: inset 0 0 0 1px var(--color-accent-500);
   }
 
   &[data-disabled] {
@@ -28,43 +38,53 @@
     color: var(--color-dark-100);
     border-color: var(--color-dark-100);
   }
+
+  &[data-state="open"] {
+    border: 1px solid #fff;
+  }
 }
 
 .valueWrapper {
   display: flex;
+  flex-direction: row;
   gap: 12px;
   align-items: center;
+  justify-content: center;
 }
 
-.width-medium {
-  width: 210px;
-}
+.selectContent {
+  overflow: hidden;
 
-.width-small {
-  width: 163px;
-}
+  width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
 
-.width-tiny {
-  width: 84px;
-}
-
-.viewport {
-  width: calc(100% - 2px);
-  margin: 0;
-  padding: 0;
+  background-color: var(--color-dark-700);
   border: var(--color-light-900) solid 1px;
+  border-radius: 2px;
+
+  &[data-state] {
+    border: 1px solid  var(--color-light-900);
+  }
 }
 
-.option,
+.selectViewport {
+  max-height: 108px;
+}
+
 .default {
   display: flex;
   gap: 12px;
   align-items: center;
 }
 
-.option {
+.selectItem {
   cursor: pointer;
-  padding: 6px 6px 6px 12px;
+
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  padding: 6px 12px;
 
   &:hover {
     color: var(--color-accent-500);
@@ -73,13 +93,13 @@
   }
 }
 
-@media (width <= 767px) {
-  .width-small {
-    width: 84px;
+// @media (width <= 767px) {
+//   .width-small {
+//     width: 84px;
 
-    &.option img + span,
-    .valueWrapper img + span {
-      display: none;
-    }
-  }
-}
+//     &.option img + span,
+//     .valueWrapper img + span {
+//       display: none;
+//     }
+//   }
+// }
