@@ -14,8 +14,11 @@ import { Header } from '@/widgets/header';
 import { NextPage } from 'next';
 import Link from 'next/link';
 
+import s from './editProfileLayout.module.scss';
+
 import { EditProfile } from '../accounts/edit/edit-profile';
 import { Sidebar } from '../sidebar';
+
 export const EditProfileLayOut: NextPage<PropsWithChildren> = props => {
   const { children } = props;
 
@@ -25,7 +28,7 @@ export const EditProfileLayOut: NextPage<PropsWithChildren> = props => {
       <main>
         <NavBar />
         <Sidebar />
-        <div style={{ marginLeft: '0px' }}>
+        <div className={s.profileContainer}>
           <Tabs
             defaultValue={'general information'}
             fullWidth
@@ -39,7 +42,7 @@ export const EditProfileLayOut: NextPage<PropsWithChildren> = props => {
               { title: 'My payments', value: 'my payments' },
             ]}
           >
-            <TabContent value={'general information'}>
+            {/* <TabContent value={'general information'}>
               <GeneralInformation />
             </TabContent>
             <TabContent value={'devices'}>
@@ -50,9 +53,8 @@ export const EditProfileLayOut: NextPage<PropsWithChildren> = props => {
             </TabContent>
             <TabContent value={'my payments'}>
               <MyPayments />
-            </TabContent>
+            </TabContent> */}
           </Tabs>
-
           <EditProfile />
           {children}
         </div>

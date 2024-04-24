@@ -1,7 +1,9 @@
-import { EditProfileLayOut } from '@/widgets/editProfileLayOut/editProfileLayOut';
+import { EditProfileLayOut } from '@/widgets/editProfileLayout/editProfileLayout';
 
-const Devices = () => {
-  return <div>devices!!</div>;
+import { NextPageWithLayout } from '../_app';
+
+const Devices: NextPageWithLayout = () => {
+  return <div>devices page!!</div>;
 };
 
 Devices.getLayout = page => <EditProfileLayOut>{page}</EditProfileLayOut>;

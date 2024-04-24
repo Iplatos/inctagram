@@ -13,7 +13,7 @@ import style from './edit-profile.module.scss';
 
 export const EditProfile = () => {
   return (
-    <div className={style.profileContainer}>
+    <div>
       {/* <Tabs
         defaultValue={'general information'}
         fullWidth
