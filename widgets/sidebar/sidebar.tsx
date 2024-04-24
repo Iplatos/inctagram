@@ -2,13 +2,10 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { CloseDialog, Modal } from '@/features/modal';
-import { useGetMeQuery, useLogoutMutation } from '@/shared/api/auth.service';
-import { baseApi, setTokenToLocalStorage } from '@/shared/api/base-api';
-import { useAppSelector } from '@/shared/api/store';
+import { useLogoutMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button';
 import { Typography } from '@/shared/ui/typography';
-import { Trans } from '@/widgets/Trans/Trans';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
 import HomeOutline from 'assets/icons/home-outline.svg';
 import LogOutOutline from 'assets/icons/log-out-outline.svg';
@@ -22,12 +19,8 @@ import { useRouter } from 'next/navigation';
 import s from './sidebar.module.scss';
 
 export const Sidebar = () => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
   const [logout] = useLogoutMutation();
-  const { isLoggedIn } = useAppSelector(state => state.auth);
-  const { email } = useGetMeQuery(undefined, {
-    selectFromResult: res => ({ email: res.data?.email ?? '' }),
-  });
   const { t } = useTranslation();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -42,9 +35,9 @@ export const Sidebar = () => {
 
   const logOut = () => {
     logout();
-    setTokenToLocalStorage(null);
-    dispatch(baseApi.util.resetApiState());
-    router.push('/signIn');
+    // setTokenToLocalStorage(null);
+    // dispatch(baseApi.util.resetApiState());
+    // router.push('/signIn');
   };
 
   return (
@@ -90,14 +83,7 @@ export const Sidebar = () => {
           Log Out
         </div>
         <Modal onClose={handleModalClosed} open={open} showCloseButton title={'Log Out'}>
-          <Typography.Regular16>
-            <Trans
-              tags={{
-                email: () => <Typography.Bold16>&quot;{email} &quot;</Typography.Bold16>,
-              }}
-              text={t.logOut.reallyWantToLogOut}
-            />
-          </Typography.Regular16>
+          <Typography.Regular16>{t.logOut.reallyWantToLogOut}</Typography.Regular16>
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 25 }}>
             <CloseDialog asChild>
               <div style={{ display: 'flex', justifyContent: 'space-Between', width: '216px' }}>

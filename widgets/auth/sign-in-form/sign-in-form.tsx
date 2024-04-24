@@ -1,34 +1,37 @@
-import { Controller, useForm } from 'react-hook-form';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
-import { useGetMeQuery, useLoginMutation } from '@/shared/api/auth.service';
-import { setTokenToLocalStorage } from '@/shared/api/base-api';
+import { useLoginMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui/Button/button';
 import { Card } from '@/shared/ui/Card/Card';
-import { TextField } from '@/shared/ui/textField/TextField';
+import { ControlledTextField } from '@/shared/ui/controlled';
 import { Typography } from '@/shared/ui/typography';
 import { GitHubGoogleContainer } from '@/widgets/auth/gitHubGoogleContainer/gitHubGoogleContainer';
 import { zodResolver } from '@hookform/resolvers/zod';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 
 import s from 'widgets/auth/sign-in-form/sign-in-form.module.scss';
 
+const DevTool: React.ElementType = dynamic(
+  () => import('@hookform/devtools').then(module => module.DevTool),
+  { ssr: false }
+);
+
 export const SignInForm = () => {
-  const { data: meData, error: meError, isLoading: isMeLoading } = useGetMeQuery();
   const { t } = useTranslation();
   const signInSchema = z.object({
-    email: z.string().email(t.auth.signInPage.invalidEmail).nonempty('Enter email'),
+    email: z.string().email(t.auth.signInPage.invalidEmail).min(1, 'Enter email'),
     password: z
       .string()
       .min(6, { message: t.auth.signInPage.invalidPass })
       .max(20, { message: t.auth.signInPage.invalidPass })
-      /* eslint-disable */
-      .regex(/^[0-9A-Za-z!"#$%&'()*+,\-.\/:;<=>?@[\\\]^_`{|}~]+$/, {
+      .regex(/^[0-9A-Za-z!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]+$/, {
         message: t.auth.signInPage.invalidPass,
       }),
-    /* eslint-enable */
   });
 
   const router = useRouter();
@@ -36,97 +39,71 @@ export const SignInForm = () => {
 
   type FormValuesType = z.infer<typeof signInSchema>;
   const onSubmit = (data: FormValuesType) => {
-    login(data);
+    return login(data);
   };
-  const { clearErrors, control, handleSubmit } = useForm({
+
+  const {
+    control,
+    formState: { isDirty, isSubmitting, isValid, submitCount },
+    handleSubmit,
+  } = useForm({
     defaultValues: {
       email: '',
       password: '',
     },
-    mode: 'onBlur',
+    mode: 'onTouched',
     resolver: zodResolver(signInSchema),
   });
 
-  if (isMeLoading) {
-    return <div>hello</div>;
-  }
+  // if (loginData) {
+  //   router.push(`/`);
+  //
+  //   return null;
+  // }
 
-  if (loginData) {
-    setTokenToLocalStorage(loginData.accessToken);
-    router.push(`/`);
-  }
-  if (meData && !meError) {
-    router.push(`/`);
-  }
-  console.log(meData);
+  const submitIsDisabled = !isDirty || (!isValid && !!submitCount) || isSubmitting;
 
   return (
-    /* eslint-disable */
     <Card className={s.signInFormContainer}>
-      {/* <div> */}
       <Typography.H1>{t.navbar.signIn}</Typography.H1>
-      {/* </div> */}
       <GitHubGoogleContainer />
 
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        {/* <div className={s.textFieldsContainer}> */}
-        <Controller
+        {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />}
+        <ControlledTextField
           control={control}
-          name="email"
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              onFocus={() => clearErrors('email')}
-              error={fieldState?.error?.message}
-              onChange={field.onChange}
-              value={field.value}
-              label={t.auth.signInPage.email}
-              placeholder={t.auth.signInPage.email}
-              inputType={'text'}
-            />
-          )}
+          disabled={isSubmitting}
+          label={t.auth.signInPage.email}
+          name={'email'}
+          placeholder={t.auth.signInPage.email}
         />
-        <Controller
+        <ControlledTextField
           control={control}
-          name="password"
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              onFocus={() => clearErrors('password')}
-              onChange={field.onChange}
-              placeholder={t.auth.signInPage.password}
-              label={t.auth.signInPage.password}
-              error={fieldState?.error?.message}
-              inputType={'password'}
-            />
-          )}
+          disabled={isSubmitting}
+          inputType={'password'}
+          label={t.auth.signInPage.password}
+          name={'password'}
+          placeholder={t.auth.signInPage.password}
         />
-        {/* </div> */}
 
-        {/* <div className={s.linksAndButtonsContainer}> */}
-        <div className={s.forgotPasswordLink}>
-          <Link href={'/forgot-password'}>
-            <Typography.Regular14 color={'var(--color-light-900)'}>
-              {t.navbar.forgotPassword}
-            </Typography.Regular14>
-          </Link>
-        </div>
-
-        <Button style={{ width: '100%' }} type={'submit'}>
+        <Typography.Regular14
+          className={s.forgotPasswordLink}
+          color={'var(--color-light-900)'}
+          component={Link}
+          href={'/forgot-password'}
+        >
+          {t.navbar.forgotPassword}
+        </Typography.Regular14>
+        <Button disabled={submitIsDisabled} fullWidth type={'submit'}>
           {t.navbar.signIn}
         </Button>
 
-        {/* <div className=''> */}
         <Typography.Regular16>{t.auth.signInPage.dontHaveAcc}</Typography.Regular16>
 
-        <Button variant="text">
+        <Button variant={'text'}>
           <Link href={'/signUp'}>{t.navbar.signUp}</Link>
         </Button>
-        {/* </div> */}
-
-        {/* </div> */}
       </form>
     </Card>
-    /* eslint-enable */
   );
 };

@@ -1,29 +1,25 @@
-import { ProfileForm } from '@/features/accounts/edit';
-import { useGetMeQuery } from '@/shared/api/auth.service';
-import { useTranslation } from '@/shared/hooks/useTranslation';
+
+import { useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { CommonLayout } from '@/widgets/Layout/CommonLayout';
-import { useRouter } from 'next/navigation';
 
 import { NextPageWithLayout } from './_app';
 
 const Home: NextPageWithLayout = () => {
-  const { t } = useTranslation();
-  const { data: meData, error: meError, isLoading: isMeLoading } = useGetMeQuery();
-  const router = useRouter();
+  const { error, isLoading } = useRefreshTokenQuery();
 
-  if (meError) {
-    if ('status' in meError) {
-      meError.status === 401 && router.push('/signIn');
-    }
+  if (isLoading) {
+    return <div style={{ marginLeft: '300px' }}>Init loading...</div>;
   }
-  if (isMeLoading) {
-    return <div>hello</div>;
+
+  if (error && 'status' in error && error.status === 401) {
+    return <div style={{ marginLeft: '300px' }}>Unauthorized</div>;
   }
 
   return (
     <>
       <HeadMeta title={'main'} />
+      <div style={{ marginLeft: '300px' }}>Hello World!</div>
     </>
   );
 };

@@ -9,6 +9,7 @@ import styles from './SelectBox.module.scss';
 import { Typography } from '..';
 
 type Option = {
+  id?: string;
   image?: string;
   label?: string;
   value: string;
@@ -32,6 +33,7 @@ const DefaultFieldCreator = ({ image, label }: Option) => {
 
 export const SelectBox = (props: SelectProps) => {
   const { defaultValue, disabled, labelField, onChangeFn, options, placeholder } = props;
+
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const defaultField =
     typeof defaultValue === 'number' && options?.[defaultValue]
@@ -69,7 +71,7 @@ export const SelectBox = (props: SelectProps) => {
 
           <Select.Viewport className={styles.selectViewport}>
             {options?.map((option, i) => (
-              <Select.Item className={styles.selectItem} key={i} value={option.value}>
+              <Select.Item className={styles.selectItem} key={option.value} value={option.value}>
                 {option.image && <Image alt={'Option image'} src={option.image} />}
                 {option.label && <Select.ItemText>{option.label}</Select.ItemText>}
               </Select.Item>
