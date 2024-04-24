@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { log } from 'console';
-
 import {
   AccountManagement,
   Devices,
@@ -16,10 +14,9 @@ import style from './edit-profile.module.scss';
 export const EditProfile = () => {
   return (
     <div className={style.profileContainer}>
-      <Tabs
+      {/* <Tabs
         defaultValue={'general information'}
         fullWidth
-        onValueChange={() => console.log('tab')}
         tabs={[
           {
             title: 'General information',
@@ -42,7 +39,7 @@ export const EditProfile = () => {
         <TabContent value={'my payments'}>
           <MyPayments />
         </TabContent>
-      </Tabs>
+      </Tabs> */}
     </div>
   );
 };
