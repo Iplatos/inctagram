@@ -1,24 +1,28 @@
 .signInFormContainer {
-  width: 378px;
-  margin: 72px auto;
-  padding: 24px;
-  box-sizing: border-box;
   display: flex;
+
   // justify-content: center;
   // align-items: center;
   flex-direction: column;
+  gap: 24px;
+
+  box-sizing: border-box;
+  width: 378px;
+  margin: 72px auto;
+  padding: 24px;
+
   background-color: var(--color-dark-500);
   border: 1px solid var(--color-dark-300);
   border-radius: 3px;
-  gap: 24px;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  width: 100%;
   gap: 24px;
   align-items: center;
+
+  width: 100%;
 }
 
 // .linksAndButtonsContainer {
@@ -35,6 +39,7 @@
 .forgotPasswordLink {
   width: 100%;
   text-align: end;
+
   // padding: 36px 0 24px 0;
 }
 

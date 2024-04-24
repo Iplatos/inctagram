@@ -17,8 +17,8 @@ export const NavBar = () => {
       {open && (
         <div className={styles.links}>
           <Link href={'/'}>{t.navbar.main}</Link>
-          <Link href={'/signIn'}>{t.navbar.signIn}</Link>
-          <Link href={'/signUp'}>{t.navbar.signUp}</Link>
+          <Link href={'/sign-in'}>{t.navbar.signIn}</Link>
+          <Link href={'/sign-up'}>{t.navbar.signUp}</Link>
           <Link href={'/forgot-password'}>{t.navbar.forgotPassword}</Link>
           <Link href={'/password-reset'}>Восстановление пароля</Link>
           <Link href={'/terms-of-service'}>{t.navbar.termsOfService}</Link>

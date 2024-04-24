@@ -1,26 +1,36 @@
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
-import { useGetMeQuery, useSignUpMutation } from '@/shared/api/auth.service';
+import { useSignUpMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button, Card, TextField, Typography } from '@/shared/ui';
+import { Button, Card, Typography } from '@/shared/ui';
 import { ControlledCheckbox } from '@/shared/ui/checkbox/controlled-checkbox';
+import { ControlledTextField } from '@/shared/ui/controlled';
 import { Trans } from '@/widgets/Trans/Trans';
 import { GitHubGoogleContainer } from '@/widgets/auth/gitHubGoogleContainer/gitHubGoogleContainer';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { clsx } from 'clsx';
-import { omit } from 'next/dist/shared/lib/router/utils/omit';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 
 import s from 'widgets/auth/sign-up-form/sign-up.module.scss';
+
+const DevTool: React.ElementType = dynamic(
+  () => import('@hookform/devtools').then(module => module.DevTool),
+  { ssr: false }
+);
 
 const schema = z
   .object({
     checkbox: z.boolean(),
     confirm: z.string(),
     email: z.string().email({ message: 'The email must match the format example@example.com' }),
+    nickname: z
+      .string()
+      .min(6, { message: 'Minimum number of characters 6' })
+      .max(30, { message: 'Maximum number of characters 30' })
+      .regex(/^[0-9A-Za-z_-]+$/),
     password: z
       .string()
       .min(6, { message: 'Minimum number of characters 6' })
@@ -30,11 +40,6 @@ const schema = z
           /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~])/.test(value),
         'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
       ),
-    username: z
-      .string()
-      .min(6, { message: 'Minimum number of characters 6' })
-      .max(30, { message: 'Maximum number of characters 30' })
-      .regex(/^[0-9A-Za-z_-]+$/),
   })
   .refine(data => data.password === data.confirm, {
     message: 'Passwords must match',
@@ -44,147 +49,110 @@ const schema = z
 type FormValues = z.input<typeof schema>;
 
 export const SignUpForm = () => {
-  const { data: meData } = useGetMeQuery();
-  const router = useRouter();
   const { t } = useTranslation();
-  const [signUp, { data: signUpData }] = useSignUpMutation();
+  const [signUpTrigger] = useSignUpMutation();
 
-  const { clearErrors, control, handleSubmit } = useForm<FormValues>({
-    mode: 'onBlur',
+  const {
+    control,
+    formState: { isDirty, isSubmitting, isValid, submitCount },
+    handleSubmit,
+  } = useForm<FormValues>({
+    defaultValues: {
+      checkbox: false,
+      confirm: '',
+      email: '',
+      // 'nickname' is used instead of 'username' to disable the browser's autofill when clicking on this field, since the latter is reserved
+      nickname: '',
+      password: '',
+    },
+    mode: 'onTouched',
     resolver: zodResolver(schema),
   });
 
-  if (signUpData) {
-    router.push(`/email-sent`);
-  }
-  const handleFormSubmitted = handleSubmit(data => signUp(omit(data, ['confirm'])));
+  // if (signUpData) {
+  //   router.push(`/email-sent`);
+  //
+  //   return null;
+  // }
 
-  if (meData) {
-    router.push(`/`);
-  }
+  const signUp = handleSubmit(({ email, nickname, password }) => {
+    return signUpTrigger({ email, password, username: nickname });
+  });
+
+  const submitIsDisabled = !isDirty || (!isValid && !!submitCount) || isSubmitting;
 
   return (
     <div className={s.outerContainer}>
       <Card className={s.card}>
         <Typography.H1>{t.auth.signUpPage.title}</Typography.H1>
-
         <GitHubGoogleContainer />
-
-        <form onSubmit={handleFormSubmitted}>
+        <form onSubmit={signUp}>
+          {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />}
           <div className={s.values}>
-            <Controller
+            <ControlledTextField
               control={control}
-              name={'username'}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  error={fieldState?.error?.message}
-                  inputType={'text'}
-                  label={t.auth.signUpPage.labelName}
-                  onChange={field.onChange}
-                  onFocus={() => clearErrors('username')}
-                  placeholder={t.auth.signUpPage.labelName}
-                  value={field.value}
-                />
-              )}
+              disabled={isSubmitting}
+              label={t.auth.signUpPage.labelName}
+              name={'nickname'}
+              placeholder={t.auth.signUpPage.labelName}
             />
-
-            <Controller
+            <ControlledTextField
               control={control}
+              disabled={isSubmitting}
+              label={t.auth.signUpPage.labelEmail}
               name={'email'}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  error={fieldState?.error?.message}
-                  inputType={'text'}
-                  label={t.auth.signUpPage.labelEmail}
-                  onChange={field.onChange}
-                  onFocus={() => clearErrors('email')}
-                  placeholder={t.auth.signInPage.email}
-                  value={field.value}
-                />
-              )}
+              placeholder={t.auth.signInPage.email}
             />
-
-            <Controller
+            <ControlledTextField
               control={control}
+              disabled={isSubmitting}
+              inputType={'password'}
+              label={t.auth.signUpPage.labelPassword}
               name={'password'}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  error={fieldState?.error?.message}
-                  inputType={'password'}
-                  label={t.auth.signUpPage.labelPassword}
-                  onChange={field.onChange}
-                  onFocus={() => clearErrors('password')}
-                  placeholder={t.auth.signInPage.password}
-                />
-              )}
+              placeholder={t.auth.signInPage.password}
             />
-
-            <Controller
+            <ControlledTextField
               control={control}
+              disabled={isSubmitting}
+              inputType={'password'}
+              label={t.auth.signUpPage.labelConfirm}
               name={'confirm'}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  error={fieldState?.error?.message}
-                  inputType={'password'}
-                  label={t.auth.signUpPage.labelConfirm}
-                  onChange={field.onChange}
-                  onFocus={() => clearErrors('password')}
-                  placeholder={t.auth.signUpPage.labelConfirm}
-                />
-              )}
+              placeholder={t.auth.signUpPage.labelConfirm}
             />
-
             <div className={s.checkbox}>
               <ControlledCheckbox
                 control={control}
+                disabled={isSubmitting}
                 label={
-                  <Typography.Regular12>
-                    <Trans
-                      tags={{
-                        '1': () => (
-                          <Link href={'/terms-of-service'}>
-                            <span className={s.link}>Пользовательским соглашением</span>
-                          </Link>
-                        ),
-                        '2': () => (
-                          <Link className={s.link} href={'/privacy-policy'}>
-                            <span className={s.link}>Политикой конфиденциальности</span>
-                          </Link>
-                        ),
-                        '3': () => (
-                          <Link className={s.link} href={'/terms-of-service'}>
-                            <span className={s.link}>Terms of service</span>
-                          </Link>
-                        ),
-                        '4': () => (
-                          <Link className={s.link} href={'/privacy-policy'}>
-                            <span className={s.link}>Privacy policy</span>
-                          </Link>
-                        ),
-                      }}
-                      text={t.auth.signUpPage.agreement}
-                    />
-                  </Typography.Regular12>
+                  <Trans
+                    tags={{
+                      agreement: ({ content }) => (
+                        <Typography.SmallLink component={Link} href={'/terms-of-service'}>
+                          {content}
+                        </Typography.SmallLink>
+                      ),
+                      policy: ({ content }) => (
+                        <Typography.SmallLink component={Link} href={'/privacy-policy'}>
+                          {content}
+                        </Typography.SmallLink>
+                      ),
+                    }}
+                    text={t.auth.signUpPage.agreement}
+                  />
                 }
                 name={'checkbox'}
               />
             </div>
           </div>
-          <Button className={s.button} fullWidth type={'submit'}>
+          <Button className={s.button} disabled={submitIsDisabled} fullWidth type={'submit'}>
             {t.auth.signUpPage.signUp}
           </Button>
         </form>
-
         <div className={s.bottom}>
           <Typography.Regular16>{t.auth.signUpPage.account}</Typography.Regular16>
         </div>
-
         <Button className={clsx(s.center, s.signUp)} variant={'text'}>
-          {t.auth.signUpPage.signIn}
+          <Link href={'/sign-in'}>{t.auth.signUpPage.signIn}</Link>
         </Button>
       </Card>
     </div>

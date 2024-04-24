@@ -1,9 +1,7 @@
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-// import { Trans } from '@/widgets/Trans/Trans';
-import { useChangePasswordMutation } from '@/shared/api/auth.service';
-// import { Modal } from '@/features';
+import { useChangePasswordMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
 import { Button } from '@/shared/ui/Button/button';
