@@ -46,16 +46,15 @@ export const Tabs = (props: TabsProps) => {
     >
       <TabsRadix.List className={style.list}>
         {tabs.map(tab => (
-          <Link href={`/$settings/{tab.value}`} key={tab.value}>
-            <TabsRadix.Trigger
-              className={`${style.trigger} ${fullWidth && style.fullWidth} `}
-              disabled={tab.disabled}
-              tabIndex={1}
-              value={tab.value}
-            >
-              {tab.title}
-            </TabsRadix.Trigger>
-          </Link>
+          <TabsRadix.Trigger
+            className={`${style.trigger} ${fullWidth && style.fullWidth} `}
+            disabled={tab.disabled}
+            key={tab.value}
+            tabIndex={1}
+            value={tab.value}
+          >
+            {tab.title}
+          </TabsRadix.Trigger>
         ))}
       </TabsRadix.List>
       {children}

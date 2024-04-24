@@ -19,7 +19,7 @@ export const EditProfile = () => {
       <Tabs
         defaultValue={'general information'}
         fullWidth
-        onValueChange={() => console.log("tab")}
+        onValueChange={() => console.log('tab')}
         tabs={[
           {
             title: 'General information',
