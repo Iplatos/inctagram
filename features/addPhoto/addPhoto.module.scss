@@ -1,39 +1,37 @@
+@use '../../styles/z-index' as *;
+
 .photoPlaceHolder {
-  width: 222px;
-  height: 228px;
-  background-color: var(--color-dark-500);
-  margin-top: 50px;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50px;
-  overflow: hidden;
   position: relative;
+
+  overflow: hidden;
   display: flex;
+  align-items: center;
   justify-content: center;
 
+  width: 222px;
+  height: 228px;
+  margin: 50px auto;
+
+  background-color: var(--color-dark-500);
 }
 
 .addPhotoCard {
+  z-index: z-index('modal');
   width: 492px;
   height: 564px;
 }
 
 .photoPlaceHolderWithAvatar {
-  width: 332px;
-  height: 340px;
-  background-color: var(--color-dark-500);
-  margin-top: 0;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 0px;
-  overflow: hidden;
   position: relative;
+
+  overflow: hidden;
   display: flex;
+  align-items: center;
   justify-content: center;
 
+  width: 332px;
+  height: 340px;
+  margin: 0 auto;
+
+  background-color: var(--color-dark-500);
 }
-
-
-

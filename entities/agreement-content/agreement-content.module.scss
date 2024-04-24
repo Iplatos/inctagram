@@ -3,18 +3,20 @@
 }
 
 .buttonBlock {
+    cursor: pointer;
+
     display: flex;
     flex-direction: row;
     gap: 12px;
-    cursor: pointer;
+
     padding-bottom: 23px;
 }
 
 .content {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 20px;
+    align-items: center;
 }
 
 .contentText {

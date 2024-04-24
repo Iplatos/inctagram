@@ -20,7 +20,6 @@ const EmailSent: NextPageWithLayout = () => {
   return (
     <>
       <HeadMeta title={'Email Sent'} />
-
       <Modal onClose={handleModalClosed} open={open} showCloseButton title={'Email sent'}>
         <Typography.Regular16>
           <Trans

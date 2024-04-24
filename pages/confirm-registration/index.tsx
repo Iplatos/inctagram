@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
+import { useConfirmCodeMutation } from '@/shared/api/auth-api';
 import { AuthLayout } from '@/widgets/AuthLayout/AuthLayout';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useConfirmCodeMutation } from 'shared/api/auth.service';
 
 import { NextPageWithLayout } from '../_app';
 
@@ -19,6 +19,7 @@ const ConfirmRegistration: NextPageWithLayout = () => {
       confirmCode({ code, userId });
       router.push('/email-confirmed');
     }
+  }, [confirmCode, router, code, userId]);
   }, [code, userId, confirmCode, router]);
 
   return (

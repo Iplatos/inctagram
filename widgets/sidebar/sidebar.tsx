@@ -22,7 +22,7 @@ import { useRouter } from 'next/navigation';
 import s from './sidebar.module.scss';
 
 export const Sidebar = () => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
   const [logout] = useLogoutMutation();
   const { isLoggedIn } = useAppSelector(state => state.auth);
   const { email } = useGetMeQuery(undefined, {
@@ -42,9 +42,9 @@ export const Sidebar = () => {
 
   const logOut = () => {
     logout();
-    setTokenToLocalStorage(null);
-    dispatch(baseApi.util.resetApiState());
-    router.push('/signIn');
+    // setTokenToLocalStorage(null);
+    // dispatch(baseApi.util.resetApiState());
+    // router.push('/signIn');
   };
 
   return (

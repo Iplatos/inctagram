@@ -1,65 +1,87 @@
-import React, { FC } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import React, { FC, useState } from 'react';
+import { Controller, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 
 import { useProfileFormSchema } from '@/features/accounts/edit/profile-form/use-profile-form-schema';
 import { ProfileFormDatePicker } from '@/features/accounts/edit/profile-form-date-picker/ProfileFormDatePicker';
+import { useGetCitiesQuery, useGetCountriesQuery } from '@/shared/api/countries.api';
+import { useLazyGetUserProfileQuery } from '@/shared/api/user.api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
 import { SelectBox } from '@/shared/ui/SelectBox';
+import { Combobox } from '@/shared/ui/combobox';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { DevTool } from '@hookform/devtools';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { skipToken } from '@reduxjs/toolkit/query';
 import { z } from 'zod';
 
 import style from './profile-form.module.scss';
 
-type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
+export type FormValues = z.infer<ReturnType<typeof useProfileFormSchema>>;
 
-export const ProfileForm: FC = () => {
+type ProfileFormProps = {
+  onSubmit: SubmitHandler<FormValues>;
+  onSubmitError: SubmitErrorHandler<FormValues>;
+};
+
+export const ProfileForm = (props: ProfileFormProps) => {
+  const { onSubmit, onSubmitError } = props;
+
   const {
     t: { generalInformation: t },
   } = useTranslation();
   const schema = useProfileFormSchema();
 
-  const { control, handleSubmit, resetField } = useForm<FormValues>({
-    defaultValues: {
-      aboutMe: '',
-      city: '',
-      country: '',
-      dateOfBirth: new Date(),
-      firstName: '',
-      lastName: '',
-      userName: '',
+  const { control, handleSubmit, resetField, watch } = useForm<FormValues>({
+    defaultValues: async () => {
+      const { data } = await trigger();
+
+      // console.log(data);
+
+      const mappedData = {
+        ...data,
+        lastName: data?.familyName,
+        userName: data?.firstName,
+      };
+
+      const formFields: (keyof FormValues)[] = [
+        'aboutMe',
+        'city',
+        'country',
+        'dateOfBirth',
+        'firstName',
+        'lastName',
+        'userName',
+      ];
+
+      return formFields.reduce((defaultValue, field) => {
+        if (field === 'dateOfBirth') {
+          defaultValue[field] = mappedData?.[field]?.length
+            ? new Date(mappedData[field] as string)
+            : null;
+        } else {
+          defaultValue[field] = mappedData?.[field] ?? '';
+        }
+
+        return defaultValue;
+      }, {} as FormValues);
     },
     mode: 'onTouched',
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: FormValues) => {};
+  const [inputValue, setInputValue] = useState('');
 
-  const selectOptions = [
-    { label: 'English', value: 'en' },
-    { label: 'Русский', value: 'ru' },
-    { label: 'french', value: 'france' },
-    { label: '1', value: '1' },
-    { label: '2', value: '2' },
-    { label: '3', value: '3' },
-    { label: '4', value: '4' },
-  ];
+  const selectedCountry = watch('country');
 
-  // const defaultIdx = selectOptions.findIndex(item => item.value === locale);
+  const { data: countries } = useGetCountriesQuery();
+  const { data: cities } = useGetCitiesQuery(selectedCountry || skipToken);
 
-  const changeCountry = (value: string) => {
-    // push(value);
-  };
-
-  const changeCity = (value: string) => {
-    // push(value);
-  };
+  const [trigger] = useLazyGetUserProfileQuery();
 
   return (
     <div className={style.formContainer}>
-      <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={style.form} onSubmit={handleSubmit(onSubmit, onSubmitError)}>
         {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />}
         <ControlledTextField
           control={control}
@@ -91,25 +113,43 @@ export const ProfileForm: FC = () => {
               control={control}
               name={'country'}
               render={({ field, fieldState }) => (
-                <SelectBox
-                  labelField={t.country.label}
-                  onChangeFn={changeCountry}
-                  options={selectOptions}
+                <Combobox
+                  {...field}
+                  errorMessage={fieldState?.error?.message}
+                  inputValue={inputValue}
+                  label={t.country.label}
+                  onChange={value => {
+                    resetField('city');
+                    field.onChange(value);
+                  }}
+                  onInputChange={setInputValue}
+                  options={(countries?.data ?? []).map(({ name }) => ({
+                    label: name,
+                    value: name,
+                  }))}
                   placeholder={t.country.placeholder}
+                  value={field.value}
                 />
               )}
             />
           </div>
+
           <div className={style.select}>
             <Controller
               control={control}
               name={'city'}
               render={({ field, fieldState }) => (
-                <SelectBox
-                  labelField={t.city.label}
-                  onChangeFn={changeCity}
-                  options={selectOptions}
+                <Combobox
+                  {...field}
+                  errorMessage={fieldState?.error?.message}
+                  inputValue={inputValue}
+                  label={t.city.label}
+                  onChange={field.onChange}
+                  onInputChange={setInputValue}
+                  options={(cities?.data ?? []).map(name => ({ label: name, value: name }))}
                   placeholder={t.city.placeholder}
+                  ref={field.ref}
+                  value={field.value}
                 />
               )}
             />
@@ -121,8 +161,14 @@ export const ProfileForm: FC = () => {
           label={'About Me'}
           name={'aboutMe'}
         />
-        {/*// TODO: Consider disabling the submit button if the form is invalid */}
-        <Button type={'submit'}>{t.submitButton}</Button>
+
+        <div className={style.separator} role={'separator'}></div>
+
+        <div className={style.saveButton}>
+          <Button type={'submit'} variant={'primary'}>
+            {t.submitButton}
+          </Button>
+        </div>
       </form>
     </div>
   );

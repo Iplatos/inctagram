@@ -37,6 +37,7 @@ export const Checkbox = forwardRef<ElementRef<typeof CheckboxRadix.Root>, Checkb
 
     return (
       <div className={style.container}>
+        {/*TODO: fix label layout (click doesn't work, for example)*/}
         <CheckboxRadix.Root
           checked={checked}
           className={`${style.checkboxRoot} ${disabled && style.disabled}`}
