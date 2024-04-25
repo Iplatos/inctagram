@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import style from './tabs.module.scss';
+import { concatString } from '@/shared/helpers/concatString';
 
 export type TabType = {
   disabled?: boolean;
@@ -43,7 +44,7 @@ export const Tabs = (props: TabsProps) => {
 
   const onLinkClick = (tab: TabType) => {
     if (isLink) {
-      router.push(`/settings/${tab.value.split(' ').join('')}`);
+      router.push(`/settings/${concatString(tab.value)}`);
     }
 
     return;
