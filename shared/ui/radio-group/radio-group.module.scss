@@ -1,0 +1,89 @@
+@use '../../../styles/helpers' as *;
+@use '../../../styles/mixins' as *;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: em(28);
+
+  &[data-orientation='horizontal'] {
+    flex-direction: row;
+  }
+}
+
+.itemWrapper {
+  @include flex($justify: null);
+
+  gap: em(14);
+  word-break: break-all;
+}
+
+.item {
+  @include flex;
+
+  cursor: pointer;
+
+  position: relative;
+
+  width: em(26);
+  height: em(26);
+
+  border: 3px solid currentcolor;
+  border-radius: 50%;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: em(36);
+    height: em(36);
+
+    background-color: inherit;
+    border-radius: 50%;
+
+    transition: 0.5s;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: var(--color-dark-300);
+  }
+
+  &[data-state='checked'] {
+    background-color: var(--color-dark-100);
+  }
+
+  &:focus-visible {
+    outline: auto;
+  }
+
+  &[data-disabled] {
+    cursor: not-allowed;
+    color: var(--color-dark-100);
+    background-color: transparent;
+  }
+}
+
+.indicator {
+  width: em(12);
+  height: em(12);
+  background-color: currentcolor;
+  border-radius: 50%;
+}
+
+.label {
+  cursor: pointer;
+
+  .item[data-disabled] + & {
+    cursor: not-allowed;
+    color: var(--color-dark-100);
+  }
+}
