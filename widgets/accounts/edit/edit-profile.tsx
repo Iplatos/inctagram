@@ -1,7 +1,3 @@
-import React from 'react';
-
-import { log } from 'console';
-
 import {
   AccountManagement,
   Devices,
@@ -20,7 +16,6 @@ export const EditProfile = () => {
         defaultValue={'general information'}
         fullWidth
         isLink
-        onValueChange={() => console.log('1')}
         tabs={[
           {
             title: 'General information',

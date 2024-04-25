@@ -20,7 +20,7 @@ export const EditProfileLayout: NextPage<PropsWithChildren> = props => {
       <main>
         <NavBar />
         <Sidebar />
-        <div>
+        <div className={s.EditProfileContainer}>
           <EditProfile />
           {children}
         </div>

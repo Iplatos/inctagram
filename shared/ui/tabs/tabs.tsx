@@ -1,12 +1,12 @@
 import { FC, ReactNode } from 'react';
 
 import { capitalise } from '@/shared/helpers/capitalise';
+import { concatString } from '@/shared/helpers/concatString';
 import * as TabsRadix from '@radix-ui/react-tabs';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 import style from './tabs.module.scss';
-import { concatString } from '@/shared/helpers/concatString';
 
 export type TabType = {
   disabled?: boolean;
@@ -40,6 +40,9 @@ export type TabContentProps = {
 
 export const Tabs = (props: TabsProps) => {
   const router = useRouter();
+
+  console.log(router.pathname);
+
   const { children, defaultValue, fullWidth, isLink, onValueChange, tabs, value } = props;
 
   const onLinkClick = (tab: TabType) => {

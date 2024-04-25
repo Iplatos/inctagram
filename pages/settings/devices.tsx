@@ -1,11 +1,12 @@
+import { Devices } from '@/entities/accounts/edit';
 import { EditProfileLayout } from '@/widgets/editProfileLayout/editProfileLayout';
 
 import { NextPageWithLayout } from '../_app';
 
-const Devices: NextPageWithLayout = () => {
-  return <div>Devices page</div>;
+const DevicesPage: NextPageWithLayout = () => {
+  return <Devices />;
 };
 
-Devices.getLayout = page => <EditProfileLayout>{page}</EditProfileLayout>;
+DevicesPage.getLayout = page => <EditProfileLayout>{page}</EditProfileLayout>;
 
-export default Devices;
+export default DevicesPage;
