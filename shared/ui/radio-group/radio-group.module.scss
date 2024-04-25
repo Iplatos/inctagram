@@ -1,33 +1,34 @@
-.radioGroupRoot {
+@use '../../../styles/helpers' as *;
+@use '../../../styles/mixins' as *;
+
+.root {
   display: flex;
   flex-direction: column;
-  gap: 28px;
-}
+  gap: em(28);
 
-.radioGroup {
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  word-break: break-all;
-
-  &[data-disabled] {
-    cursor: not-allowed;
-    color: var(--color-dark-100);
+  &[data-orientation='horizontal'] {
+    flex-direction: row;
   }
 }
 
+.itemWrapper {
+  @include flex($justify: null);
+
+  gap: em(14);
+  word-break: break-all;
+}
+
 .item {
-  all: unset;
+  @include flex;
 
   cursor: pointer;
 
   position: relative;
 
-  min-width: 20px;
-  min-height: 20px;
+  width: em(26);
+  height: em(26);
 
-  background-color: transparent;
-  border: 3px solid var(--color-light-100);
+  border: 3px solid currentcolor;
   border-radius: 50%;
 
   &::before {
@@ -39,76 +40,50 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    width: 36px;
-    height: 36px;
+    width: em(36);
+    height: em(36);
 
+    background-color: inherit;
     border-radius: 50%;
 
     transition: 0.5s;
   }
 
-  &:hover::before {
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
     background-color: var(--color-dark-300);
   }
 
-  &:active::before {
+  &[data-state='checked'] {
     background-color: var(--color-dark-100);
   }
 
-  &:focus-visible::before {
-    background-color: var(--color-dark-500);
+  &:focus-visible {
+    outline: auto;
   }
 
   &[data-disabled] {
     cursor: not-allowed;
-    border-color: var(--color-dark-100);
-  }
-
-  &[data-disabled]:hover::before {
-    cursor: not-allowed;
+    color: var(--color-dark-100);
     background-color: transparent;
   }
 }
 
 .indicator {
-  position: relative;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  height: 100%;
-
-  &::after {
-    content: '';
-
-    display: block;
-
-    width: 12px;
-    height: 12px;
-
-    background-color: var(--color-light-100);
-    border-radius: 50%;
-  }
-
-  &[data-disabled]::after {
-    cursor: not-allowed;
-    background-color: var(--color-dark-100);
-  }
+  width: em(12);
+  height: em(12);
+  background-color: currentcolor;
+  border-radius: 50%;
 }
 
 .label {
   cursor: pointer;
 
-  .radioGroupRoot[data-disabled] & {
+  .item[data-disabled] + & {
     cursor: not-allowed;
     color: var(--color-dark-100);
   }
-}
-
-
-.disabled {
-  cursor: not-allowed;
-  color: var(--color-dark-100);
 }

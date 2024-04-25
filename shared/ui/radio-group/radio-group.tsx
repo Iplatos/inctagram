@@ -6,38 +6,33 @@ import { clsx } from 'clsx';
 
 import style from './radio-group.module.scss';
 
-export type OptionRadioGroup = {
+export type RadioGroupOption = {
   disabled?: boolean;
   label?: string;
   value: string;
 };
 
 export type RadioGroupProps = {
-  className?: string;
-  options: OptionRadioGroup[];
+  options: RadioGroupOption[];
 } & Omit<ComponentPropsWithoutRef<typeof Radio.Root>, 'children'>;
 
 export const RadioGroup = ({ className, defaultValue, options, ...rest }: RadioGroupProps) => {
   defaultValue ??= options[0].value;
 
   return (
-    <Radio.Root
-      className={clsx(style.radioGroupRoot, className)}
-      defaultValue={defaultValue}
-      {...rest}
-    >
+    <Radio.Root className={clsx(style.root, className)} defaultValue={defaultValue} {...rest}>
       {options.map(el => (
-        <div className={style.radioGroup} key={el.value}>
+        <div className={style.itemWrapper} key={el.value}>
           <Radio.Item
             className={clsx(style.item, el.disabled && style.disabled)}
             disabled={el.disabled}
             id={el.value}
             value={el.value}
           >
-            <Radio.Indicator className={clsx(style.indicator, el.disabled && style.disabled)} />
+            <Radio.Indicator className={style.indicator} />
           </Radio.Item>
           <Typography.Regular14
-            className={clsx(style.label, el.disabled && style.disabled)}
+            className={style.label}
             component={'label'}
             htmlFor={el.value}
             variant={'body2'}

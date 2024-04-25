@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { OptionRadioGroup, RadioGroup } from '@/shared/ui';
+import { RadioGroup, RadioGroupOption } from '@/shared/ui';
 
-const mockedOptions: OptionRadioGroup[] = [
+const mockedOptions: RadioGroupOption[] = [
   {
     label: 'First',
     value: '1',
@@ -17,13 +17,44 @@ const mockedOptions: OptionRadioGroup[] = [
   },
 ];
 
+/**
+ * Common component based on the headless [Radio Group](https://www.radix-ui.com/primitives/docs/components/radio-group#indicator) component from the Radix-UI.
+ */
 const meta = {
   argTypes: {
+    asChild: { table: { disable: true } },
+    defaultValue: {
+      control: 'text',
+      description:
+        'The value passed to the radio group when mounted. It is set to the first `options` element, if provided. Otherwise it is `undefined`.',
+      table: { type: { summary: 'string' } },
+    },
     disabled: {
       control: 'boolean',
+      table: { type: { summary: 'boolean' } },
+    },
+    onValueChange: {
+      control: { action: 'onValueChange' },
+      description: 'Event handler called when the value changes.',
+      table: { type: { summary: '(value: string) => void' } },
     },
     options: {
-      defaultValue: mockedOptions,
+      table: {
+        type: {
+          detail: `Array<${JSON.stringify(
+            { 'disabled?': 'boolean', 'label?': 'string', value: 'string' },
+            null,
+            2
+          )}>`,
+          summary: 'RadioGroupOption[]',
+        },
+      },
+    },
+    orientation: {
+      control: 'inline-radio',
+      description: 'The orientation of the component.',
+      options: ['horizontal', 'vertical'],
+      table: { type: { summary: 'horizontal | vertical' } },
     },
   },
   component: RadioGroup,
@@ -36,6 +67,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    defaultValue: mockedOptions[0].value,
+    disabled: false,
     options: mockedOptions,
   },
 };
