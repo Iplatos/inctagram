@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { OptionsRadioGroup, RadioGroup } from '@/shared/ui';
+import { OptionRadioGroup, RadioGroup } from '@/shared/ui';
 
-const mockedOptions: OptionsRadioGroup = [
+const mockedOptions: OptionRadioGroup[] = [
   {
     label: 'First',
     value: '1',
@@ -28,7 +28,7 @@ const meta = {
   },
   component: RadioGroup,
   tags: ['autodocs'],
-  title: 'Components/RadioGroup',
+  title: 'UI/RadioGroup',
 } satisfies Meta<typeof RadioGroup>;
 
 export default meta;

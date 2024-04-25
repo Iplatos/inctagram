@@ -48,11 +48,11 @@
   }
 
   &:hover::before {
-    background-color: var(--color-dark-500);
+    background-color: var(--color-dark-300);
   }
 
   &:active::before {
-    background-color: var(--color-light-100);
+    background-color: var(--color-dark-100);
   }
 
   &:focus-visible::before {
