@@ -1,7 +1,9 @@
 import { FC, ReactNode } from 'react';
 
+import { capitalise } from '@/shared/helpers/capitalise';
 import * as TabsRadix from '@radix-ui/react-tabs';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import style from './tabs.module.scss';
 
@@ -14,6 +16,7 @@ export type TabType = {
 type CommonProps = {
   children?: ReactNode;
   defaultValue?: string;
+  isLink?: boolean;
   onValueChange?: (value: string) => void;
   tabs: TabType[];
   value?: string;
@@ -35,7 +38,16 @@ export type TabContentProps = {
 };
 
 export const Tabs = (props: TabsProps) => {
-  const { children, defaultValue, fullWidth, onValueChange, tabs, value } = props;
+  const router = useRouter();
+  const { children, defaultValue, fullWidth, isLink, onValueChange, tabs, value } = props;
+
+  const onLinkClick = (tab: TabType) => {
+    if (isLink) {
+      router.push(`/settings/${tab.value.split(' ').join('')}`);
+    }
+
+    return;
+  };
 
   return (
     <TabsRadix.Root
@@ -46,16 +58,16 @@ export const Tabs = (props: TabsProps) => {
     >
       <TabsRadix.List className={style.list}>
         {tabs.map(tab => (
-          <Link href={`/$settings/{tab.value}`} key={tab.value}>
-            <TabsRadix.Trigger
-              className={`${style.trigger} ${fullWidth && style.fullWidth} `}
-              disabled={tab.disabled}
-              tabIndex={1}
-              value={tab.value}
-            >
-              {tab.title}
-            </TabsRadix.Trigger>
-          </Link>
+          <TabsRadix.Trigger
+            className={`${style.trigger} ${fullWidth && style.fullWidth} `}
+            disabled={tab.disabled}
+            key={tab.value}
+            onClick={() => onLinkClick(tab)}
+            tabIndex={1}
+            value={tab.value}
+          >
+            {tab.title}
+          </TabsRadix.Trigger>
         ))}
       </TabsRadix.List>
       {children}

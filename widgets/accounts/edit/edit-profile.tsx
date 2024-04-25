@@ -19,7 +19,8 @@ export const EditProfile = () => {
       <Tabs
         defaultValue={'general information'}
         fullWidth
-        onValueChange={() => console.log("tab")}
+        isLink
+        onValueChange={() => console.log('1')}
         tabs={[
           {
             title: 'General information',
@@ -30,7 +31,7 @@ export const EditProfile = () => {
           { title: 'My payments', value: 'my payments' },
         ]}
       >
-        <TabContent value={'general information'}>
+        {/* <TabContent value={'general information'}>
           <GeneralInformation />
         </TabContent>
         <TabContent value={'devices'}>
@@ -41,7 +42,7 @@ export const EditProfile = () => {
         </TabContent>
         <TabContent value={'my payments'}>
           <MyPayments />
-        </TabContent>
+        </TabContent> */}
       </Tabs>
     </div>
   );
