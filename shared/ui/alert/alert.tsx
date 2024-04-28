@@ -34,9 +34,11 @@ export const Alert = forwardRef<ElementRef<'div'>, AlertProps>(
         <div className={cls.message} data-test-id={'message'}>
           {children}
         </div>
-        <div className={cls.action} data-test-id={'action'}>
-          {showAction && resolvedAction}
-        </div>
+        {showAction && (
+          <div className={cls.action} data-test-id={'action'}>
+            {resolvedAction}
+          </div>
+        )}
       </div>
     );
   }
