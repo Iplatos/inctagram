@@ -1,9 +1,9 @@
 import { NextPageWithLayout } from '@/pages/_app';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { CommonLayout } from '@/widgets/Layout/CommonLayout';
+import { getBaseLayout } from '@/widgets/Layout/BaseLayout';
 import { EditProfile } from '@/widgets/accounts/edit/edit-profile';
 
-const Edit: NextPageWithLayout = () => {
+const Settings: NextPageWithLayout = () => {
   return (
     <>
       <HeadMeta title={'Edit'} />
@@ -12,5 +12,5 @@ const Edit: NextPageWithLayout = () => {
   );
 };
 
-Edit.getLayout = page => <CommonLayout>{page}</CommonLayout>;
-export default Edit;
+Settings.getLayout = getBaseLayout;
+export default Settings;

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
 import { useConfirmCodeMutation } from '@/shared/api/auth-api';
-import { AuthLayout } from '@/widgets/AuthLayout/AuthLayout';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
+import { Layout } from '@/widgets/Layout/Layout';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { NextPageWithLayout } from '../_app';
@@ -28,5 +28,5 @@ const ConfirmRegistration: NextPageWithLayout = () => {
   );
 };
 
-ConfirmRegistration.getLayout = page => <AuthLayout>{page}</AuthLayout>;
+ConfirmRegistration.getLayout = page => <Layout>{page}</Layout>;
 export default ConfirmRegistration;

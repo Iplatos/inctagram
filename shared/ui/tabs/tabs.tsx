@@ -1,10 +1,6 @@
-import { FC, ReactNode, useEffect } from 'react';
+import { FC, ReactNode } from 'react';
 
-import { capitalise } from '@/shared/helpers/capitalise';
-import { concatString } from '@/shared/helpers/concatString';
 import * as TabsRadix from '@radix-ui/react-tabs';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import style from './tabs.module.scss';
 
@@ -17,10 +13,9 @@ export type TabType = {
 type CommonProps = {
   children?: ReactNode;
   defaultValue?: string;
-  isLink?: boolean;
   onValueChange?: (value: string) => void;
   tabs: TabType[];
-  value?: string;
+  value?: string | string[];
 };
 
 type ConditionalProps =
@@ -39,19 +34,7 @@ export type TabContentProps = {
 };
 
 export const Tabs = (props: TabsProps) => {
-  const router = useRouter();
-
-  console.log(router.pathname);
-
-  const { children, defaultValue, fullWidth, isLink, onValueChange, tabs, value } = props;
-
-  const onLinkClick = (tab: TabType) => {
-    if (isLink) {
-      router.push(`/settings/${concatString(tab.value)}`);
-    }
-
-    return;
-  };
+  const { children, defaultValue, fullWidth, onValueChange, tabs, value } = props;
 
   return (
     <TabsRadix.Root
@@ -66,7 +49,6 @@ export const Tabs = (props: TabsProps) => {
             className={`${style.trigger} ${fullWidth && style.fullWidth} `}
             disabled={tab.disabled}
             key={tab.value}
-            onClick={() => onLinkClick(tab)}
             tabIndex={1}
             value={tab.value}
           >
