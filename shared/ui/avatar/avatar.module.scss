@@ -43,6 +43,6 @@ $avatar-sizes: (
 
 .fallback > svg {
   aspect-ratio: 1;
-  width: max(1.5rem, 50%);
+  width: max(1.5em, 35%);
   height: auto;
 }
