@@ -1,17 +1,16 @@
-import React from 'react';
-
+import { NextPageWithLayout } from '@/pages/_app';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
+import { CommonLayout } from '@/widgets/Layout/CommonLayout';
 import { EditProfile } from '@/widgets/accounts/edit/edit-profile';
 
-function Edit() {
+const Edit: NextPageWithLayout = () => {
   return (
     <>
       <HeadMeta title={'Edit'} />
       <EditProfile />
     </>
   );
-}
+};
 
-Edit.getLayout = getLayout;
+Edit.getLayout = page => <CommonLayout>{page}</CommonLayout>;
 export default Edit;

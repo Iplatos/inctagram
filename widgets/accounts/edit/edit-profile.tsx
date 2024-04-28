@@ -7,13 +7,14 @@ import {
   MyPayments,
 } from '@/entities/accounts/edit';
 import { TabContent, Tabs } from '@/shared/ui';
+import Link from 'next/link';
 
 import style from './edit-profile.module.scss';
 
 export const EditProfile = () => {
   return (
-    <div className={style.profileContainer}>
-      <Tabs
+    <div>
+      {/* <Tabs
         defaultValue={'general information'}
         fullWidth
         tabs={[
@@ -38,7 +39,7 @@ export const EditProfile = () => {
         <TabContent value={'my payments'}>
           <MyPayments />
         </TabContent>
-      </Tabs>
+      </Tabs> */}
     </div>
   );
 };

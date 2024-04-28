@@ -1,10 +1,10 @@
-import React from 'react';
-
+import { AuthLayout } from '@/widgets/AuthLayout/AuthLayout';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
 import { PasswordResetForm } from '@/widgets/auth';
 
-function PasswordReset() {
+import { NextPageWithLayout } from '../_app';
+
+const PasswordReset: NextPageWithLayout = () => {
   return (
     <>
       <HeadMeta title={'Create new password'} />
@@ -12,7 +12,7 @@ function PasswordReset() {
       <PasswordResetForm />
     </>
   );
-}
+};
 
-PasswordReset.getLayout = getLayout;
+PasswordReset.getLayout = page => <AuthLayout>{page}</AuthLayout>;
 export default PasswordReset;

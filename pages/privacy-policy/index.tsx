@@ -1,17 +1,17 @@
-import React from 'react';
-
 import { AgreementContent } from '@/entities';
+import { AuthLayout } from '@/widgets/AuthLayout/AuthLayout';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
 
-function PrivacyPolicy() {
+import { NextPageWithLayout } from '../_app';
+
+const PrivacyPolicy: NextPageWithLayout = () => {
   return (
     <>
       <HeadMeta title={'Privacy policy'} />
       <AgreementContent privacyPolicy />
     </>
   );
-}
+};
 
-PrivacyPolicy.getLayout = getLayout;
+PrivacyPolicy.getLayout = page => <AuthLayout>{page}</AuthLayout>;
 export default PrivacyPolicy;

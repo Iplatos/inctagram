@@ -21,7 +21,7 @@ function Home() {
       <div style={{ marginLeft: '300px' }}>Hello World!</div>
     </>
   );
-}
+};
 
-Home.getLayout = getLayout;
+Home.getLayout = page => <CommonLayout>{page}</CommonLayout>;
 export default Home;

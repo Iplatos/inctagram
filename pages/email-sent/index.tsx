@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { CloseDialog, Modal } from '@/features/modal';
 import { Button } from '@/shared/ui/Button';
 import { Typography } from '@/shared/ui/typography';
+import { AuthLayout } from '@/widgets/AuthLayout/AuthLayout';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
 import { Trans } from '@/widgets/Trans/Trans';
 
-const EmailSent = () => {
+import { NextPageWithLayout } from '../_app';
+
+const EmailSent: NextPageWithLayout = () => {
   const [open, setOpen] = useState<boolean>(true);
   const [email, setEmail] = useState<string>('someEmail');
 
@@ -39,5 +41,5 @@ const EmailSent = () => {
   );
 };
 
-EmailSent.getLayout = getLayout;
+EmailSent.getLayout = page => <AuthLayout>{page}</AuthLayout>;
 export default EmailSent;
