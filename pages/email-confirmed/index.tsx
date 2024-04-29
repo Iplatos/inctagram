@@ -1,5 +1,5 @@
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { Layout } from '@/widgets/Layout/Layout';
+import { getLayout } from '@/widgets/Layout/Layout';
 import { RedirectContent } from '@/widgets/auth/redirect-content/redirect-content';
 
 import { NextPageWithLayout } from '../_app';
@@ -14,5 +14,5 @@ const ConfirmedEmailPage: NextPageWithLayout = () => {
   );
 };
 
-ConfirmedEmailPage.getLayout = page => <Layout>{page}</Layout>;
+ConfirmedEmailPage.getLayout = getLayout;
 export default ConfirmedEmailPage;

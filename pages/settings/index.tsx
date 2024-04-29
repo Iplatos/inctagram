@@ -1,6 +1,6 @@
 import { NextPageWithLayout } from '@/pages/_app';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getBaseLayout } from '@/widgets/Layout/BaseLayout';
+import { getSettingsLayout } from '@/widgets/Layout/SettingsLayout';
 import { EditProfile } from '@/widgets/accounts/edit/edit-profile';
 
 const Settings: NextPageWithLayout = () => {
@@ -12,5 +12,5 @@ const Settings: NextPageWithLayout = () => {
   );
 };
 
-Settings.getLayout = getBaseLayout;
+Settings.getLayout = getSettingsLayout;
 export default Settings;

@@ -1,6 +1,6 @@
 import { AgreementContent } from '@/entities';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { Layout } from '@/widgets/Layout/Layout';
+import { getLayout } from '@/widgets/Layout/Layout';
 
 import { NextPageWithLayout } from '../_app';
 
@@ -13,5 +13,5 @@ const PrivacyPolicy: NextPageWithLayout = () => {
   );
 };
 
-PrivacyPolicy.getLayout = page => <Layout>{page}</Layout>;
+PrivacyPolicy.getLayout = getLayout;
 export default PrivacyPolicy;

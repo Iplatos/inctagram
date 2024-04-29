@@ -11,12 +11,7 @@ export const Layout: NextPage<PropsWithChildren> = props => {
   return (
     <>
       <Provider store={store}>
-        <div
-          style={{
-            background: 'red',
-            // height: '100vh',
-          }}
-        >
+        <div>
           <Header />
           {children}
         </div>

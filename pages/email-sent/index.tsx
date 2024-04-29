@@ -4,7 +4,7 @@ import { CloseDialog, Modal } from '@/features/modal';
 import { Button } from '@/shared/ui/Button';
 import { Typography } from '@/shared/ui/typography';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { Layout } from '@/widgets/Layout/Layout';
+import { getLayout } from '@/widgets/Layout/Layout';
 import { Trans } from '@/widgets/Trans/Trans';
 
 import { NextPageWithLayout } from '../_app';
@@ -41,5 +41,5 @@ const EmailSent: NextPageWithLayout = () => {
   );
 };
 
-EmailSent.getLayout = page => <Layout>{page}</Layout>;
+EmailSent.getLayout = getLayout;
 export default EmailSent;

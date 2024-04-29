@@ -1,5 +1,5 @@
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { Layout } from '@/widgets/Layout/Layout';
+import { getLayout } from '@/widgets/Layout/Layout';
 import { RedirectContent } from '@/widgets/auth';
 
 import { NextPageWithLayout } from '../_app';
@@ -13,5 +13,5 @@ const LinkExpiredPage: NextPageWithLayout = () => {
   );
 };
 
-LinkExpiredPage.getLayout = page => <Layout>{page}</Layout>;
+LinkExpiredPage.getLayout = getLayout;
 export default LinkExpiredPage;
