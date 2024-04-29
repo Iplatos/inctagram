@@ -1,7 +1,8 @@
-import { useReducer } from 'react';
-import { CroppedRect, Position } from 'react-avatar-editor';
+import type { CropProps } from '@/shared/ui/croppedImage';
+import type { CroppedRect, Position } from 'react-avatar-editor';
 
-import { CropProps } from '@/shared/ui/croppedImage';
+import { useReducer } from 'react';
+
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 // TODO: set max photo size to 10 Mb

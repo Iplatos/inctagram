@@ -1,8 +1,6 @@
 import { FC, useState } from 'react';
-import { Provider } from 'react-redux';
 
-import { store } from '@/shared/api/store';
-import { convertFileToBase64 } from '@/shared/helpers/convertFileToBase64';
+import { blobToBase64 } from '@/shared/helpers';
 import { Avatar, Button } from '@/shared/ui';
 import { CropProps } from '@/shared/ui/croppedImage';
 import { Meta, StoryObj } from '@storybook/react';
@@ -23,15 +21,8 @@ const CustomRender: FC = () => {
   };
 
   const handleImageSave: AvatarUploaderProps['onImageSave'] = async (image, cropProps) => {
-    if (typeof image === 'string') {
-      setAvatar(image);
-      setCropProps(cropProps);
-    } else {
-      const avatar = await convertFileToBase64(image);
-
-      setAvatar(avatar);
-      setCropProps(cropProps);
-    }
+    setAvatar(await blobToBase64(image));
+    setCropProps(cropProps);
   };
 
   return (

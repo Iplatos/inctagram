@@ -2,13 +2,13 @@ import React, { ChangeEvent, ElementRef, FC, useRef } from 'react';
 import AvatarEditor from 'react-avatar-editor';
 
 import { Modal } from '@/features/modal';
+import { dataURLToBlob } from '@/shared/helpers';
 import { Button } from '@/shared/ui';
 import { Alert } from '@/shared/ui/alert';
 import { CropProps } from '@/shared/ui/croppedImage';
 import { Typography } from '@/shared/ui/typography';
 import { Trans } from '@/widgets/Trans/Trans';
 import { AvatarFallback } from 'assets/icons/avatar-fallback';
-import Image from 'next/image';
 
 import s from './avatar-uploader.module.scss';
 
@@ -27,7 +27,7 @@ export type AvatarUploaderProps = {
   avatar?: File | string;
   cropProps?: CropProps;
   onClose: () => void;
-  onImageSave: (image: File | string, cropProps: CropProps) => void;
+  onImageSave: (image: Blob, cropProps: CropProps) => void;
   open: boolean;
 };
 
@@ -94,7 +94,10 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
 
     const { height, width, x, y } = canvas.getCroppingRect();
 
-    onImageSave(previewOrAvatar, {
+    const file =
+      typeof previewOrAvatar === 'string' ? dataURLToBlob(previewOrAvatar) : previewOrAvatar;
+
+    onImageSave(file, {
       offsetX: castCroppedSizeToOffsetProp(width, x),
       offsetY: castCroppedSizeToOffsetProp(height, y),
       scale: state.cropProps.scale,
