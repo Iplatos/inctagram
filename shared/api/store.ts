@@ -6,7 +6,6 @@ import { authSlice } from '@/widgets/auth/slices/auth';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 const rootReducer = combineReducers({
-  [addPhotoReducer.name]: addPhotoReducer.reducer,
   [authSlice.name]: authSlice.reducer,
   [baseApi.reducerPath]: baseApi.reducer,
 });

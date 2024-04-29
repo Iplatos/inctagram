@@ -35,7 +35,7 @@ export const Modal = (props: ModalProps) => {
     <Dialog onOpenChange={handleModalClosed} open={open}>
       {open && (
         <DialogPortal forceMount>
-          <DialogOverlay asChild className={style.dialogOverlay} />
+          <DialogOverlay className={style.dialogOverlay} />
           <DialogContent
             asChild
             className={className ? `${style.dialogContent} ${className}` : style.dialogContent}

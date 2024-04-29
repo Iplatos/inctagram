@@ -6,3 +6,4 @@ export * from './SelectBox';
 export * from './textField';
 export * from './tabs';
 export * from './pagination';
+export * from './avatar';

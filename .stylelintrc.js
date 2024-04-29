@@ -13,6 +13,7 @@ const finalConfig = {
         message: 'Expected placeholder to be either kebab-case or lowerCamelCase',
       },
     ],
+    'scss/dollar-variable-colon-space-after': 'always-single-line',
   },
 };
 
