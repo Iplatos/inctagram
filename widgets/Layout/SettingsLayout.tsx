@@ -12,7 +12,9 @@ export const SettingsLayout: NextPage<PropsWithChildren> = props => {
   return (
     <Layout>
       <Sidebar />
-      <EditProfile />
+      <div style={{ marginLeft: '220px', paddingTop: '60px' }}>
+        <EditProfile />
+      </div>
       {children}
     </Layout>
   );

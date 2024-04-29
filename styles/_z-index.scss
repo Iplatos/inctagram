@@ -2,6 +2,7 @@ $z-index: (
   content: 1500,
   form: 100,
   modal: 1000,
+  header: 2000,
 );
 
 @function z-index($key) {

@@ -17,12 +17,12 @@ export const Header = () => {
 
   return (
     <header className={styles.header}>
-      <div className={styles.container}>
-        <div className={styles.logo}>
-          <Link href={'/'}>Inctagram</Link>
-        </div>
-        <div className={styles.flex}>
-          {/*{meData ? (
+      {/* <div className={styles.container}> */}
+      <div className={styles.logo}>
+        <Link href={'/'}>Inctagram</Link>
+      </div>
+      <div className={styles.flex}>
+        {/*{meData ? (
             <>
               <NotificationMenu notifications={mockedNotifications} />
               <LangSwitcher />
@@ -41,17 +41,17 @@ export const Header = () => {
               </div>
             </>
           )}*/}
-          <LangSwitcher />
-          <div className={styles['buttons-wrapper']}>
-            <Button variant={'text'}>
-              <Link href={'/sign-in'}>{t.navbar.signIn}</Link>
-            </Button>
-            <Button>
-              <Link href={'/sign-up'}>{t.navbar.signUp}</Link>
-            </Button>
-          </div>
+        <LangSwitcher />
+        <div className={styles['buttons-wrapper']}>
+          <Button variant={'text'}>
+            <Link href={'/sign-in'}>{t.navbar.signIn}</Link>
+          </Button>
+          <Button>
+            <Link href={'/sign-up'}>{t.navbar.signUp}</Link>
+          </Button>
         </div>
       </div>
+      {/* </div> */}
     </header>
   );
 };
