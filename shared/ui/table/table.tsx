@@ -1,8 +1,11 @@
+import { v1 } from 'uuid';
+
 import {
   Column,
   Sort,
   Table,
   TableBody,
+  TableBodyRows,
   TableDataCell,
   TableHeader,
   TableRow,
@@ -11,7 +14,6 @@ import {
 export type PaymentData = {
   dateOfPayment: string;
   endDateOfSubscription: string;
-  id: string;
   paymentType: string;
   price: string;
   subscriptionType: string;
@@ -28,17 +30,7 @@ export const TableComponent = (props: TableProps) => {
   return (
     <Table>
       <TableHeader columns={props.columns} onSort={props.onSort} sort={props.sort}></TableHeader>
-      <TableBody>
-        {props.data.map(el => (
-          <TableRow key={el.id}>
-            <TableDataCell>{el.dateOfPayment}</TableDataCell>
-            <TableDataCell>{el.endDateOfSubscription}</TableDataCell>
-            <TableDataCell>{el.price}</TableDataCell>
-            <TableDataCell>{el.subscriptionType}</TableDataCell>
-            <TableDataCell>{el.paymentType}</TableDataCell>
-          </TableRow>
-        ))}
-      </TableBody>
+      <TableBodyRows data={props.data} />
     </Table>
   );
 };

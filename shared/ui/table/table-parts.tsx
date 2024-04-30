@@ -1,12 +1,14 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
 
 import Image from 'next/image';
+import { v1 } from 'uuid';
 
 import s from './table.module.scss';
 
 import ArrowDown from '../../../assets/icons/arrow-down.svg?url';
 import Arrow from '../../../assets/icons/arrow-up.svg?url';
 import { Typography } from '../typography';
+import { PaymentData } from './table';
 
 export type Cols = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 type ThProps = {
@@ -117,5 +119,23 @@ export const TableHeader = ({ columns, onSort, sort, ...restProps }: TableHeader
         ))}
       </TableRow>
     </TableHead>
+  );
+};
+
+type TableBodyRowsProps = {
+  data: PaymentData[];
+};
+
+export const TableBodyRows = (props: TableBodyRowsProps) => {
+  return (
+    <TableBody>
+      {props.data.map(el => (
+        <TableRow key={v1()}>
+          {Object.entries(el).map(el => (
+            <TableDataCell key={v1()}>{el[1]}</TableDataCell>
+          ))}
+        </TableRow>
+      ))}
+    </TableBody>
   );
 };

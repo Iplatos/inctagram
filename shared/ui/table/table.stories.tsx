@@ -20,7 +20,6 @@ const data = [
   {
     dateOfPayment: '12-12-2024',
     endDateOfSubscription: '12-12-2024',
-    id: '1',
     paymentType: 'Stripe',
     price: '50$',
     subscriptionType: '7 days',
@@ -28,7 +27,6 @@ const data = [
   {
     dateOfPayment: '12-12-2024',
     endDateOfSubscription: '12-12-2024',
-    id: '2',
     paymentType: 'Paypal',
     price: '100$',
     subscriptionType: '1 month',
@@ -36,7 +34,6 @@ const data = [
   {
     dateOfPayment: '12-12-2024',
     endDateOfSubscription: '12-12-2024',
-    id: '3',
     paymentType: 'Paypal',
     price: '10$',
     subscriptionType: '1 day',
