@@ -18,7 +18,7 @@ export const CommonLayout: NextPage<PropsWithChildren> = props => {
       <Header />
       <main>
         <NavBar />
-        <div style={{ marginLeft: '0px' }}>{children}</div>
+        <div>{children}</div>
       </main>
     </Provider>
   );
