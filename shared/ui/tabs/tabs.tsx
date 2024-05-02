@@ -41,8 +41,6 @@ export type TabContentProps = {
 export const Tabs = (props: TabsProps) => {
   const router = useRouter();
 
-  console.log(router.pathname);
-
   const { children, defaultValue, fullWidth, isLink, onValueChange, tabs, value } = props;
 
   const onLinkClick = (tab: TabType) => {

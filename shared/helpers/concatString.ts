@@ -9,7 +9,7 @@ export const concatString = (string: string) => {
 
     array[0] = splitted[0];
 
-    return array.join('');
+    return array.join('-');
   }
 
   return string.toLowerCase();
