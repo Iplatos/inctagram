@@ -1,5 +1,5 @@
 import React, { ChangeEvent, ElementRef, FC, useRef } from 'react';
-import AvatarEditor from 'react-avatar-editor';
+import AvatarEditor, { CroppedRect } from 'react-avatar-editor';
 
 import { Modal } from '@/features/modal';
 import { dataURLToBlob } from '@/shared/helpers';
@@ -12,40 +12,37 @@ import { AvatarFallback } from 'assets/icons/avatar-fallback';
 
 import s from './avatar-uploader.module.scss';
 
-import {
-  canvasInitialized,
-  canvasPositionChanged,
-  castCroppedSizeToOffsetProp,
-  modalClosed,
-  previewAdded,
-  scaleChanged,
-  useAvatarUploader,
-} from './useAvatarUploader';
+import { useAvatarUploader } from './useAvatarUploader';
 
 // TODO: add missing common components to index file in shared/ui
 export type AvatarUploaderProps = {
   avatar?: File | string;
-  cropProps?: CropProps;
+  initCropProps?: CropProps;
   onClose: () => void;
   onImageSave: (image: Blob, cropProps: CropProps) => void;
   open: boolean;
 };
 
-const defaultCropProps = { offsetX: 0.5, offsetY: 0.5, scale: 1 };
-
 export const AvatarUploader: FC<AvatarUploaderProps> = ({
   avatar,
-  cropProps = defaultCropProps,
+  initCropProps,
   onClose,
   onImageSave,
   open,
 }) => {
-  const [state, dispatch] = useAvatarUploader();
-
   const editorRef = useRef<AvatarEditor>(null);
   const inputRef = useRef<ElementRef<'input'>>(null);
-
-  const previewOrAvatar = state.preview ?? avatar;
+  const {
+    actions: {
+      editorClosed,
+      editorPositionChanged,
+      editorPositionInitialized,
+      loadedFromDevice,
+      scaleChanged,
+    },
+    dispatch,
+    state,
+  } = useAvatarUploader();
 
   const changeImageScale = (e: React.WheelEvent<HTMLDivElement>) => {
     const offset = e.deltaY > 0 ? -0.1 : 0.1;
@@ -54,56 +51,61 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
   };
 
   const handleClose = () => {
-    dispatch(modalClosed());
+    dispatch(editorClosed());
     onClose();
   };
 
-  const uploadPreview = (e: ChangeEvent<HTMLInputElement>) => {
+  const uploadFromDevice = (e: ChangeEvent<HTMLInputElement>) => {
     const preview = e.target.files?.[0];
 
     if (!preview) {
       return;
     }
 
-    dispatch(previewAdded(preview));
+    dispatch(loadedFromDevice(preview));
   };
 
-  const adjustCanvasCropping = () => {
-    const canvas = editorRef.current;
+  // TODO: add helper to receive default cropProps
+  const initEditorPosition = () => {
+    if (editorRef.current) {
+      const initPosition: CroppedRect & Partial<CropProps> = {
+        ...editorRef.current.getCroppingRect(),
+        ...initCropProps,
+      };
 
-    if (!canvas) {
-      return;
+      dispatch(editorPositionInitialized(initPosition));
     }
-
-    // TODO: fix a bug where the canvas position is retained even when loading a new preview
-    // TODO: add helper to receive default cropProps
-    dispatch(
-      canvasInitialized({
-        ...canvas.getCroppingRect(),
-        ...(avatar ? cropProps : defaultCropProps),
-      })
-    );
   };
 
   const saveAvatar = () => {
-    const canvas = editorRef.current;
+    const editor = editorRef.current;
 
-    if (!canvas || !previewOrAvatar) {
+    if (!editor) {
       return;
     }
 
-    const { height, width, x, y } = canvas.getCroppingRect();
+    const { height, width, x, y } = editor.getCroppingRect();
+    const cropProps: CropProps = {
+      offsetX: editorPositionToOffset(width, x),
+      offsetY: editorPositionToOffset(height, y),
+      scale: state.scale,
+    };
 
-    const file =
-      typeof previewOrAvatar === 'string' ? dataURLToBlob(previewOrAvatar) : previewOrAvatar;
+    if (state.preview) {
+      onImageSave(state.preview, cropProps);
+      handleClose();
 
-    onImageSave(file, {
-      offsetX: castCroppedSizeToOffsetProp(width, x),
-      offsetY: castCroppedSizeToOffsetProp(height, y),
-      scale: state.cropProps.scale,
-    });
-    handleClose();
+      return;
+    }
+    if (avatar) {
+      const file = typeof avatar === 'string' ? dataURLToBlob(avatar) : avatar;
+
+      onImageSave(file, cropProps);
+      handleClose();
+    }
   };
+
+  const previewOrAvatar = state.preview ?? avatar;
 
   return (
     <Modal onClose={handleClose} open={open} showCloseButton title={'Add a Profile Photo'}>
@@ -128,11 +130,11 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
               className={s.canvas}
               color={[23, 23, 23, 0.75]} // --color-dark-500 with transparency
               image={previewOrAvatar}
-              onImageReady={adjustCanvasCropping}
-              onPositionChange={pos => dispatch(canvasPositionChanged(pos))}
-              position={state.canvasPosition}
+              onImageReady={initEditorPosition}
+              onPositionChange={pos => dispatch(editorPositionChanged(pos))}
+              position={state.editorPosition}
               ref={editorRef}
-              scale={state.cropProps.scale}
+              scale={state.scale}
               style={{ aspectRatio: 1, height: 'auto', width: '100%' }}
             />
           </div>
@@ -142,14 +144,31 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
           </div>
         )}
 
-        <input onChange={uploadPreview} ref={inputRef} style={{ display: 'none' }} type={'file'} />
+        <input
+          onChange={uploadFromDevice}
+          ref={inputRef}
+          style={{ display: 'none' }}
+          type={'file'}
+        />
         <div className={s.buttonsGroup}>
-          {!state.preview && (
-            <Button onClick={() => inputRef.current?.click()}>select from device</Button>
-          )}
+          <Button
+            onClick={() => inputRef.current?.click()}
+            variant={previewOrAvatar ? 'tertiary' : 'primary'}
+          >
+            select from device
+          </Button>
           {previewOrAvatar && <Button onClick={saveAvatar}>save</Button>}
         </div>
       </div>
     </Modal>
   );
+};
+
+const editorPositionToOffset = (circleSize: number, circlePos: number) => {
+  if (circleSize === 1) {
+    return 0.5;
+  }
+  const offset = circlePos / (1 - circleSize);
+
+  return Math.round(offset * 100) / 100;
 };
