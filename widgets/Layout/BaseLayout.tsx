@@ -13,17 +13,9 @@ export const BaseLayout: NextPage<PropsWithChildren> = props => {
 
   return (
     <Provider store={store}>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          margin: '0',
-          padding: '0',
-        }}
-      >
+      <div className={style.container}>
         <Header />
-        <main style={{ overflow: 'hidden', width: '100%' }}>
+        <main className={style.main}>
           <NavBar />
           <div>{children}</div>
         </main>
