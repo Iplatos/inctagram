@@ -1,23 +1,28 @@
 .dialogOverlay {
-  background-color: var(--color-dark-900);
-  opacity: 50%;
   position: fixed;
   inset: 0;
-  animation: overlayShow 300ms;
+
+  opacity: 0.5;
+  background-color: var(--color-dark-900);
+
+  animation: overlay-show 300ms;
 }
 
 .dialogContent {
-  background-color: var(--color-dark-300);
-  border-radius: 2px;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 378px;
-  padding: 12px 0 36px 0;
-  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+
   box-sizing: border-box;
+  width: 378px;
+  padding: 12px 0 36px;
+
+  background-color: var(--color-dark-300);
   border: 1px solid var(--color-dark-100);
+  border-radius: 2px;
+
+  animation: content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dialogContent:focus {
@@ -26,42 +31,48 @@
 
 .closeButton {
   all: unset;
-  height: 24px;
-  width: 24px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+
+  cursor: pointer;
+
   position: absolute;
   top: 17px;
   right: 24px;
-  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+  height: 24px;
 }
 
 .titleBlock {
+  padding: 0 24px 11px;
   border-bottom: 1px solid var(--color-dark-100);
-  padding: 0 24px 11px 24px;
 }
 
 .contentBlock {
-  padding: 24px 24px 0 24px;
+  padding: 24px 24px 0;
 }
 
-@keyframes overlayShow {
+@keyframes overlay-show {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 0.5;
   }
 }
 
-@keyframes contentShow {
+@keyframes content-show {
   from {
-    opacity: 0;
     transform: translate(-50%, -48%) scale(0.96);
+    opacity: 0;
   }
+
   to {
-    opacity: 1;
     transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
   }
 }

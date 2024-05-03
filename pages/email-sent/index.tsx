@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
-import { Trans } from '@/widgets/Trans/Trans';
 import { CloseDialog, Modal } from '@/features/modal';
 import { Button } from '@/shared/ui/Button';
 import { Typography } from '@/shared/ui/typography';
+import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
+import { getLayout } from '@/widgets/Layout/Layout';
+import { Trans } from '@/widgets/Trans/Trans';
 
 const EmailSent = () => {
   const [open, setOpen] = useState<boolean>(true);
@@ -18,7 +18,6 @@ const EmailSent = () => {
   return (
     <>
       <HeadMeta title={'Email Sent'} />
-
       <Modal onClose={handleModalClosed} open={open} showCloseButton title={'Email sent'}>
         <Typography.Regular16>
           <Trans

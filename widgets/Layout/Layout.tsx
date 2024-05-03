@@ -8,8 +8,6 @@ import { NextPage } from 'next';
 
 import { Sidebar } from '../sidebar';
 
-import style from './Layout.module.scss';
-
 export const Layout: NextPage<PropsWithChildren> = props => {
   const { children } = props;
 
