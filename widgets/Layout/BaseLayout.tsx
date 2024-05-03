@@ -6,25 +6,24 @@ import { NavBar } from '@/widgets/NavBar/NavBar';
 import { Header } from '@/widgets/header';
 import { NextPage } from 'next';
 
-import { Sidebar } from '../sidebar';
+import style from './BaseLayout.module.scss';
 
-export const Layout: NextPage<PropsWithChildren> = props => {
+export const BaseLayout: NextPage<PropsWithChildren> = props => {
   const { children } = props;
 
   return (
-    <>
-      <Provider store={store}>
+    <Provider store={store}>
+      <div className={style.container}>
         <Header />
-        <main>
-          <Sidebar />
+        <main className={style.main}>
           <NavBar />
-          {children}
+          <div>{children}</div>
         </main>
-      </Provider>
-    </>
+      </div>
+    </Provider>
   );
 };
 
-export const getLayout = (page: ReactElement) => {
-  return <Layout>{page}</Layout>;
+export const getBaseLayout = (page: ReactElement) => {
+  return <BaseLayout>{page}</BaseLayout>;
 };

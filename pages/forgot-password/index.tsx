@@ -1,10 +1,10 @@
-import React from 'react';
-
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
+import { getBaseLayout } from '@/widgets/Layout/BaseLayout';
 import { ForgotPasswordForm } from '@/widgets/auth';
 
-function ForgotPassword() {
+import { NextPageWithLayout } from '../_app';
+
+const ForgotPassword: NextPageWithLayout = () => {
   return (
     <>
       <HeadMeta title={'Forgot Password?'} />
@@ -12,11 +12,11 @@ function ForgotPassword() {
       <ForgotPasswordForm />
     </>
   );
-}
+};
 
 //          //"8c9252c9-bff2-49e1-8027-38883b2d5cc5", -INCTAGRAM_TRAINEE_FRONT_TOKEN_HEROKU , incubator-icta-trainee
 //INCTAGRAM_TRAINEE_FRONT_TOKEN
-ForgotPassword.getLayout = getLayout;
+ForgotPassword.getLayout = getBaseLayout;
 export default ForgotPassword;
 
 /*

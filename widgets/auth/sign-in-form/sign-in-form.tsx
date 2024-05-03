@@ -37,15 +37,11 @@ export const SignInForm = () => {
   const router = useRouter();
   const [login, { data: loginData }] = useLoginMutation();
 
-  type FormValuesType = z.infer<typeof signInSchema>;
-  const onSubmit = (data: FormValuesType) => {
-    return login(data);
-  };
-
   const {
     control,
     formState: { isDirty, isSubmitting, isValid, submitCount },
     handleSubmit,
+    setError,
   } = useForm({
     defaultValues: {
       email: '',
@@ -54,6 +50,22 @@ export const SignInForm = () => {
     mode: 'onTouched',
     resolver: zodResolver(signInSchema),
   });
+
+  type FormValuesType = z.infer<typeof signInSchema>;
+  const onSubmit = async (data: FormValuesType) => {
+    try {
+      await login(data).unwrap();
+    } catch (e) {
+      setError('email', {
+        message: t.auth.signInPage.wrongEmail,
+        type: 'server side validation',
+      });
+      setError('password', {
+        message: t.auth.signInPage.wrongPass,
+        type: 'server side validation',
+      });
+    }
+  };
 
   // if (loginData) {
   //   router.push(`/`);

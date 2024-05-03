@@ -106,6 +106,8 @@ export const en: LocaleType = {
       invalidEmail: 'Invalid email',
       invalidPass: 'Invalid Password',
       password: 'password',
+      wrongEmail: 'Wrong email',
+      wrongPass: 'Wrong password',
     },
     signUpPage: {
       account: 'Do you have an account?',
@@ -238,7 +240,7 @@ export const en: LocaleType = {
   },
 
   logOut: {
-    reallyWantToLogOut: 'Are you really want to log out of your account',
+    reallyWantToLogOut: 'Are you really want to log out of your account <email></email>',
   },
   navbar: {
     forgotPassword: 'Forgot Password',

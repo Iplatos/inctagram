@@ -1,10 +1,10 @@
-import React from 'react';
-
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
+import { getBaseLayout } from '@/widgets/Layout/BaseLayout';
 import { RedirectContent } from '@/widgets/auth/redirect-content/redirect-content';
 
-function ConfirmedEmailPage() {
+import { NextPageWithLayout } from '../_app';
+
+const ConfirmedEmailPage: NextPageWithLayout = () => {
   return (
     <>
       <HeadMeta title={'Email Confirmed'} />
@@ -12,7 +12,7 @@ function ConfirmedEmailPage() {
       <RedirectContent emailConfirmed />
     </>
   );
-}
+};
 
-ConfirmedEmailPage.getLayout = getLayout;
+ConfirmedEmailPage.getLayout = getBaseLayout;
 export default ConfirmedEmailPage;

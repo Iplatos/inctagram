@@ -1,10 +1,10 @@
-import React from 'react';
-
 import { useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
+import { getBaseLayout } from '@/widgets/Layout/BaseLayout';
 
-function Home() {
+import { NextPageWithLayout } from './_app';
+
+const Home: NextPageWithLayout = () => {
   const { error, isLoading } = useRefreshTokenQuery();
 
   if (isLoading) {
@@ -18,10 +18,10 @@ function Home() {
   return (
     <>
       <HeadMeta title={'main'} />
-      <div style={{ marginLeft: '300px' }}>Hello World!</div>
+      {/* <div style={{ marginLeft: '300px' }}>Hello World!</div> */}
     </>
   );
-}
+};
 
-Home.getLayout = getLayout;
+Home.getLayout = getBaseLayout;
 export default Home;

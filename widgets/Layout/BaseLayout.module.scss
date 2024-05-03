@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    overflow: hidden;
+    width: 100%;
+}

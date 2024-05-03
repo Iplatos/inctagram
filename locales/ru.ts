@@ -104,6 +104,8 @@ export const ru = {
       invalidEmail: 'Неверный формат электронной почты',
       invalidPass: 'Неверный формат пароля',
       password: 'Пароль',
+      wrongEmail: 'Неверный адрес электронной почты',
+      wrongPass: 'Неверный пароль',
     },
     signUpPage: {
       account: 'У Вас есть аккаунт?',
@@ -237,7 +239,7 @@ export const ru = {
   },
 
   logOut: {
-    reallyWantToLogOut: 'Вы действительно хотите выйти из аккаунта',
+    reallyWantToLogOut: 'Вы действительно хотите выйти из аккаунта <email></email>',
   },
   navbar: {
     forgotPassword: 'Забыл пароль',

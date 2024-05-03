@@ -1,6 +1,8 @@
-import { FC, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import * as TabsRadix from '@radix-ui/react-tabs';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import style from './tabs.module.scss';
 
@@ -34,7 +36,15 @@ export type TabContentProps = {
 };
 
 export const Tabs = (props: TabsProps) => {
+  const router = useRouter();
+
   const { children, defaultValue, fullWidth, onValueChange, tabs, value } = props;
+
+  const onLinkClick = (tab: TabType) => {
+    router.push(`/settings/${tab.value}`);
+
+    return;
+  };
 
   return (
     <TabsRadix.Root
@@ -49,6 +59,7 @@ export const Tabs = (props: TabsProps) => {
             className={`${style.trigger} ${fullWidth && style.fullWidth} `}
             disabled={tab.disabled}
             key={tab.value}
+            onClick={() => onLinkClick(tab)}
             tabIndex={1}
             value={tab.value}
           >
