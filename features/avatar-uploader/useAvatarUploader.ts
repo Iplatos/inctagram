@@ -3,6 +3,7 @@ import type { CroppedRect, Position } from 'react-avatar-editor';
 
 import { useReducer } from 'react';
 
+import { getDefaultCropProps } from '@/shared/helpers/getDefaultCropProps';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const PHOTO_MAX_SIZE = 10_485_760; // 10 Megabytes
@@ -14,10 +15,8 @@ type InitialState = {
   scale: number;
 };
 
-const defaultCropProps: CropProps = { offsetX: 0.5, offsetY: 0.5, scale: 1 };
-const defaultPosition: Position = { x: 0.5, y: 0.5 };
 const initialState: InitialState = {
-  editorPosition: defaultPosition,
+  editorPosition: { x: 0.5, y: 0.5 },
   error: null,
   scale: 1,
 };
@@ -45,6 +44,7 @@ const slice = createSlice({
       { payload }: PayloadAction<CroppedRect & Omit<Partial<CropProps>, 'scale'>>
     ) {
       const { height, offsetX, offsetY, width } = payload;
+      const defaultCropProps = getDefaultCropProps();
       let initialOffsetX = state.preview ? defaultCropProps.offsetX : offsetX;
       let initialOffsetY = state.preview ? defaultCropProps.offsetY : offsetY;
 
@@ -70,8 +70,8 @@ const slice = createSlice({
       }
 
       state.preview = payload;
-      state.editorPosition = defaultPosition;
-      state.scale = defaultCropProps.scale;
+      state.editorPosition = initialState.editorPosition;
+      state.scale = getDefaultCropProps().scale;
     },
     scaleChanged(state, { payload: offset }: PayloadAction<number>) {
       const prev = state.scale;

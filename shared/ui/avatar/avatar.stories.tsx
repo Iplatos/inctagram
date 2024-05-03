@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import UserAvatar from '@/assets/img/mock-user-avatar.jpg';
-import { Typography } from '@/shared/ui';
 import * as CroppedImageStories from '@/shared/ui/croppedImage/croppedImage.stories';
+import { Typography } from '@/shared/ui/typography';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Avatar, AvatarClasses, AvatarProps } from './avatar';

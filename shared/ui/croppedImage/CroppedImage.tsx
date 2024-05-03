@@ -1,5 +1,6 @@
 import React, { CSSProperties, FC, useMemo } from 'react';
 
+import { getDefaultCropProps } from '@/shared/helpers/getDefaultCropProps';
 import { resolveImageSrcToString } from '@/shared/helpers/resolveImageSrcToString';
 import { clsx } from 'clsx';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
@@ -8,11 +9,7 @@ import { z } from 'zod';
 
 import s from './croppedImage.module.scss';
 
-const DEFAULT_CROP_PROPS: CropProps = {
-  offsetX: 0.5,
-  offsetY: 0.5,
-  scale: 1,
-} as const;
+const DEFAULT_CROP_PROPS = getDefaultCropProps();
 
 export type CroppedImageSlot = 'image' | 'viewBox';
 export type CroppedImageClasses = { [P in CroppedImageSlot]?: string };

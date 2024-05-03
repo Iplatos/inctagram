@@ -65,7 +65,6 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
     dispatch(loadedFromDevice(preview));
   };
 
-  // TODO: add helper to receive default cropProps
   const initEditorPosition = () => {
     if (editorRef.current) {
       const initPosition: CroppedRect & Partial<CropProps> = {

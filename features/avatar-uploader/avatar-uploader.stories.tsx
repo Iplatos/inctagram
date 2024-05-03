@@ -2,13 +2,12 @@ import { FC, useEffect, useState } from 'react';
 
 import MockUserAvatar from '@/assets/img/mock-user-avatar.jpg';
 import { blobToBase64 } from '@/shared/helpers';
+import { getDefaultCropProps } from '@/shared/helpers/getDefaultCropProps';
 import { Avatar, Button } from '@/shared/ui';
 import { CropProps } from '@/shared/ui/croppedImage';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { AvatarUploader, AvatarUploaderProps } from './avatar-uploader';
-
-const defaultCropProps = { offsetX: 0.5, offsetY: 0.5, scale: 1 };
 
 type CustomRenderProps = {
   specifiedImage: 'base64' | 'file' | 'none';
@@ -19,7 +18,7 @@ const CustomRender: FC<CustomRenderProps> = ({ specifiedImage }) => {
 
   const [avatar, setAvatar] = useState<File | string | undefined>(undefined);
   const [avatarBase64, setAvatarBase64] = useState<string | undefined>(undefined);
-  const [cropProps, setCropProps] = useState<CropProps>(defaultCropProps);
+  const [cropProps, setCropProps] = useState<CropProps>(getDefaultCropProps());
 
   useEffect(() => {
     if (specifiedImage === 'none') {
@@ -44,7 +43,7 @@ const CustomRender: FC<CustomRenderProps> = ({ specifiedImage }) => {
   const resetAvatar = () => {
     setAvatar(undefined);
     setAvatarBase64(undefined);
-    setCropProps(defaultCropProps);
+    setCropProps(getDefaultCropProps());
   };
 
   const handleImageSave: AvatarUploaderProps['onImageSave'] = async (image, cropProps) => {
