@@ -1,12 +1,14 @@
 .root {
     display: flex;
     flex-direction: column;
+    margin-bottom: 24px;
 }
   
 .list {
     display: flex;
     flex-shrink: 0;
     border-bottom: 2px solid var(--color-dark-100);
+
 }
 
 .content {
@@ -15,6 +17,7 @@
   
 .trigger {
     all: unset;
+
 
     cursor: pointer;
 
@@ -27,6 +30,7 @@
     font-weight: 600;
     color: var(--color-dark-100);
     text-align: center;
+
     
       &.fullWidth {
         flex-grow: 1;

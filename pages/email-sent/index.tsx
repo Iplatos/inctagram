@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { CloseDialog, Modal } from '@/features/modal';
 import { Button } from '@/shared/ui/Button';
 import { Typography } from '@/shared/ui/typography';
-import { AuthLayout } from '@/widgets/AuthLayout/AuthLayout';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
+import { getBaseLayout } from '@/widgets/Layout/BaseLayout';
 import { Trans } from '@/widgets/Trans/Trans';
 
 import { NextPageWithLayout } from '../_app';
@@ -41,5 +41,5 @@ const EmailSent: NextPageWithLayout = () => {
   );
 };
 
-EmailSent.getLayout = page => <AuthLayout>{page}</AuthLayout>;
+EmailSent.getLayout = getBaseLayout;
 export default EmailSent;

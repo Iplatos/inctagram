@@ -33,7 +33,26 @@ export const EditProfile = () => {
 
   return (
     <div className={style.profileContainer}>
-      <Tabs defaultValue={tabs[tabDefaultValue()].value} fullWidth isLink tabs={tabs}></Tabs>
+      <Tabs defaultValue={tabs[tabDefaultValue()].value} fullWidth isLink tabs={tabs}>
+        <TabContent value={'general information'}>
+          <GeneralInformation />
+        </TabContent>
+        <TabContent value={'devices'}>
+          <Devices />
+        </TabContent>
+        <TabContent value={'account management'}>
+          <AccountManagement />
+        </TabContent>
+        <TabContent value={'my payments'}>
+          <MyPayments />
+        </TabContent>
+      </Tabs>
     </div>
   );
 };
+
+{
+  /* <TabContent value={'general information'}>
+          <GeneralInformation />
+        </TabContent> */
+}

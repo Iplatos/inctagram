@@ -1,5 +1,5 @@
-import { AuthLayout } from '@/widgets/AuthLayout/AuthLayout';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
+import { getBaseLayout } from '@/widgets/Layout/BaseLayout';
 import { SignUpForm } from '@/widgets/auth/sign-up-form';
 
 import { NextPageWithLayout } from '../_app';
@@ -13,5 +13,5 @@ const SignUp: NextPageWithLayout = () => {
   );
 };
 
-SignUp.getLayout = page => <AuthLayout>{page}</AuthLayout>;
+SignUp.getLayout = getBaseLayout;
 export default SignUp;

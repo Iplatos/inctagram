@@ -31,9 +31,6 @@ export const GeneralInformation = () => {
 
   const { data, isLoading } = useGetUserProfileQuery();
 
-  // if (isLoading) {
-  //   return <Loader />;
-  // } else {
   return (
     <>
       <div className={style.container}>

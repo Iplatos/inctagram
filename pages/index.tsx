@@ -1,7 +1,6 @@
-
 import { useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { CommonLayout } from '@/widgets/Layout/CommonLayout';
+import { getBaseLayout } from '@/widgets/Layout/BaseLayout';
 
 import { NextPageWithLayout } from './_app';
 
@@ -19,10 +18,10 @@ const Home: NextPageWithLayout = () => {
   return (
     <>
       <HeadMeta title={'main'} />
-      <div style={{ marginLeft: '300px' }}>Hello World!</div>
+      {/* <div style={{ marginLeft: '300px' }}>Hello World!</div> */}
     </>
   );
 };
 
-Home.getLayout = page => <CommonLayout>{page}</CommonLayout>;
+Home.getLayout = getBaseLayout;
 export default Home;

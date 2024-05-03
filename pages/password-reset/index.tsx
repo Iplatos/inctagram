@@ -1,5 +1,5 @@
-import { AuthLayout } from '@/widgets/AuthLayout/AuthLayout';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
+import { getBaseLayout } from '@/widgets/Layout/BaseLayout';
 import { PasswordResetForm } from '@/widgets/auth';
 
 import { NextPageWithLayout } from '../_app';
@@ -14,5 +14,5 @@ const PasswordReset: NextPageWithLayout = () => {
   );
 };
 
-PasswordReset.getLayout = page => <AuthLayout>{page}</AuthLayout>;
+PasswordReset.getLayout = getBaseLayout;
 export default PasswordReset;

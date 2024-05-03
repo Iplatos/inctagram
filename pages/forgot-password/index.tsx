@@ -1,5 +1,5 @@
-import { AuthLayout } from '@/widgets/AuthLayout/AuthLayout';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
+import { getBaseLayout } from '@/widgets/Layout/BaseLayout';
 import { ForgotPasswordForm } from '@/widgets/auth';
 
 import { NextPageWithLayout } from '../_app';
@@ -16,7 +16,7 @@ const ForgotPassword: NextPageWithLayout = () => {
 
 //          //"8c9252c9-bff2-49e1-8027-38883b2d5cc5", -INCTAGRAM_TRAINEE_FRONT_TOKEN_HEROKU , incubator-icta-trainee
 //INCTAGRAM_TRAINEE_FRONT_TOKEN
-ForgotPassword.getLayout = page => <AuthLayout>{page}</AuthLayout>;
+ForgotPassword.getLayout = getBaseLayout;
 export default ForgotPassword;
 
 /*

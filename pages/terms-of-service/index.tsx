@@ -1,6 +1,6 @@
 import { AgreementContent } from '@/entities';
-import { AuthLayout } from '@/widgets/AuthLayout/AuthLayout';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
+import { getBaseLayout } from '@/widgets/Layout/BaseLayout';
 
 import { NextPageWithLayout } from '../_app';
 
@@ -13,5 +13,5 @@ const TermsOfService: NextPageWithLayout = () => {
   );
 };
 
-TermsOfService.getLayout = page => <AuthLayout>{page}</AuthLayout>;
+TermsOfService.getLayout = getBaseLayout;
 export default TermsOfService;

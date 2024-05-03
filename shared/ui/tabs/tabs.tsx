@@ -1,7 +1,5 @@
-import { FC, ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 
-import { capitalise } from '@/shared/helpers/capitalise';
-import { concatString } from '@/shared/helpers/concatString';
 import * as TabsRadix from '@radix-ui/react-tabs';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -17,7 +15,6 @@ export type TabType = {
 type CommonProps = {
   children?: ReactNode;
   defaultValue?: string;
-  isLink?: boolean;
   onValueChange?: (value: string) => void;
   tabs: TabType[];
   value?: string;
@@ -41,12 +38,10 @@ export type TabContentProps = {
 export const Tabs = (props: TabsProps) => {
   const router = useRouter();
 
-  const { children, defaultValue, fullWidth, isLink, onValueChange, tabs, value } = props;
+  const { children, defaultValue, fullWidth, onValueChange, tabs, value } = props;
 
   const onLinkClick = (tab: TabType) => {
-    if (isLink) {
-      router.push(`/settings/${concatString(tab.value)}`);
-    }
+    router.push(`/settings/${tab.value}`);
 
     return;
   };
