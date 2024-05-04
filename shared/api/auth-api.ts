@@ -1,6 +1,7 @@
 import type {
   ChangePasswordRequestType,
-  ConfirmCodeRequestType,
+  ConfirmCodeRequestData,
+  ConfirmCodeResponse,
   LoginRequestData,
   LoginResponse,
   LogoutResponse,
@@ -25,7 +26,7 @@ export const authApi = baseApi.injectEndpoints({
         };
       },
     }),
-    confirmCode: builder.mutation<void, ConfirmCodeRequestType>({
+    confirmCode: builder.mutation<ConfirmCodeResponse, ConfirmCodeRequestData>({
       query: params => {
         return {
           body: params,

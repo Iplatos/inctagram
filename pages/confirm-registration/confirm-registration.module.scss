@@ -1,0 +1,15 @@
+@use '../../styles/mixins' as *;
+@use '../../styles/helpers' as *;
+
+.outerContainer {
+  margin-top: 60px;
+  margin-left: 220px;
+}
+
+.innerContainer {
+  @include flex($justify: null, $direction: column);
+
+  gap: rem(16);
+  max-width: 300px;
+  margin-inline: auto;
+}
