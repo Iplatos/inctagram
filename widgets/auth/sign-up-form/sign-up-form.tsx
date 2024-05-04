@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import { EmailSentModal } from '@/entities/modals/email-sent-modal/EmailSentModal';
 import { useSignUpMutation } from '@/shared/api/auth-api';
+import { ROUTERS } from '@/shared/constants';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Card, Typography } from '@/shared/ui';
 import { ControlledCheckbox } from '@/shared/ui/checkbox/controlled-checkbox';
@@ -147,7 +148,7 @@ export const SignUpForm = () => {
           <Typography.Regular16>{t.auth.signUpPage.account}</Typography.Regular16>
         </div>
         <Button className={clsx(s.center, s.signUp)} variant={'text'}>
-          <Link href={'/sign-in'}>{t.auth.signUpPage.signIn}</Link>
+          <Link href={ROUTERS.SIGN_IN}>{t.auth.signUpPage.signIn}</Link>
         </Button>
       </Card>
     </div>
