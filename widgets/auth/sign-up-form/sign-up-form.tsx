@@ -9,11 +9,11 @@ import { ControlledCheckbox } from '@/shared/ui/checkbox/controlled-checkbox';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { Trans } from '@/widgets/Trans/Trans';
 import { GitHubGoogleContainer } from '@/widgets/auth/gitHubGoogleContainer/gitHubGoogleContainer';
+import { SignUpFormValues, signUpSchema } from '@/widgets/auth/sign-up-form/signUpValidationSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { clsx } from 'clsx';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { z } from 'zod';
 
 import s from 'widgets/auth/sign-up-form/sign-up.module.scss';
 
@@ -22,44 +22,21 @@ const DevTool: React.ElementType = dynamic(
   { ssr: false }
 );
 
-const schema = z
-  .object({
-    checkbox: z.boolean(),
-    confirm: z.string(),
-    email: z.string().email({ message: 'The email must match the format example@example.com' }),
-    nickname: z
-      .string()
-      .min(6, { message: 'Minimum number of characters 6' })
-      .max(30, { message: 'Maximum number of characters 30' })
-      .regex(/^[0-9A-Za-z_-]+$/),
-    password: z
-      .string()
-      .min(6, { message: 'Minimum number of characters 6' })
-      .max(20, { message: 'Maximum number of characters 20' })
-      .refine(
-        value =>
-          /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~])/.test(value),
-        'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
-      ),
-  })
-  .refine(data => data.password === data.confirm, {
-    message: 'Passwords must match',
-    path: ['confirm'],
-  });
-
-type FormValues = z.input<typeof schema>;
-
 export const SignUpForm = () => {
   const { t } = useTranslation();
-  const [signUpTrigger] = useSignUpMutation();
+  const [signUpTrigger, data] = useSignUpMutation();
   const [open, setOpen] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
+
+  const schema = signUpSchema(t);
 
   const {
     control,
     formState: { isDirty, isSubmitting, isValid, submitCount },
     handleSubmit,
-  } = useForm<FormValues>({
+    reset,
+    setError,
+  } = useForm<SignUpFormValues>({
     defaultValues: {
       checkbox: false,
       confirm: '',
@@ -72,11 +49,28 @@ export const SignUpForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const signUp = handleSubmit(({ email, nickname, password }) => {
-    setOpen(true);
-    setEmail(email);
-
-    return signUpTrigger({ email, password, username: nickname });
+  const signUp = handleSubmit(async ({ email, nickname, password }) => {
+    try {
+      await signUpTrigger({ email, password, username: nickname }).unwrap();
+      if (data.data?.resultCode === 0) {
+        setOpen(true);
+        setEmail(email);
+        reset();
+      } else if (data.data?.resultCode === 1) {
+        // @ts-ignore
+        if (data.data?.errors[0].message === 'user with username is exist') {
+          setError('nickname', {
+            message: t.auth.signUpPage.errorUsername,
+          });
+        } else {
+          setError('email', {
+            message: t.auth.signUpPage.errorEmail,
+          });
+        }
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
   });
 
   const submitIsDisabled = !isDirty || (!isValid && !!submitCount) || isSubmitting;
