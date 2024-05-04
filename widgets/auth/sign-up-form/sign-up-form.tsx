@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { EmailSentModal } from '@/entities/modals/email-sent-modal/EmailSentModal';
 import { useSignUpMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Card, Typography } from '@/shared/ui';
@@ -51,6 +52,8 @@ type FormValues = z.input<typeof schema>;
 export const SignUpForm = () => {
   const { t } = useTranslation();
   const [signUpTrigger] = useSignUpMutation();
+  const [open, setOpen] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('');
 
   const {
     control,
@@ -69,13 +72,10 @@ export const SignUpForm = () => {
     resolver: zodResolver(schema),
   });
 
-  // if (signUpData) {
-  //   router.push(`/email-sent`);
-  //
-  //   return null;
-  // }
-
   const signUp = handleSubmit(({ email, nickname, password }) => {
+    setOpen(true);
+    setEmail(email);
+
     return signUpTrigger({ email, password, username: nickname });
   });
 
@@ -83,6 +83,7 @@ export const SignUpForm = () => {
 
   return (
     <div className={s.outerContainer}>
+      <EmailSentModal email={email} isOpen={open} setOpen={setOpen} />
       <Card className={s.card}>
         <Typography.H1>{t.auth.signUpPage.title}</Typography.H1>
         <GitHubGoogleContainer />
