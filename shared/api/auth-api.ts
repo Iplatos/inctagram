@@ -57,8 +57,6 @@ export const authApi = baseApi.injectEndpoints({
       },
       query: arg => ({
         body: arg,
-        // allow to set cross-site cookie 'refreshToken'
-        credentials: 'include',
         method: 'POST',
         url: 'auth/login',
       }),
@@ -86,11 +84,7 @@ export const authApi = baseApi.injectEndpoints({
         }
       },
       providesTags: ['Auth'],
-      query: () => ({
-        // allow to send cross-site cookie 'refreshToken'
-        credentials: 'include',
-        url: 'auth/refresh-token',
-      }),
+      query: () => 'auth/refresh-token',
     }),
     signUp: builder.mutation<SignUpResponse, SignUpRequestData>({
       query: body => {
