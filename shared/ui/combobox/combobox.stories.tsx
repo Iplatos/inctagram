@@ -2,9 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { useState } from 'react';
 
-import { ComboboxOption } from '@/shared/ui/combobox/combobox';
-
-import { Combobox } from '.';
+import { Combobox, ComboboxOption } from './combobox';
 
 const meta = {
   component: Combobox,
