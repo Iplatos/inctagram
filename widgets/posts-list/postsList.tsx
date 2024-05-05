@@ -1,6 +1,8 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
+import { Button, Typography } from '@/shared/ui';
 import { CropProps, CroppedImage } from '@/shared/ui/croppedImage';
+import clsx from 'clsx';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
 import s from './postsList.module.scss';
@@ -12,17 +14,29 @@ export type Post = {
 };
 
 export type PostsListProps = {
+  className?: string;
   posts: Post[];
 };
 
-export const PostsList: FC<PostsListProps> = ({ posts }) => {
+export const PostsList: FC<PostsListProps> = ({ className, posts }) => {
+  const mappedPosts = posts.map(({ cropProps = {}, src }, index) => (
+    <div className={s.post} key={index}>
+      <CroppedImage alt={''} fill src={src} {...cropProps} />
+    </div>
+  ));
+
   return (
-    <section className={s.container}>
-      {posts.map(({ cropProps = {}, src }, index) => (
-        <div className={s.post} key={index}>
-          <CroppedImage alt={''} fill src={src} {...cropProps} />
+    <section className={clsx(s.container, className)}>
+      {posts.length ? (
+        mappedPosts
+      ) : (
+        <div className={s.messageContainer}>
+          <Typography.H1 className={s.message} component={'h2'}>
+            There are not posts yet
+          </Typography.H1>
+          <Button>create post</Button>
         </div>
-      ))}
+      )}
     </section>
   );
 };

@@ -25,3 +25,13 @@
   position: relative;
   aspect-ratio: 1;
 }
+
+.messageContainer {
+  @include flex($direction: column);
+
+  grid-column: 1 / -1;
+}
+
+.message {
+  margin-bottom: rem(30);
+}
