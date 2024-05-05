@@ -71,14 +71,14 @@ const meta = {
 export default meta;
 type Story = StoryObj<PostsListPropsAndCustomArgs>;
 
-export const Primary: Story = {
+export const ManyPosts: Story = {
   args: { posts: [], postsCount: 7 },
 };
 
 export const OnePost: Story = {
-  args: { ...Primary.args, postsCount: 1 },
+  args: { ...ManyPosts.args, postsCount: 1 },
 };
 
 export const EmptyPosts: Story = {
-  args: { ...Primary.args, postsCount: 0 },
+  args: { ...ManyPosts.args, postsCount: 0 },
 };
