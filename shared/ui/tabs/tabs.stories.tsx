@@ -21,7 +21,7 @@ export default {
     ],
   },
   component: Tabs,
-  title: 'Components/Tabs',
+  title: 'UI/Tabs',
 } as Meta<typeof Tabs>;
 
 export const Primary = {};

@@ -5,7 +5,7 @@ import { useSignUpMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Card, Typography } from '@/shared/ui';
 import { ControlledCheckbox } from '@/shared/ui/checkbox/controlled-checkbox';
-import { ControlledTextField } from '@/shared/ui/controlled';
+import { ControlledTextField } from 'shared/ui/controlled-text-field';
 import { Trans } from '@/widgets/Trans/Trans';
 import { GitHubGoogleContainer } from '@/widgets/auth/gitHubGoogleContainer/gitHubGoogleContainer';
 import { zodResolver } from '@hookform/resolvers/zod';

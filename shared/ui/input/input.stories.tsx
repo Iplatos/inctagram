@@ -22,7 +22,7 @@ const inputAdornmentArgType = {
 
 /**
  * Common Input element based on react native input element.
- * It can be used in both uncontrolled and controlled way.
+ * It can be used in both uncontrolled and controlled-text-field way.
  * */
 const meta = {
   argTypes: {

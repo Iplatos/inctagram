@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import s from './Alerts.module.scss';
+import s from './alerts.module.scss';
 
 export const Alerts = (props: PropsType) => {
   const { children, className, isError } = props;

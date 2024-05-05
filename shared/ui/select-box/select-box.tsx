@@ -4,7 +4,7 @@ import Arrow from '@/assets/icons/arrow.svg?url';
 import * as Select from '@radix-ui/react-select';
 import Image from 'next/image';
 
-import styles from './SelectBox.module.scss';
+import styles from './select-box.module.scss';
 
 import { Typography } from '..';
 

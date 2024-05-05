@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { CloseDialog, Modal } from '@/features/modal';
 import { useLogoutMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button } from '@/shared/ui/Button';
 import { Typography } from '@/shared/ui/typography';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
 import HomeOutline from 'assets/icons/home-outline.svg';
@@ -14,7 +13,9 @@ import PersonOutline from 'assets/icons/person-outline.svg';
 import PlusSquareOutline from 'assets/icons/plus-square-outline.svg';
 import SearchOutline from 'assets/icons/searchOutline.svg';
 import TrendingUpOutline from 'assets/icons/trending-up-outline.svg';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Button } from 'shared/ui/button';
 
 import s from './sidebar.module.scss';
 
@@ -33,7 +34,7 @@ export const Sidebar = () => {
     setOpen(true);
   }
 
-  const logOut = () => {
+  const logOut = async () => {
     logout();
     // setTokenToLocalStorage(null);
     // dispatch(baseApi.util.resetApiState());
@@ -43,38 +44,38 @@ export const Sidebar = () => {
   return (
     <div className={s.sidebarContainer}>
       <div className={s.buttonContainer}>
-        <div className={s.button} tabIndex={1}>
+        <Link className={s.button} href={'/'} tabIndex={1}>
           <HomeOutline className={s.svgAsComponent} />
           Home
-        </div>
+        </Link>
 
-        <div className={s.button} tabIndex={1}>
+        <Link className={s.button} href={'/'} tabIndex={1}>
           <PlusSquareOutline className={s.svgAsComponent} />
           Create
-        </div>
-        <div className={s.button} tabIndex={1}>
+        </Link>
+        <Link className={s.button} href={'/'} tabIndex={1}>
           <PersonOutline className={s.svgAsComponent} />
           My Profile
-        </div>
-        <div className={s.button} tabIndex={1}>
+        </Link>
+        <Link className={s.button} href={'/'} tabIndex={1}>
           <MessageCircleOutline className={s.svgAsComponent} />
           Messenger
-        </div>
-        <div className={s.button} tabIndex={1}>
+        </Link>
+        <Link className={s.button} href={'/'} tabIndex={1}>
           <SearchOutline className={s.svgAsComponent} />
           Search
-        </div>
+        </Link>
       </div>
 
       <div className={s.buttonContainer}>
-        <div className={s.button} tabIndex={1}>
+        <Link className={s.button} href={'/'} tabIndex={1}>
           <TrendingUpOutline className={s.svgAsComponent} />
           Statistics
-        </div>
-        <div className={s.button} tabIndex={1}>
+        </Link>
+        <Link className={s.button} href={'/'} tabIndex={1}>
           <BookmarkOutline className={s.svgAsComponent} />
           Favorites
-        </div>
+        </Link>
       </div>
 
       <div className={s.buttonContainer}>

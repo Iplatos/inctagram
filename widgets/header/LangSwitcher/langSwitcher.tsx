@@ -1,6 +1,6 @@
 import FlagRu from '@/assets/icons/flag-ru.svg?url';
 import FlagEn from '@/assets/icons/flag-uk.svg?url';
-import { SelectBox } from '@/shared/ui/SelectBox';
+import { SelectBox } from 'shared/ui/select-box';
 import { useRouter } from 'next/router';
 
 /** Each value in selectOptions you provide should match locales in next.config.js */

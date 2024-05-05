@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Button } from '@/shared/ui/Button/button';
+import { Button } from '@/shared/ui/button/button';
 
 const meta = {
   argTypes: {
@@ -11,7 +11,7 @@ const meta = {
   },
   component: Button,
   tags: ['autodocs'],
-  title: 'Components/Button',
+  title: 'UI/Button',
 } satisfies Meta<typeof Button>;
 
 export default meta;
@@ -19,7 +19,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    children: 'Primary Button',
+    children: 'Primary button',
     disabled: false,
     variant: 'primary',
   },
@@ -27,28 +27,28 @@ export const Primary: Story = {
 
 export const Secondary: Story = {
   args: {
-    children: 'Secondary Button',
+    children: 'Secondary button',
     disabled: false,
     variant: 'secondary',
   },
 };
 export const Tertiary: Story = {
   args: {
-    children: 'Tertiary Button',
+    children: 'Tertiary button',
     disabled: false,
     variant: 'tertiary',
   },
 };
 export const Text: Story = {
   args: {
-    children: 'Text Button',
+    children: 'Text button',
     disabled: false,
     variant: 'text',
   },
 };
 export const FullWidth: Story = {
   args: {
-    children: 'Full Width Button',
+    children: 'Full Width button',
     disabled: false,
     fullWidth: true,
     variant: 'primary',
