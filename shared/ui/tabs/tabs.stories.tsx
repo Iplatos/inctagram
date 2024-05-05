@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Meta } from '@storybook/react';
 
-import { TabContent, Tabs } from '.';
+import { TabContent, Tabs } from './tabs';
 
 export default {
   args: {

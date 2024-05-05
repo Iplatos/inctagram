@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
 import NextIcon from '@/public/next.svg?url';
-import { Button, Typography } from '@/shared/ui';
+import { Button } from '@/shared/ui/Button';
 import { AlertProps, AlertSeverity } from '@/shared/ui/alert';
+import { Typography } from '@/shared/ui/typography';
 import { Meta, StoryObj } from '@storybook/react';
 import Image from 'next/image';
 

@@ -1,6 +1,7 @@
+import type { Meta, StoryObj } from '@storybook/react';
+
 import MockUserAvatar from '@/assets/img/mock-user-avatar.jpg';
-import { CropProps } from '@/shared/ui/croppedImage/CroppedImage';
-import { Meta, StoryObj } from '@storybook/react';
+import { CropProps } from '@/shared/ui/croppedImage';
 
 import { Post, PostsList } from './postsList';
 

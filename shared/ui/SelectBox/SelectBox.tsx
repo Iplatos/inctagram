@@ -1,12 +1,11 @@
 import { useState } from 'react';
 
 import Arrow from '@/assets/icons/arrow.svg?url';
+import { Typography } from '@/shared/ui/typography';
 import * as Select from '@radix-ui/react-select';
 import Image, { StaticImageData } from 'next/image';
 
 import styles from './SelectBox.module.scss';
-
-import { Typography } from '..';
 
 export type SelectBoxOption = {
   image?: StaticImageData;

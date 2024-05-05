@@ -1,5 +1,5 @@
 import MockUserAvatar from '@/assets/img/mock-user-avatar.jpg';
-import { Typography } from '@/shared/ui';
+import { Typography } from '@/shared/ui/typography';
 import { Meta, ReactRenderer, StoryObj } from '@storybook/react';
 import { DecoratorFunction } from '@storybook/types';
 
