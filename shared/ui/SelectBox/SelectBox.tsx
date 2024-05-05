@@ -1,16 +1,14 @@
 import { useState } from 'react';
 
 import Arrow from '@/assets/icons/arrow.svg?url';
+import { Typography } from '@/shared/ui/typography';
 import * as Select from '@radix-ui/react-select';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 
 import styles from './SelectBox.module.scss';
 
-import { Typography } from '..';
-
-type Option = {
-  id?: string;
-  image?: string;
+export type SelectBoxOption = {
+  image?: StaticImageData;
   label?: string;
   value: string;
 };
@@ -19,10 +17,10 @@ type SelectProps = Select.SelectValueProps & {
   disabled?: boolean;
   labelField?: string;
   onChangeFn?: (value: string) => void;
-  options?: Option[];
+  options?: SelectBoxOption[];
 };
 
-const DefaultFieldCreator = ({ image, label }: Option) => {
+const DefaultFieldCreator = ({ image, label }: SelectBoxOption) => {
   return (
     <div className={`${styles.default}`}>
       {image && <Image alt={'Option image'} src={image} />}
@@ -34,7 +32,7 @@ const DefaultFieldCreator = ({ image, label }: Option) => {
 export const SelectBox = (props: SelectProps) => {
   const { defaultValue, disabled, labelField, onChangeFn, options, placeholder } = props;
 
-  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+  const [selectedOption, setSelectedOption] = useState<SelectBoxOption | null>(null);
   const defaultField =
     typeof defaultValue === 'number' && options?.[defaultValue]
       ? DefaultFieldCreator(options[defaultValue])

@@ -14,6 +14,7 @@ import { Mutex } from 'async-mutex';
 const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+  credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const token = selectAccessToken(getState() as RootState);
 

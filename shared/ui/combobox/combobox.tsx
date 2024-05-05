@@ -8,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 
+import { Typography } from '@/shared/ui/typography';
 import { Combobox as ComboboxUI } from '@headlessui/react';
 import * as ScrollArea from '@radix-ui/react-scroll-area';
 import { clsx } from 'clsx';
@@ -15,7 +16,6 @@ import Image from 'next/image';
 
 import style from './combobox.module.scss';
 
-import { Typography } from '..';
 import ArrowDown from '../../../assets/icons/arrow-down.svg?url';
 import Close from '../../../assets/icons/close.svg?url';
 

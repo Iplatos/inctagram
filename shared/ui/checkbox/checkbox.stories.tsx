@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { useArgs } from '@storybook/preview-api';
 
-import { Checkbox } from '.';
+import { Checkbox } from './checkbox';
 
 const meta = {
   argTypes: {
