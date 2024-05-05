@@ -1,12 +1,27 @@
 @use '../../styles/helpers' as *;
+@use '../../styles/mixins' as *;
 
 .container {
+  --columns-count: 4;
+
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(var(--columns-count), 1fr);
   gap: em(12);
 
-  .post {
-    position: relative;
-    aspect-ratio: 1;
+  @include media-breakpoint('tablet-m') {
+    --columns-count: 3;
   }
+
+  @include media-breakpoint('tablet-s') {
+    gap: em(4);
+  }
+
+  @media (width <= 340px) {
+    --columns-count: 2;
+  }
+}
+
+.post {
+  position: relative;
+  aspect-ratio: 1;
 }
