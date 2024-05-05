@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { RadioGroup, RadioGroupOption } from '@/shared/ui';
+import { RadioGroup, RadioGroupOption } from './radio-group';
 
 const mockedOptions: RadioGroupOption[] = [
   {

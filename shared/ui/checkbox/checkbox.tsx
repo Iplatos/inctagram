@@ -1,11 +1,11 @@
 import React, { ElementRef, ReactNode, forwardRef } from 'react';
 
+import { Typography } from '@/shared/ui/typography';
 import * as CheckboxRadix from '@radix-ui/react-checkbox';
 import Image from 'next/image';
 
 import style from './checkbox.module.scss';
 
-import { Typography } from '..';
 import DefaultSelectedImgUrl from '../../../assets/icons/checkbox-default-selected.svg?url';
 import DefaultUnselectedImgUrl from '../../../assets/icons/checkbox-default-unselected.svg?url';
 import DisabledSelectedImgUrl from '../../../assets/icons/checkbox-disabled-selected.svg?url';
