@@ -7,7 +7,7 @@ import { Modal } from '@/features/modal';
 import { useAppDispatch, useAppSelector } from '@/shared/api/pretyped-redux-hooks';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
-import { Alerts } from '@/shared/ui/alerts/Alerts';
+import { Alerts } from '@/shared/ui/alerts/alerts';
 import { Typography } from '@/shared/ui/typography';
 import ImageSVG from 'assets/icons/image.svg';
 

@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 
 import { useLoginMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button } from '@/shared/ui/Button/button';
-import { Card } from '@/shared/ui/Card/Card';
+import { Button } from '@/shared/ui/button/button';
+import { Card } from '@/shared/ui/card/card';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { Typography } from '@/shared/ui/typography';
 import { GitHubGoogleContainer } from '@/widgets/auth/gitHubGoogleContainer/gitHubGoogleContainer';

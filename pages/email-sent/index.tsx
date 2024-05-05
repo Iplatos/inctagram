@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { CloseDialog, Modal } from '@/features/modal';
-import { Button } from '@/shared/ui/Button';
+import { Button } from 'shared/ui/button';
 import { Typography } from '@/shared/ui/typography';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';

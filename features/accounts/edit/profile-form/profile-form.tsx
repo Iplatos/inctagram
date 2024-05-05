@@ -7,7 +7,7 @@ import { useGetCitiesQuery, useGetCountriesQuery } from '@/shared/api/countries.
 import { useLazyGetUserProfileQuery } from '@/shared/api/user.api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
-import { SelectBox } from '@/shared/ui/SelectBox';
+import { SelectBox } from 'shared/ui/select-box';
 import { Combobox } from '@/shared/ui/combobox';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { DevTool } from '@hookform/devtools';

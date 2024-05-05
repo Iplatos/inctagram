@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { showErrorMessage } from '@/features/addPhoto/addPhoto.slice';
 import { CloseDialog } from '@/features/modal';
-import { Button } from '@/shared/ui/Button';
+import { Button } from 'shared/ui/button';
 
 type AddPhotoProps = {
   addPhoto: (a: any, pos: { x: number; y: number }, scale: number) => void;

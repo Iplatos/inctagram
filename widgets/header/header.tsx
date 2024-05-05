@@ -1,5 +1,5 @@
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button } from '@/shared/ui/Button';
+import { Button } from 'shared/ui/button';
 import { LangSwitcher } from '@/widgets/header/LangSwitcher';
 import Link from 'next/link';
 
@@ -32,12 +32,12 @@ export const Header = () => {
             <>
               <LangSwitcher />
               <div className={styles['buttons-wrapper']}>
-                <Button variant={'text'}>
+                <button variant={'text'}>
                   <Link href={'/signIn'}>{t.navbar.signIn}</Link>
-                </Button>
-                <Button>
+                </button>
+                <button>
                   <Link href={'/signUp'}>{t.navbar.signUp}</Link>
-                </Button>
+                </button>
               </div>
             </>
           )}*/}

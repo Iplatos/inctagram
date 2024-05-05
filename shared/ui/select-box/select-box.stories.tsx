@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import FlagRu from '../../../assets/icons/flag-ru.svg';
 import FlagEn from '../../../assets/icons/flag-uk.svg';
-import { SelectBox } from './SelectBox';
+import { SelectBox } from './select-box';
 
 const mockedPlaceHolder = 'A placeholder';
 const mockedOptions = [
@@ -26,7 +26,7 @@ const meta = {
   },
   component: SelectBox,
   tags: ['autodocs'],
-  title: 'Components/SelectBox',
+  title: 'Components/select-box',
 } satisfies Meta<typeof SelectBox>;
 
 export default meta;

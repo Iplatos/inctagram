@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { CloseDialog, Modal } from '@/features/modal';
 import { useLogoutMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button } from '@/shared/ui/Button';
+import { Button } from 'shared/ui/button';
 import { Typography } from '@/shared/ui/typography';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
 import HomeOutline from 'assets/icons/home-outline.svg';

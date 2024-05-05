@@ -7,7 +7,7 @@ import { Typography } from '@/shared/ui/typography';
 import { clsx } from 'clsx';
 import Image from 'next/image';
 
-import s from 'shared/ui/textField/TextField.module.scss';
+import s from '@/shared/ui/text-field/TextField.module.scss';
 
 type SharedProps = {
   className?: string;

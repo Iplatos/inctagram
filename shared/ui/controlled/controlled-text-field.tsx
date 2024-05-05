@@ -1,7 +1,7 @@
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form';
 
 import { assertUnreachable } from '@/shared/helpers/assertUnreachable';
-import { TextField, TextFieldProps } from '@/shared/ui/textField';
+import { TextField, TextFieldProps } from 'shared/ui/text-field';
 
 type ControllerProps<TFieldValues extends FieldValues> = {
   control: Control<TFieldValues>;
