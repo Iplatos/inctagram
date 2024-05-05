@@ -9,7 +9,7 @@ import { Combobox } from '.';
 const meta = {
   component: Combobox,
   tags: ['autodocs'],
-  title: 'Components/Combobox',
+  title: 'UI/Combobox',
 } satisfies Meta<typeof Combobox>;
 
 export default meta;

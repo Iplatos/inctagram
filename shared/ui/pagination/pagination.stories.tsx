@@ -6,7 +6,7 @@ const meta = {
   argTypes: {},
   component: Pagination,
   tags: ['autodocs'],
-  title: 'Auth/Pagination',
+  title: 'UI/Pagination',
 } satisfies Meta<typeof Pagination>;
 
 export default meta;

@@ -4,7 +4,7 @@ import { Meta, StoryObj } from '@storybook/react';
 const meta = {
   component: Card,
   tags: ['autodocs'],
-  title: 'Components/card',
+  title: 'UI/card',
 } satisfies Meta<typeof Card>;
 
 export default meta;

@@ -9,7 +9,7 @@ import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
 import { SelectBox } from 'shared/ui/select-box';
 import { Combobox } from '@/shared/ui/combobox';
-import { ControlledTextField } from '@/shared/ui/controlled';
+import { ControlledTextField } from 'shared/ui/controlled-text-field';
 import { DevTool } from '@hookform/devtools';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { skipToken } from '@reduxjs/toolkit/query';

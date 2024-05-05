@@ -44,7 +44,7 @@ export const DatePickerInput = forwardRef<ElementRef<'input'>, DatePickerInputPr
     /* After the DatePicker's 'onClose' event, the value of the input always depends on whether the DatePicker was able to parse correctly:
       when manually entering a date via input, it can be an empty string if it fails, or a new date string if it succeeds.
       The value of the input is always changed based on the parsing of the entered string, regardless of the internal state of the DatePicker or the external state of the parent component.
-      To get around this behavior, in 'controlled mode' (where the date is explicitly passed to the DatePicker):
+      To get around this behavior, in 'controlled-text-field mode' (where the date is explicitly passed to the DatePicker):
         * if the DatePicker's 'onChange' handler returns 'false',
         * or the parsing of the input failed (an empty string was passed),
       the input value will be taken from the provided date.
