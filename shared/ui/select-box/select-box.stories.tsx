@@ -26,7 +26,7 @@ const meta = {
   },
   component: SelectBox,
   tags: ['autodocs'],
-  title: 'UI/select-box',
+  title: 'UI/SelectBox',
 } satisfies Meta<typeof SelectBox>;
 
 export default meta;
