@@ -13,20 +13,20 @@ type ButtonVariant = {
   name: string;
   variant: NonNullable<ButtonProps<'button'>['variant']>;
 };
-type ButtonVariantOption = `${ButtonVariant['variant']} button`;
-type ButtonsMap = Record<ButtonVariantOption, ReactElement>;
+type ButtonsMap = Record<(typeof buttonVariants)[number]['name'], ReactElement>;
 
-const buttonVariants: ButtonVariant[] = [
-  { name: 'Follow', variant: 'primary' },
-  { name: 'Send Message', variant: 'secondary' },
-  { name: 'Unfollow', variant: 'tertiary' },
-];
+const buttonVariants = [
+  { name: 'follow', variant: 'primary' } as const,
+  { name: 'send message', variant: 'secondary' } as const,
+  { name: 'unfollow', variant: 'tertiary' } as const,
+  { name: 'profile settings', variant: 'secondary' } as const,
+] satisfies ButtonVariant[];
 
 const getButtonsByActionCategory = (category: 'primary' | 'secondary'): ButtonsMap =>
   buttonVariants.reduce(
     (buttonsMap, { name, variant }) => ({
       ...buttonsMap,
-      [`${variant} button`]: (
+      [name]: (
         <Button
           onClick={action(`on${capitalise(category)}ActionClick`)}
           style={{ height: '100%', width: '100%' }}
@@ -43,12 +43,12 @@ const primaryButtons = { ...getButtonsByActionCategory('primary'), none: undefin
 const secondaryButtons = { ...getButtonsByActionCategory('secondary'), none: undefined };
 
 type CustomStatisticItem = Omit<ProfileSummaryItem, 'action'> & { action?: boolean };
-type UserProfilePropsAndCustomArgs = Omit<ProfileInfoProps, 'statistics'> & {
+export type ProfileInfoPropsAndCustomArgs = Omit<ProfileInfoProps, 'statistics'> & {
   avatarSrc: boolean;
   statistics: CustomStatisticItem[];
 };
 
-const CustomRender: FC<UserProfilePropsAndCustomArgs> = ({
+const CustomRender: FC<ProfileInfoPropsAndCustomArgs> = ({
   avatarProps,
   avatarSrc,
   statistics,
@@ -66,7 +66,7 @@ const CustomRender: FC<UserProfilePropsAndCustomArgs> = ({
 
 /**
  * The ProfileInfo widget is embedded on the user's page to display information about the user's profile
- * and also provides some contextual actions for the authorised user, such as "follow", "send message", etc.
+ * and also provides some contextual actions for the authorized user, such as "follow", "send message", etc.
  * */
 const meta = {
   argTypes: {
@@ -76,14 +76,35 @@ const meta = {
       type: { name: 'string', required: true },
     },
 
-    avatarSrc: {
-      control: 'boolean',
-      description: `Path to the user's avatar. Takes the same value as NextJs
-        [Image](https://nextjs.org/docs/app/api-reference/components/image#src) component.
-        If the value is missing, a fallback image will be used.`,
+    avatarProps: {
+      description: `Optional object representing a set of props for the [Avatar](/?path=/docs/ui-avatar--docs) component.
+      The \`src\` field takes the same value as the Next.js [Image](https://nextjs.org/docs/app/api-reference/components/image#src) component.
+      If the value is missing, the backup image will be used.`,
       table: {
-        type: { summary: 'string | StaticImport' },
+        type: {
+          detail: `Partial<${JSON.stringify(
+            {
+              offsetX: 'number',
+              offsetY: 'number',
+              scale: 'number',
+              src: 'StaticImport | string',
+            },
+            null,
+            2
+          )}>`,
+          summary: 'AvatarProps',
+        },
       },
+    },
+
+    avatarSrc: {
+      description: `STORYBOOK_SPECIFIC_SETTING: allows you to dynamically switch the \`src\` prop for the underlying [Avatar](/?path=/docs/ui-avatar--docs)  component.`,
+      table: { type: { summary: 'boolean' } },
+    },
+
+    className: {
+      description: `The class name will be applied to the underlying \`section\` component, e.g. the root container of the component`,
+      table: { type: { summary: 'string' } },
     },
 
     primaryAction: {
@@ -130,19 +151,19 @@ const meta = {
   component: CustomRender,
   decorators: [
     Story => (
-      <div style={{ maxWidth: '1060px' }}>
+      <div style={{ maxWidth: '972px' }}>
         <Story />
       </div>
     ),
   ],
   tags: ['autodocs'],
   title: 'WIDGETS/ProfileInfo',
-} satisfies Meta<UserProfilePropsAndCustomArgs>;
+} satisfies Meta<ProfileInfoPropsAndCustomArgs>;
 
 export default meta;
-type Story = StoryObj<UserProfilePropsAndCustomArgs>;
+type Story = StoryObj<ProfileInfoPropsAndCustomArgs>;
 
-export const PrimaryAction: Story = {
+export const UnfollowedUser: Story = {
   args: {
     aboutMe:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
@@ -153,8 +174,8 @@ export const PrimaryAction: Story = {
       src: MockUserAvatar,
     },
     avatarSrc: true,
-    primaryAction: primaryButtons['primary button'],
-    secondaryAction: secondaryButtons.none,
+    primaryAction: primaryButtons['follow'],
+    secondaryAction: secondaryButtons['send message'],
     statistics: [
       { action: true, name: 'following', value: 2218 },
       { action: true, name: 'followers', value: 2358 },
@@ -164,17 +185,24 @@ export const PrimaryAction: Story = {
   },
 };
 
-export const SecondaryAction: Story = {
+export const FollowedUser: Story = {
   args: {
-    ...PrimaryAction.args,
-    secondaryAction: getButtonsByActionCategory('secondary')['secondary button'],
+    ...UnfollowedUser.args,
+    primaryAction: primaryButtons['unfollow'],
+  },
+};
+
+export const MyProfile: Story = {
+  args: {
+    ...UnfollowedUser.args,
+    primaryAction: primaryButtons['profile settings'],
+    secondaryAction: secondaryButtons.none,
   },
 };
 
 export const MissingAvatar: Story = {
   args: {
-    ...PrimaryAction.args,
+    ...UnfollowedUser.args,
     avatarSrc: false,
-    primaryAction: primaryButtons['tertiary button'],
   },
 };
