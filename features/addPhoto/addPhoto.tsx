@@ -7,7 +7,7 @@ import { Modal } from '@/features/modal';
 import { useAppDispatch, useAppSelector } from '@/shared/api/pretyped-redux-hooks';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
-import { Alerts } from '@/shared/ui/alerts/Alerts';
+import { Alert } from '@/shared/ui/alert';
 import { Typography } from '@/shared/ui/typography';
 import ImageSVG from 'assets/icons/image.svg';
 
@@ -69,11 +69,11 @@ export const AddPhoto = () => {
         title={'Add a Profile Photo'}
       >
         <Typography.Regular16>SomeEmail</Typography.Regular16>
-        <Alerts isError={errorMessage}>
+        <Alert>
           <Typography.Regular14 color={'var(--color-light-900)'}>
             {errorMessage || ''}
           </Typography.Regular14>
-        </Alerts>
+        </Alert>
 
         <div
           className={avatar ? s.photoPlaceHolderWithAvatar : s.photoPlaceHolder}

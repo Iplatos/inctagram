@@ -1,4 +1,4 @@
-import { Button } from '@/shared/ui';
+import { Button } from '@/shared/ui/Button';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Alert, AlertClasses } from './alert';
