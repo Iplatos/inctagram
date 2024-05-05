@@ -19,10 +19,10 @@ type SelectProps = Select.SelectValueProps & {
   disabled?: boolean;
   labelField?: string;
   onChangeFn?: (value: string) => void;
-  options?: Option[];
+  options?: SelectBoxOption[];
 };
 
-const DefaultFieldCreator = ({ image, label }: Option) => {
+const DefaultFieldCreator = ({ image, label }: SelectBoxOption) => {
   return (
     <div className={`${styles.default}`}>
       {image && <Image alt={'Option image'} src={image} />}
@@ -34,7 +34,7 @@ const DefaultFieldCreator = ({ image, label }: Option) => {
 export const SelectBox = (props: SelectProps) => {
   const { defaultValue, disabled, labelField, onChangeFn, options, placeholder } = props;
 
-  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+  const [selectedOption, setSelectedOption] = useState<SelectBoxOption | null>(null);
   const defaultField =
     typeof defaultValue === 'number' && options?.[defaultValue]
       ? DefaultFieldCreator(options[defaultValue])
