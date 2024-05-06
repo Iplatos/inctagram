@@ -21,37 +21,37 @@ const DevTool: React.ElementType = dynamic(
   { ssr: false }
 );
 
-const schema = z
-  .object({
-    checkbox: z.boolean(),
-    confirm: z.string(),
-    email: z.string().email({ message: 'The email must match the format example@example.com' }),
-    nickname: z
-      .string()
-      .min(6, { message: 'Minimum number of characters 6' })
-      .max(30, { message: 'Maximum number of characters 30' })
-      .regex(/^[0-9A-Za-z_-]+$/),
-    password: z
-      .string()
-      .min(6, { message: 'Minimum number of characters 6' })
-      .max(20, { message: 'Maximum number of characters 20' })
-      .refine(
-        value =>
-          /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~])/.test(value),
-        'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
-      ),
-  })
-  .refine(data => data.password === data.confirm, {
-    message: 'Passwords must match',
-    path: ['confirm'],
-  });
-
-type FormValues = z.input<typeof schema>;
-
 export const SignUpForm = () => {
   const { t } = useTranslation();
   const [signUpTrigger] = useSignUpMutation();
 
+  const schema = z
+    .object({
+      checkbox: z.boolean(),
+      confirm: z.string(),
+      email: z.string().email({ message: 'The email must match the format example@example.com' }),
+      nickname: z
+        .string()
+        .min(6, { message: 'Minimum number of characters 6' })
+        .max(30, { message: 'Maximum number of characters 30' })
+        .regex(/^[0-9A-Za-z_-]+$/),
+      password: z
+        .string()
+        .min(6, { message: 'Minimum number of characters 6' })
+        .max(20, { message: 'Maximum number of characters 20' })
+        .regex(/[0-9]/, { message: t.auth.signUpPage.passMustDigit })
+        .regex(/[a-z]/, { message: t.auth.signUpPage.passMustLowLetter })
+        .regex(/[A-Z]/, { message: t.auth.signUpPage.passMustUpLetter })
+        .regex(/[^A-Za-z0-9]/, {
+          message: t.auth.signUpPage.passMustSpecialChar,
+        }),
+    })
+    .refine(data => data.password === data.confirm, {
+      message: 'Passwords must match',
+      path: ['confirm'],
+    });
+
+  type FormValues = z.input<typeof schema>;
   const {
     control,
     formState: { isDirty, isSubmitting, isValid, submitCount },
