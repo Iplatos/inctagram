@@ -112,6 +112,7 @@ export const en: LocaleType = {
       account: 'Do you have an account?',
       agreement:
         'I agree to the <agreement>Terms of service</agreement> and <policy>Privacy policy</policy>',
+      emailExample: 'The email must match the format example@example.com',
       labelConfirm: 'Password confirmation',
       labelEmail: 'Email',
       labelName: 'Username',
@@ -120,6 +121,7 @@ export const en: LocaleType = {
         'This field can only contain Latin letters, numbers, underscores (_), and dashes (-).',
       passMustDigit: 'The password must contain at least one digit.',
       passMustLowLetter: 'The password must contain at least one lowercase letter.',
+      passMustMatch: 'Passwords must match',
       passMustSpecialChar: 'The password must contain at least one special character.',
       passMustUpLetter: 'The password must contain at least one uppercase letter.',
       signIn: 'Sign In',

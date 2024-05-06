@@ -29,7 +29,7 @@ export const SignUpForm = () => {
     .object({
       checkbox: z.boolean(),
       confirm: z.string(),
-      email: z.string().email({ message: 'The email must match the format example@example.com' }),
+      email: z.string().email({ message: t.auth.signUpPage.emailExample }),
       nickname: z
         .string()
         .min(6, { message: 'Minimum number of characters 6' })
@@ -48,7 +48,7 @@ export const SignUpForm = () => {
         }),
     })
     .refine(data => data.password === data.confirm, {
-      message: 'Passwords must match',
+      message: t.auth.signUpPage.passMustMatch,
       path: ['confirm'],
     });
 
