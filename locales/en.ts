@@ -117,8 +117,7 @@ export const en: LocaleType = {
       labelEmail: 'Email',
       labelName: 'Username',
       labelPassword: 'Password',
-      onlyLatin:
-        'This field can only contain Latin letters, numbers, underscores (_), and dashes (-).',
+      onlyLatin: 'This field can only contain Latin letters, digits, symbols ',
       passMustDigit: 'The password must contain at least one digit.',
       passMustLowLetter: 'The password must contain at least one lowercase letter.',
       passMustMatch: 'Passwords must match',
