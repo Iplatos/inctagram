@@ -39,12 +39,15 @@ export const SignUpForm = () => {
         .string()
         .min(6, { message: 'Minimum number of characters 6' })
         .max(20, { message: 'Maximum number of characters 20' })
-        .regex(/^[0-9A-Za-z_-]+$/, { message: t.auth.signUpPage.onlyLatin })
+
         .regex(/[0-9]/, { message: t.auth.signUpPage.passMustDigit })
         .regex(/[a-z]/, { message: t.auth.signUpPage.passMustLowLetter })
         .regex(/[A-Z]/, { message: t.auth.signUpPage.passMustUpLetter })
         .regex(/[^A-Za-z0-9]/, {
           message: t.auth.signUpPage.passMustSpecialChar,
+        })
+        .regex(/^[0-9A-Za-z!@#$%^&*()_+=[\]{}|';:,.<>?-]+$/, {
+          message: t.auth.signUpPage.onlyLatin,
         }),
     })
     .refine(data => data.password === data.confirm, {
