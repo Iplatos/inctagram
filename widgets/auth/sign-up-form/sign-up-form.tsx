@@ -34,11 +34,12 @@ export const SignUpForm = () => {
         .string()
         .min(6, { message: 'Minimum number of characters 6' })
         .max(30, { message: 'Maximum number of characters 30' })
-        .regex(/^[0-9A-Za-z_-]+$/),
+        .regex(/^[0-9A-Za-z_-]+$/, { message: t.auth.signUpPage.onlyLatin }),
       password: z
         .string()
         .min(6, { message: 'Minimum number of characters 6' })
         .max(20, { message: 'Maximum number of characters 20' })
+        .regex(/^[0-9A-Za-z_-]+$/, { message: t.auth.signUpPage.onlyLatin })
         .regex(/[0-9]/, { message: t.auth.signUpPage.passMustDigit })
         .regex(/[a-z]/, { message: t.auth.signUpPage.passMustLowLetter })
         .regex(/[A-Z]/, { message: t.auth.signUpPage.passMustUpLetter })
