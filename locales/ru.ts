@@ -104,6 +104,7 @@ export const ru = {
       invalidEmail: 'Неверный формат электронной почты',
       invalidPass: 'Неверный формат пароля',
       password: 'Пароль',
+      wrongEmailOrPass: 'Неверное имя пользователя или пароль',
     },
     signUpPage: {
       account: 'У Вас есть аккаунт?',

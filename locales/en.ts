@@ -106,6 +106,7 @@ export const en: LocaleType = {
       invalidEmail: 'Invalid email',
       invalidPass: 'Invalid Password',
       password: 'password',
+      wrongEmailOrPass: 'Wrong email or password',
     },
     signUpPage: {
       account: 'Do you have an account?',

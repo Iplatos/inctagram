@@ -23,6 +23,7 @@ const DevTool: React.ElementType = dynamic(
 
 export const SignInForm = () => {
   const { t } = useTranslation();
+
   const signInSchema = z.object({
     email: z.string().email(t.auth.signInPage.invalidEmail).min(1, 'Enter email'),
     password: z
@@ -33,19 +34,12 @@ export const SignInForm = () => {
         message: t.auth.signInPage.invalidPass,
       }),
   });
-
-  const router = useRouter();
-  const [login, { data: loginData }] = useLoginMutation();
-
-  type FormValuesType = z.infer<typeof signInSchema>;
-  const onSubmit = (data: FormValuesType) => {
-    return login(data);
-  };
-
+  ///xebotep956@lewenbo.com
   const {
     control,
     formState: { isDirty, isSubmitting, isValid, submitCount },
     handleSubmit,
+    setError,
   } = useForm({
     defaultValues: {
       email: '',
@@ -54,6 +48,19 @@ export const SignInForm = () => {
     mode: 'onTouched',
     resolver: zodResolver(signInSchema),
   });
+  const router = useRouter();
+  const [login, { data: loginData }] = useLoginMutation();
+
+  type FormValuesType = z.infer<typeof signInSchema>;
+  const onSubmit = async (data: FormValuesType) => {
+    try {
+      await login(data).unwrap();
+      router.push('/');
+    } catch (e) {
+      setError('email', { message: t.auth.signInPage.wrongEmailOrPass });
+      setError('password', { message: t.auth.signInPage.wrongEmailOrPass });
+    }
+  };
 
   // if (loginData) {
   //   router.push(`/`);
