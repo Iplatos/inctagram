@@ -79,8 +79,6 @@ export const SignUpForm = () => {
     return signUpTrigger({ email, password, username: nickname });
   });
 
-  const submitIsDisabled = !isDirty || (!isValid && !!submitCount) || isSubmitting;
-
   return (
     <div className={s.outerContainer}>
       <Card className={s.card}>
@@ -144,7 +142,12 @@ export const SignUpForm = () => {
               />
             </div>
           </div>
-          <Button className={s.button} disabled={submitIsDisabled} fullWidth type={'submit'}>
+          <Button
+            className={s.button}
+            disabled={!isValid || isSubmitting}
+            fullWidth
+            type={'submit'}
+          >
             {t.auth.signUpPage.signUp}
           </Button>
         </form>
