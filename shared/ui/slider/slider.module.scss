@@ -1,0 +1,99 @@
+.container {
+    display: flex;
+    gap: 0.625rem;
+    align-items: center;
+    justify-content: center;
+  
+    width: 100%;
+    min-width: 13.75rem;
+  }
+  
+  
+  .root {
+    touch-action: none;
+    user-select: none;
+  
+    position: relative;
+  
+    display: flex;
+    align-items: center;
+  
+    width: 100%;
+  }
+  
+  .track {
+    position: relative;
+  
+    width: 100%;
+    height: 0.25rem;
+  
+    background-color:var( --color-light-100);
+    border-radius: 0.125rem;
+  }
+  
+  .range {
+    position: absolute;
+    height: 100%;
+    opacity: 1;
+    background-color: var(--color-accent-500);
+  }
+  
+  .thumb {
+    touch-action: pan-x;
+    cursor: pointer;
+  
+    position: relative;
+  
+    display: block;
+  
+    width: 1rem;
+    height: 1rem;
+  
+    background-color: var(--color-accent-500);
+    border-radius: 625rem;
+    outline: none;
+  
+    transition: trasform 0.2s ease-in-out;
+  
+    &::after {
+      content: '';
+  
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  
+      width: 0.5rem;
+      height: 0.5rem;
+  
+      background-color: var(--color-light-100);
+      border-radius: 625rem;
+    }
+  
+    &::before {
+      content: '';
+  
+      position: absolute;
+      z-index: -1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  
+      width: 36px;
+      height: 36px;
+  
+      opacity: 0.5;
+      border-radius: 50%;
+  
+      transition: 0.5s;
+    }
+  
+    &:hover::before {
+      background-color: var(--color-dark-500);
+    }
+  
+    &:focus-visible::before {
+      background-color: var(--color-dark-500);
+    }
+  }
+  
