@@ -1,18 +1,55 @@
-import type {
-  BaseQueryFabric,
-  BaseQueryFabricParams,
-  TypedBaseQueryFn,
-} from '@/shared/api/base-api';
 import type { RefreshTokenResponse } from '@/shared/types/auth.types';
 
 import { accessTokenReceived, resetApp } from '@/shared/api/app-slice';
+import { BaseQueryFactoryWithSubdomain } from '@/shared/api/enhancers/withSubdomain';
 import { Mutex } from 'async-mutex';
 
 const mutex = new Mutex();
 
-export const withReauth = (baseQueryFabric: BaseQueryFabric) => {
-  const enhancedBaseQueryFabric = (args: BaseQueryFabricParams): TypedBaseQueryFn => {
-    const baseQuery = baseQueryFabric(args);
+/**
+ * A higher-order function designed to produce the `fetchBaseQuery` factory used by rtk-query, or its analogue.
+ * When used as part of a function composition, the types of the received and returned values
+ * must be changed to match the preceding function in the composition chain.
+ *
+ * @param baseQueryFactory - the rkt-query function `fetchBaseQuery` or a more specific version of it.
+ * @return A factory function that returns a `baseQuery` that is compatible
+ * with rtk-query. Must have the same type as the `baseQueryFactory` parameter,
+ * since this HOF returns a function with the same signature as the received function.
+ *
+ * @example
+ * type FetchBaseQueryWithCoolFeature = (args: FetchBaseQueryArgs) => BaseQueryWithCoolFeature;
+ *
+ * type BaseQueryWithCooFeature = BaseQueryFn<
+ *    (FetchArgs & { isCoolFeature?: boolean; }) | string,
+ *    unknown,
+ *    FetchBaseQueryError,
+ *    {},
+ *    FetchBaseQueryMeta
+ * >;
+ *
+ * const enhancedFetchBaseQuery = compose(withReauth, withCoolFeature)(fetchBaseQuery);
+ *
+ * const withReauth = (
+ *  baseQueryFactory: FetchBaseQueryWithCoolFeature
+ * ) => {
+ *  const enhancedBaseQueryFactory: FetchBaseQueryWithCoolFeature = args => {
+ *    const baseQuery = baseQueryFactory(args)
+ *
+ *    return (args, api, extraOptions) => {
+ *      if (typeof args !== 'string' && args.isCoolFeature) {
+ *         // `isCoolFeature` is accessible here
+ *      }
+ *      // ...
+ *
+ *      return baseQuery(args, api, extraOptions); // `isCoolFeature` arg is supplied
+ *    }
+ *
+ *   return enhancedBaseQueryFactory;
+ * }
+ */
+export const withReauth = (baseQueryFactory: BaseQueryFactoryWithSubdomain) => {
+  const enhancedBaseQueryFactory: BaseQueryFactoryWithSubdomain = args => {
+    const baseQuery = baseQueryFactory(args);
 
     return async (args, api, extraOptions) => {
       // wait until the mutex is available for each request
@@ -55,5 +92,5 @@ export const withReauth = (baseQueryFabric: BaseQueryFabric) => {
     };
   };
 
-  return enhancedBaseQueryFabric;
+  return enhancedBaseQueryFactory;
 };
