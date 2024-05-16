@@ -9,15 +9,15 @@ import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
 import s from './profileInfo.module.scss';
 
-type AvatarProps = { src?: StaticImport | string } & Partial<CropProps>;
+type UserAvatarData = { url?: StaticImport | string } & Partial<CropProps>;
 
 export type ProfileInfoProps = {
-  aboutMe: string;
-  avatarProps: AvatarProps;
+  aboutMe?: null | string;
+  avatarProps?: UserAvatarData | null;
   className?: string;
   primaryAction?: ReactElement;
   secondaryAction?: ReactElement;
-  statistics: ProfileSummaryItem[];
+  statistics?: ProfileSummaryItem[];
   userName: string;
 };
 
@@ -27,29 +27,34 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({
   className,
   primaryAction,
   secondaryAction,
-  statistics,
+  statistics = [],
   userName,
-}) => (
-  <section className={clsx(s.container, className)}>
-    <Avatar classes={{ avatarRoot: s.avatar }} priority {...avatarProps} />
-    <div className={s.header}>
-      <Typography.H2 className={s.userName}>{userName}</Typography.H2>
-      <div className={s.actionsGroup}>
-        {primaryAction && <div className={s.actionWrapper}>{primaryAction}</div>}
-        {secondaryAction && <div className={s.actionWrapper}>{secondaryAction}</div>}
+}) => {
+  // Manual destructuring to prevent unrecognized props from backend such as `updatedAt` from being passed to the internal `img` component.
+  const { offsetX, offsetY, scale, url: src } = avatarProps ?? {};
+
+  return (
+    <section className={clsx(s.container, className)}>
+      <Avatar classes={{ avatarRoot: s.avatar }} {...{ offsetX, offsetY, scale, src }} />
+      <div className={s.header}>
+        <Typography.H2 className={s.userName}>{userName}</Typography.H2>
+        <div className={s.actionsGroup}>
+          {primaryAction && <div className={s.actionWrapper}>{primaryAction}</div>}
+          {secondaryAction && <div className={s.actionWrapper}>{secondaryAction}</div>}
+        </div>
       </div>
-    </div>
-    <ProfileSummary
-      classes={{
-        item: s.statsItem,
-        itemName: s.statsItemName,
-        itemValue: s.statsItemValue,
-        items: s.statsGroup,
-      }}
-      summary={statistics}
-    />
-    <Typography.Regular16 className={s.about} component={'p'}>
-      {aboutMe}
-    </Typography.Regular16>
-  </section>
-);
+      <ProfileSummary
+        classes={{
+          item: s.statsItem,
+          itemName: s.statsItemName,
+          itemValue: s.statsItemValue,
+          items: s.statsGroup,
+        }}
+        summary={statistics}
+      />
+      <Typography.Regular16 className={s.about} component={'p'}>
+        {aboutMe}
+      </Typography.Regular16>
+    </section>
+  );
+};

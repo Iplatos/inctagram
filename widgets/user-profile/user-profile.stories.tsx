@@ -23,7 +23,7 @@ const CustomRender: FC<UserProfilePropsAndCustomArgs> = ({
 }) => {
   return (
     <UserProfile
-      avatarProps={{ ...avatarProps, src: avatarSrc ? avatarProps.src : undefined }}
+      avatarProps={{ ...avatarProps, url: avatarSrc ? avatarProps?.url : undefined }}
       posts={PostsListStories.getRandomPosts(postsCount, adjacentPosts)}
       statistics={statistics.map(s => ({
         ...s,

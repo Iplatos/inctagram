@@ -55,7 +55,7 @@ const CustomRender: FC<ProfileInfoPropsAndCustomArgs> = ({
   ...props
 }) => (
   <ProfileInfo
-    avatarProps={{ ...avatarProps, src: avatarSrc ? avatarProps.src : undefined }}
+    avatarProps={{ ...avatarProps, url: avatarSrc ? avatarProps?.url : undefined }}
     statistics={statistics.map(s => ({
       ...s,
       action: s.action ? storybookAction(`on${capitalise(s.name)}Click`) : undefined,
@@ -171,7 +171,7 @@ export const UnfollowedUser: Story = {
       offsetX: 0.5,
       offsetY: 0.5,
       scale: 1,
-      src: MockUserAvatar,
+      url: MockUserAvatar,
     },
     avatarSrc: true,
     primaryAction: primaryButtons['follow'],
