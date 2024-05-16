@@ -15,10 +15,10 @@ export type Post = {
 
 export type PostsListProps = {
   className?: string;
-  posts: Post[];
+  posts?: Post[];
 };
 
-export const PostsList: FC<PostsListProps> = ({ className, posts }) => {
+export const PostsList: FC<PostsListProps> = ({ className, posts = [] }) => {
   const mappedPosts = posts.map(({ cropProps = {}, src }, index) => (
     <div className={s.post} key={index}>
       <CroppedImage alt={''} fill src={src} {...cropProps} />
