@@ -15,14 +15,23 @@ type InitialState = {
   scale: number;
 };
 
+const dCP = getDefaultCropProps();
+
 const initialState: InitialState = {
   editorPosition: { x: 0.5, y: 0.5 },
   error: null,
-  scale: 1,
+  scale: dCP.scale,
 };
 
-export const useAvatarUploader = () => {
-  const [state, dispatch] = useReducer(slice.reducer, initialState);
+/**
+ * The `initialScale` should be passed to the hook to correctly calculate editor's cropping parameters
+ * when the image is loaded on the `onImageReady` event.
+ */
+export const useAvatarUploader = (initialScale?: number) => {
+  const [state, dispatch] = useReducer(slice.reducer, {
+    ...initialState,
+    scale: initialScale ?? dCP.scale,
+  });
 
   return { actions: slice.actions, dispatch, state };
 };
@@ -39,17 +48,15 @@ const slice = createSlice({
       state.editorPosition.x = pos.x;
       state.editorPosition.y = pos.y;
     },
-    editorPositionInitialized(
-      state,
-      { payload }: PayloadAction<CroppedRect & Omit<Partial<CropProps>, 'scale'>>
-    ) {
-      const { height, offsetX, offsetY, width } = payload;
-      const defaultCropProps = getDefaultCropProps();
-      let initialOffsetX = state.preview ? defaultCropProps.offsetX : offsetX;
-      let initialOffsetY = state.preview ? defaultCropProps.offsetY : offsetY;
+    editorPositionInitialized(state, { payload }: PayloadAction<CroppedRect & Partial<CropProps>>) {
+      const { height, offsetX, offsetY, scale, width } = payload;
 
-      initialOffsetX ??= defaultCropProps.offsetX;
-      initialOffsetY ??= defaultCropProps.offsetY;
+      // When loading a preview from the device, existing cropping props will be reset to default values
+      const initialOffsetX = state.preview || offsetX === undefined ? dCP.offsetX : offsetX;
+      const initialOffsetY = state.preview || offsetY === undefined ? dCP.offsetY : offsetY;
+      const initialScale = state.preview || scale === undefined ? dCP.scale : scale;
+
+      state.scale = initialScale;
       state.editorPosition.x = getCanvasPositionFromOffset(width, initialOffsetX);
       state.editorPosition.y = getCanvasPositionFromOffset(height, initialOffsetY);
     },
@@ -71,7 +78,7 @@ const slice = createSlice({
 
       state.preview = payload;
       state.editorPosition = initialState.editorPosition;
-      state.scale = getDefaultCropProps().scale;
+      state.scale = dCP.scale;
     },
     scaleChanged(state, { payload: offset }: PayloadAction<number>) {
       const prev = state.scale;

@@ -42,7 +42,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
     },
     dispatch,
     state,
-  } = useAvatarUploader();
+  } = useAvatarUploader(initCropProps?.scale);
 
   const changeImageScale = (e: React.WheelEvent<HTMLDivElement>) => {
     const offset = e.deltaY > 0 ? -0.1 : 0.1;
