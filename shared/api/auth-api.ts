@@ -15,7 +15,6 @@ import { baseApi } from '@/shared/api/base-api';
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    // It's not working yet
     changePassword: builder.mutation<void, ChangePasswordRequestType>({
       query: params => {
         return {
@@ -43,9 +42,8 @@ export const authApi = baseApi.injectEndpoints({
         };
       },
     }),
-
-    // Working (partially)
     login: builder.mutation<LoginResponse, LoginRequestData>({
+      invalidatesTags: ['Me', 'Auth'],
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
@@ -62,7 +60,7 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
     logout: builder.mutation<LogoutResponse, void>({
-      invalidatesTags: ['Auth'],
+      invalidatesTags: ['Auth', 'Me'],
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;

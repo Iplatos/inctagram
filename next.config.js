@@ -4,6 +4,15 @@ module.exports = {
     defaultLocale: 'ru',
     locales: ['en', 'ru'],
   },
+  images: {
+    remotePatterns: [
+      {
+        hostname: 'storage.yandexcloud.net',
+        pathname: '/incta-back/**',
+        protocol: 'https',
+      },
+    ],
+  },
   reactStrictMode: true,
   webpack(config) {
     // Grab the existing rule that handles SVG imports
