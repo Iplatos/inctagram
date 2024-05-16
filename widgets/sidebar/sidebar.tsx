@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 
-import { CloseDialog, Modal } from '@/features/modal';
+import { Modal } from '@/features/modal';
 import { useLogoutMutation } from '@/shared/api/auth-api';
+import { useMeQuery } from '@/shared/api/users-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button } from '@/shared/ui/Button';
-import { Typography } from '@/shared/ui/typography';
+import { Button, Typography } from '@/shared/ui';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
 import HomeOutline from 'assets/icons/home-outline.svg';
 import LogOutOutline from 'assets/icons/log-out-outline.svg';
@@ -14,88 +13,86 @@ import PersonOutline from 'assets/icons/person-outline.svg';
 import PlusSquareOutline from 'assets/icons/plus-square-outline.svg';
 import SearchOutline from 'assets/icons/searchOutline.svg';
 import TrendingUpOutline from 'assets/icons/trending-up-outline.svg';
-import { useRouter } from 'next/navigation';
+import clsx from 'clsx';
+import Link from 'next/link';
 
 import s from './sidebar.module.scss';
 
+import { Trans } from '../Trans/Trans';
+
 export const Sidebar = () => {
-  const [open, setOpen] = useState(false);
-  const [logout] = useLogoutMutation();
   const { t } = useTranslation();
-  const router = useRouter();
-  const dispatch = useDispatch();
+  const [logoutTrigger] = useLogoutMutation();
+  const { data: meResponse } = useMeQuery();
+  const [open, setOpen] = useState(false);
 
-  function handleModalClosed() {
+  const handleLogout = () => {
     setOpen(false);
-  }
-
-  function handleModalOpened() {
-    setOpen(true);
-  }
-
-  const logOut = () => {
-    logout();
-    // setTokenToLocalStorage(null);
-    // dispatch(baseApi.util.resetApiState());
-    // router.push('/signIn');
+    logoutTrigger();
   };
 
   return (
-    <div className={s.sidebarContainer}>
-      <div className={s.buttonContainer}>
-        <div className={s.button} tabIndex={1}>
-          <HomeOutline className={s.svgAsComponent} />
+    <div className={s.container}>
+      <div className={s.buttonsGroup}>
+        <Typography.Regular14 className={s.button} component={Link} href={'/'}>
+          <HomeOutline className={s.svg} />
           Home
-        </div>
+        </Typography.Regular14>
 
-        <div className={s.button} tabIndex={1}>
-          <PlusSquareOutline className={s.svgAsComponent} />
+        <Typography.Regular14 className={s.button} tabIndex={1}>
+          <PlusSquareOutline className={s.svg} />
           Create
-        </div>
-        <div className={s.button} tabIndex={1}>
-          <PersonOutline className={s.svgAsComponent} />
+        </Typography.Regular14>
+        <Typography.Regular14 className={s.button} component={Link} href={'/my-profile'}>
+          <PersonOutline className={s.svg} />
           My Profile
-        </div>
-        <div className={s.button} tabIndex={1}>
-          <MessageCircleOutline className={s.svgAsComponent} />
+        </Typography.Regular14>
+        <Typography.Regular14 className={s.button} tabIndex={1}>
+          <MessageCircleOutline className={s.svg} />
           Messenger
-        </div>
-        <div className={s.button} tabIndex={1}>
-          <SearchOutline className={s.svgAsComponent} />
+        </Typography.Regular14>
+        <Typography.Regular14 className={s.button} tabIndex={1}>
+          <SearchOutline className={s.svg} />
           Search
-        </div>
+        </Typography.Regular14>
       </div>
 
-      <div className={s.buttonContainer}>
-        <div className={s.button} tabIndex={1}>
-          <TrendingUpOutline className={s.svgAsComponent} />
+      <div className={s.buttonsGroup}>
+        <Typography.Regular14 className={s.button} tabIndex={1}>
+          <TrendingUpOutline className={s.svg} />
           Statistics
-        </div>
-        <div className={s.button} tabIndex={1}>
-          <BookmarkOutline className={s.svgAsComponent} />
+        </Typography.Regular14>
+        <Typography.Regular14 className={s.button} tabIndex={1}>
+          <BookmarkOutline className={s.svg} />
           Favorites
-        </div>
+        </Typography.Regular14>
       </div>
 
-      <div className={s.buttonContainer}>
-        <div className={s.button} onClick={handleModalOpened} tabIndex={1}>
-          <LogOutOutline className={s.svgAsComponent} />
-          Log Out
+      <Typography.Regular14
+        className={clsx(s.button, s.buttonLogout)}
+        onClick={() => setOpen(true)}
+        tabIndex={1}
+      >
+        <LogOutOutline className={s.svg} />
+        Log Out
+      </Typography.Regular14>
+
+      <Modal onClose={() => setOpen(false)} open={open} showCloseButton title={'Log Out'}>
+        <Typography.Regular14>
+          <Trans
+            tags={{ email: () => <Typography.Bold16>{meResponse?.data.email}</Typography.Bold16> }}
+            text={t.logOut.reallyWantToLogOut}
+          />
+        </Typography.Regular14>
+        <div className={s.modalButtonsGroup}>
+          <Button className={s.modalButton} onClick={handleLogout} variant={'tertiary'}>
+            Yes
+          </Button>
+          <Button className={s.modalButton} onClick={() => setOpen(false)}>
+            No
+          </Button>
         </div>
-        <Modal onClose={handleModalClosed} open={open} showCloseButton title={'Log Out'}>
-          <Typography.Regular16>{t.logOut.reallyWantToLogOut}</Typography.Regular16>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 25 }}>
-            <CloseDialog asChild>
-              <div style={{ display: 'flex', justifyContent: 'space-Between', width: '216px' }}>
-                <Button onClick={logOut} style={{ width: '96px' }} variant={'tertiary'}>
-                  yes
-                </Button>
-                <Button style={{ width: '96px' }}>no</Button>
-              </div>
-            </CloseDialog>
-          </div>
-        </Modal>
-      </div>
+      </Modal>
     </div>
   );
 };
