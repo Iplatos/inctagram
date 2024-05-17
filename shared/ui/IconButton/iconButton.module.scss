@@ -1,0 +1,112 @@
+@mixin button {
+    all: unset;
+    cursor: pointer;
+  user-select: none;
+  position: relative;
+
+    &::before {
+      content: '';
+  
+      position: absolute;
+      z-index: -1;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  
+  
+      margin-bottom: 0;
+      padding: 0;
+  
+      border-radius: 50%;
+  
+      transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    &:hover {
+      transform: scale(1);
+    }
+  
+    &:active {
+      transform: scale(1);
+    }
+  
+    &:hover::before {
+      transform: translate(-50%, -50%) scale(1);
+      background-color: var(--color-dark-500);
+    }
+  
+    &:active::before {
+      transform: translate(-50%, -50%) scale(1);
+      background-color: var(--color-dark-300);
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.5;
+    }
+
+  }
+
+  .filled{
+    fill: red;
+  }
+
+
+.smth {
+    fill: white;
+
+    &:hover {
+    fill: red
+    }
+}
+
+.small {
+  @include button;
+
+  &::before {
+  width: 36px;
+  height: 36px;
+  }
+
+ svg   {
+    width: 24px;
+    height: 24px;
+    background-color: inherit
+    }
+  
+   
+  
+}
+
+.medium {
+  @include button;
+
+  &::before {
+    width: 54px;
+    height: 54px;
+    }
+
+   svg
+   { width: 36px;
+    height: 36px;
+    background-color: inherit
+   }
+}
+
+.large {
+  @include button;
+
+  &::before {
+    width: 72px;
+    height: 72px;
+    }
+
+    svg {
+    width: 48px;
+    height: 48px;
+    background-color: inherit
+    }
+}
+
