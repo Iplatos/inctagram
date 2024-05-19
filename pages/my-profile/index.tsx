@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { ProfileSummaryItem } from '@/features/profile-info/profile-summary';
 import { NextPageWithLayout } from '@/pages/_app';
-import { useLazyMeQuery } from '@/shared/api/users-api';
+import { useLazyGetMeQuery } from '@/shared/api/users-api';
 import { useAuthRedirect } from '@/shared/hooks/useAuthRedirect';
 import { Button, Typography } from '@/shared/ui';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
@@ -18,7 +18,7 @@ const statistics: ProfileSummaryItem[] = [
 ];
 
 const MyProfile: NextPageWithLayout = () => {
-  const [getMyProfile, { data: meResponse, isError }] = useLazyMeQuery();
+  const [getMyProfile, { data: meResponse, isError }] = useLazyGetMeQuery();
 
   const isAuthSuccess = useAuthRedirect();
 

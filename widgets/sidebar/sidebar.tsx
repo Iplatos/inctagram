@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Modal } from '@/features/modal';
 import { useLogoutMutation, useRefreshTokenQuery } from '@/shared/api/auth-api';
-import { useLazyMeQuery } from '@/shared/api/users-api';
+import { useLazyGetMeQuery } from '@/shared/api/users-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Typography } from '@/shared/ui';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
@@ -26,7 +26,7 @@ export const Sidebar = () => {
 
   const [logoutTrigger] = useLogoutMutation();
   const { isSuccess: isAuthSuccess } = useRefreshTokenQuery();
-  const [getMyProfile, { data: meResponse }] = useLazyMeQuery();
+  const [getMyProfile, { data: meResponse }] = useLazyGetMeQuery();
 
   useEffect(() => {
     if (isAuthSuccess) {

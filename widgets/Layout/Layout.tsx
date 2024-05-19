@@ -1,7 +1,7 @@
 import { PropsWithChildren, ReactElement, useEffect } from 'react';
 
 import { useRefreshTokenQuery } from '@/shared/api/auth-api';
-import { useLazyMeQuery } from '@/shared/api/users-api';
+import { useLazyGetMeQuery } from '@/shared/api/users-api';
 import { Typography } from '@/shared/ui';
 import { NavBar } from '@/widgets/NavBar/NavBar';
 import { Header } from '@/widgets/header';
@@ -12,7 +12,7 @@ import s from './Layout.module.scss';
 
 export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
   const { isLoading: isAuthorizing, isSuccess: isAuthSuccess } = useRefreshTokenQuery();
-  const [getMyProfile, { isError: isMeError, isLoading: isMeLoading }] = useLazyMeQuery();
+  const [getMyProfile, { isError: isMeError, isLoading: isMeLoading }] = useLazyGetMeQuery();
 
   useEffect(() => {
     if (isAuthSuccess) {

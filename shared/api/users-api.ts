@@ -1,4 +1,10 @@
-import { MeResponse, UpdateMeRequestData, UpdateMeResponse } from '@/shared/types/user.types';
+import type {
+  MeResponse,
+  SetAvatarResponse,
+  UpdateMeRequestData,
+  UpdateMeResponse,
+} from '@/shared/types/user.types';
+
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 
 import { blobToBase64 } from '../helpers';
@@ -14,14 +20,15 @@ const customBaseQuery = fetchBaseQuery({
 
 export const usersApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    me: builder.query<MeResponse, void>({
-      providesTags: ['Me'],
+    getMe: builder.query<MeResponse, void>({
+      providesTags: [{ id: 'USER_DATA', type: 'Me' }],
       query: () => ({
         subdomain: 'read',
         url: 'users/me',
       }),
     }),
-    myAvatarBase64: builder.query<null | string, void>({
+    getMyAvatarBase64: builder.query<null | string, void>({
+      providesTags: [{ id: 'AVATAR64', type: 'Me' }],
       queryFn: async (_arg, api, extraOptions) => {
         const { data: meResponse } = selectMyProfile(api.getState() as RootState);
         const avatarUrl = meResponse?.data.avatar?.url;
@@ -31,7 +38,11 @@ export const usersApi = baseApi.injectEndpoints({
         }
 
         const { data, error } = await customBaseQuery(
-          `https://corsproxy.io?${avatarUrl}`,
+          {
+            url: `https://corsproxy.io?${avatarUrl}`,
+            // headers: { 'x-cors-api-key': 'temp_5f7968c43e0954ac6b88dd08460b7d1d' },
+            // url: `https://proxy.cors.sh/${avatarUrl}`,
+          },
           api,
           extraOptions
         );
@@ -56,15 +67,15 @@ export const usersApi = baseApi.injectEndpoints({
         return resolvedError;
       },
     }),
-    setAvatar: builder.mutation<any, FormData>({
-      invalidatesTags: ['Me'],
+    setMyAvatar: builder.mutation<SetAvatarResponse, FormData>({
+      invalidatesTags: [{ id: 'USER_DATA', type: 'Me' }],
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
           const avatar = arg.get('file') as File;
           const avatarBase64 = await blobToBase64(avatar);
 
-          dispatch(usersApi.util.upsertQueryData('myAvatarBase64', undefined, avatarBase64));
+          dispatch(usersApi.util.upsertQueryData('getMyAvatarBase64', undefined, avatarBase64));
         } catch (e) {
           console.log("Don't forget to handle async errors!", e);
         }
@@ -77,7 +88,7 @@ export const usersApi = baseApi.injectEndpoints({
       }),
     }),
     updateMe: builder.mutation<UpdateMeResponse, UpdateMeRequestData>({
-      invalidatesTags: ['Me'],
+      invalidatesTags: [{ id: 'USER_DATA', type: 'Me' }],
       query: body => ({
         body,
         method: 'PUT',
@@ -87,12 +98,12 @@ export const usersApi = baseApi.injectEndpoints({
   }),
 });
 
-const selectMyProfile = usersApi.endpoints.me.select();
+const selectMyProfile = usersApi.endpoints.getMe.select();
 
 export const {
-  useLazyMeQuery,
-  useLazyMyAvatarBase64Query,
-  useMeQuery,
-  useSetAvatarMutation,
+  useGetMeQuery,
+  useLazyGetMeQuery,
+  useLazyGetMyAvatarBase64Query,
+  useSetMyAvatarMutation,
   useUpdateMeMutation,
 } = usersApi;

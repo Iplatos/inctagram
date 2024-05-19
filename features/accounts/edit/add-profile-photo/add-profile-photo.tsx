@@ -2,14 +2,15 @@ import { useState } from 'react';
 
 import { AvatarUploader } from '@/features/avatar-uploader';
 import {
-  useLazyMyAvatarBase64Query,
-  useMeQuery,
-  useSetAvatarMutation,
+  useGetMeQuery,
+  useLazyGetMyAvatarBase64Query,
+  useSetMyAvatarMutation,
 } from '@/shared/api/users-api';
 import { getDefaultCropProps } from '@/shared/helpers/getDefaultCropProps';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Avatar, Button } from '@/shared/ui';
 import { CropProps } from '@/shared/ui/croppedImage';
+import { nanoid } from '@reduxjs/toolkit';
 
 import style from './add-profile-photo.module.scss';
 
@@ -17,9 +18,9 @@ export const AddProfilePhoto = () => {
   const { addProfilePhoto: t } = useTranslation().t.generalInformation;
   const [open, setOpen] = useState(false);
 
-  const { data: meResponse } = useMeQuery();
-  const [getAvatarBase64, { data: avatarBase64 }] = useLazyMyAvatarBase64Query();
-  const [uploadAvatar] = useSetAvatarMutation();
+  const { data: meResponse } = useGetMeQuery();
+  const [getAvatarBase64, { data: avatarBase64 }] = useLazyGetMyAvatarBase64Query();
+  const [uploadAvatar] = useSetMyAvatarMutation();
 
   const handleAvatarUpload = (image: Blob, { offsetX, offsetY, scale }: CropProps) => {
     const formData = new FormData();
@@ -27,7 +28,7 @@ export const AddProfilePhoto = () => {
     formData.append('offsetX', offsetX.toString());
     formData.append('offsetY', offsetY.toString());
     formData.append('scale', scale.toString());
-    formData.append('file', image, 'user-avatar`');
+    formData.append('file', image, nanoid());
 
     uploadAvatar(formData);
   };

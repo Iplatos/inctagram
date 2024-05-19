@@ -4,7 +4,7 @@ import { DateObject } from 'react-multi-date-picker';
 
 import { AddProfilePhoto } from '@/features/accounts/edit';
 import { FormValues, ProfileForm } from '@/features/accounts/edit/profile-form/profile-form';
-import { useLazyMeQuery, useUpdateMeMutation } from '@/shared/api/users-api';
+import { useLazyGetMeQuery, useUpdateMeMutation } from '@/shared/api/users-api';
 import { useAuthRedirect } from '@/shared/hooks/useAuthRedirect';
 import { UpdateMeRequestData, UserProfile } from '@/shared/types/user.types';
 import { Typography } from '@/shared/ui';
@@ -12,7 +12,7 @@ import { Typography } from '@/shared/ui';
 import style from './general-information.module.scss';
 
 export const GeneralInformation = () => {
-  const [getMyProfile, { data: meResponse, isError }] = useLazyMeQuery();
+  const [getMyProfile, { data: meResponse, isError }] = useLazyGetMeQuery();
   const [updateProfile] = useUpdateMeMutation();
 
   const isAuthSuccess = useAuthRedirect();
