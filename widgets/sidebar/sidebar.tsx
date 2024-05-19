@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Modal } from '@/features/modal';
-import { useLogoutMutation } from '@/shared/api/auth-api';
-import { useMeQuery } from '@/shared/api/users-api';
+import { useLogoutMutation, useRefreshTokenQuery } from '@/shared/api/auth-api';
+import { useLazyMeQuery } from '@/shared/api/users-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Typography } from '@/shared/ui';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
@@ -22,9 +22,17 @@ import { Trans } from '../Trans/Trans';
 
 export const Sidebar = () => {
   const { t } = useTranslation();
-  const [logoutTrigger] = useLogoutMutation();
-  const { data: meResponse } = useMeQuery();
   const [open, setOpen] = useState(false);
+
+  const [logoutTrigger] = useLogoutMutation();
+  const { isSuccess: isAuthSuccess } = useRefreshTokenQuery();
+  const [getMyProfile, { data: meResponse }] = useLazyMeQuery();
+
+  useEffect(() => {
+    if (isAuthSuccess) {
+      getMyProfile(undefined, true);
+    }
+  }, [isAuthSuccess, getMyProfile]);
 
   const handleLogout = () => {
     setOpen(false);
@@ -80,7 +88,9 @@ export const Sidebar = () => {
       <Modal onClose={() => setOpen(false)} open={open} showCloseButton title={'Log Out'}>
         <Typography.Regular14>
           <Trans
-            tags={{ email: () => <Typography.Bold16>{meResponse?.data.email}</Typography.Bold16> }}
+            tags={{
+              email: () => <Typography.Bold16>{meResponse?.data.email}</Typography.Bold16>,
+            }}
             text={t.logOut.reallyWantToLogOut}
           />
         </Typography.Regular14>
