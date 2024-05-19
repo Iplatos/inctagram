@@ -30,6 +30,8 @@ export const GeneralInformation = () => {
   const handleSubmit: SubmitHandler<FormValues> = data => {
     const requestBody: UpdateMeRequestData = {
       aboutMe: data.aboutMe,
+      city: data.city,
+      country: data.country,
       dateOfBirth: data.dateOfBirth
         ? new DateObject({
             date: data.dateOfBirth,
@@ -58,8 +60,8 @@ export const GeneralInformation = () => {
 
 const mapUserProfileToFormValues = (profile: UserProfile): FormValues => ({
   aboutMe: profile.aboutMe ?? '',
-  city: '',
-  country: '',
+  city: profile.city ?? '',
+  country: profile.country ?? '',
   dateOfBirth: profile.dateOfBirth ? new Date(profile.dateOfBirth) : null,
   firstName: profile.firstname ?? '',
   lastName: profile.lastname ?? '',

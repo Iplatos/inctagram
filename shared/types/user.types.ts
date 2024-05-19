@@ -5,6 +5,8 @@ export type MeResponse = AppResponse<UserProfile>;
 export type UserProfile = {
   aboutMe: null | string;
   avatar: AvatarResponse | null;
+  city: null | string;
+  country: null | string;
   createdAt: string;
   dateOfBirth: null | string;
   email: string;
@@ -16,7 +18,10 @@ export type UserProfile = {
 };
 
 export type UpdateMeRequestData = Record<
-  Extract<'aboutMe' | 'dateOfBirth' | 'firstname' | 'lastname' | 'username', keyof UserProfile>,
+  Extract<
+    'aboutMe' | 'city' | 'country' | 'dateOfBirth' | 'firstname' | 'lastname' | 'username',
+    keyof UserProfile
+  >,
   string
 >;
 

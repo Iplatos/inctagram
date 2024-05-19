@@ -96,7 +96,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                   inputValue={inputValue}
                   label={t.country.label}
                   onChange={value => {
-                    resetField('city');
+                    resetField('city', { defaultValue: '' });
                     field.onChange(value);
                   }}
                   onInputChange={setInputValue}
