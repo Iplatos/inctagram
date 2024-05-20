@@ -36,12 +36,11 @@ const baseQuery = enhancedFetchBaseQuery({
       headers.set('Authorization', `Bearer ${token}`);
     }
   },
-  timeout: 10_000,
 });
 
 export const baseApi = createApi({
   baseQuery,
   endpoints: _builder => ({}),
   reducerPath: 'baseApi',
-  tagTypes: ['Auth', 'Me'],
+  tagTypes: ['Auth', 'Me', 'MyAvatarBase64'],
 });

@@ -50,7 +50,7 @@ export const authApi = baseApi.injectEndpoints({
 
           dispatch(accessTokenReceived(data.data.accessToken));
         } catch (e) {
-          console.log("Don't forget to handle async errors!", e);
+          console.error("Don't forget to handle async errors!", e);
         }
       },
       query: arg => ({
@@ -66,7 +66,7 @@ export const authApi = baseApi.injectEndpoints({
           await queryFulfilled;
           dispatch(resetApp());
         } catch (e) {
-          console.log("Don't forget to handle async errors!", e);
+          console.error("Don't forget to handle async errors!", e);
         }
       },
       query: () => ({ method: 'POST', url: 'auth/logout' }),
@@ -78,7 +78,7 @@ export const authApi = baseApi.injectEndpoints({
 
           dispatch(accessTokenReceived(data.data.accessToken));
         } catch (e) {
-          console.log("Don't forget to handle async errors!", e);
+          console.error("Don't forget to handle async errors!", e);
         }
       },
       providesTags: ['Auth'],

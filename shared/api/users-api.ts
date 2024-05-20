@@ -1,6 +1,7 @@
 import type {
-  MeResponse,
-  SetAvatarResponse,
+  deleteMyAvatarResponse as DeleteMyAvatarResponse,
+  GetMeResponse,
+  SetMyAvatarResponse,
   UpdateMeRequestData,
   UpdateMeResponse,
 } from '@/shared/types/user.types';
@@ -20,16 +21,55 @@ const customBaseQuery = fetchBaseQuery({
 
 export const usersApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getMe: builder.query<MeResponse, void>({
-      providesTags: [{ id: 'USER_DATA', type: 'Me' }],
+    deleteMyAvatar: builder.mutation<DeleteMyAvatarResponse, void>({
+      invalidatesTags: ['Me'],
+      async queryFn(_arg, { getState }, _extraOptions, baseQuery) {
+        const { data: meResponse } = selectMyProfile(getState() as RootState);
+        const avatarId = meResponse?.data.avatar?.id;
+
+        if (!avatarId) {
+          const error =
+            'Request to delete user avatar failed due to missing avatar id in user data in redux cache';
+
+          console.error(error);
+
+          return {
+            error: {
+              error,
+              status: 'CUSTOM_ERROR',
+            },
+          };
+        }
+
+        const { data, error, meta } = await baseQuery({
+          method: 'DELETE',
+          subdomain: 'files',
+          url: `users/avatar/${avatarId}`,
+        });
+
+        // TODO: do I really need `data` property in the error object (unexpected error messages in the console)
+        return error ? { data, error, meta } : { data: data as DeleteMyAvatarResponse, meta };
+      },
+    }),
+    getMe: builder.query<GetMeResponse, void>({
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(usersApi.endpoints.refetchMyAvatarBase64.initiate());
+        } catch (e) {
+          console.error('Don"t forget to handle async errors!', e);
+        }
+      },
+      providesTags: ['Me'],
       query: () => ({
         subdomain: 'read',
         url: 'users/me',
       }),
     }),
+    // downloading the user's avatar file for re-uploading if the user wants to use the same image but with different cropping props.
     getMyAvatarBase64: builder.query<null | string, void>({
-      providesTags: [{ id: 'AVATAR64', type: 'Me' }],
-      queryFn: async (_arg, api, extraOptions) => {
+      providesTags: ['MyAvatarBase64'],
+      async queryFn(_arg, api, extraOptions) {
         const { data: meResponse } = selectMyProfile(api.getState() as RootState);
         const avatarUrl = meResponse?.data.avatar?.url;
 
@@ -37,12 +77,8 @@ export const usersApi = baseApi.injectEndpoints({
           return { data: null };
         }
 
-        const { data, error } = await customBaseQuery(
-          {
-            url: `https://corsproxy.io?${avatarUrl}`,
-            // headers: { 'x-cors-api-key': 'temp_5f7968c43e0954ac6b88dd08460b7d1d' },
-            // url: `https://proxy.cors.sh/${avatarUrl}`,
-          },
+        const { data, error, meta } = await customBaseQuery(
+          { url: `https://corsproxy.io?${avatarUrl}` },
           api,
           extraOptions
         );
@@ -52,12 +88,14 @@ export const usersApi = baseApi.injectEndpoints({
           return { data: 'data:image/jpeg;base64,' + bufferToBase64(data) };
         }
 
+        // FIXME: Maybe get Response instead of ArrayBuffer and provide data.text() to error body to make error serializable
         const resolvedError = error
-          ? { error }
+          ? { data, error, meta }
           : {
               error: {
                 data,
                 error: 'Failed attempt at transforming the response body to base64.',
+                meta,
                 status: 'CUSTOM_ERROR',
               } as const,
             };
@@ -67,8 +105,12 @@ export const usersApi = baseApi.injectEndpoints({
         return resolvedError;
       },
     }),
-    setMyAvatar: builder.mutation<SetAvatarResponse, FormData>({
-      invalidatesTags: [{ id: 'USER_DATA', type: 'Me' }],
+    refetchMyAvatarBase64: builder.mutation<null, void>({
+      invalidatesTags: ['MyAvatarBase64'],
+      queryFn: () => ({ data: null }),
+    }),
+    setMyAvatar: builder.mutation<SetMyAvatarResponse, FormData>({
+      invalidatesTags: ['Me'],
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -77,7 +119,7 @@ export const usersApi = baseApi.injectEndpoints({
 
           dispatch(usersApi.util.upsertQueryData('getMyAvatarBase64', undefined, avatarBase64));
         } catch (e) {
-          console.log("Don't forget to handle async errors!", e);
+          console.error("Don't forget to handle async errors!", e);
         }
       },
       query: body => ({
@@ -88,7 +130,7 @@ export const usersApi = baseApi.injectEndpoints({
       }),
     }),
     updateMe: builder.mutation<UpdateMeResponse, UpdateMeRequestData>({
-      invalidatesTags: [{ id: 'USER_DATA', type: 'Me' }],
+      invalidatesTags: ['Me'],
       query: body => ({
         body,
         method: 'PUT',
@@ -101,6 +143,7 @@ export const usersApi = baseApi.injectEndpoints({
 const selectMyProfile = usersApi.endpoints.getMe.select();
 
 export const {
+  useDeleteMyAvatarMutation,
   useGetMeQuery,
   useLazyGetMeQuery,
   useLazyGetMyAvatarBase64Query,

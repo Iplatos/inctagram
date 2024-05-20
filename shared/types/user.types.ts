@@ -1,6 +1,6 @@
 import { AppResponse } from './auth.types';
 
-export type MeResponse = AppResponse<UserProfile>;
+export type GetMeResponse = AppResponse<UserProfile>;
 
 export type UserProfile = {
   aboutMe: null | string;
@@ -28,7 +28,9 @@ export type UpdateMeRequestData = Record<
 // TODO: check for `null` value in the response body
 export type UpdateMeResponse = AppResponse<null | true>;
 
-export type SetAvatarResponse = AppResponse<{ id: string }>;
+export type SetMyAvatarResponse = AppResponse<{ id: string }>;
+
+export type deleteMyAvatarResponse = AppResponse<null | true>;
 
 type AvatarResponse = {
   createdAt: string;
