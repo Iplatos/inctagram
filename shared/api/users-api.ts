@@ -47,8 +47,7 @@ export const usersApi = baseApi.injectEndpoints({
           url: `users/avatar/${avatarId}`,
         });
 
-        // TODO: do I really need `data` property in the error object (unexpected error messages in the console)
-        return error ? { data, error, meta } : { data: data as DeleteMyAvatarResponse, meta };
+        return error ? { error, meta } : { data: data as DeleteMyAvatarResponse, meta };
       },
     }),
     getMe: builder.query<GetMeResponse, void>({
@@ -83,17 +82,27 @@ export const usersApi = baseApi.injectEndpoints({
           extraOptions
         );
 
-        // The file is not serializable, so base64 is passed to the cache
+        // The `File` instance is not serializable, so `base64` string is passed to the cache
         if (data instanceof ArrayBuffer) {
-          return { data: 'data:image/jpeg;base64,' + bufferToBase64(data) };
+          const regex = /^.+\.(jpeg|png)$/;
+          const mediaSubtype = avatarUrl.match(regex)?.[1] as string | undefined;
+
+          if (!mediaSubtype) {
+            console.warn(
+              'Unable to extract MIME subtype from user avatar url. The default type `jpeg` will be used.'
+            );
+          }
+
+          return {
+            data: `data:image/${mediaSubtype ?? 'jpeg'};base64,` + bufferToBase64(data),
+            meta,
+          };
         }
 
-        // FIXME: Maybe get Response instead of ArrayBuffer and provide data.text() to error body to make error serializable
         const resolvedError = error
-          ? { data, error, meta }
+          ? { error, meta }
           : {
               error: {
-                data,
                 error: 'Failed attempt at transforming the response body to base64.',
                 meta,
                 status: 'CUSTOM_ERROR',

@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { CloseIcon } from '@/assets/icons/close';
 import { Modal } from '@/features';
-import { AvatarUploader } from '@/features/avatar-uploader';
+import { AvatarUploader, AvatarUploaderProps } from '@/features/avatar-uploader';
 import {
   useDeleteMyAvatarMutation,
   useGetMeQuery,
@@ -12,7 +12,6 @@ import {
 import { getDefaultCropProps } from '@/shared/helpers/getDefaultCropProps';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Avatar, Button, Typography } from '@/shared/ui';
-import { CropProps } from '@/shared/ui/croppedImage';
 import { nanoid } from '@reduxjs/toolkit';
 import clsx from 'clsx';
 
@@ -30,13 +29,24 @@ export const AddProfilePhoto = () => {
   const [deleteAvatar, { isLoading: isDeletingAvatar }] = useDeleteMyAvatarMutation();
   const [uploadAvatar, { isLoading: isUploadingAvatar }] = useSetMyAvatarMutation();
 
-  const handleAvatarUpload = (image: Blob, { offsetX, offsetY, scale }: CropProps) => {
+  const handleAvatarUpload: AvatarUploaderProps['onImageSave'] = (
+    image,
+    { mediaType, offsetX, offsetY, scale }
+  ) => {
     const formData = new FormData();
+    const [, subtype = ''] = mediaType.split('/');
+    const isValidAvatar = ['jpeg', 'png'].includes(subtype);
+
+    if (!isValidAvatar) {
+      console.warn(
+        `Can't specify the MIME type of the loaded file from user device. Loaded image must be of either JPEG of PNG type. When sent to the server, the user's avatar will not be provided with metadata about the image type. Received MIME type: ${mediaType}.`
+      );
+    }
 
     formData.append('offsetX', offsetX.toString());
     formData.append('offsetY', offsetY.toString());
     formData.append('scale', scale.toString());
-    formData.append('file', image, nanoid());
+    formData.append('file', image, nanoid() + (isValidAvatar ? `.${subtype}` : ''));
 
     uploadAvatar(formData);
   };
@@ -56,7 +66,6 @@ export const AddProfilePhoto = () => {
   } = meResponse?.data.avatar ?? {};
 
   const isUploaderDisabled = isUploadingAvatar || isDeletingAvatar || isFetchingMyProfile;
-  const isImageUnavailable = isDeletingAvatar || isFetchingMyProfile;
 
   return (
     <div className={s.photoContainer}>
@@ -64,7 +73,7 @@ export const AddProfilePhoto = () => {
         <Avatar
           classes={{
             avatarRoot: clsx(s.avatar),
-            image: clsx(isImageUnavailable && s.avatarImage),
+            image: clsx(isUploaderDisabled && s.avatarImage),
           }}
           priority
           {...{ offsetX, offsetY, scale, src }}

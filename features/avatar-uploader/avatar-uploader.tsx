@@ -19,7 +19,7 @@ export type AvatarUploaderProps = {
   avatar?: File | string;
   initCropProps?: CropProps;
   onClose: () => void;
-  onImageSave: (image: Blob, cropProps: CropProps) => void;
+  onImageSave: (image: Blob, cropProps: CropProps & { mediaType: string }) => void;
   open: boolean;
 };
 
@@ -91,7 +91,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
     };
 
     if (state.preview) {
-      onImageSave(state.preview, cropProps);
+      onImageSave(state.preview, { ...cropProps, mediaType: state.preview.type });
       handleClose();
 
       return;
@@ -99,7 +99,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
     if (avatar) {
       const file = typeof avatar === 'string' ? dataURLToBlob(avatar) : avatar;
 
-      onImageSave(file, cropProps);
+      onImageSave(file, { ...cropProps, mediaType: file.type });
       handleClose();
     }
   };
@@ -144,6 +144,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
         )}
 
         <input
+          accept={'image/png, image/jpeg'}
           onChange={uploadFromDevice}
           ref={inputRef}
           style={{ display: 'none' }}
@@ -156,7 +157,11 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
           >
             select from device
           </Button>
-          {previewOrAvatar && <Button onClick={saveAvatar}>save</Button>}
+          {previewOrAvatar && (
+            <Button disabled={!!state.error} onClick={saveAvatar}>
+              save
+            </Button>
+          )}
         </div>
       </div>
     </Modal>
