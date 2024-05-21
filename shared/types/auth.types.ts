@@ -22,10 +22,10 @@ export type ChangePasswordRequestType = {
   password: string;
   userId: string;
 };
-export type ConfirmCodeRequestType = {
-  code: string;
-  userId: string;
-};
+export type ConfirmCodeRequestData = { code: string };
+
+export type ConfirmCodeResponse = AppResponse<null | true>;
+
 export type PasswordRecoveryRequestType = {
   email: string;
 };
