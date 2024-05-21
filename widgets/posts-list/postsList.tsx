@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Typography } from '@/shared/ui';
 import { CropProps, CroppedImage } from '@/shared/ui/croppedImage';
 import clsx from 'clsx';
@@ -19,6 +20,8 @@ export type PostsListProps = {
 };
 
 export const PostsList: FC<PostsListProps> = ({ className, posts = [] }) => {
+  const { postsList: t } = useTranslation().t.common;
+
   const mappedPosts = posts.map(({ cropProps = {}, src }, index) => (
     <div className={s.post} key={index}>
       <CroppedImage alt={''} fill src={src} {...cropProps} />
@@ -32,9 +35,9 @@ export const PostsList: FC<PostsListProps> = ({ className, posts = [] }) => {
       ) : (
         <div className={s.messageContainer}>
           <Typography.H1 className={s.message} component={'h2'}>
-            There are not posts yet
+            {t.noPostsMessage}
           </Typography.H1>
-          <Button>create post</Button>
+          <Button>{t.addPostButton}</Button>
         </div>
       )}
     </section>

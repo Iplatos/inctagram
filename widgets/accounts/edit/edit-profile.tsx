@@ -6,19 +6,27 @@ import {
   GeneralInformation,
   MyPayments,
 } from '@/entities/accounts/edit';
+import { useTranslation } from '@/shared/hooks/useTranslation';
 import { TabContent, Tabs } from '@/shared/ui';
 
+const tabs = [
+  { key: 'accountManagement', value: 'general information' } as const,
+  { key: 'devices', value: 'devices' } as const,
+  { key: 'generalInformation', value: 'account management' } as const,
+  { key: 'myPayments', value: 'my payments' } as const,
+] as const;
+
 export const EditProfile = () => {
+  const { editProfile: t } = useTranslation().t;
+
   return (
     <Tabs
       defaultValue={'general information'}
       fullWidth
-      tabs={[
-        { title: 'General information', value: 'general information' },
-        { title: 'Devices', value: 'devices' },
-        { title: 'Account Management', value: 'account management' },
-        { title: 'My payments', value: 'my payments' },
-      ]}
+      tabs={tabs.map(({ key, value }) => ({
+        title: t.tabs[key].label,
+        value,
+      }))}
     >
       <TabContent value={'general information'}>
         <GeneralInformation />

@@ -31,7 +31,7 @@
   .statsGroup {
     grid-area: stat;
     min-width: fit-content;
-    max-width: 60%;
+    max-width: 65%;
 
     @include media-breakpoint('tablet-s') {
       max-width: 80%;
@@ -120,7 +120,12 @@
 
 .about {
   grid-area: me;
+  margin-top: em(4);
   color: var(--color-light-500);
+
+  @include media-breakpoint('mobile-l') {
+    margin-top: 0;
+  }
 }
 
 .actionsGroup {

@@ -4,6 +4,7 @@ import type { CroppedRect, Position } from 'react-avatar-editor';
 import { useReducer } from 'react';
 
 import { getDefaultCropProps } from '@/shared/helpers/getDefaultCropProps';
+import { useTranslation } from '@/shared/hooks/useTranslation';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const PHOTO_MAX_SIZE = 10_485_760; // 10 Megabytes
@@ -11,6 +12,7 @@ const PHOTO_MAX_SIZE = 10_485_760; // 10 Megabytes
 type InitialState = {
   editorPosition: Position;
   error: null | string;
+  errorsList: Record<string, string>;
   preview?: File;
   scale: number;
 };
@@ -20,6 +22,7 @@ const dCP = getDefaultCropProps();
 const initialState: InitialState = {
   editorPosition: { x: 0.5, y: 0.5 },
   error: null,
+  errorsList: {},
   scale: dCP.scale,
 };
 
@@ -28,8 +31,10 @@ const initialState: InitialState = {
  * when the image is loaded on the `onImageReady` event.
  */
 export const useAvatarUploader = (initialScale?: number) => {
+  const { avatarUploader: t } = useTranslation().t.common;
   const [state, dispatch] = useReducer(slice.reducer, {
     ...initialState,
+    errorsList: t.errors,
     scale: initialScale ?? dCP.scale,
   });
 
@@ -62,12 +67,12 @@ const slice = createSlice({
     },
     loadedFromDevice(state, { payload }: PayloadAction<File>) {
       if (!['image/jpeg', 'image/png'].includes(payload.type)) {
-        state.error = '<bold>Error!</bold> The format of the uploaded photo must be PNG or JPEG';
+        state.error = state.errorsList.wrongFormat;
 
         return;
       }
       if (payload.size > PHOTO_MAX_SIZE) {
-        state.error = '<bold>Error!</bold> Photo size must be less than 10 MB (MegaBytes)!';
+        state.error = state.errorsList.tooBig;
 
         return;
       }

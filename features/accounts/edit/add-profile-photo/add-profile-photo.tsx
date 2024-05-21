@@ -18,7 +18,7 @@ import clsx from 'clsx';
 import s from './add-profile-photo.module.scss';
 
 export const AddProfilePhoto = () => {
-  const { addProfilePhoto: t } = useTranslation().t.generalInformation;
+  const { addPhotoButton: tButton, deleteAvatarModal: tModal } = useTranslation().t.editProfile;
 
   const [uploaderOpen, setUploaderOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -95,7 +95,7 @@ export const AddProfilePhoto = () => {
         onMouseEnter={() => getAvatarBase64(undefined, true)}
         variant={'tertiary'}
       >
-        {t.submitButton}
+        {tButton}
       </Button>
 
       <AvatarUploader
@@ -110,15 +110,15 @@ export const AddProfilePhoto = () => {
         onClose={() => setDeleteModalOpen(false)}
         open={deleteModalOpen}
         showCloseButton
-        title={'Delete Photo'}
+        title={tModal.title}
       >
-        <Typography.Regular16>Are you sure you want to delete the photo?</Typography.Regular16>
+        <Typography.Regular16>{tModal.message}</Typography.Regular16>
         <div className={s.modalButtonsGroup}>
           <Button className={s.modalButton} onClick={handleAvatarDelete} variant={'tertiary'}>
-            Yes
+            {tModal.buttons.confirm}
           </Button>
           <Button className={s.modalButton} onClick={() => setDeleteModalOpen(false)}>
-            No
+            {tModal.buttons.deny}
           </Button>
         </div>
       </Modal>

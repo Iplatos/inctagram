@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- useless rule for locale file */
 import gregorian_en from 'react-date-object/locales/gregorian_en';
 
 import { LocaleType } from './ru';
@@ -9,6 +10,7 @@ export const en: LocaleType = {
       textButton: 'Sign In',
       title: 'Congratulations!',
     },
+
     forgotPasswordPage: {
       backToSignIn: 'Back to Sign In',
       invalidEmail: 'Invalid email',
@@ -18,11 +20,13 @@ export const en: LocaleType = {
       title: 'Forgot Password',
       titleModal: 'Email Sent',
     },
+
     linkExpiredPage: {
       text: 'Looks like the verification link has expired. Not to worry, we can send the link again',
       textButton: 'Resend verification link',
       title: 'Email verification link expired',
     },
+
     passwordResetPage: {
       confirmPasswordZod: 'Confirm password is required',
       message: 'Your password must be between 6 and 20 characters',
@@ -35,8 +39,10 @@ export const en: LocaleType = {
       textLink: 'Create new password',
       title: 'Create New Password',
     },
+
     privacyPolicy: {
       backSignUp: 'Back to Sign Up',
+      // cSpell: disable
       content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
       incididunt ut labore et dolore magna aliqua. Fames ac turpis egestas integer eget
       aliquet nibh. Amet consectetur adipiscing elit ut aliquam purus sit amet luctus. Tortor
@@ -98,8 +104,10 @@ export const en: LocaleType = {
       aenean sed adipiscing diam. Viverra nam libero justo laoreet. Id neque aliquam
       vestibulum morbi blandit cursus. Vel facilisis volutpat est velit egestas dui id ornare.
       Feugiat nibh sed pulvinar proin.`,
+      // cSpell: enable
       title: 'Privacy Policy',
     },
+
     signInPage: {
       dontHaveAcc: "Don't have an account?",
       email: 'email',
@@ -107,6 +115,7 @@ export const en: LocaleType = {
       invalidPass: 'Invalid Password',
       password: 'password',
     },
+
     signUpPage: {
       account: 'Do you have an account?',
       agreement:
@@ -119,8 +128,10 @@ export const en: LocaleType = {
       signUp: 'Sign Up',
       title: 'Sign Up',
     },
+
     termsOfService: {
       backSignUp: 'Back to Sign Up',
+      // cSpell: disable
       content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
       incididunt ut labore et dolore magna aliqua. Fames ac turpis egestas integer eget
       aliquet nibh. Amet consectetur adipiscing elit ut aliquam purus sit amet luctus. Tortor
@@ -182,64 +193,107 @@ export const en: LocaleType = {
       aenean sed adipiscing diam. Viverra nam libero justo laoreet. Id neque aliquam
       vestibulum morbi blandit cursus. Vel facilisis volutpat est velit egestas dui id ornare.
       Feugiat nibh sed pulvinar proin.`,
+      // cSpell: enable
       title: 'Terms of Service',
     },
   },
 
   common: {
+    avatarUploader: {
+      buttons: {
+        save: 'Save',
+        select: 'Select from Device',
+      },
+      errors: {
+        tooBig: '<bold>Error!</bold> Photo size must be less than 10 MB (MegaBytes)',
+        wrongFormat: '<bold>Error!</bold> The format of the uploaded photo must be PNG or JPEG',
+      },
+      title: 'Add a Profile Photo',
+    },
     datePicker: {
       locale: gregorian_en,
     },
+    postsList: {
+      addPostButton: 'Create Post',
+      noPostsMessage: 'There are not posts yet',
+    },
   },
 
-  generalInformation: {
-    aboutMe: {
-      label: 'About Me',
-    },
-    addProfilePhoto: {
-      submitButton: 'add a profile photo',
-    },
-    city: {
-      label: 'Select your city',
-      placeholder: 'City',
-    },
-    commonFieldErrors: {
-      max: '<field></field> must contain at most <max></max> characters',
-      min: '<field></field> must contain at least <min></min> characters',
-      onlyLetters: '<field></field> must contain only letters',
-      required: '<field></field> is required',
-    },
-    country: {
-      label: 'Select your country',
-      placeholder: 'Country',
-    },
-    dateOfBirth: {
-      errors: {
-        invalidDateFormat:
-          'Invalid date format. Enter the date in the specified format: <format></format>',
-        toYoung: 'A user under 13 cannot create a profile. <link>Privacy Policy</link>',
-        under1900: "The date of birth can't be before 1900",
+  editProfile: {
+    addPhotoButton: 'Add a Profile Photo',
+
+    deleteAvatarModal: {
+      buttons: {
+        confirm: 'Yes',
+        deny: 'No',
       },
-      label: 'Date of Birth',
+      message: 'Are you sure you want to delete the photo?',
+      title: 'Delete Photo',
     },
-    firstName: {
-      label: 'First Name',
-    },
-    lastName: {
-      label: 'Last Name',
-    },
-    submitButton: 'save changes',
-    userName: {
-      errors: {
-        regexp: 'User Name must contain only letters, numbers, underscores or hyphens',
+
+    profileForm: {
+      aboutMe: {
+        label: 'About Me',
       },
-      label: 'Username',
+      city: {
+        label: 'Select your city',
+        placeholder: 'City',
+      },
+      commonFieldErrors: {
+        max: '<field></field> must contain at most <max></max> characters',
+        min: '<field></field> must contain at least <min></min> characters',
+        onlyLetters: '<field></field> must contain only letters',
+        required: '<field></field> is required',
+      },
+      country: {
+        label: 'Select your country',
+        placeholder: 'Country',
+      },
+      dateOfBirth: {
+        errors: {
+          invalidDateFormat:
+            'Invalid date format. Enter the date in the specified format: <format></format>',
+          toYoung: 'A user under 13 cannot create a profile. <link>Privacy Policy</link>',
+          under1900: "The date of birth can't be before 1900",
+        },
+        label: 'Date of Birth',
+      },
+      firstName: {
+        label: 'First Name',
+      },
+      lastName: {
+        label: 'Last Name',
+      },
+      submitButton: 'save changes',
+      userName: {
+        errors: {
+          regexp: 'User Name must contain only letters, numbers, underscores or hyphens',
+        },
+        label: 'Username',
+      },
+    },
+
+    tabs: {
+      accountManagement: { label: 'Account Management' },
+      devices: { label: 'Devices' },
+      generalInformation: { label: 'General Information' },
+      myPayments: { label: 'My payments' },
     },
   },
 
   logOut: {
     reallyWantToLogOut: 'Are you really want to log out of your account <email></email>?',
   },
+
+  myProfile: {
+    settingsButton: 'Profile Settings',
+    statistics: {
+      followers: { label: 'followers' },
+      following: { label: 'following' },
+      publications: { label: 'publications' },
+    },
+  },
+
   navbar: {
     forgotPassword: 'Forgot Password',
     main: 'Main',
@@ -248,6 +302,7 @@ export const en: LocaleType = {
     signUp: 'Sign Up',
     termsOfService: 'Terms Of Service',
   },
+
   notificationMenu: {
     ago: 'ago',
     new: 'New',

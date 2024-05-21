@@ -3,6 +3,7 @@ import AvatarEditor, { CroppedRect } from 'react-avatar-editor';
 
 import { Modal } from '@/features/modal';
 import { dataURLToBlob } from '@/shared/helpers';
+import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
 import { Alert } from '@/shared/ui/alert';
 import { CropProps } from '@/shared/ui/croppedImage';
@@ -30,6 +31,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
   onImageSave,
   open,
 }) => {
+  const { avatarUploader: t } = useTranslation().t.common;
   const editorRef = useRef<AvatarEditor>(null);
   const inputRef = useRef<ElementRef<'input'>>(null);
   const {
@@ -107,7 +109,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
   const previewOrAvatar = state.preview ?? avatar;
 
   return (
-    <Modal onClose={handleClose} open={open} showCloseButton title={'Add a Profile Photo'}>
+    <Modal onClose={handleClose} open={open} showCloseButton title={t.title}>
       <div className={s.content}>
         {state.error && (
           <Alert classes={{ alertRoot: s.error }} severity={'error'}>
@@ -155,11 +157,11 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
             onClick={() => inputRef.current?.click()}
             variant={previewOrAvatar ? 'tertiary' : 'primary'}
           >
-            select from device
+            {t.buttons.select}
           </Button>
           {previewOrAvatar && (
             <Button disabled={!!state.error} onClick={saveAvatar}>
-              save
+              {t.buttons.save}
             </Button>
           )}
         </div>

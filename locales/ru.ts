@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- useless rule for locale file */
 import gregorian_ru from '@/locales/gregorian_ru';
 
 export const ru = {
@@ -7,6 +8,7 @@ export const ru = {
       textButton: 'Войти',
       title: 'Поздравляем!',
     },
+
     forgotPasswordPage: {
       backToSignIn: 'Вернуться на страницу входа',
       invalidEmail: 'Неверный формат электронной почты',
@@ -16,11 +18,13 @@ export const ru = {
       title: 'Забыл пароль',
       titleModal: 'Ссылка отправлена',
     },
+
     linkExpiredPage: {
       text: 'Похоже, срок действия ссылки для подтверждения истек. Не волнуйтесь, мы можем отправить ссылку еще раз.',
       textButton: 'Отправить еще раз',
       title: 'Срок действия ссылки истек',
     },
+
     passwordResetPage: {
       confirmPasswordZod: 'Подтверждение пароля обязательно',
       message: 'Ваш пароль должен содержать от 6 до 20 символов',
@@ -33,8 +37,10 @@ export const ru = {
       textLink: 'Создать новый пароль',
       title: 'Создать новый пароль',
     },
+
     privacyPolicy: {
       backSignUp: 'Назад к регистрации',
+      // cSpell: disable
       content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
       incididunt ut labore et dolore magna aliqua. Fames ac turpis egestas integer eget
       aliquet nibh. Amet consectetur adipiscing elit ut aliquam purus sit amet luctus. Tortor
@@ -96,8 +102,10 @@ export const ru = {
       aenean sed adipiscing diam. Viverra nam libero justo laoreet. Id neque aliquam
       vestibulum morbi blandit cursus. Vel facilisis volutpat est velit egestas dui id ornare.
       Feugiat nibh sed pulvinar proin.`,
+      // cSpell: enable
       title: 'Политика конфиденциальности',
     },
+
     signInPage: {
       dontHaveAcc: 'Нет учётной записи?',
       email: 'Электронная почта',
@@ -105,6 +113,7 @@ export const ru = {
       invalidPass: 'Неверный формат пароля',
       password: 'Пароль',
     },
+
     signUpPage: {
       account: 'У Вас есть аккаунт?',
       agreement:
@@ -117,8 +126,10 @@ export const ru = {
       signUp: 'Зарегистрироваться',
       title: 'Регистрация',
     },
+
     termsOfService: {
       backSignUp: 'Назад к регистрации',
+      // cSpell: disable
       content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
       incididunt ut labore et dolore magna aliqua. Fames ac turpis egestas integer eget
       aliquet nibh. Amet consectetur adipiscing elit ut aliquam purus sit amet luctus. Tortor
@@ -180,65 +191,108 @@ export const ru = {
       aenean sed adipiscing diam. Viverra nam libero justo laoreet. Id neque aliquam
       vestibulum morbi blandit cursus. Vel facilisis volutpat est velit egestas dui id ornare.
       Feugiat nibh sed pulvinar proin.`,
+      // cSpell: enable
       title: 'Пользовательское соглашение',
     },
   },
 
   common: {
+    avatarUploader: {
+      buttons: {
+        save: 'Сохранить',
+        select: 'Загрузить С Устройства',
+      },
+      errors: {
+        tooBig: '<bold>Ошибка!</bold> Размер фото должен быть менее 10 MB (Мегабайт)',
+        wrongFormat: '<bold>Ошибка!</bold> Формат загружаемого фото должен быть PNG или JPEG',
+      },
+      title: 'Добавить Фото Пользователя',
+    },
     datePicker: {
       locale: gregorian_ru,
     },
+    postsList: {
+      addPostButton: 'Создать Пост',
+      noPostsMessage: 'Здесь пока нет постов',
+    },
   },
 
-  generalInformation: {
-    aboutMe: {
-      label: 'Обо мне',
-    },
-    addProfilePhoto: {
-      submitButton: 'добавить фото профиля',
-    },
-    city: {
-      label: 'Выберите ваш город',
-      placeholder: 'Город',
-    },
-    commonFieldErrors: {
-      max: '<field></field> должно содержать не более <max></max> символов',
-      min: '<field></field> должно содержать не менее <min></min> символовов',
-      onlyLetters: '<field></field> может содержать только буквы',
-      required: '<field></field> обязательно для заполнения',
-    },
-    country: {
-      label: 'Выберите вашу страну',
-      placeholder: 'Страна',
-    },
-    dateOfBirth: {
-      errors: {
-        invalidDateFormat:
-          'Неверный формат даты. Введите дату в указанном формате: <format></format>',
-        toYoung:
-          'Пользователь младше 13 лет не может создать профиль. <link>Политика конфиденциальности</link>',
-        under1900: 'Дата рождения не может быть раньше 1900 года',
+  editProfile: {
+    addPhotoButton: 'Добавить Фото Пользователя',
+
+    deleteAvatarModal: {
+      buttons: {
+        confirm: 'Да',
+        deny: 'Нет',
       },
-      label: 'Дата Рождения',
+      message: 'Вы уверены, что хотите удалить это фото?',
+      title: 'Удалить Фото',
     },
-    firstName: {
-      label: 'Имя',
-    },
-    lastName: {
-      label: 'Фамилия',
-    },
-    submitButton: 'сохранить изменения',
-    userName: {
-      errors: {
-        regexp: 'Имя пользователя может содержать только буквы, цифры, подчеркивания и тире',
+
+    profileForm: {
+      aboutMe: {
+        label: 'Обо мне',
       },
-      label: 'Имя Пользователя',
+      city: {
+        label: 'Выберите ваш город',
+        placeholder: 'Город',
+      },
+      commonFieldErrors: {
+        max: '<field></field> должно содержать не более <max></max> символов',
+        min: '<field></field> должно содержать не менее <min></min> символов',
+        onlyLetters: '<field></field> может содержать только буквы',
+        required: '<field></field> обязательно для заполнения',
+      },
+      country: {
+        label: 'Выберите вашу страну',
+        placeholder: 'Страна',
+      },
+      dateOfBirth: {
+        errors: {
+          invalidDateFormat:
+            'Неверный формат даты. Введите дату в указанном формате: <format></format>',
+          toYoung:
+            'Пользователь младше 13 лет не может создать профиль. <link>Политика конфиденциальности</link>',
+          under1900: 'Дата рождения не может быть раньше 1900 года',
+        },
+        label: 'Дата Рождения',
+      },
+      firstName: {
+        label: 'Имя',
+      },
+      lastName: {
+        label: 'Фамилия',
+      },
+      submitButton: 'сохранить изменения',
+      userName: {
+        errors: {
+          regexp: 'Имя пользователя может содержать только буквы, цифры, подчеркивания и тире',
+        },
+        label: 'Имя Пользователя',
+      },
+    },
+
+    tabs: {
+      accountManagement: { label: 'Управление Аккаунтом' },
+      devices: { label: 'Устройства' },
+      generalInformation: { label: 'Общая информация' },
+      myPayments: { label: 'Мои платежи' },
     },
   },
 
   logOut: {
     reallyWantToLogOut: 'Вы действительно хотите выйти из аккаунта <email></email>?',
   },
+
+  myProfile: {
+    settingsButton: 'Настройки Профиля',
+    statistics: {
+      followers: { label: 'подписчики' },
+      following: { label: 'подписки' },
+      publications: { label: 'публикации' },
+    },
+  },
+
   navbar: {
     forgotPassword: 'Забыл пароль',
     main: 'Главная страница',
@@ -247,6 +301,7 @@ export const ru = {
     signUp: 'Зарегистрироваться',
     termsOfService: 'Условия пользования',
   },
+
   notificationMenu: {
     ago: 'назад',
     new: 'Новое',

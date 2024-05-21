@@ -38,9 +38,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
   onSubmit,
   onSubmitError,
 }) => {
-  const {
-    t: { generalInformation: t },
-  } = useTranslation();
+  const { profileForm: t } = useTranslation().t.editProfile;
   const schema = useProfileFormSchema();
 
   const [inputValue, setInputValue] = useState('');
@@ -131,7 +129,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         <ControlledTextField
           as={'textarea'}
           control={control}
-          label={'About Me'}
+          label={t.aboutMe.label}
           name={'aboutMe'}
         />
 

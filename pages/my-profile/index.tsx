@@ -4,6 +4,7 @@ import { ProfileSummaryItem } from '@/features/profile-info/profile-summary';
 import { NextPageWithLayout } from '@/pages/_app';
 import { useLazyGetMeQuery } from '@/shared/api/users-api';
 import { useAuthRedirect } from '@/shared/hooks/useAuthRedirect';
+import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Typography } from '@/shared/ui';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
@@ -11,13 +12,14 @@ import { UserProfile } from '@/widgets/user-profile';
 import Link from 'next/link';
 
 // temporary placeholder
-const statistics: ProfileSummaryItem[] = [
-  { name: 'following', value: 0 },
-  { name: 'followers', value: 0 },
-  { name: 'publications', value: 0 },
-];
+const statistics = [
+  { key: 'following', value: 0 } as const,
+  { key: 'followers', value: 0 } as const,
+  { key: 'publications', value: 0 } as const,
+] satisfies ProfileSummaryItem[];
 
 const MyProfile: NextPageWithLayout = () => {
+  const { myProfile: t } = useTranslation().t;
   const [getMyProfile, { data: meResponse, isError }] = useLazyGetMeQuery();
 
   const isAuthSuccess = useAuthRedirect();
@@ -43,10 +45,13 @@ const MyProfile: NextPageWithLayout = () => {
         primaryAction={
           // TODO: fix button styles when it is used as span. Rename `as` prop to `component`
           <Button as={'span'} style={{ height: '100%', width: '100%' }} variant={'secondary'}>
-            <Link href={'/accounts/edit'}>profile settings</Link>
+            <Link href={'/accounts/edit'}>{t.settingsButton}</Link>
           </Button>
         }
-        statistics={statistics}
+        statistics={statistics.map(({ key, value }) => ({
+          name: t.statistics[key].label,
+          value,
+        }))}
         userName={username}
       />
     </>
