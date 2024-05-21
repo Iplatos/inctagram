@@ -59,8 +59,9 @@ export const ProfileFormDatePicker = <TFieldValues extends FieldValues = FieldVa
   ...props
 }: ProfileFormDatePickerProps<TFieldValues>) => {
   const {
-    t: { common: commonT, generalInformation: t },
-  } = useTranslation();
+    common: commonT,
+    editProfile: { profileForm: t },
+  } = useTranslation().t;
 
   const {
     field,

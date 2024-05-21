@@ -36,9 +36,7 @@ const getCommonMappers = ({
 });
 
 const getValidationSchema = (locale: LocaleType) => {
-  const {
-    generalInformation: { commonFieldErrors, ...t },
-  } = locale;
+  const { commonFieldErrors, ...t } = locale.editProfile.profileForm;
 
   const getFieldSchema = ({ field, max, min, regex, required }: FieldSchemaOptions) => {
     let schema = z.string().trim();

@@ -1,6 +1,24 @@
+@use 'helpers' as *;
+
 @mixin flex($justify: center, $align: center, $direction: null, $wrap: null) {
   display: flex;
   flex-flow: $direction $wrap;
   align-items: $align;
   justify-content: $justify;
+}
+
+@mixin media-breakpoint($bp-name, $approach: 'desktop-first') {
+  $media-query: null;
+
+  @if $approach == 'desktop-first' {
+    $media-query: 'width <= #{get-breakpoint($bp-name) * 1px}';
+  } @else if $approach == 'mobile-first' {
+    $media-query: 'width >= #{get-breakpoint($bp-name) * 1px}';
+  } @else {
+    @error 'Provided `$approach` parameter should be either `desktop-first` or `mobile-first`';
+  }
+
+  @media ($media-query) {
+    @content;
+  }
 }

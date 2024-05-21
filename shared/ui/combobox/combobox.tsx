@@ -1,11 +1,9 @@
-import React, {
+import {
   ChangeEvent,
   ComponentPropsWithoutRef,
   ElementRef,
-  FC,
   MouseEventHandler,
   forwardRef,
-  useState,
 } from 'react';
 
 import { Typography } from '@/shared/ui/typography';
@@ -30,7 +28,7 @@ export type ComboboxProps = {
   inputValue: string;
   label?: string;
   name?: string;
-  onChange: (value: null | string) => void;
+  onChange: (value: string) => void;
   onClear?: () => void;
   onInputChange: (value: string) => void;
   options: ComboboxOption[];
@@ -60,20 +58,18 @@ export const Combobox = forwardRef<ElementRef<'input'>, InputProps>(
     },
     ref
   ) => {
-    // const  = props;
-
     const showError = !!errorMessage && errorMessage.length > 0;
 
     const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
       if (e.currentTarget.value === '') {
-        onChange(null);
+        onChange('');
       }
       onInputChange(e.currentTarget.value);
     };
 
     const handleClearButtonClicked: MouseEventHandler<HTMLDivElement> = () => {
       onInputChange('');
-      onChange(null);
+      onChange('');
     };
 
     const filteredOptions =

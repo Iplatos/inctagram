@@ -1,13 +1,55 @@
 @use 'sass:math';
+@use 'sass:map';
 
 @function em($number, $root-font-size: 16) {
   $temp: math.round(math.div($number, $root-font-size) * 1000);
 
-  @return math.div($temp, 1000) + em;
+  @return math.div($temp, 1000) * 1em;
 }
 
 @function rem($number, $root-font-size: 16) {
   $temp: math.round(math.div($number, $root-font-size) * 1000);
 
-  @return math.div($temp, 1000) + rem;
+  @return math.div($temp, 1000) * 1rem;
+}
+
+$breakpoints: (
+  'mobile-s': 320,
+  'mobile-m': 360,
+  'mobile-l': 480,
+  'tablet-s': 600,
+  'tablet-m': 768,
+  'tablet-l': 990,
+  'desktop-s': 1024,
+  'desktop-m': 1280,
+  'desktop-l': 1920,
+  'desktop-xl': 2560,
+);
+
+@function get-breakpoint($bp-name) {
+  $bp-size: map.get($breakpoints, $bp-name);
+
+  @if not $bp-size {
+    @error 'Breakpoint `#{$bp-name}` is not found in the list of breakpoints. Consider one of the existing breakpoints: #{map.keys($breakpoints)}.';
+  }
+
+  @return $bp-size;
+}
+
+// All `-size` variables must be unitless except `$container-size`.
+// `$unit` parameter must represent division scale with units, e.g. 1px, 1em etc.
+@function get-adaptive-size(
+  $min-size,
+  $max-size,
+  $min-device-size,
+  $max-device-size,
+  $unit,
+  $container-size: 100vw
+) {
+  $size-diff: $max-size - $min-size;
+  $device-size-diff: $max-device-size - $min-device-size;
+
+  @return calc(
+    #{$min-size * $unit} + #{$size-diff} * (#{$container-size} - #{$min-device-size * $unit}) / #{$device-size-diff}
+  );
 }

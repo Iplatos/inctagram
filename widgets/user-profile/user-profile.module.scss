@@ -1,0 +1,10 @@
+@use '../../styles/helpers' as *;
+@use '../../styles/mixins' as *;
+
+.wrapper {
+  margin-bottom: em(48);
+
+  @include media-breakpoint('tablet-m') {
+    margin-bottom: em(30);
+  }
+}

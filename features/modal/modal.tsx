@@ -1,5 +1,6 @@
-import React, { ComponentProps, ReactNode } from 'react';
+import { ComponentProps, ReactNode } from 'react';
 
+import { CloseIcon } from '@/assets/icons/close';
 import { Typography } from '@/shared/ui';
 import {
   Dialog,
@@ -9,11 +10,8 @@ import {
   DialogPortal,
   DialogTitle,
 } from '@radix-ui/react-dialog';
-import Image from 'next/image';
 
 import style from './modal.module.scss';
-
-import CloseUrl from '../../assets/icons/close.svg?url';
 
 export type ModalProps = {
   children?: ReactNode;
@@ -35,7 +33,7 @@ export const Modal = (props: ModalProps) => {
     <Dialog onOpenChange={handleModalClosed} open={open}>
       {open && (
         <DialogPortal forceMount>
-          <DialogOverlay asChild className={style.dialogOverlay} />
+          <DialogOverlay className={style.dialogOverlay} />
           <DialogContent
             asChild
             className={className ? `${style.dialogContent} ${className}` : style.dialogContent}
@@ -49,7 +47,7 @@ export const Modal = (props: ModalProps) => {
 
                 {showCloseButton && (
                   <DialogClose aria-label={'Close'} className={style.closeButton}>
-                    <Image alt={'closeModal'} src={CloseUrl} />
+                    <CloseIcon />
                   </DialogClose>
                 )}
               </div>

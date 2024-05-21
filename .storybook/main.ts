@@ -8,14 +8,12 @@ const config: StorybookConfig = {
     '@storybook/addon-interactions',
     'storybook-addon-next-router',
   ],
-  docs: {
-    autodocs: 'tag',
-  },
+  docs: { autodocs: 'tag' },
   framework: {
     name: '@storybook/nextjs',
     options: {},
   },
-  stories: ['../**/**/**/*.mdx', '../**/**/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ['../**/*.mdx', '../**/*.stories.@(js|jsx|mjs|ts|tsx)'],
 };
 
 export default config;

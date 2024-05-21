@@ -1,30 +1,43 @@
-export type UserProfileType = {
-  aboutMe: string;
-  city: string;
-  country: string;
-  dateOfBirth: string;
-  familyName: string;
-  firstName: string;
-  photos: [
-    {
-      authorId: string;
-      createdAt: string;
-      cropProps: string;
-      id: string;
-      title: string;
-      updatedAt: string;
-      url: string;
-    },
-  ];
-  userId: string;
+import { AppResponse } from './auth.types';
+
+export type GetMeResponse = AppResponse<UserProfile>;
+
+export type UserProfile = {
+  aboutMe: null | string;
+  avatar: AvatarResponse | null;
+  city: null | string;
+  country: null | string;
+  createdAt: string;
+  dateOfBirth: null | string;
+  email: string;
+  firstname: null | string;
+  id: string;
+  lastname: null | string;
+  updatedAt: null | string;
+  username: string;
 };
 
-export type UpdateProfileType = {
-  aboutMe: string;
-  city: string;
-  country: string;
-  dateOfBirth: string;
-  firstName: string;
-  lastName: string;
-  userName: string;
+export type UpdateMeRequestData = Record<
+  Extract<
+    'aboutMe' | 'city' | 'country' | 'dateOfBirth' | 'firstname' | 'lastname' | 'username',
+    keyof UserProfile
+  >,
+  string
+>;
+
+// TODO: check for `null` value in the response body
+export type UpdateMeResponse = AppResponse<null | true>;
+
+export type SetMyAvatarResponse = AppResponse<{ id: string }>;
+
+export type deleteMyAvatarResponse = AppResponse<null | true>;
+
+type AvatarResponse = {
+  createdAt: string;
+  id: string;
+  offsetX: number;
+  offsetY: number;
+  scale: number;
+  updatedAt: null | string;
+  url: string;
 };

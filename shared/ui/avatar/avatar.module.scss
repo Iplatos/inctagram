@@ -1,0 +1,48 @@
+@use '../../../styles/helpers' as *;
+@use '../../../styles/mixins' as *;
+@use 'sass:string';
+
+%avatar-root {
+  @include flex;
+
+  user-select: none;
+
+  position: relative;
+
+  overflow: hidden;
+  display: inline-flex;
+
+  background-color: var(--color-dark-500);
+  border-radius: 50%;
+}
+
+$avatar-sizes: (
+  'small': em(36),
+  'medium': em(48),
+  'large': em(60),
+);
+
+@each $name, $size in $avatar-sizes {
+  $camel-cased-name: string.to-upper-case(string.slice($name, 1, 1)) + string.slice($name, 2);
+
+  .avatarRoot#{$camel-cased-name} {
+    @extend %avatar-root;
+
+    width: $size;
+    height: $size;
+  }
+}
+
+.fallback {
+  @include flex;
+
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-dark-500);
+}
+
+.fallback > svg {
+  aspect-ratio: 1;
+  width: max(1.5em, 35%);
+  height: auto;
+}

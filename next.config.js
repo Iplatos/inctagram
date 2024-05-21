@@ -1,19 +1,19 @@
 /** @type {import("next").NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-};
-
-/*module.exports = nextConfig;*/
 module.exports = {
-  eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
-  },
   i18n: {
     defaultLocale: 'ru',
     locales: ['en', 'ru'],
   },
+  images: {
+    remotePatterns: [
+      {
+        hostname: 'storage.yandexcloud.net',
+        pathname: '/incta-back/**',
+        protocol: 'https',
+      },
+    ],
+  },
+  reactStrictMode: true,
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find(rule => rule.test?.test?.('.svg'));

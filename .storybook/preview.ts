@@ -28,7 +28,7 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-    docs: { toc: true },
+    docs: { controls: { sort: 'requiredFirst' }, toc: true },
     nextRouter: {
       Provider: AppRouterContext.Provider,
     },

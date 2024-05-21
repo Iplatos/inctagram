@@ -6,39 +6,40 @@ import {
   GeneralInformation,
   MyPayments,
 } from '@/entities/accounts/edit';
+import { useTranslation } from '@/shared/hooks/useTranslation';
 import { TabContent, Tabs } from '@/shared/ui';
 
-import style from './edit-profile.module.scss';
+const tabs = [
+  { key: 'accountManagement', value: 'general information' } as const,
+  { key: 'devices', value: 'devices' } as const,
+  { key: 'generalInformation', value: 'account management' } as const,
+  { key: 'myPayments', value: 'my payments' } as const,
+] as const;
 
 export const EditProfile = () => {
+  const { editProfile: t } = useTranslation().t;
+
   return (
-    <div className={style.profileContainer}>
-      <Tabs
-        defaultValue={'general information'}
-        fullWidth
-        tabs={[
-          {
-            title: 'General information',
-            value: 'general information',
-          },
-          { title: 'Devices', value: 'devices' },
-          { title: 'Account Management', value: 'account management' },
-          { title: 'My payments', value: 'my payments' },
-        ]}
-      >
-        <TabContent value={'general information'}>
-          <GeneralInformation />
-        </TabContent>
-        <TabContent value={'devices'}>
-          <Devices />
-        </TabContent>
-        <TabContent value={'account management'}>
-          <AccountManagement />
-        </TabContent>
-        <TabContent value={'my payments'}>
-          <MyPayments />
-        </TabContent>
-      </Tabs>
-    </div>
+    <Tabs
+      defaultValue={'general information'}
+      fullWidth
+      tabs={tabs.map(({ key, value }) => ({
+        title: t.tabs[key].label,
+        value,
+      }))}
+    >
+      <TabContent value={'general information'}>
+        <GeneralInformation />
+      </TabContent>
+      <TabContent value={'devices'}>
+        <Devices />
+      </TabContent>
+      <TabContent value={'account management'}>
+        <AccountManagement />
+      </TabContent>
+      <TabContent value={'my payments'}>
+        <MyPayments />
+      </TabContent>
+    </Tabs>
   );
 };
