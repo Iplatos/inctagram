@@ -43,7 +43,13 @@ export const ProfileForm: FC<ProfileFormProps> = ({
 
   const [inputValue, setInputValue] = useState('');
 
-  const { control, handleSubmit, resetField, watch } = useForm<FormValues>({
+  const {
+    control,
+    formState: { isSubmitting, isValid, submitCount },
+    handleSubmit,
+    resetField,
+    watch,
+  } = useForm<FormValues>({
     defaultValues,
     mode: 'onTouched',
     resolver: zodResolver(schema),
@@ -54,30 +60,36 @@ export const ProfileForm: FC<ProfileFormProps> = ({
   const { data: countries } = useGetCountriesQuery();
   const { data: cities } = useGetCitiesQuery(selectedCountry || skipToken);
 
+  const submitIsDisabled = (!isValid && !!submitCount) || isSubmitting;
+
   return (
     <div className={style.formContainer}>
       <form className={style.form} onSubmit={handleSubmit(onSubmit, onSubmitError)}>
         {process.env.NEXT_PUBLIC_MODE === 'development' && <DevTool control={control} />}
         <ControlledTextField
           control={control}
+          disabled={isSubmitting}
           label={t.userName.label}
           name={'userName'}
           required
         />
         <ControlledTextField
           control={control}
+          disabled={isSubmitting}
           label={t.firstName.label}
           name={'firstName'}
           required
         />
         <ControlledTextField
           control={control}
+          disabled={isSubmitting}
           label={t.lastName.label}
           name={'lastName'}
           required
         />
         <ProfileFormDatePicker
           control={control}
+          disabled={isSubmitting}
           label={t.dateOfBirth.label}
           name={'dateOfBirth'}
           resetField={resetField}
@@ -86,6 +98,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
           <div className={style.select}>
             <Controller
               control={control}
+              disabled={isSubmitting}
               name={'country'}
               render={({ field, fieldState }) => (
                 <Combobox
@@ -111,6 +124,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
           <div className={style.select}>
             <Controller
               control={control}
+              disabled={isSubmitting}
               name={'city'}
               render={({ field, fieldState }) => (
                 <Combobox
@@ -129,13 +143,19 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         <ControlledTextField
           as={'textarea'}
           control={control}
+          disabled={isSubmitting}
           label={t.aboutMe.label}
           name={'aboutMe'}
         />
 
         <div className={style.separator} role={'separator'} />
 
-        <Button className={style.saveButton} type={'submit'} variant={'primary'}>
+        <Button
+          className={style.saveButton}
+          disabled={submitIsDisabled}
+          type={'submit'}
+          variant={'primary'}
+        >
           {t.submitButton}
         </Button>
       </form>

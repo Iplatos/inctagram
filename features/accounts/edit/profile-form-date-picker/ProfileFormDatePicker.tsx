@@ -120,9 +120,11 @@ export const ProfileFormDatePicker = <TFieldValues extends FieldValues = FieldVa
   return (
     <DatePicker
       calendarError={calendarError}
+      disabled={field.disabled}
       fixMainPosition
       format={stringDateFormat}
       inputError={error?.message}
+      inputProps={{ disabled: field.disabled }}
       locale={commonT.datePicker.locale}
       onChange={handleChange}
       onClose={handleClose}

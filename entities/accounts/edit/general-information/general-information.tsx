@@ -37,13 +37,13 @@ export const GeneralInformation = () => {
             date: data.dateOfBirth,
             format: 'DD.MM.YYYY',
           }).format()
-        : '',
+        : undefined,
       firstname: data.firstName,
       lastname: data.lastName,
       username: data.userName,
     };
 
-    updateProfile(requestBody);
+    return updateProfile(requestBody);
   };
 
   return (

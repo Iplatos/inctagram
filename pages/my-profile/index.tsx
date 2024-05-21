@@ -13,9 +13,9 @@ import Link from 'next/link';
 
 // temporary placeholder
 const statistics = [
-  { key: 'following', value: 0 } as const,
-  { key: 'followers', value: 0 } as const,
-  { key: 'publications', value: 0 } as const,
+  { name: 'following', value: 0 } as const,
+  { name: 'followers', value: 0 } as const,
+  { name: 'publications', value: 0 } as const,
 ] satisfies ProfileSummaryItem[];
 
 const MyProfile: NextPageWithLayout = () => {
@@ -48,7 +48,7 @@ const MyProfile: NextPageWithLayout = () => {
             <Link href={'/accounts/edit'}>{t.settingsButton}</Link>
           </Button>
         }
-        statistics={statistics.map(({ key, value }) => ({
+        statistics={statistics.map(({ name: key, value }) => ({
           name: t.statistics[key].label,
           value,
         }))}

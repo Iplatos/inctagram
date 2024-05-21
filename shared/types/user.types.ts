@@ -19,11 +19,11 @@ export type UserProfile = {
 
 export type UpdateMeRequestData = Record<
   Extract<
-    'aboutMe' | 'city' | 'country' | 'dateOfBirth' | 'firstname' | 'lastname' | 'username',
+    'aboutMe' | 'city' | 'country' | 'firstname' | 'lastname' | 'username',
     keyof UserProfile
   >,
   string
->;
+> & { dateOfBirth?: string };
 
 // TODO: check for `null` value in the response body
 export type UpdateMeResponse = AppResponse<null | true>;
