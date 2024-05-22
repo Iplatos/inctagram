@@ -31,7 +31,6 @@ const DefaultFieldCreator = ({ image, label }: SelectBoxOption) => {
 
 export const SelectBox = (props: SelectProps) => {
   const { defaultValue, disabled, labelField, onChangeFn, options, placeholder } = props;
-
   const [selectedOption, setSelectedOption] = useState<SelectBoxOption | null>(null);
   const defaultField =
     typeof defaultValue === 'number' && options?.[defaultValue]

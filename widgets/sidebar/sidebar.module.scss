@@ -1,83 +1,64 @@
-.sidebarContainer {
+@use '../../styles/mixins' as *;
+@use '../../styles/helpers' as *;
+
+.container {
+  scrollbar-width: thin;
+
   position: fixed;
   top: 60px;
   bottom: 0;
 
+  overflow: auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 60px;
 
-  box-sizing: border-box;
   width: 220px;
-  padding: 72px 0 36px 60px;
+  padding: 60px 0 36px 60px;
 
-  background-color: var(--color-dark-700);
-  border-top: 1px solid var(--color-dark-300);
   border-right: 1px solid var(--color-dark-300);
 }
 
-.svgAsComponent {
-  & * {
-    fill: white;
-  }
+.buttonsGroup {
+  @include flex($justify: null, $align: null, $direction: column);
+
+  gap: 24px;
 }
 
 .button {
+  @include flex($justify: null);
+
   cursor: pointer;
-
-  display: flex;
-  flex-direction: row;
   gap: 12px;
-  align-items: center;
 
-  width: max-content;
-  height: 24px;
-
-  font-size: var(--font-size-s);
-  font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-m);
-
-  &:focus {
-    box-sizing: border-box;
-    border: 1px solid var(--color-accent-700);
-    border-radius: 2px;
-
-    // padding: 1px;
+  &Logout {
+    margin-top: auto;
   }
 
   &:hover {
     color: var(--color-accent-100);
-
-    .svgAsComponent * {
-      fill: var(--color-accent-100);
-    }
   }
 
+  // doesn't work properly
   &:active {
     font-weight: var(--font-weight-bold);
     color: var(--color-accent-500);
-
-    .svgAsComponent * {
-      fill: var(--color-accent-500);
-    }
-  }
-
-  &:disabled {
-    color: var(--color-dark-100);
-
-    .svgAsComponent * {
-      fill: var(--color-dark-100);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--color-accent-700);
-    }
   }
 }
 
-.buttonContainer {
-  display: inline-flex;
-  flex-direction: column;
-  gap: 24px;
-  width: max-content;
+.svg {
+  & * {
+    fill: currentcolor;
+  }
+}
+
+.modalButtonsGroup {
+  @include flex($justify: flex-end, $align: null);
+
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.modalButton {
+  flex-basis: em(96);
 }

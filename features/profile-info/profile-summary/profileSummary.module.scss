@@ -1,0 +1,35 @@
+@use '../../../styles/helpers' as *;
+@use '../../../styles/mixins' as *;
+
+.items {
+  display: flex;
+  gap: em(20);
+}
+
+.item {
+  user-select: none;
+
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: em(6);
+  align-items: flex-start;
+
+  &:hover:enabled {
+    cursor: pointer;
+  }
+
+  &:hover:enabled :where(&Name, &Value) {
+    border-bottom-color: var(--color-light-100);
+  }
+
+  &Name,
+  &Value {
+    border-bottom: 1px solid transparent;
+  }
+
+  &Name {
+    color: var(--color-light-700);
+    text-transform: capitalize;
+  }
+}

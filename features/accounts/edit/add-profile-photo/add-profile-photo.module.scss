@@ -1,18 +1,67 @@
+@use '../../../../styles/mixins' as *;
+@use '../../../../styles/helpers' as *;
+
 .photoContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    padding-top: 24px;
+  @include flex($justify: null, $direction: column);
+
+  padding-top: rem(24);
 }
 
-.imageBlock {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.avatarWrapper {
+  position: relative;
+}
 
-    width: 192px;
-    height: 192px;
+.avatar {
+  aspect-ratio: 1;
+  width: 192px;
+  height: auto;
+  margin-bottom: 24px;
+}
 
-    background-color: var(--color-dark-500);
-    border-radius: 50%;
+.avatarImage {
+  filter: grayscale(100%);
+}
+
+.deleteButton {
+  @include flex;
+
+  cursor: pointer;
+  user-select: none;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  translate: -50% 0%;
+
+  margin: em(4);
+
+  background-color: var(--color-danger-500);
+  border: em(4) solid var(--color-dark-700);
+  border-radius: 50%;
+
+  &:active {
+    background-color: var(--color-danger-700);
+  }
+
+  &:disabled {
+    cursor: default;
+    background-color: var(--color-danger-500);
+    filter: grayscale(100%);
+  }
+
+  & svg {
+    width: em(22);
+    height: em(22);
+  }
+}
+
+.modalButtonsGroup {
+  @include flex($justify: flex-end, $align: null);
+
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.modalButton {
+  flex-basis: em(96);
 }

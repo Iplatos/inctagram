@@ -1,0 +1,27 @@
+import { Controls, Description, Meta, Primary, Stories, Subtitle, Title } from '@storybook/blocks';
+
+import * as UserPforileStories from './user-profile.stories';
+
+import * as ProfileInfoStories from '../profile-info/profileInfo.stories';
+
+import * as PostsListStories from '../posts-list/postsList.stories';
+
+<Meta of={UserPforileStories} />
+
+<Title />
+
+<Subtitle />
+
+<Description />
+
+<Primary />
+
+#### ProfileInfo specific props
+
+<Controls of={ProfileInfoStories.FollowedUser} exclude={['className']} />
+
+#### PostsList specific props
+
+<Controls of={PostsListStories.ManyPosts} exclude={['className']} />
+
+<Stories />

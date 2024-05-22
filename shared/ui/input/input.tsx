@@ -60,7 +60,7 @@ const getClassNames = (
   classes: InputClasses,
   { disabled, error }: Record<'disabled' | 'error', boolean | undefined>
 ): InputClasses => ({
-  input: clsx(s.input, disabled && s.inputDisabled, error && s.inputError),
+  input: clsx(s.input, disabled && s.inputDisabled, error && s.inputError, classes.input),
   inputRoot: clsx(
     s.inputRoot,
     disabled && s.inputRootDisabled,

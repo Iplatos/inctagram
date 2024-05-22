@@ -1,4 +1,5 @@
 import { useTranslation } from '@/shared/hooks/useTranslation';
+import { Typography } from '@/shared/ui';
 import { Button } from '@/shared/ui/Button';
 import { LangSwitcher } from '@/widgets/header/LangSwitcher';
 import Link from 'next/link';
@@ -16,42 +17,23 @@ export const Header = () => {
   const { t } = useTranslation();
 
   return (
-    <header className={styles.header}>
-      <div className={styles.container}>
-        <div className={styles.logo}>
-          <Link href={'/'}>Inctagram</Link>
-        </div>
-        <div className={styles.flex}>
-          {/*{meData ? (
-            <>
-              <NotificationMenu notifications={mockedNotifications} />
-              <LangSwitcher />
-              <ExpandBtn />
-            </>
-          ) : (
-            <>
-              <LangSwitcher />
-              <div className={styles['buttons-wrapper']}>
-                <Button variant={'text'}>
-                  <Link href={'/signIn'}>{t.navbar.signIn}</Link>
-                </Button>
-                <Button>
-                  <Link href={'/signUp'}>{t.navbar.signUp}</Link>
-                </Button>
-              </div>
-            </>
-          )}*/}
+    <div className={styles.container}>
+      <header className={styles.content}>
+        <Typography.Large component={Link} href={'/'}>
+          Inctagram
+        </Typography.Large>
+        <div className={styles.controlsWrapper}>
           <LangSwitcher />
-          <div className={styles['buttons-wrapper']}>
-            <Button variant={'text'}>
+          <div className={styles.buttonsWrapper}>
+            <Button as={'span'} variant={'text'}>
               <Link href={'/sign-in'}>{t.navbar.signIn}</Link>
             </Button>
-            <Button>
+            <Button as={'span'}>
               <Link href={'/sign-up'}>{t.navbar.signUp}</Link>
             </Button>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </div>
   );
 };

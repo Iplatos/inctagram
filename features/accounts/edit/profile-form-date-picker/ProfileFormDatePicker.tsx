@@ -59,8 +59,9 @@ export const ProfileFormDatePicker = <TFieldValues extends FieldValues = FieldVa
   ...props
 }: ProfileFormDatePickerProps<TFieldValues>) => {
   const {
-    t: { common: commonT, generalInformation: t },
-  } = useTranslation();
+    common: commonT,
+    editProfile: { profileForm: t },
+  } = useTranslation().t;
 
   const {
     field,
@@ -119,9 +120,11 @@ export const ProfileFormDatePicker = <TFieldValues extends FieldValues = FieldVa
   return (
     <DatePicker
       calendarError={calendarError}
+      disabled={field.disabled}
       fixMainPosition
       format={stringDateFormat}
       inputError={error?.message}
+      inputProps={{ disabled: field.disabled }}
       locale={commonT.datePicker.locale}
       onChange={handleChange}
       onClose={handleClose}

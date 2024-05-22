@@ -1,7 +1,4 @@
-import {
-  CountriesApiResponse,
-  CountryWithFlagApiData,
-} from '@/features/accounts/edit/profile-form/pofile-form-types';
+import { CountriesApiResponse, CountryWithFlagApiData } from '@/shared/types/countries.types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const countriesApi = createApi({
