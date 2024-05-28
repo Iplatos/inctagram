@@ -1,52 +1,51 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, useEffect } from 'react';
+import type { SliderProps as SliderPrimitiveProps } from '@radix-ui/react-slider';
+
+import { FC } from 'react';
 
 import * as SliderPrimitive from '@radix-ui/react-slider';
 import { clsx } from 'clsx';
-import { v1 } from 'uuid';
 
 import s from './slider.module.scss';
 
-type SliderProps = {
-  className?: string;
-  thumbCount: 1 | 2;
-  value: (null | number)[] | undefined;
+type SliderSize = 'medium' | 'small';
+export type SliderSlot = 'range' | 'sliderRoot' | 'thumb' | 'track';
+export type SliderClasses = { [P in SliderSlot]?: string };
+type OwnProps = {
+  classes?: SliderClasses;
+  size?: SliderSize;
+  thumbsCount?: number;
 };
 
-export const Slider = forwardRef<
-  ElementRef<typeof SliderPrimitive.Root>,
-  Omit<ComponentPropsWithoutRef<typeof SliderPrimitive.Root>, 'value'> & SliderProps
->(({ className, defaultValue, max, onValueChange, thumbCount, value, ...rest }, ref) => {
-  const classNames = {
-    container: clsx(s.container),
-    range: clsx(s.range),
-    root: clsx(s.root, className),
-    thumb: clsx(s.thumb),
-    track: clsx(s.track),
-    valueDisplay: clsx(s.valueDisplay),
-  };
+export type SliderProps = Omit<SliderPrimitiveProps, 'asChild' | 'className' | keyof OwnProps> &
+  OwnProps;
 
-  useEffect(() => {
-    if (value?.[1] === undefined || value === null) {
-      onValueChange?.([value?.[0] ?? 0, max ?? 0]);
-    }
-  }, [max, value, onValueChange]);
+export const Slider: FC<SliderProps> = ({ thumbsCount = 1, ...props }) => (
+  <InnerComponent key={thumbsCount} thumbsCount={thumbsCount} {...props} />
+);
+
+const InnerComponent: FC<SliderProps> = ({
+  classes = {},
+  size = 'medium',
+  thumbsCount = 1,
+  ...rest
+}) => {
+  const cls = getClassNames(classes, size);
 
   return (
-    <div className={classNames.container}>
-      <SliderPrimitive.Root
-        className={classNames.root}
-        max={max}
-        onValueChange={onValueChange}
-        ref={ref}
-        value={thumbCount === 2 ? [value?.[0] ?? 0, value?.[1] ?? max ?? 0] : [value?.[0] ?? 0]}
-        {...rest}
-      >
-        <SliderPrimitive.Track className={classNames.track}>
-          <SliderPrimitive.Range className={classNames.range} />
-        </SliderPrimitive.Track>
-        <SliderPrimitive.Thumb className={classNames.thumb} />
-        {thumbCount === 2 && <SliderPrimitive.Thumb className={classNames.thumb} />}
-      </SliderPrimitive.Root>
-    </div>
+    <SliderPrimitive.Root className={cls.sliderRoot} {...rest}>
+      <SliderPrimitive.Track className={cls.track}>
+        <SliderPrimitive.Range className={cls.range} />
+      </SliderPrimitive.Track>
+      {new Array(thumbsCount).fill(0).map((_, i) => (
+        <SliderPrimitive.Thumb className={cls.thumb} key={i} />
+      ))}
+    </SliderPrimitive.Root>
   );
+};
+
+const getClassNames = (classes: SliderClasses, size: SliderSize): SliderClasses => ({
+  range: clsx(s.range, classes.range),
+  sliderRoot: clsx(s.root, classes.sliderRoot, s[size]),
+  thumb: clsx(s.thumb, classes.thumb),
+  track: clsx(s.track, classes.track),
 });
