@@ -118,6 +118,8 @@ export const ru = {
       account: 'У Вас есть аккаунт?',
       agreement:
         'Я согласен с <agreement>Пользовательским соглашением</agreement> и <policy>Политикой конфиденциальности</policy>',
+      errorEmail: 'Пользователь с таким электронным адресом уже зарегистрирован',
+      errorUsername: 'Пользователь с таким именем уже зарегистрирован',
       labelConfirm: 'Подтверждение пароля',
       labelEmail: 'Почта',
       labelName: 'Имя пользователя',
@@ -125,6 +127,16 @@ export const ru = {
       signIn: 'Войти',
       signUp: 'Зарегистрироваться',
       title: 'Регистрация',
+      validationFormErrors: {
+        invalidEmail: 'E-mail должен соответствовать формату example@example.com',
+        invalidPassword:
+          'Пароль должен содержать 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~',
+        maxValuePassword: 'Максимальное количество символов 20',
+        maxValueUsername: 'Максимальное количество символов 30',
+        minValuePassword: 'Минимальное количество символов 6',
+        minValueUsername: 'Минимальное количество символов 6',
+        secondPasswordError: 'Пароли должны совпадать',
+      },
     },
 
     termsOfService: {

@@ -120,6 +120,8 @@ export const en: LocaleType = {
       account: 'Do you have an account?',
       agreement:
         'I agree to the <agreement>Terms of service</agreement> and <policy>Privacy policy</policy>',
+      errorEmail: 'User with this email is already registered',
+      errorUsername: 'User with this username is already registered',
       labelConfirm: 'Password confirmation',
       labelEmail: 'Email',
       labelName: 'Username',
@@ -127,6 +129,16 @@ export const en: LocaleType = {
       signIn: 'Sign In',
       signUp: 'Sign Up',
       title: 'Sign Up',
+      validationFormErrors: {
+        invalidEmail: 'The email must match the format example@example.com',
+        invalidPassword:
+          'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~',
+        maxValuePassword: 'Maximum number of characters 20',
+        maxValueUsername: 'Maximum number of characters 30',
+        minValuePassword: 'Minimum number of characters 6',
+        minValueUsername: 'Minimum number of characters 6',
+        secondPasswordError: 'Passwords must match',
+      },
     },
 
     termsOfService: {
