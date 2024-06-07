@@ -1,112 +1,61 @@
-@mixin button {
-    all: unset;
-    cursor: pointer;
+@use '../../../styles/mixins' as *;
+@use '../../../styles/helpers' as *;
+@use 'sass:map';
+
+%button {
+  @include inline-flex($wrap: wrap, $justify: flex-end);
+
+  cursor: pointer;
   user-select: none;
-  position: relative;
+  border-radius: 50%;
+  transition: background-color 0.15s ease;
 
-    &::before {
-      content: '';
-  
-      position: absolute;
-      z-index: -1;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-  
-  
-      margin-bottom: 0;
-      padding: 0;
-  
-      border-radius: 50%;
-  
-      transition:
-        background-color 0.2s ease,
-        transform 0.2s ease;
-    }
-
-    &:hover {
-      transform: scale(1);
-    }
-  
-    &:active {
-      transform: scale(1);
-    }
-  
-    &:hover::before {
-      transform: translate(-50%, -50%) scale(1);
-      background-color: var(--color-dark-500);
-    }
-  
-    &:active::before {
-      transform: translate(-50%, -50%) scale(1);
-      background-color: var(--color-dark-300);
-    }
-
-    &:disabled {
-      cursor: default;
-      opacity: 0.5;
-    }
-
+  &:hover {
+    background-color: var(--color-dark-500);
   }
 
-  .filled{
-    fill: red;
+  &:active {
+    background-color: var(--color-dark-300);
   }
-
-
-.smth {
-    fill: white;
-
-    &:hover {
-    fill: red
-    }
 }
 
-.small {
-  @include button;
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.65;
 
-  &::before {
-  width: 36px;
-  height: 36px;
+  &:is(:hover, :active) {
+    background-color: transparent;
   }
-
- svg   {
-    width: 24px;
-    height: 24px;
-    background-color: inherit
-    }
-  
-   
-  
 }
 
-.medium {
-  @include button;
+$button-variants: (
+  'small': (
+    'button-padding': 4,
+    'svg-size': 16,
+  ),
+  'medium': (
+    'button-padding': 6,
+    'svg-size': 24,
+  ),
+  'large': (
+    'button-padding': 6,
+    'svg-size': 36,
+  ),
+);
 
-  &::before {
-    width: 54px;
-    height: 54px;
-    }
+@each $variant, $params in $button-variants {
+  $button-padding: map.get($params, 'button-padding');
+  $svg-size: map.get($params, 'svg-size');
 
-   svg
-   { width: 36px;
-    height: 36px;
-    background-color: inherit
-   }
-}
+  .#{$variant} {
+    @extend %button;
 
-.large {
-  @include button;
-
-  &::before {
-    width: 72px;
-    height: 72px;
-    }
+    padding: em($button-padding);
 
     svg {
-    width: 48px;
-    height: 48px;
-    background-color: inherit
+      width: em($svg-size);
+      height: em($svg-size);
     }
+  }
 }
-
