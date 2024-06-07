@@ -1,12 +1,11 @@
+@use '../../../styles/mixins' as *;
+
 .selectTrigger {
-  all: unset;
+  @include inline-flex($justify: space-between);
 
   cursor: pointer;
 
-  display: inline-flex;
   gap: 12px;
-  align-items: center;
-  justify-content: space-between;
 
   box-sizing: border-box;
   width: 100%;
@@ -39,17 +38,15 @@
     border-color: var(--color-dark-100);
   }
 
-  &[data-state="open"] {
+  &[data-state='open'] {
     border: 1px solid #fff;
   }
 }
 
 .valueWrapper {
-  display: flex;
-  flex-direction: row;
+  @include flex;
+
   gap: 12px;
-  align-items: center;
-  justify-content: center;
 }
 
 .selectContent {
@@ -63,7 +60,7 @@
   border-radius: 2px;
 
   &[data-state] {
-    border: 1px solid  var(--color-light-900);
+    border: 1px solid var(--color-light-900);
   }
 }
 
@@ -72,18 +69,16 @@
 }
 
 .default {
-  display: flex;
+  @include flex($justify: null);
+
   gap: 12px;
-  align-items: center;
 }
 
 .selectItem {
+  @include flex($justify: null);
+
   cursor: pointer;
-
-  display: flex;
   gap: 12px;
-  align-items: center;
-
   padding: 6px 12px;
 
   &:hover {
@@ -92,14 +87,3 @@
     outline: none;
   }
 }
-
-// @media (width <= 767px) {
-//   .width-small {
-//     width: 84px;
-
-//     &.option img + span,
-//     .valueWrapper img + span {
-//       display: none;
-//     }
-//   }
-// }
