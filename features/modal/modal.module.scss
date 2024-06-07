@@ -1,3 +1,5 @@
+@use '../../styles/mixins' as *;
+
 .dialogOverlay {
   position: fixed;
   inset: 0;
@@ -30,6 +32,8 @@
 }
 
 .closeButton {
+  @include inline-flex;
+
   all: unset;
 
   cursor: pointer;
@@ -37,10 +41,6 @@
   position: absolute;
   top: 17px;
   right: 24px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 
   width: 24px;
   height: 24px;

@@ -1,9 +1,9 @@
-.container {
-  display: inline-flex;
-  gap: 8px;
-  justify-content: flex-start;
+@use '../../../styles/mixins' as *;
 
-  // width: 100%;
+.container {
+  @include inline-flex($justify: flex-start, $align: null);
+
+  gap: 8px;
   height: 36px;
   padding: 6px 2px 6px 6px;
 }
@@ -55,8 +55,7 @@
 }
 
 .checkboxLabel {
-  display: flex;
-  align-items: center;
+  @include flex($justify: null);
 }
 
 .disabled {

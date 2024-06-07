@@ -3,14 +3,13 @@
 @use 'sass:string';
 
 %avatar-root {
-  @include flex;
+  @include inline-flex;
 
   user-select: none;
 
   position: relative;
 
   overflow: hidden;
-  display: inline-flex;
 
   background-color: var(--color-dark-500);
   border-radius: 50%;
