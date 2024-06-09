@@ -43,22 +43,25 @@ export const PhotoSlider = () => {
   return (
     <div style={{ background: 'var(--color-dark-100)', height: '500px', width: '700px' }}>
       <ImageGallery
+        bull
         items={images}
         renderCustomControls={() => (
           <a
             className={'image-gallery-custom-action'}
-            href={''}
             // onClick={}
+            color={'red'}
+            href={''}
           />
+        )}
+        renderFullscreenButton={(onClick, isFullscreen) => (
+          <Fullscreen isFullscreen={isFullscreen} onClick={onClick} />
         )}
         renderLeftNav={(onClick, disabled) => <LeftNav disabled={disabled} onClick={onClick} />}
         renderRightNav={(onClick, disabled) => <RightNav disabled={disabled} onClick={onClick} />}
         showBullets
         showFullscreenButton={false}
         showPlayButton={false}
-        thumbnailPosition={'right'}
-
-        // showThumbnails={false}
+        showThumbnails={false}
       />
     </div>
   );

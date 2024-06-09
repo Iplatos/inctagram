@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { PhotoSlider } from '@/features';
 import { useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
@@ -19,6 +20,7 @@ function Home() {
     <>
       <HeadMeta title={'main'} />
       <div style={{ marginLeft: '300px' }}>Hello World!</div>
+      <PhotoSlider />
     </>
   );
 }
