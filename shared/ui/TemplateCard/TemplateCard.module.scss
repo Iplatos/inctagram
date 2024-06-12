@@ -1,0 +1,26 @@
+ .content {
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--color-dark-100);
+  }
+  
+  .component {
+      align-items: center;
+      justify-content: center;
+      background-color: var(--color-dark-300);
+      border: 1px solid var(--color-dark-100);
+  
+       .content:last-child{
+        border-bottom: none
+      }
+    }
+  
+    .header {
+      display: flex;
+      align-items:center;
+      justify-content: space-between;
+  
+      margin-bottom: 12px;
+    
+      border-bottom: 1px solid var(--color-dark-100);
+    }
+  
