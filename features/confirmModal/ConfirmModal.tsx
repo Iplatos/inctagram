@@ -1,9 +1,9 @@
+import React, { ReactNode } from 'react';
+
 import { CloseIcon } from '@/assets/icons/close';
-import { Button } from '@/shared/ui';
-import { Typography } from '@/shared/ui';
+import { Button, Typography } from '@/shared/ui';
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogOverlay,
   DialogPortal,
@@ -15,71 +15,72 @@ import style from './ConfirmModal.module.scss';
 type ConfirmModalProps = {
   children: ReactNode;
   className?: string;
-  openConfirmModal: boolean;
-  openParentModal: boolean;
-  setOpenConfirmModal: (openConfirmModal: boolean) => void;
-  setOpenParentModal: (open: boolean) => void;
-  showCloseButton: boolean;
+  confirmButtonLabel: string;
+  denyButtonLabel: string;
+  onConfirm: () => void;
+  onDeny: () => void;
+  open: boolean;
+  setOpen: (open: boolean) => void;
   title: string;
 };
 
-export const ConfirmModal = (props: ConfirmModalProps) => {
-  const {
-    children,
-    className,
-    openConfirmModal,
-    openParentModal,
-    setOpenConfirmModal,
-    setOpenParentModal,
-    showCloseButton,
-    title,
-  } = props;
-
+export const ConfirmModal = ({
+  children,
+  className,
+  confirmButtonLabel,
+  denyButtonLabel,
+  onConfirm,
+  onDeny,
+  open,
+  setOpen,
+  title,
+}: ConfirmModalProps) => {
   const closeAllModal = () => {
-    setOpenParentModal(!openParentModal);
-    setOpenConfirmModal(!openConfirmModal);
+    setOpen(false);
   };
 
   return (
-    <Dialog onOpenChange={closeAllModal} open={openConfirmModal}>
-      {openConfirmModal && (
-        <DialogPortal forceMount>
-          <DialogOverlay className={style.dialogOverlay} />
-          <DialogContent
-            asChild
-            className={className ? `${style.dialogContent} ${className}` : style.dialogContent}
-            forceMount
-          >
-            <div>
-              <div className={style.titleBlock}>
-                <DialogTitle asChild>
-                  <Typography.H1>{title}</Typography.H1>
-                </DialogTitle>
-
-                {showCloseButton && (
-                  <div
-                    aria-label={'Close'}
-                    className={style.closeButton}
-                    onClick={() => setOpenConfirmModal(!openConfirmModal)}
-                  >
-                    <CloseIcon />
-                  </div>
-                )}
-              </div>
-
-              <div className={style.contentBlock}>
-                {children}
-                <div className={style.buttonBlock}>
-                  <Button onClick={closeAllModal} variant={'tertiary'}>
-                    Discard
-                  </Button>
-                  <Button onClick={() => setOpenConfirmModal(!openConfirmModal)}>Save draft</Button>
-                </div>
+    <Dialog onOpenChange={setOpen} open={open}>
+      <DialogPortal>
+        <DialogOverlay className={style.dialogOverlay} />
+        <DialogContent
+          className={className ? `${style.dialogContent} ${className}` : style.dialogContent}
+        >
+          <div>
+            <div className={style.titleBlock}>
+              <DialogTitle asChild>
+                <Typography.H1>{title}</Typography.H1>
+              </DialogTitle>
+              <div aria-label={'Close'} className={style.closeButton} onClick={closeAllModal}>
+                <CloseIcon />
               </div>
             </div>
-          </DialogContent>
-        </DialogPortal>
-      )}
+
+            <div className={style.contentBlock}>
+              {children}
+              <div className={style.buttonBlock}>
+                <Button
+                  onClick={() => {
+                    onDeny();
+                    closeAllModal();
+                  }}
+                  variant={'tertiary'}
+                >
+                  {denyButtonLabel}
+                </Button>
+                <Button
+                  onClick={() => {
+                    onConfirm();
+                    closeAllModal();
+                  }}
+                >
+                  {confirmButtonLabel}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </DialogPortal>
     </Dialog>
   );
 };
