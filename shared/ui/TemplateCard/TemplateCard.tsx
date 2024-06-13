@@ -1,36 +1,29 @@
-import { ReactNode } from 'react';
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
 
 import { clsx } from 'clsx';
 
 import s from './TemplateCard.module.scss';
 
-type TemplateCardProps = {
-  children?: ReactNode;
-  className?: string;
-};
+export type TemplateCardProps = ComponentPropsWithoutRef<'div'>;
 
-type ContentProps = {
-  children?: ReactNode;
-  className?: string;
-};
+export const TemplateCardRoot = forwardRef<ElementRef<'div'>, TemplateCardProps>(
+  ({ className, ...props }, ref) => <div className={clsx(s.root, className)} ref={ref} {...props} />
+);
 
-type HeaderProps = {
-  children?: ReactNode;
-  className?: string;
-};
+export const TemplateCardContent = forwardRef<ElementRef<'div'>, TemplateCardProps>(
+  ({ className, ...props }, ref) => (
+    <div className={clsx(s.content, className)} ref={ref} {...props} />
+  )
+);
 
-export const TemplateCard = (props: TemplateCardProps) => {
-  return <div className={clsx(s.component, props.className)}>{props.children}</div>;
-};
+export const TemplateCardHeader = forwardRef<ElementRef<'div'>, TemplateCardProps>(
+  ({ className, ...props }, ref) => (
+    <div className={clsx(s.header, className)} ref={ref} {...props} />
+  )
+);
 
-export const Content = (props: ContentProps) => {
-  return <div className={clsx(s.content, props.className)}>{props.children}</div>;
-};
-
-export const Header = (props: HeaderProps) => {
-  return <Content className={clsx(s.header, props.className)}>{props.children}</Content>;
-};
-
-TemplateCard.Content = Content;
-
-TemplateCard.Header = Header;
+export const TemplateCard = Object.assign(TemplateCardRoot, {
+  Content: TemplateCardContent,
+  Header: TemplateCardHeader,
+  Root: TemplateCardRoot,
+});
