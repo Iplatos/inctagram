@@ -58,7 +58,7 @@
   }
 
   &[data-state='checked'] {
-    background-color: var(--color-dark-100);
+    background-color: transparent;
   }
 
   &:focus-visible {
