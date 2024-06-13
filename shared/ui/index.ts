@@ -8,3 +8,4 @@ export * from './tabs';
 export * from './pagination';
 export * from './avatar';
 export * from './radio-group';
+export * from './template-modale';
