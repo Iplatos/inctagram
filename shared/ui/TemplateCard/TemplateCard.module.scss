@@ -1,26 +1,31 @@
- .content {
-    padding: 12px 24px;
-    border-bottom: 1px solid var(--color-dark-100);
+@use '../../../styles/mixins' as *;
+
+$card-border: 1px solid var(--color-dark-100);
+
+.content {
+  padding: 12px 24px;
+
+  &:not(:last-of-type) {
+    border-bottom: $card-border;
   }
-  
-  .component {
-      align-items: center;
-      justify-content: center;
-      background-color: var(--color-dark-300);
-      border: 1px solid var(--color-dark-100);
-  
-       .content:last-child{
-        border-bottom: none
-      }
-    }
-  
-    .header {
-      display: flex;
-      align-items:center;
-      justify-content: space-between;
-  
-      margin-bottom: 12px;
-    
-      border-bottom: 1px solid var(--color-dark-100);
-    }
-  
+
+  @include media-breakpoint('tablet-s') {
+    padding-inline: 16px;
+  }
+}
+
+.root {
+  background-color: var(--color-dark-300);
+  border: $card-border;
+  border-radius: 2px;
+}
+
+.header {
+  @extend .content;
+
+  @include flex($justify: null);
+
+  &:not(:last-of-type) {
+    margin-bottom: 6px;
+  }
+}
