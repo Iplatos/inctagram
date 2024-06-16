@@ -1,25 +1,23 @@
 import MockUserAvatar from '@/assets/img/mock-user-avatar.jpg';
-import { Button } from '@/shared/ui/Button';
-import { Avatar } from '@/shared/ui/avatar';
-import { Typography } from '@/shared/ui/typography';
+import { Avatar, Button, Typography } from '@/shared/ui';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { TemplateCard } from './TemplateCard';
+import { Card } from './card';
 
 /**
  * Cards are surfaces that display content and actions on a single topic.
- * The `TemplateCard` component includes several complementary utility components to handle various use cases:
- * * `TemplateCard.Content`: the wrapper for the Card content.
- * * `TemplateCard.Header`: an optional wrapper for the `TemplateCard.Content`.
+ * The `Card` component includes several complementary utility components to handle various use cases:
+ * * `Card.Content`: the wrapper for the Card content.
+ * * `Card.Header`: an optional wrapper for the `Card.Content`.
  *
- * The `TemplateCard.Content` component provides convenient paddings for its content.
+ * The `Card.Content` component provides convenient paddings for its content.
  * It also has a bottom border if it is not the last among neighboring elements.
  *
- * The `TemplateCard.Header` component extends the `TemplateCard.Content` styles.
+ * The `Card.Header` component extends the `Card.Content` styles.
  * It also aligns the content vertically and has a bottom margin if it is not the last among its neighbors
  * (similar to the `Content` component)
  *
- * Components `Header` and `Content` are also available as named imports `TemplateCardHeader`, `TemplateCardContent` for convenience.
+ * Components `Header` and `Content` are also available as named imports `CardHeader`, `CardContent` for convenience.
  *
  * Each component of `Card`-like type extends the html tag `div` with all retained props.
  */
@@ -36,7 +34,7 @@ const meta = {
       table: { type: { summary: 'ForwardedRef<HTMLDivElement>' } },
     },
   },
-  component: TemplateCard,
+  component: Card,
   decorators: [
     Story => (
       <div style={{ maxWidth: 400 }}>
@@ -49,41 +47,41 @@ const meta = {
     ),
   ],
   tags: ['autodocs'],
-  title: 'UI/TemplateCard',
-} satisfies Meta<typeof TemplateCard>;
+  title: 'UI/Card',
+} satisfies Meta<typeof Card>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 const header = (
-  <TemplateCard.Header>
+  <Card.Header>
     <Avatar src={MockUserAvatar} />
     <Typography.H1 component={'h4'} style={{ marginLeft: 16 }}>
       Long UserName
     </Typography.H1>
-  </TemplateCard.Header>
+  </Card.Header>
 );
 const content = (
   <>
-    <TemplateCard.Content>
+    <Card.Content>
       <Typography.Regular16 component={'p'}>Lorem, ipsum dolor.</Typography.Regular16>
-    </TemplateCard.Content>
+    </Card.Content>
 
-    <TemplateCard.Content>
+    <Card.Content>
       <Typography.Regular16 component={'p'}>
         {/* cSpell: disable */}
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi consequuntur, exercitationem
         sunt iusto cum deleniti minus voluptates earum distinctio deserunt!
         {/* cSpell: enable */}
       </Typography.Regular16>
-    </TemplateCard.Content>
+    </Card.Content>
 
-    <TemplateCard.Content className={'buttons-group'}>
+    <Card.Content className={'buttons-group'}>
       <Button className={'button'}>Confirm</Button>
       <Button className={'button'} variant={'tertiary'}>
         Deny
       </Button>
-    </TemplateCard.Content>
+    </Card.Content>
   </>
 );
 
