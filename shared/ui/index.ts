@@ -1,5 +1,5 @@
 export * from './Button';
-export * from './Card';
+export * from './DEPRECATED_Card';
 export * from './checkbox';
 export * from './typography';
 export * from './SelectBox';
