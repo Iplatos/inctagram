@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import { useSignUpMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button, Card, Typography } from '@/shared/ui';
+import { Button, DEPRECATED_Card, Typography } from '@/shared/ui';
 import { ControlledCheckbox } from '@/shared/ui/checkbox/controlled-checkbox';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { Trans } from '@/widgets/Trans/Trans';
@@ -83,7 +83,7 @@ export const SignUpForm = () => {
 
   return (
     <div className={s.outerContainer}>
-      <Card className={s.card}>
+      <DEPRECATED_Card className={s.card}>
         <Typography.H1>{t.auth.signUpPage.title}</Typography.H1>
         <GitHubGoogleContainer />
         <form onSubmit={signUp}>
@@ -154,7 +154,7 @@ export const SignUpForm = () => {
         <Button className={clsx(s.center, s.signUp)} variant={'text'}>
           <Link href={'/sign-in'}>{t.auth.signUpPage.signIn}</Link>
         </Button>
-      </Card>
+      </DEPRECATED_Card>
     </div>
   );
 };
