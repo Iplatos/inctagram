@@ -213,6 +213,9 @@ export const ru = {
     },
     postsList: {
       addPostButton: 'Создать Пост',
+      buttons: {
+        draftButton: 'Открыть Черновик',
+      },
       noPostsMessage: 'Здесь пока нет постов',
     },
   },
