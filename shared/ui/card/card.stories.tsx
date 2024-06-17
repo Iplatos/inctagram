@@ -46,6 +46,7 @@ const meta = {
       </div>
     ),
   ],
+  excludeStories: ['cardHeader', 'cardContent'],
   tags: ['autodocs'],
   title: 'UI/Card',
 } satisfies Meta<typeof Card>;
@@ -53,53 +54,51 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const header = (
-  <Card.Header>
+export const cardHeader = (
+  <>
     <Avatar src={MockUserAvatar} />
-    <Typography.H1 component={'h4'} style={{ marginLeft: 16 }}>
+    <Typography.H1 component={'h2'} style={{ marginLeft: 16 }}>
       Long UserName
     </Typography.H1>
-  </Card.Header>
-);
-const content = (
-  <>
-    <Card.Content>
-      <Typography.Regular16 component={'p'}>Lorem, ipsum dolor.</Typography.Regular16>
-    </Card.Content>
-
-    <Card.Content>
-      <Typography.Regular16 component={'p'}>
-        {/* cSpell: disable */}
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi consequuntur, exercitationem
-        sunt iusto cum deleniti minus voluptates earum distinctio deserunt!
-        {/* cSpell: enable */}
-      </Typography.Regular16>
-    </Card.Content>
-
-    <Card.Content className={'buttons-group'}>
-      <Button className={'button'}>Confirm</Button>
-      <Button className={'button'} variant={'tertiary'}>
-        Deny
-      </Button>
-    </Card.Content>
   </>
 );
+export const cardContent = [
+  <Typography.Regular16 component={'p'} key={'short'}>
+    Lorem, ipsum dolor.
+  </Typography.Regular16>,
+
+  <Typography.Regular16 component={'p'} key={'long'}>
+    {/* cSpell: disable */}
+    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi consequuntur, exercitationem
+    sunt iusto cum deleniti minus voluptates earum distinctio deserunt!
+    {/* cSpell: enable */}
+  </Typography.Regular16>,
+
+  <div className={'buttons-group'} key={'buttons'}>
+    <Button className={'button'}>Confirm</Button>
+    <Button className={'button'} variant={'tertiary'}>
+      Deny
+    </Button>
+  </div>,
+];
+
+export const HeaderOnly: Story = {
+  args: { children: <Card.Header>{cardHeader}</Card.Header> },
+};
+
+export const ContentOnly: Story = {
+  args: {
+    children: cardContent.map((content, i) => <Card.Content key={i}>{content}</Card.Content>),
+  },
+};
 
 export const Basic: Story = {
   args: {
     children: (
       <>
-        {header}
-        {content}
+        {HeaderOnly.args?.children}
+        {ContentOnly.args?.children}
       </>
     ),
   },
-};
-
-export const HeaderOnly: Story = {
-  args: { children: header },
-};
-
-export const ContentOnly: Story = {
-  args: { children: content },
 };
