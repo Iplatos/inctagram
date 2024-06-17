@@ -97,14 +97,11 @@
 }
 
 .userName {
-  overflow: hidden;
+  @include text-overflow-ellipsis;
 
   max-width: 20ch;
   margin-right: auto;
-
   line-height: var(--line-height-l);
-  text-overflow: ellipsis;
-  white-space: nowrap;
 
   @include media-breakpoint('tablet-s') {
     margin-top: em(8) * -1;
