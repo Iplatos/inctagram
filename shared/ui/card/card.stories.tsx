@@ -1,5 +1,7 @@
 import MockUserAvatar from '@/assets/img/mock-user-avatar.jpg';
-import { Avatar, Button, Typography } from '@/shared/ui';
+import { Button } from '@/shared/ui/Button';
+import { Avatar } from '@/shared/ui/avatar';
+import { Typography } from '@/shared/ui/typography';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Card } from './card';
