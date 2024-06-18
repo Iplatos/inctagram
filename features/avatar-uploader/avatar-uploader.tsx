@@ -9,7 +9,7 @@ import { Alert } from '@/shared/ui/alert';
 import { CropProps } from '@/shared/ui/croppedImage';
 import { Typography } from '@/shared/ui/typography';
 import { Trans } from '@/widgets/Trans/Trans';
-import { AvatarFallback } from 'assets/icons/avatar-fallback';
+import { AddPhotoCard } from '@/widgets/addPhotoCard/addPhotoCard';
 
 import s from './avatar-uploader.module.scss';
 
@@ -108,7 +108,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
 
   const previewOrAvatar = state.preview ?? avatar;
 
-  return (
+  return previewOrAvatar ? (
     <Modal onClose={handleClose} open={open} showCloseButton title={t.title}>
       <div className={s.content}>
         {state.error && (
@@ -122,28 +122,22 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
           </Alert>
         )}
 
-        {previewOrAvatar ? (
-          <div className={s.canvasWrapper} onWheel={changeImageScale}>
-            <div className={s.canvasBackground} />
-            <AvatarEditor
-              border={12}
-              borderRadius={10_000}
-              className={s.canvas}
-              color={[23, 23, 23, 0.75]} // --color-dark-500 with transparency
-              image={previewOrAvatar}
-              onImageReady={initEditorPosition}
-              onPositionChange={pos => dispatch(editorPositionChanged(pos))}
-              position={state.editorPosition}
-              ref={editorRef}
-              scale={state.scale}
-              style={{ aspectRatio: 1, height: 'auto', width: '100%' }}
-            />
-          </div>
-        ) : (
-          <div className={s.placeholder}>
-            <AvatarFallback className={s.image} />
-          </div>
-        )}
+        <div className={s.canvasWrapper} onWheel={changeImageScale}>
+          <div className={s.canvasBackground} />
+          <AvatarEditor
+            border={12}
+            borderRadius={10_000}
+            className={s.canvas}
+            color={[23, 23, 23, 0.75]} // --color-dark-500 with transparency
+            image={previewOrAvatar}
+            onImageReady={initEditorPosition}
+            onPositionChange={pos => dispatch(editorPositionChanged(pos))}
+            position={state.editorPosition}
+            ref={editorRef}
+            scale={state.scale}
+            style={{ aspectRatio: 1, height: 'auto', width: '100%' }}
+          />
+        </div>
 
         <input
           accept={'image/png, image/jpeg'}
@@ -167,6 +161,14 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
         </div>
       </div>
     </Modal>
+  ) : (
+    <AddPhotoCard
+      error={state.error}
+      onClose={handleClose}
+      open={open}
+      setImg={uploadFromDevice}
+      title={t.title}
+    />
   );
 };
 
