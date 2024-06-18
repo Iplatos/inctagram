@@ -1,77 +1,17 @@
-import { ReactNode } from 'react';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
 
-import { CloseIcon } from '@/assets/icons/close';
-import { Typography } from '@/shared/ui';
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogOverlay,
-  DialogPortal,
-  DialogTitle,
-  DialogTrigger,
-} from '@radix-ui/react-dialog';
-import clsx from 'clsx';
+export * from './template-modal';
+import { ModalRoot } from './template-modal';
 
-import s from './template-modal.module.scss';
+export const ModalClose = DialogPrimitive.Close;
+export const ModalTitle = DialogPrimitive.Title;
+export const ModalDescription = DialogPrimitive.Description;
+export const ModalTrigger = DialogPrimitive.Trigger;
 
-export type TemplateModalProps = {
-  asChild?: boolean;
-  children?: ReactNode;
-  className?: string;
-  classNameOverlay?: string;
-  contentProps?: Omit<typeof DialogContent, 'forceMount'>;
-  customTitleComponent?: ReactNode;
-  description?: string;
-  portalProps?: typeof DialogPortal;
-  title?: string;
-  trigger?: ReactNode;
-} & Omit<typeof Dialog, 'modal'>;
-
-export const TemplateModal = (props: TemplateModalProps) => {
-  const {
-    asChild,
-    children,
-    className,
-    classNameOverlay,
-    contentProps,
-    customTitleComponent,
-    description,
-    portalProps,
-    title,
-    trigger,
-    ...rest
-  } = props;
-
-  return (
-    <Dialog {...rest}>
-      {trigger && <DialogTrigger asChild={asChild}>{trigger}</DialogTrigger>}
-      <DialogPortal {...portalProps}>
-        <DialogOverlay className={clsx(s.overlay, classNameOverlay)} />
-        <DialogContent {...contentProps} asChild={asChild} className={clsx(s.content, className)}>
-          {customTitleComponent ||
-            (title && (
-              <div className={s.content__title}>
-                <DialogTitle>
-                  <Typography.H1>{title}</Typography.H1>
-                </DialogTitle>
-                <DialogClose>
-                  <CloseIcon className={s.content__title__closeIcon} />
-                </DialogClose>
-              </div>
-            ))}
-          {description && (
-            <div className={s.content__body}>
-              <DialogDescription className={s.content__body__description}>
-                <Typography.Regular16>{description}</Typography.Regular16>
-              </DialogDescription>
-              {children}
-            </div>
-          )}
-          {!description && children}
-        </DialogContent>
-      </DialogPortal>
-    </Dialog>
-  );
-};
+export const TemplateModal = Object.assign(ModalRoot, {
+  Close: ModalClose,
+  Description: ModalDescription,
+  Root: ModalRoot,
+  Title: ModalTitle,
+  Trigger: ModalTrigger,
+});
