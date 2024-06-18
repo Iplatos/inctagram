@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Modal } from '@/features/modal';
+import { DEPRECATED_Modal } from '@/features/DEPRECATED_Modal';
 import { useLogoutMutation, useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { useLazyGetMeQuery } from '@/shared/api/users-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
@@ -85,7 +85,12 @@ export const Sidebar = () => {
         Log Out
       </Typography.Regular14>
 
-      <Modal onClose={() => setOpen(false)} open={open} showCloseButton title={'Log Out'}>
+      <DEPRECATED_Modal
+        onClose={() => setOpen(false)}
+        open={open}
+        showCloseButton
+        title={'Log Out'}
+      >
         <Typography.Regular14>
           <Trans
             tags={{
@@ -102,7 +107,7 @@ export const Sidebar = () => {
             No
           </Button>
         </div>
-      </Modal>
+      </DEPRECATED_Modal>
     </div>
   );
 };
