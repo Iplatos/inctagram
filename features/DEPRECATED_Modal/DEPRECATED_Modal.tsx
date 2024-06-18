@@ -11,9 +11,9 @@ import {
   DialogTitle,
 } from '@radix-ui/react-dialog';
 
-import style from './modal.module.scss';
+import style from './DEPRECATED_Modal.module.scss';
 
-export type ModalProps = {
+export type DEPRECATED_ModalProps = {
   children?: ReactNode;
   className?: string;
   onClose?: () => void;
@@ -22,7 +22,7 @@ export type ModalProps = {
   title?: string;
 } & ComponentProps<'div'>;
 
-export const Modal = (props: ModalProps) => {
+export const DEPRECATED_Modal = (props: DEPRECATED_ModalProps) => {
   const { children, className, onClose, open, showCloseButton, title } = props;
 
   function handleModalClosed() {

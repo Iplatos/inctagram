@@ -6,6 +6,18 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Card } from './card';
 
+type DecoratorFunction = Exclude<Meta['decorators'], undefined>[number];
+export const commonDecorator: DecoratorFunction = Story => (
+  <>
+    <style>{`
+          .card-content { width: 400px; max-width: 100%; }
+          .buttons-group { display: flex; gap: 16px; }
+          .button { flex: 1 1 0; }
+        `}</style>
+    <Story />
+  </>
+);
+
 /**
  * Cards are surfaces that display content and actions on a single topic.
  * The `Card` component includes several complementary utility components to handle various use cases:
@@ -37,18 +49,8 @@ const meta = {
     },
   },
   component: Card,
-  decorators: [
-    Story => (
-      <div style={{ maxWidth: 400 }}>
-        <style>{`
-          .buttons-group { display: flex; gap: 16px; }
-          .button { flex: 1 1 0; }
-        `}</style>
-        <Story />
-      </div>
-    ),
-  ],
-  excludeStories: ['cardHeader', 'cardContent'],
+  decorators: [commonDecorator],
+  excludeStories: ['cardHeader', 'cardContent', 'commonDecorator'],
   tags: ['autodocs'],
   title: 'UI/Card',
 } satisfies Meta<typeof Card>;
@@ -85,12 +87,13 @@ export const cardContent = [
 ];
 
 export const HeaderOnly: Story = {
-  args: { children: <Card.Header>{cardHeader}</Card.Header> },
+  args: { children: <Card.Header>{cardHeader}</Card.Header>, className: 'card-content' },
 };
 
 export const ContentOnly: Story = {
   args: {
     children: cardContent.map((content, i) => <Card.Content key={i}>{content}</Card.Content>),
+    className: 'card-content',
   },
 };
 
@@ -102,5 +105,6 @@ export const Basic: Story = {
         {ContentOnly.args?.children}
       </>
     ),
+    className: 'card-content',
   },
 };

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { CloseIcon } from '@/assets/icons/close';
-import { Modal } from '@/features';
+import { DEPRECATED_Modal } from '@/features';
 import { AvatarUploader, AvatarUploaderProps } from '@/features/avatar-uploader';
 import {
   useDeleteMyAvatarMutation,
@@ -106,7 +106,7 @@ export const AddProfilePhoto = () => {
         open={uploaderOpen}
       />
 
-      <Modal
+      <DEPRECATED_Modal
         onClose={() => setDeleteModalOpen(false)}
         open={deleteModalOpen}
         showCloseButton
@@ -121,7 +121,7 @@ export const AddProfilePhoto = () => {
             {tModal.buttons.deny}
           </Button>
         </div>
-      </Modal>
+      </DEPRECATED_Modal>
     </div>
   );
 };
