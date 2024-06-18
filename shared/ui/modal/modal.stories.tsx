@@ -1,10 +1,10 @@
 import { Button } from '@/shared/ui/Button';
 import * as CardStories from '@/shared/ui/card/card.stories';
+import { ModalCard } from '@/shared/ui/modal-card';
 import * as ModalCardStories from '@/shared/ui/modal-card/modal-card.stories';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { ModalCard } from '../modal-card';
-import { TemplateModal } from './index';
+import { Modal } from './index';
 
 /**
  * The TemplateModal component provides a flexible dialog box functionality in React,
@@ -19,11 +19,11 @@ const meta = {
     },
     trigger: { control: false },
   },
-  component: TemplateModal,
+  component: Modal,
   decorators: [CardStories.commonDecorator],
   tags: ['autodocs'],
-  title: 'UI/TemplateModal',
-} satisfies Meta<typeof TemplateModal>;
+  title: 'UI/Modal',
+} satisfies Meta<typeof Modal>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

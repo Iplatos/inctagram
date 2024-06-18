@@ -6,7 +6,7 @@ import { PropsWithoutChildren, Replace } from '@/shared/types/helpers';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import clsx from 'clsx';
 
-import s from './template-modal.module.scss';
+import s from './modal-root.module.scss';
 
 type ModalPortalProps = PropsWithoutChildren<DialogPortalProps>;
 type ModalContentProps = PropsWithoutChildren<Omit<DialogContentProps, 'asChild' | 'className'>>;
@@ -24,7 +24,7 @@ type OwnProps = {
   trigger?: ReactNode;
   triggerRef?: Ref<ElementRef<typeof DialogPrimitive.Trigger>>;
 };
-export type TemplateModalProps = Replace<Omit<DialogProps, 'modal'>, OwnProps>;
+export type ModalProps = Replace<Omit<DialogProps, 'modal'>, OwnProps>;
 
 export const ModalRoot = ({
   children,
@@ -36,11 +36,11 @@ export const ModalRoot = ({
   trigger,
   triggerRef,
   ...props
-}: TemplateModalProps) => {
+}: ModalProps) => {
   const cls = getClassNames(classes);
 
   return (
-    <DialogPrimitive.Root {...props}>
+    <DialogPrimitive.Root modal {...props}>
       {trigger && (
         <DialogPrimitive.Trigger asChild ref={triggerRef}>
           {trigger}

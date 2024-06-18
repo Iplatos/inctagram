@@ -1,14 +1,14 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 
-export * from './template-modal';
-import { ModalRoot } from './template-modal';
+export * from './modal-root';
+import { ModalRoot } from './modal-root';
 
 export const ModalClose = DialogPrimitive.Close;
 export const ModalTitle = DialogPrimitive.Title;
 export const ModalDescription = DialogPrimitive.Description;
 export const ModalTrigger = DialogPrimitive.Trigger;
 
-export const TemplateModal = Object.assign(ModalRoot, {
+export const Modal = Object.assign(ModalRoot, {
   Close: ModalClose,
   Description: ModalDescription,
   Root: ModalRoot,

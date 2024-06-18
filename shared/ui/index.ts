@@ -10,4 +10,4 @@ export * from './avatar';
 export * from './radio-group';
 export * from './card';
 export * from './IconButton';
-export * from './template-modale';
+export * from './modal';
