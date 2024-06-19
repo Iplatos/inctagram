@@ -2,12 +2,11 @@
 @use '../../../styles/mixins' as *;
 
 %button {
-  @include flex;
+  @include inline-flex;
 
   cursor: pointer;
   user-select: none;
 
-  display: inline-flex;
   gap: em(10);
 
   height: em(36);

@@ -2,6 +2,7 @@ import type { SliderProps as SliderPrimitiveProps } from '@radix-ui/react-slider
 
 import { FC } from 'react';
 
+import { Replace } from '@/shared/types/helpers';
 import * as SliderPrimitive from '@radix-ui/react-slider';
 import { clsx } from 'clsx';
 
@@ -16,8 +17,7 @@ type OwnProps = {
   thumbsCount?: number;
 };
 
-export type SliderProps = Omit<SliderPrimitiveProps, 'asChild' | 'className' | keyof OwnProps> &
-  OwnProps;
+export type SliderProps = Replace<Omit<SliderPrimitiveProps, 'asChild' | 'className'>, OwnProps>;
 
 export const Slider: FC<SliderProps> = ({ thumbsCount = 1, ...props }) => (
   <InnerComponent key={thumbsCount} thumbsCount={thumbsCount} {...props} />

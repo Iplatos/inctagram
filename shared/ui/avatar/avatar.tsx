@@ -3,6 +3,7 @@ import { FC, ReactEventHandler, ReactNode, useEffect, useRef, useState } from 'r
 import { AvatarFallback } from '@/assets/icons/avatar-fallback';
 import { capitalise } from '@/shared/helpers/capitalise';
 import { resolveImageSrcToString } from '@/shared/helpers/resolveImageSrcToString';
+import { Replace } from '@/shared/types/helpers';
 import { CroppedImage, CroppedImageProps, CroppedImageSlot } from '@/shared/ui/croppedImage';
 import { clsx } from 'clsx';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
@@ -23,8 +24,7 @@ type OwnProps = {
   src?: StaticImport | string;
 };
 
-export type AvatarProps = OwnProps &
-  Omit<CroppedImageProps, 'fill' | 'height' | 'width' | keyof OwnProps>;
+export type AvatarProps = Replace<Omit<CroppedImageProps, 'fill' | 'height' | 'width'>, OwnProps>;
 
 export const Avatar: FC<AvatarProps> = ({ src, ...props }) => (
   <InnerComponent key={resolveImageSrcToString(src)} src={src} {...props} />

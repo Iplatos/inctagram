@@ -7,6 +7,14 @@
   justify-content: $justify;
 }
 
+// TODO: replace all flex-mixin calls followed by inline-flex with this mixin.
+// Also replace all `display: flex` properties in the app with `flex` mixin.
+@mixin inline-flex($args...) {
+  @include flex($args...);
+
+  display: inline-flex;
+}
+
 @mixin media-breakpoint($bp-name, $approach: 'desktop-first') {
   $media-query: null;
 
@@ -21,4 +29,10 @@
   @media ($media-query) {
     @content;
   }
+}
+
+@mixin text-overflow-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
