@@ -1,14 +1,8 @@
 import React, { ReactNode } from 'react';
 
 import { CloseIcon } from '@/assets/icons/close';
-import { Button, Typography } from '@/shared/ui';
-import {
-  Dialog,
-  DialogContent,
-  DialogOverlay,
-  DialogPortal,
-  DialogTitle,
-} from '@radix-ui/react-dialog';
+import { Button, ModalRoot, Typography } from '@/shared/ui';
+import { CommonCardRoot } from '@/shared/ui/modal-card';
 
 import style from './ConfirmModal.module.scss';
 
@@ -40,47 +34,35 @@ export const ConfirmModal = ({
   };
 
   return (
-    <Dialog onOpenChange={setOpen} open={open}>
-      <DialogPortal>
-        <DialogOverlay className={style.dialogOverlay} />
-        <DialogContent
-          className={className ? `${style.dialogContent} ${className}` : style.dialogContent}
-        >
-          <div>
-            <div className={style.titleBlock}>
-              <DialogTitle asChild>
-                <Typography.H1>{title}</Typography.H1>
-              </DialogTitle>
-              <div aria-label={'Close'} className={style.closeButton} onClick={closeAllModal}>
-                <CloseIcon />
-              </div>
-            </div>
-
-            <div className={style.contentBlock}>
-              {children}
-              <div className={style.buttonBlock}>
-                <Button
-                  onClick={() => {
-                    onDeny();
-                    closeAllModal();
-                  }}
-                  variant={'tertiary'}
-                >
-                  {denyButtonLabel}
-                </Button>
-                <Button
-                  onClick={() => {
-                    onConfirm();
-                    closeAllModal();
-                  }}
-                >
-                  {confirmButtonLabel}
-                </Button>
-              </div>
-            </div>
+    <ModalRoot classes={{ content: className }} onOpenChange={setOpen} open={open}>
+      <CommonCardRoot
+        classes={{ cardRoot: style.cardRoot }}
+        headerTitle={title}
+        onClose={closeAllModal}
+      >
+        <div className={style.contentBlock}>
+          {children}
+          <div className={style.buttonBlock}>
+            <Button
+              onClick={() => {
+                onDeny();
+                closeAllModal();
+              }}
+              variant={'tertiary'}
+            >
+              {denyButtonLabel}
+            </Button>
+            <Button
+              onClick={() => {
+                onConfirm();
+                closeAllModal();
+              }}
+            >
+              {confirmButtonLabel}
+            </Button>
           </div>
-        </DialogContent>
-      </DialogPortal>
-    </Dialog>
+        </div>
+      </CommonCardRoot>
+    </ModalRoot>
   );
 };
