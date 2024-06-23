@@ -1,3 +1,5 @@
+@use '../../../styles/mixins' as *;
+
 .toastRoot {
   position: fixed;
   bottom: 24px;
@@ -13,19 +15,10 @@
   }
 
   .message {
-    scrollbar-width: thin;
+    @include thin-scrollbar;
+
     overflow: auto;
     max-height: 100%;
-
-    &::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-      background-color: hsl(0deg 50% 0% / 35%);
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: hsl(0deg 50% 100% / 45%);
-    }
   }
 
   @media (width <= 768px) {
