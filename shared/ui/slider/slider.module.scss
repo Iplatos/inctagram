@@ -1,0 +1,116 @@
+@use '../../../styles/helpers' as *;
+@use '../../../styles/mixins' as *;
+@use 'sass:math';
+
+.root {
+  @include flex($justify: null);
+
+  touch-action: none;
+  cursor: pointer;
+  user-select: none;
+
+  position: relative;
+
+  width: var(--track-length);
+  height: var(--track-thickness);
+
+  &[data-orientation='vertical'] {
+    flex-direction: column;
+    width: var(--track-thickness);
+    height: var(--track-length);
+  }
+
+  & [data-disabled] {
+    cursor: default;
+  }
+}
+
+.medium {
+  --thumb-size: #{em(24)};
+  --track-thickness: #{em(6)};
+  --track-length: #{em(250)};
+}
+
+.small {
+  --thumb-size: #{em(16)};
+  --track-thickness: #{em(3)};
+  --track-length: #{em(150)};
+}
+
+.track {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--color-light-100);
+  border-radius: calc(infinity * 1px);
+
+  &[data-disabled] {
+    background-color: var(--color-light-500);
+  }
+}
+
+.range {
+  position: absolute;
+  height: 100%;
+  background-color: var(--color-accent-500);
+  border-radius: calc(infinity * 1px);
+
+  &[data-disabled] {
+    filter: grayscale(100%);
+  }
+
+  [data-orientation='vertical'] & {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.thumb {
+  touch-action: pan-x;
+
+  display: block;
+
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+
+  background-color: var(--color-light-100);
+  border: calc(var(--thumb-size) / 4) solid var(--color-accent-500);
+  border-radius: calc(infinity * 1px);
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: em(36);
+    height: em(36);
+
+    opacity: 0.45;
+    border-radius: 50%;
+
+    transition: 0.15s;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:is(:hover, :focus)::before {
+    background-color: var(--color-light-900);
+  }
+
+  &[data-disabled] {
+    background-color: var(--color-light-500);
+    filter: grayscale(100%);
+
+    &::before {
+      background-color: transparent;
+    }
+  }
+}

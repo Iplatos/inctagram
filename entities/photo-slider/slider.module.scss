@@ -1,0 +1,33 @@
+// @import "~react-image-gallery/styles/scss/image-gallery";
+
+
+
+
+
+.customControls {
+    position:absolute;
+    z-index: 2000;
+    bottom:0;
+    left:0;
+
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+    padding: 13px;
+
+    // background-color: red;
+
+    
+}
+
+.customControls__inner {
+    display: flex;
+    gap: 25px;
+
+// justify-content: space-between;
+}
+
+.image-gallery-bullets-container {
+    background-color: red;
+}

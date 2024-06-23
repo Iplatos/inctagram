@@ -1,2 +1,3 @@
 export * from './modal';
-export * from './photo-slider';
+export * from '../entities/photo-slider';
+export * from './photo-slider/thumbnails';

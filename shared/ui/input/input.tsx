@@ -1,5 +1,6 @@
 import { ChangeEvent, ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef } from 'react';
 
+import { Replace } from '@/shared/types/helpers';
 import { clsx } from 'clsx';
 
 import s from './input.module.scss';
@@ -16,8 +17,7 @@ type OwnProps = {
   type?: 'password' | 'search' | 'text';
 };
 
-export type InputProps = OwnProps &
-  Omit<ComponentPropsWithoutRef<'input'>, 'className' | keyof OwnProps>;
+export type InputProps = Replace<Omit<ComponentPropsWithoutRef<'input'>, 'className'>, OwnProps>;
 
 export const Input = forwardRef<ElementRef<'input'>, InputProps>(
   (

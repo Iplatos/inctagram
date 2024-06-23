@@ -1,6 +1,8 @@
 import React, { MouseEventHandler } from 'react';
 
-import style from './leftNav.module.scss';
+import Arrow from 'assets/icons/arrowLeft.svg';
+
+import style from './controls.module.scss';
 
 export type NavProps = {
   disabled: boolean;
@@ -16,10 +18,10 @@ export const LeftNav = React.memo((props: NavProps) => {
       className={`image-gallery-icon image-gallery-left-nav ${style.button}`}
       disabled={disabled}
       onClick={onClick}
-      // style={{ background: 'lightgrey', height: '48px', width: '48px' }}
+      style={{ marginLeft: '12px' }}
       type={'button'}
     >
-      &#8678;
+      <Arrow className={style.svg} />
     </button>
   );
 });

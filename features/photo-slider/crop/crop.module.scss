@@ -1,0 +1,50 @@
+
+
+.content {
+    padding: 12px;
+    background-color: rgb(23 23 23 / 80%);
+    border-radius: 2px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    width: 156px;
+
+    color: var(--color-light-900);
+}
+
+.image {
+    width: 80px;
+    height: 82px;
+}
+
+.aspectRatio {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.svg {
+    & * {
+        fill: var(--color-light-900);
+      }
+}
+
+
+
+.aspectRatio:hover  {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-light-100);
+    transition: color 0.2s;
+
+    .svg {
+        & * {
+          fill: var(--color-light-100);
+        }
+    }
+}
+

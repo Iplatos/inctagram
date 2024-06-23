@@ -1,8 +1,10 @@
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 
-import style from './rightNav.module.scss';
+import Arrow from 'assets/icons/arrowRight.svg';
 
-import { NavProps } from '../leftNav/leftNav';
+import style from './controls.module.scss';
+
+import { NavProps } from './leftNav';
 
 export const RightNav = React.memo((props: NavProps) => {
   const { disabled, onClick } = props;
@@ -13,10 +15,10 @@ export const RightNav = React.memo((props: NavProps) => {
       className={`image-gallery-icon image-gallery-right-nav ${style.button}`}
       disabled={disabled}
       onClick={onClick}
-      // style={{ background: 'lightgrey', height: '48px', width: '48px' }}
+      style={{ marginRight: '12px' }}
       type={'button'}
     >
-      &#8680;
+      <Arrow className={style.svg} />
     </button>
   );
 });
