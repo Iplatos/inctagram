@@ -19,6 +19,13 @@
     },
     "plugins": [{ "name": "next" }]
   },
-  "include": ["svg.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "svg.d.ts",
+    "next-env.d.ts",
+    "external-libs-augmentation.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }
