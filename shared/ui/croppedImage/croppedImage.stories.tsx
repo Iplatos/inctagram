@@ -1,7 +1,10 @@
+import { ComponentPropsWithoutRef, useEffect, useRef } from 'react';
+
 import MockUserAvatar from '@/assets/img/mock-user-avatar.jpg';
 import { Typography } from '@/shared/ui/typography';
 import { Meta, ReactRenderer, StoryObj } from '@storybook/react';
 import { DecoratorFunction } from '@storybook/types';
+import { DEFAULT_FILTERS, createFilter } from 'cc-gram';
 
 import { CroppedImage, CroppedImageClasses, CroppedImageProps } from './CroppedImage';
 
@@ -163,4 +166,50 @@ export const FixedAspectRatio: Story = {
     width: 320,
   },
   decorators: [commonStoryDecorator],
+};
+
+const CustomRenderWithFilters = ({ filter, ...props }: CroppedImageProps & { filter: string }) => {
+  const filterRef = useRef(createFilter({ init: false }));
+
+  useEffect(() => {
+    filterRef.current.applyFilter();
+  }, [filter]);
+
+  return <CroppedImage data-filter={filter} {...props} />;
+};
+
+type StoryWithFilters = StoryObj<ComponentPropsWithoutRef<typeof CustomRenderWithFilters>>;
+
+export const WithCCGramFilters: StoryWithFilters = {
+  argTypes: {
+    filter: {
+      control: 'select',
+      options: Array.from(DEFAULT_FILTERS.keys()),
+    },
+  },
+  args: {
+    ...Primary.args,
+    filter: 'inkwell',
+  },
+  decorators: [
+    commonStoryDecorator,
+    Story => (
+      <>
+        <Typography.Regular16 component={'p'}>
+          In this story, you can set a filter for a photo. Use the `filter` field in the `Controls`
+          panel to test the behavior of the component.
+        </Typography.Regular16>
+        <Typography.Regular16 component={'p'} style={{ marginBlock: '1rem' }}>
+          The photo filter is applied using the `filter` CSS property.
+        </Typography.Regular16>
+        <Story />
+      </>
+    ),
+  ],
+  parameters: {
+    controls: {
+      include: [...meta.parameters.controls.include, 'filter'],
+    },
+  },
+  render: CustomRenderWithFilters,
 };
