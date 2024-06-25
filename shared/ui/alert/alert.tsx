@@ -1,4 +1,4 @@
-import React, { ElementRef, PropsWithChildren, ReactElement, forwardRef } from 'react';
+import { ElementRef, PropsWithChildren, ReactElement, SyntheticEvent, forwardRef } from 'react';
 
 import { CloseIcon } from '@/assets/icons/close';
 import { capitalise } from '@/shared/helpers/capitalise';
@@ -13,7 +13,7 @@ export type AlertClasses = { [P in AlertSlot]?: string };
 export type AlertProps = PropsWithChildren<{
   action?: ReactElement;
   classes?: AlertClasses;
-  onClose?: () => void;
+  onClose?: (e: SyntheticEvent) => void;
   severity?: AlertSeverity;
 }>;
 
@@ -22,7 +22,7 @@ export const Alert = forwardRef<ElementRef<'div'>, AlertProps>(
     const cls = getClassNames(classes, severity);
 
     const resolvedAction = action ?? (
-      <button className={cls.close} onClick={() => onClose?.()}>
+      <button className={cls.close} onClick={onClose}>
         <CloseIcon />
       </button>
     );
