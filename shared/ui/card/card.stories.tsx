@@ -42,6 +42,10 @@ const meta = {
       description: 'Any arbitrary `ReactNode` component',
       table: { type: { summary: 'ReactNode' } },
     },
+    className: {
+      description: 'A class name provided to the underlying `div` element',
+      table: { type: { summary: 'string' } },
+    },
     ref: {
       control: false,
       description: 'The `ref` is forwarded to the root `div` element',
