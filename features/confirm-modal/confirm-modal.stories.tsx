@@ -4,7 +4,7 @@ import * as ModalCardStories from '@/shared/ui/modal-card/modal-card.stories';
 import { DialogClose } from '@radix-ui/react-dialog';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { ConfirmModal } from './ConfirmModal';
+import { ConfirmModal } from './confirm-modal';
 
 const meta = {
   argTypes: {

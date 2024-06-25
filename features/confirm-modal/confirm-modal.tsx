@@ -5,7 +5,7 @@ import { Button } from '@/shared/ui/Button';
 import { Modal, ModalProps } from '@/shared/ui/modal';
 import { ModalCard, ModalCardProps } from '@/shared/ui/modal-card';
 
-import s from './ConfirmModal.module.scss';
+import s from './confirm-modal.module.scss';
 
 type OwnProps = {
   children?: ReactNode;
@@ -16,7 +16,6 @@ type OwnProps = {
 };
 
 // TODO: remap slot names for better readability
-// TODO: rename related files to lower-kebab-case
 
 type PickedModalCardProps = Pick<ModalCardProps, 'disabled' | 'headerTitle'>;
 // prettier-ignore
