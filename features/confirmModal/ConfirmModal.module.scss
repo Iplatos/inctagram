@@ -1,84 +1,46 @@
-.dialogOverlay {
-  position: fixed;
-  inset: 0;
+@use '../../styles/helpers' as *;
+@use '../../styles/mixins' as *;
 
-  opacity: 0.5;
-  background-color: var(--color-dark-900);
-
-  animation: overlay-show 300ms;
-}
-
-.dialogContent {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  box-sizing: border-box;
-  width: 378px;
-  padding: 12px 0 36px;
-
-  background-color: var(--color-dark-300);
-  border: 1px solid var(--color-dark-100);
-  border-radius: 2px;
-
-  animation: content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.dialogContent:focus {
-  outline: none;
-}
-
-.buttonBlock {
+.modalContent {
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
+  max-height: 100vh;
 
-.closeButton {
-  all: unset;
+  .cardRoot {
+    @include thin-scrollbar;
 
-  cursor: pointer;
-
-  position: absolute;
-  top: 17px;
-  right: 24px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 24px;
-  height: 24px;
-}
-
-.titleBlock {
-  padding: 0 24px 11px;
-  border-bottom: 1px solid var(--color-dark-100);
-}
-
-.contentBlock {
-  padding: 24px 24px 0;
-}
-
-@keyframes overlay-show {
-  from {
-    opacity: 0;
+    width: 440px;
+    max-width: 100%;
   }
 
-  to {
-    opacity: 0.5;
+  .cardContent {
+    @include flex($justify: null, $align: null, $direction: column);
+
+    padding-bottom: 24px;
   }
 }
 
-@keyframes content-show {
-  from {
-    transform: translate(-50%, -48%) scale(0.96);
-    opacity: 0;
+.buttonsGroup {
+  @include flex($justify: flex-end, $align: null, $wrap: wrap);
+
+  gap: 16px;
+  align-self: flex-end;
+
+  &:has(.button) {
+    margin-top: 24px;
   }
 
-  to {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
+  @include media-breakpoint('tablet-s') {
+    align-self: stretch;
+  }
+}
+
+.button {
+  flex-grow: 1;
+  min-width: em(96);
+  white-space: nowrap;
+
+  @include media-breakpoint('tablet-s') {
+    flex-basis: 0;
+    min-width: min-content;
   }
 }

@@ -1,68 +1,85 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
-import { CloseIcon } from '@/assets/icons/close';
-import { Button, ModalRoot, Typography } from '@/shared/ui';
-import { CommonCardRoot } from '@/shared/ui/modal-card';
+import { Replace } from '@/shared/types/helpers';
+import { Button } from '@/shared/ui/Button';
+import { Modal, ModalProps } from '@/shared/ui/modal';
+import { ModalCard, ModalCardProps } from '@/shared/ui/modal-card';
 
-import style from './ConfirmModal.module.scss';
+import s from './ConfirmModal.module.scss';
 
-type ConfirmModalProps = {
-  children: ReactNode;
-  className?: string;
-  confirmButtonLabel: string;
-  denyButtonLabel: string;
-  onConfirm: () => void;
-  onDeny: () => void;
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  title: string;
+type OwnProps = {
+  children?: ReactNode;
+  confirmButtonLabel?: null | string;
+  denyButtonLabel?: null | string;
+  onCancel?: () => void;
+  onConfirm?: () => void;
 };
+
+// TODO: remap slot names for better readability
+// TODO: rename related files to lower-kebab-case
+
+type PickedModalCardProps = Pick<ModalCardProps, 'disabled' | 'headerTitle'>;
+// prettier-ignore
+type ConfirmModalProps = Replace<
+  Omit<ModalProps & PickedModalCardProps, 'classes'>,
+  OwnProps
+>;
 
 export const ConfirmModal = ({
   children,
-  className,
-  confirmButtonLabel,
-  denyButtonLabel,
+  confirmButtonLabel = 'Ok',
+  denyButtonLabel = 'Cancel',
+  disabled,
+  headerTitle,
+  onCancel,
   onConfirm,
-  onDeny,
-  open,
-  setOpen,
-  title,
+  ...props
 }: ConfirmModalProps) => {
-  const closeAllModal = () => {
-    setOpen(false);
+  const handleConfirmClick = () => {
+    onConfirm?.();
+    props.onOpenChange?.(false);
+  };
+
+  const handleDenyClick = () => {
+    onCancel?.();
+    props.onOpenChange?.(false);
   };
 
   return (
-    <ModalRoot classes={{ content: className }} onOpenChange={setOpen} open={open}>
-      <CommonCardRoot
-        classes={{ cardRoot: style.cardRoot }}
-        headerTitle={title}
-        onClose={closeAllModal}
+    <Modal.Root classes={{ content: s.modalContent }} {...props}>
+      <ModalCard.Root
+        classes={{ cardRoot: s.cardRoot }}
+        disabled={disabled}
+        headerTitle={headerTitle}
+        onClose={() => props.onOpenChange?.(false)}
+        style={{ overflow: 'auto' }}
       >
-        <div className={style.contentBlock}>
+        <ModalCard.Content className={s.cardContent}>
           {children}
-          <div className={style.buttonBlock}>
-            <Button
-              onClick={() => {
-                onDeny();
-                closeAllModal();
-              }}
-              variant={'tertiary'}
-            >
-              {denyButtonLabel}
-            </Button>
-            <Button
-              onClick={() => {
-                onConfirm();
-                closeAllModal();
-              }}
-            >
-              {confirmButtonLabel}
-            </Button>
+
+          <div className={s.buttonsGroup}>
+            {confirmButtonLabel && (
+              <Modal.Close asChild>
+                <Button
+                  className={s.button}
+                  disabled={disabled}
+                  onClick={handleConfirmClick}
+                  variant={'tertiary'}
+                >
+                  {confirmButtonLabel}
+                </Button>
+              </Modal.Close>
+            )}
+            {denyButtonLabel && (
+              <Modal.Close asChild>
+                <Button className={s.button} disabled={disabled} onClick={handleDenyClick}>
+                  {denyButtonLabel}
+                </Button>
+              </Modal.Close>
+            )}
           </div>
-        </div>
-      </CommonCardRoot>
-    </ModalRoot>
+        </ModalCard.Content>
+      </ModalCard.Root>
+    </Modal.Root>
   );
 };
