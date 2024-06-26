@@ -1,48 +1,62 @@
-import { ReactNode } from 'react';
+import { MouseEventHandler, ReactNode } from 'react';
 
 import { Replace } from '@/shared/types/helpers';
-import { Button } from '@/shared/ui/Button';
+import { Button, ButtonVariant } from '@/shared/ui/Button';
 import { Modal, ModalProps } from '@/shared/ui/modal';
 import { ModalCard, ModalCardProps } from '@/shared/ui/modal-card';
+import clsx from 'clsx';
 
 import s from './confirm-modal.module.scss';
 
+type CustomButtonRenderProps = {
+  children: string;
+  className?: string;
+  disabled?: boolean;
+  onClick: MouseEventHandler;
+  variant?: ButtonVariant;
+};
+export type CustomButtonRender = (props: CustomButtonRenderProps) => ReactNode;
+export type ConfirmModalSlot = 'button' | 'buttonsGroup';
+export type ConfirmModalClasses = { [P in ConfirmModalSlot]?: string };
+
 type OwnProps = {
   children?: ReactNode;
-  confirmButtonLabel?: null | string;
-  denyButtonLabel?: null | string;
-  onCancel?: () => void;
-  onConfirm?: () => void;
+  classes?: ConfirmModalClasses;
+  onCancel?: MouseEventHandler;
+  onConfirm?: MouseEventHandler;
+  renderCancelButton?: CustomButtonRender;
+  renderConfirmButton?: CustomButtonRender;
 };
-
-// TODO: remap slot names for better readability
 
 type PickedModalCardProps = Pick<ModalCardProps, 'disabled' | 'headerTitle'>;
 // prettier-ignore
-type ConfirmModalProps = Replace<
+export type ConfirmModalProps = Replace<
   Omit<ModalProps & PickedModalCardProps, 'classes'>,
   OwnProps
 >;
 
 export const ConfirmModal = ({
   children,
-  confirmButtonLabel = 'Ok',
-  denyButtonLabel = 'Cancel',
+  classes = {},
   disabled,
   headerTitle,
   onCancel,
   onConfirm,
+  renderCancelButton: CancelButtonComponent = Button,
+  renderConfirmButton: ConfirmButtonComponent = Button,
   ...props
 }: ConfirmModalProps) => {
-  const handleConfirmClick = () => {
-    onConfirm?.();
+  const handleConfirmClick: MouseEventHandler = e => {
+    onConfirm?.(e);
     props.onOpenChange?.(false);
   };
 
-  const handleDenyClick = () => {
-    onCancel?.();
+  const handleCancelClick: MouseEventHandler = e => {
+    onCancel?.(e);
     props.onOpenChange?.(false);
   };
+
+  const cls = getClassNames(classes);
 
   return (
     <Modal.Root classes={{ content: s.modalContent }} {...props}>
@@ -56,29 +70,35 @@ export const ConfirmModal = ({
         <ModalCard.Content className={s.cardContent}>
           {children}
 
-          <div className={s.buttonsGroup}>
-            {confirmButtonLabel && (
-              <Modal.Close asChild>
-                <Button
-                  className={s.button}
-                  disabled={disabled}
-                  onClick={handleConfirmClick}
-                  variant={'tertiary'}
-                >
-                  {confirmButtonLabel}
-                </Button>
-              </Modal.Close>
-            )}
-            {denyButtonLabel && (
-              <Modal.Close asChild>
-                <Button className={s.button} disabled={disabled} onClick={handleDenyClick}>
-                  {denyButtonLabel}
-                </Button>
-              </Modal.Close>
-            )}
+          <div className={cls.buttonsGroup}>
+            <Modal.Close asChild>
+              <ConfirmButtonComponent
+                className={cls.button}
+                disabled={disabled}
+                onClick={handleConfirmClick}
+                variant={'tertiary'}
+              >
+                OK
+              </ConfirmButtonComponent>
+            </Modal.Close>
+
+            <Modal.Close asChild>
+              <CancelButtonComponent
+                className={cls.button}
+                disabled={disabled}
+                onClick={handleCancelClick}
+              >
+                Cancel
+              </CancelButtonComponent>
+            </Modal.Close>
           </div>
         </ModalCard.Content>
       </ModalCard.Root>
     </Modal.Root>
   );
 };
+
+const getClassNames = (classes: ConfirmModalClasses): ConfirmModalClasses => ({
+  button: clsx(s.button, classes.button),
+  buttonsGroup: clsx(s.buttonsGroup, classes.buttonsGroup),
+});
