@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { DEPRECATED_Modal } from '@/features/DEPRECATED_Modal';
+import { ConfirmModal } from '@/features/confirm-modal';
 import { useLogoutMutation, useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { useLazyGetMeQuery } from '@/shared/api/users-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
@@ -37,6 +38,9 @@ export const Sidebar = () => {
   const handleLogout = () => {
     setOpen(false);
     logoutTrigger();
+  };
+  const closeModal = () => {
+    setOpen(false);
   };
 
   return (
@@ -85,11 +89,12 @@ export const Sidebar = () => {
         Log Out
       </Typography.Regular14>
 
-      <DEPRECATED_Modal
-        onClose={() => setOpen(false)}
+      <ConfirmModal
+        headerTitle={'Log Out'}
+        onCancel={closeModal}
+        onConfirm={handleLogout}
+        onOpenChange={closeModal}
         open={open}
-        showCloseButton
-        title={'Log Out'}
       >
         <Typography.Regular14>
           <Trans
@@ -99,15 +104,7 @@ export const Sidebar = () => {
             text={t.logOut.reallyWantToLogOut}
           />
         </Typography.Regular14>
-        <div className={s.modalButtonsGroup}>
-          <Button className={s.modalButton} onClick={handleLogout} variant={'tertiary'}>
-            Yes
-          </Button>
-          <Button className={s.modalButton} onClick={() => setOpen(false)}>
-            No
-          </Button>
-        </div>
-      </DEPRECATED_Modal>
+      </ConfirmModal>
     </div>
   );
 };
