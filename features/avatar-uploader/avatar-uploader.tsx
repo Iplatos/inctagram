@@ -1,7 +1,6 @@
 import React, { ChangeEvent, ElementRef, FC, useRef } from 'react';
 import AvatarEditor, { CroppedRect } from 'react-avatar-editor';
 
-import { DEPRECATED_Modal } from '@/features/DEPRECATED_Modal';
 import { dataURLToBlob } from '@/shared/helpers';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
@@ -13,6 +12,7 @@ import { AvatarFallback } from 'assets/icons/avatar-fallback';
 
 import s from './avatar-uploader.module.scss';
 
+import { ConfirmModal } from '../confirm-modal';
 import { useAvatarUploader } from './useAvatarUploader';
 
 // TODO: add missing common components to index file in shared/ui
@@ -107,9 +107,20 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
   };
 
   const previewOrAvatar = state.preview ?? avatar;
+  const renderButtons = () => {
+    return !!previewOrAvatar;
+  };
 
   return (
-    <DEPRECATED_Modal onClose={handleClose} open={open} showCloseButton title={t.title}>
+    <ConfirmModal
+      headerTitle={t.title}
+      onCancel={handleClose}
+      onConfirm={saveAvatar}
+      onOpenChange={handleClose}
+      open={open}
+      renderCancelButton={renderButtons}
+      renderConfirmButton={renderButtons}
+    >
       <div className={s.content}>
         {state.error && (
           <Alert classes={{ alertRoot: s.error }} severity={'error'}>
@@ -153,12 +164,14 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
           type={'file'}
         />
         <div className={s.buttonsGroup}>
-          <Button
-            onClick={() => inputRef.current?.click()}
-            variant={previewOrAvatar ? 'tertiary' : 'primary'}
-          >
-            {t.buttons.select}
-          </Button>
+          {!previewOrAvatar || (
+            <Button
+              onClick={() => inputRef.current?.click()}
+              variant={previewOrAvatar ? 'tertiary' : 'primary'}
+            >
+              {t.buttons.select}
+            </Button>
+          )}
           {previewOrAvatar && (
             <Button disabled={!!state.error} onClick={saveAvatar}>
               {t.buttons.save}
@@ -166,7 +179,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
           )}
         </div>
       </div>
-    </DEPRECATED_Modal>
+    </ConfirmModal>
   );
 };
 
