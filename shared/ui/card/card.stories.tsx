@@ -6,6 +6,18 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import { Card } from './card';
 
+type DecoratorFunction = Exclude<Meta['decorators'], undefined>[number];
+export const commonDecorator: DecoratorFunction = Story => (
+  <>
+    <style>{`
+          .card-content { width: 400px; max-width: 100%; }
+          .buttons-group { display: flex; gap: 16px; }
+          .button { flex: 1 1 0; }
+        `}</style>
+    <Story />
+  </>
+);
+
 /**
  * Cards are surfaces that display content and actions on a single topic.
  * The `Card` component includes several complementary utility components to handle various use cases:
@@ -30,6 +42,10 @@ const meta = {
       description: 'Any arbitrary `ReactNode` component',
       table: { type: { summary: 'ReactNode' } },
     },
+    className: {
+      description: 'A class name provided to the underlying `div` element',
+      table: { type: { summary: 'string' } },
+    },
     ref: {
       control: false,
       description: 'The `ref` is forwarded to the root `div` element',
@@ -37,18 +53,8 @@ const meta = {
     },
   },
   component: Card,
-  decorators: [
-    Story => (
-      <div style={{ maxWidth: 400 }}>
-        <style>{`
-          .buttons-group { display: flex; gap: 16px; }
-          .button { flex: 1 1 0; }
-        `}</style>
-        <Story />
-      </div>
-    ),
-  ],
-  excludeStories: ['cardHeader', 'cardContent'],
+  decorators: [commonDecorator],
+  excludeStories: ['cardHeader', 'cardContent', 'commonDecorator'],
   tags: ['autodocs'],
   title: 'UI/Card',
 } satisfies Meta<typeof Card>;
@@ -71,8 +77,11 @@ export const cardContent = [
 
   <Typography.Regular16 component={'p'} key={'long'}>
     {/* cSpell: disable */}
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi consequuntur, exercitationem
-    sunt iusto cum deleniti minus voluptates earum distinctio deserunt!
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero in, mollitia facilis nisi
+    praesentium necessitatibus. Harum veritatis odit ullam ut earum recusandae totam quia impedit
+    consequatur, illo minus, quidem in repellat possimus! Facilis obcaecati maiores tenetur! Velit,
+    tempora aperiam obcaecati ut, labore impedit, recusandae necessitatibus quas porro dolor aut
+    possimus ad perspiciatis nostrum dolores amet ullam. Optio reiciendis ab ipsum.
     {/* cSpell: enable */}
   </Typography.Regular16>,
 
@@ -85,12 +94,13 @@ export const cardContent = [
 ];
 
 export const HeaderOnly: Story = {
-  args: { children: <Card.Header>{cardHeader}</Card.Header> },
+  args: { children: <Card.Header>{cardHeader}</Card.Header>, className: 'card-content' },
 };
 
 export const ContentOnly: Story = {
   args: {
     children: cardContent.map((content, i) => <Card.Content key={i}>{content}</Card.Content>),
+    className: 'card-content',
   },
 };
 
@@ -102,5 +112,6 @@ export const Basic: Story = {
         {ContentOnly.args?.children}
       </>
     ),
+    className: 'card-content',
   },
 };

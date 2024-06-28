@@ -2,7 +2,7 @@ import * as CardStories from '@/shared/ui/card/card.stories';
 import { Dialog } from '@radix-ui/react-dialog';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { ModalCard, ModalCardSlot } from './modal-card';
+import { ModalCard, ModalCardSlot } from './index';
 
 const CardStoriesArgTypes = CardStories.default.argTypes;
 
@@ -73,7 +73,7 @@ const meta = {
         <Story />
       </Dialog>
     ),
-    ...CardStories.default.decorators,
+    CardStories.commonDecorator,
   ],
   tags: ['autodocs'],
   title: 'UI/ModalCard',
@@ -87,6 +87,7 @@ export const Basic: Story = {
     children: CardStories.cardContent.map((content, i) => (
       <ModalCard.Content key={i}>{content}</ModalCard.Content>
     )),
+    classes: { cardRoot: 'card-content' },
     disabled: false,
     headerTitle: 'Pretty Header',
   },
