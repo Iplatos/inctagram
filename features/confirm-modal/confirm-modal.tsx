@@ -20,8 +20,11 @@ export type ConfirmModalSlot = 'button' | 'buttonsGroup';
 export type ConfirmModalClasses = { [P in ConfirmModalSlot]?: string };
 
 type OwnProps = {
+  cancelButtonTitle?: string;
   children?: ReactNode;
   classes?: ConfirmModalClasses;
+
+  confirmButtonTitle?: string;
   onCancel?: MouseEventHandler;
   onConfirm?: MouseEventHandler;
   renderCancelButton?: CustomButtonRender;
@@ -31,13 +34,15 @@ type OwnProps = {
 type PickedModalCardProps = Pick<ModalCardProps, 'disabled' | 'headerTitle'>;
 // prettier-ignore
 export type ConfirmModalProps = Replace<
-  Omit<ModalProps & PickedModalCardProps, 'classes'>,
+  Omit<ModalProps & PickedModalCardProps, 'classes' >,
   OwnProps
 >;
 
 export const ConfirmModal = ({
+  cancelButtonTitle,
   children,
   classes = {},
+  confirmButtonTitle,
   disabled,
   headerTitle,
   onCancel,
@@ -78,7 +83,7 @@ export const ConfirmModal = ({
                 onClick={handleConfirmClick}
                 variant={'tertiary'}
               >
-                OK
+                {confirmButtonTitle}
               </ConfirmButtonComponent>
             </Modal.Close>
 
@@ -88,7 +93,7 @@ export const ConfirmModal = ({
                 disabled={disabled}
                 onClick={handleCancelClick}
               >
-                Cancel
+                {cancelButtonTitle}
               </CancelButtonComponent>
             </Modal.Close>
           </div>
