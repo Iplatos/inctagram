@@ -3,15 +3,15 @@ import { FC, ReactElement } from 'react';
 import MockUserAvatar from '@/assets/img/mock-user-avatar.jpg';
 import { ProfileSummaryItem } from '@/features/profile-info/profile-summary';
 import { capitalise } from '@/shared/helpers/capitalise';
-import { Button, ButtonProps } from '@/shared/ui';
+import { Button, ButtonVariant } from '@/shared/ui';
 import { action, action as storybookAction } from '@storybook/addon-actions';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { ProfileInfo, ProfileInfoProps } from './profileInfo';
 
-type ButtonVariant = {
+type ButtonOptions = {
   name: string;
-  variant: NonNullable<ButtonProps<'button'>['variant']>;
+  variant: NonNullable<ButtonVariant>;
 };
 type ButtonsMap = Record<(typeof buttonVariants)[number]['name'], ReactElement>;
 
@@ -20,7 +20,7 @@ const buttonVariants = [
   { name: 'send message', variant: 'secondary' } as const,
   { name: 'unfollow', variant: 'tertiary' } as const,
   { name: 'profile settings', variant: 'secondary' } as const,
-] satisfies ButtonVariant[];
+] satisfies ButtonOptions[];
 
 const getButtonsByActionCategory = (category: 'primary' | 'secondary'): ButtonsMap =>
   buttonVariants.reduce(

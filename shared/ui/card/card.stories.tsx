@@ -42,6 +42,10 @@ const meta = {
       description: 'Any arbitrary `ReactNode` component',
       table: { type: { summary: 'ReactNode' } },
     },
+    className: {
+      description: 'A class name provided to the underlying `div` element',
+      table: { type: { summary: 'string' } },
+    },
     ref: {
       control: false,
       description: 'The `ref` is forwarded to the root `div` element',
@@ -73,8 +77,11 @@ export const cardContent = [
 
   <Typography.Regular16 component={'p'} key={'long'}>
     {/* cSpell: disable */}
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi consequuntur, exercitationem
-    sunt iusto cum deleniti minus voluptates earum distinctio deserunt!
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero in, mollitia facilis nisi
+    praesentium necessitatibus. Harum veritatis odit ullam ut earum recusandae totam quia impedit
+    consequatur, illo minus, quidem in repellat possimus! Facilis obcaecati maiores tenetur! Velit,
+    tempora aperiam obcaecati ut, labore impedit, recusandae necessitatibus quas porro dolor aut
+    possimus ad perspiciatis nostrum dolores amet ullam. Optio reiciendis ab ipsum.
     {/* cSpell: enable */}
   </Typography.Regular16>,
 

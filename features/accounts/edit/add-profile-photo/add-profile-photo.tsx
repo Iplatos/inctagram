@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import { CloseIcon } from '@/assets/icons/close';
-import { DEPRECATED_Modal } from '@/features';
 import { AvatarUploader, AvatarUploaderProps } from '@/features/avatar-uploader';
+import { ConfirmModal } from '@/features/confirm-modal';
 import {
   useDeleteMyAvatarMutation,
   useGetMeQuery,
@@ -18,6 +18,8 @@ import clsx from 'clsx';
 import s from './add-profile-photo.module.scss';
 
 export const AddProfilePhoto = () => {
+  const { t } = useTranslation();
+
   const { addPhotoButton: tButton, deleteAvatarModal: tModal } = useTranslation().t.editProfile;
 
   const [uploaderOpen, setUploaderOpen] = useState(false);
@@ -53,7 +55,6 @@ export const AddProfilePhoto = () => {
 
   const handleAvatarDelete = () => {
     deleteAvatar();
-    setDeleteModalOpen(false);
   };
 
   // Manual destructuring to prevent unrecognized props from backend such as `updatedAt` from being passed to the internal `img` component.
@@ -66,6 +67,9 @@ export const AddProfilePhoto = () => {
   } = meResponse?.data.avatar ?? {};
 
   const isUploaderDisabled = isUploadingAvatar || isDeletingAvatar || isFetchingMyProfile;
+  const onCloseModal = () => {
+    setDeleteModalOpen(false);
+  };
 
   return (
     <div className={s.photoContainer}>
@@ -106,22 +110,17 @@ export const AddProfilePhoto = () => {
         open={uploaderOpen}
       />
 
-      <DEPRECATED_Modal
-        onClose={() => setDeleteModalOpen(false)}
+      <ConfirmModal
+        cancelButtonTitle={t.editProfile.deleteAvatarModal.buttons.deny}
+        confirmButtonTitle={t.editProfile.deleteAvatarModal.buttons.confirm}
+        headerTitle={tModal.title}
+        onCancel={onCloseModal}
+        onConfirm={handleAvatarDelete}
+        onOpenChange={onCloseModal}
         open={deleteModalOpen}
-        showCloseButton
-        title={tModal.title}
       >
         <Typography.Regular16>{tModal.message}</Typography.Regular16>
-        <div className={s.modalButtonsGroup}>
-          <Button className={s.modalButton} onClick={handleAvatarDelete} variant={'tertiary'}>
-            {tModal.buttons.confirm}
-          </Button>
-          <Button className={s.modalButton} onClick={() => setDeleteModalOpen(false)}>
-            {tModal.buttons.deny}
-          </Button>
-        </div>
-      </DEPRECATED_Modal>
+      </ConfirmModal>
     </div>
   );
 };

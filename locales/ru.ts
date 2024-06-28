@@ -281,6 +281,7 @@ export const ru = {
   },
 
   logOut: {
+    logOut: 'Выход',
     reallyWantToLogOut: 'Вы действительно хотите выйти из аккаунта <email></email>?',
   },
 
