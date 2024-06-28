@@ -90,7 +90,9 @@ export const Sidebar = () => {
       </Typography.Regular14>
 
       <ConfirmModal
-        headerTitle={'Log Out'}
+        cancelButtonTitle={t.editProfile.deleteAvatarModal.buttons.deny}
+        confirmButtonTitle={t.editProfile.deleteAvatarModal.buttons.confirm}
+        headerTitle={t.logOut.logOut}
         onCancel={closeModal}
         onConfirm={handleLogout}
         onOpenChange={closeModal}
