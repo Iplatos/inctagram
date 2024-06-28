@@ -282,6 +282,7 @@ export const en: LocaleType = {
   },
 
   logOut: {
+    logOut: 'Log Out',
     reallyWantToLogOut: 'Are you really want to log out of your account <email></email>?',
   },
 
