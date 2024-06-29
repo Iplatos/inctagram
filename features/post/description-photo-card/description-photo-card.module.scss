@@ -1,0 +1,40 @@
+.root {
+  position: relative;
+  max-width: 972px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &:not(:last-of-type) {
+    margin-bottom: 1px;
+  }
+}
+
+.content {
+  display: flex;
+  width: 100%;
+  padding: 0;
+}
+
+.slider {
+  width: 50%;
+  height: 503px;
+  background: red;
+}
+
+.description {
+  width: 50%;
+  padding: 0;
+}
+
+.submit {
+  position: absolute;
+  top: 12px;
+  right: 24px;
+
+  margin: 0;
+  padding: 0;
+}
