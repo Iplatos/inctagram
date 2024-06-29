@@ -1,12 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Card } from './Card';
+import { DEPRECATED_Card } from './DEPRECATED_Card';
 
 const meta = {
-  component: Card,
+  component: DEPRECATED_Card,
   tags: ['autodocs'],
-  title: 'Components/Card',
-} satisfies Meta<typeof Card>;
+  title: 'Components/DEPRECATED_Card',
+} satisfies Meta<typeof DEPRECATED_Card>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

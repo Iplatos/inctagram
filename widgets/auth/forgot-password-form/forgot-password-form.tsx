@@ -5,10 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { CloseDialog, Modal } from '@/features/modal';
 import { useForgotPasswordMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button } from '@/shared/ui/Button/button';
-import { Card } from '@/shared/ui/Card/Card';
-import { TextField } from '@/shared/ui/textField/TextField';
-import { Typography } from '@/shared/ui/typography';
+import { Button, DEPRECATED_Card, TextField, Typography } from '@/shared/ui';
 import { Trans } from '@/widgets/Trans/Trans';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
@@ -75,7 +72,7 @@ export const ForgotPasswordForm = () => {
 
   return (
     /* eslint-disable */
-    <Card className={style.card}>
+    <DEPRECATED_Card className={style.card}>
       <Typography.H1 style={{ paddingBottom: '37px' }}>
         {t.auth.forgotPasswordPage.title}
       </Typography.H1>
@@ -145,7 +142,7 @@ export const ForgotPasswordForm = () => {
           )}
         />
       </form>
-    </Card>
+    </DEPRECATED_Card>
     /* eslint-enable */
   );
 };
