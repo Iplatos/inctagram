@@ -1,75 +1,75 @@
-import { useEffect, useId, useMemo } from 'react';
+import { MouseEventHandler, useEffect, useMemo } from 'react';
 
 import { ArrowIOSBack } from '@/assets/icons/arrow-ios-back';
+import { capitalise } from '@/shared/helpers';
 import { Button, Card, IconButton, Typography } from '@/shared/ui';
-import { CroppedImage } from '@/shared/ui/croppedImage';
 import { createFilter } from 'cc-gram';
+import { StaticImport } from 'next/dist/shared/lib/get-img-props';
+import Image from 'next/image';
 
 import s from './FilterPhotoCard.module.scss';
 
 import { getPhoto, useFilter } from './useFilter';
 
 type FilterPhotoCardProps = {
-  onNextClick: () => void;
-  onPrevClick: () => void;
-  src: string;
+  onNextClick: MouseEventHandler<HTMLButtonElement>;
+  onPrevClick: MouseEventHandler<HTMLButtonElement>;
+  src: StaticImport | string;
 };
 
-export const FilterPhotoCard = (props: FilterPhotoCardProps) => {
-  const id = useId();
-
+export const FilterPhotoCard = ({ onNextClick, onPrevClick, src }: FilterPhotoCardProps) => {
   const filter = useMemo(() => createFilter({}), []);
 
   const { dispatch, state } = useFilter();
 
   useEffect(() => filter.applyFilter(), [filter, state.filter]);
 
-  const filterNames: string[] = filter.filterNames;
+  const filterNames = ['normal', ...filter.filterNames.sort((a, b) => a.localeCompare(b))];
 
   return (
-    <Card>
+    <Card className={s.cardRoot}>
       <Card.Header className={s.header}>
-        <IconButton onClick={() => props.onPrevClick()}>
+        <IconButton onClick={onPrevClick}>
           <ArrowIOSBack />
         </IconButton>
-        <Typography.H1>Filters</Typography.H1>
-        <Button onClick={() => props.onNextClick()} variant={'text'}>
-          <Typography.H3 className={s.next}>Next</Typography.H3>
+        <Typography.H1 className={s.headerTitle} component={'h2'}>
+          Filters
+        </Typography.H1>
+        <Button onClick={onNextClick} variant={'text'}>
+          Next
         </Button>
       </Card.Header>
-      <Card.Content className={s.content}>
-        <span>
-          {' '}
-          <CroppedImage
-            alt={'testImg'}
+
+      <div className={s.contentWrapper}>
+        <div className={s.previewWrapper}>
+          <Image
+            alt={'preview a photo with the selected filter'}
             data-filter={state.filter}
-            height={504}
-            src={props.src}
-            width={504}
+            fill
+            priority
+            src={src}
           />
-        </span>
-        <span className={s.filters}>
+        </div>
+
+        <Card.Content className={s.filtersList}>
           {filterNames.map(el => (
-            <span className={s.item} key={id}>
-              <div className={s.image}>
-                <CroppedImage
-                  alt={'test image'}
+            <div className={s.filterItem} key={el}>
+              <div className={s.filterImageWrapper}>
+                <Image
+                  alt={`${filter} filter`}
                   data-filter={el}
-                  height={108}
-                  onClick={() => {
-                    dispatch(getPhoto({ filter: el }));
-                  }}
-                  src={props.src}
-                  width={108}
+                  fill
+                  onClick={() => dispatch(getPhoto({ filter: el }))}
+                  src={src}
                 />
               </div>
-              <div>
-                <Typography.Regular14>{el}</Typography.Regular14>
-              </div>
-            </span>
+              <Typography.Regular16 className={s.filterTitle}>
+                {capitalise(el, true)}
+              </Typography.Regular16>
+            </div>
           ))}
-        </span>
-      </Card.Content>
+        </Card.Content>
+      </div>
     </Card>
   );
 };
