@@ -83,7 +83,6 @@ export const SignInForm = () => {
           name={'password'}
           placeholder={t.auth.signInPage.password}
         />
-
         <Typography.Regular14
           className={s.forgotPasswordLink}
           color={'var(--color-light-900)'}

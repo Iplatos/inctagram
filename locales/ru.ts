@@ -285,6 +285,19 @@ export const ru = {
   },
 
   myProfile: {
+    addPostModal: {
+      postDescriptionCard: {
+        labelCard: 'Публикация',
+        postDescription: {
+          errors: {
+            tooBig: 'Максимальное количество символов 500',
+          },
+          label: 'Добавить описание публикации',
+          placeholder: 'Текстовое поле',
+          titleBtnSubmit: 'Опубликовать',
+        },
+      },
+    },
     settingsButton: 'Настройки Профиля',
     statistics: {
       followers: { label: 'подписчики' },
