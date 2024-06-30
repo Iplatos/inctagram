@@ -18,7 +18,7 @@ export const Zoom = () => {
           </button>
         </PopoverTrigger>
         <PopoverContent>
-          <Slider />
+          <Slider size={'small'} />
         </PopoverContent>
       </PopoverRoot>
     </>

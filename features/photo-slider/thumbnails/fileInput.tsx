@@ -29,7 +29,7 @@ export const FileInput: FC<FileInputPropsType> = ({ onImageSelected }) => {
   };
 
   return (
-    <div>
+    <>
       <input
         accept={'image/*'}
         onChange={handleOnChange}
@@ -41,6 +41,6 @@ export const FileInput: FC<FileInputPropsType> = ({ onImageSelected }) => {
       <div onClick={onChooseImage}>
         <TriggerButton variant={'upload'} />
       </div>
-    </div>
+    </>
   );
 };

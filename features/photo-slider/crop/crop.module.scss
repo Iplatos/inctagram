@@ -1,24 +1,14 @@
-
-
 .content {
-    padding: 12px;
-    background-color: rgb(23 23 23 / 80%);
-    border-radius: 2px;
-}
-
-.wrapper {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    width: 129px;
 
-    width: 156px;
-
-    color: var(--color-light-900);
+    
 }
 
-.image {
-    width: 80px;
-    height: 82px;
+.text {
+    color: var(--color-light-900);
 }
 
 .aspectRatio {
@@ -33,18 +23,46 @@
       }
 }
 
-
-
 .aspectRatio:hover  {
     cursor: pointer;
-    font-weight: 600;
-    color: var(--color-light-100);
-    transition: color 0.2s;
 
     .svg {
         & * {
           fill: var(--color-light-100);
         }
     }
+
+    .text {
+        font-weight: 600;
+        color: var(--color-light-100);
+    }
+}
+
+
+.aspectRatio_square, .aspectRatio_vertical, .aspectRatio_horizontal {
+    width: 18px;
+    margin: 3px;
+    border: 2px solid var(--color-light-900);
+    border-radius: 3px;
+
+}
+
+.aspectRatio_square {
+    height: 18px;
+}
+
+.aspectRatio_vertical {
+    height: 26px;
+}
+
+.aspectRatio_horizontal {
+    width: 26px;
+}
+
+.aspectRatio:hover .aspectRatio_square,
+.aspectRatio:hover .aspectRatio_horizontal,
+.aspectRatio:hover .aspectRatio_vertical {
+    cursor: pointer;
+    border: 2px solid var(--color-light-100);
 }
 

@@ -22,6 +22,7 @@ export const PopoverContent = React.forwardRef(
         <PopoverPrimitive.Portal>
           <PopoverPrimitive.Content
             {...props}
+            align={'start'}
             className={style.content}
             ref={forwardedRef}
             side={'top'}

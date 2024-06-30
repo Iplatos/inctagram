@@ -14,3 +14,10 @@
     width: 80px;
     height: 82px;
 }
+
+.scrollContainer {
+    overflow: auto hidden;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}

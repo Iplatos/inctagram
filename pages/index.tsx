@@ -26,8 +26,6 @@ function Home() {
       <div style={{ marginLeft: '300px' }}>Hello World!</div>
 
       <PhotoSlider />
-      {/* <Zoom /> */}
-      {/* <Crop /> */}
     </>
   );
 }
