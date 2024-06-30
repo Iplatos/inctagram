@@ -1,11 +1,30 @@
+import { ElementRef, ForwardedRef, ReactElement, ReactNode } from 'react';
+
 import MockUserAvatar from '@/assets/img/mock-user-avatar.jpg';
+import { Replace } from '@/shared/types/helpers';
 import { Button } from '@/shared/ui/Button';
 import { Avatar } from '@/shared/ui/avatar';
 import { Typography } from '@/shared/ui/typography';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Card } from './card';
+import { Card, CardContentProps } from './card';
 
+type CustomRenderProps =
+  | (Omit<CardContentProps, 'children'> & {
+      children?: undefined;
+      renderChildren: (props: Pick<CardContentProps, 'ignoreHeader'>) => ReactNode;
+    })
+  | Replace<CardContentProps, { children: Iterable<ReactElement> | ReactElement }>;
+
+const CustomRender = (props: CustomRenderProps) => {
+  if (props.children === undefined) {
+    const { renderChildren, ...restProps } = props;
+
+    return <Card {...restProps}>{renderChildren({ ignoreHeader: props.ignoreHeader })}</Card>;
+  }
+
+  return <Card {...props} />;
+};
 /**
  * Cards are surfaces that display content and actions on a single topic.
  * The `Card` component includes several complementary utility components to handle various use cases:
@@ -14,6 +33,8 @@ import { Card } from './card';
  *
  * The `Card.Content` component provides convenient paddings for its content.
  * It also has a bottom border if it is not the last among neighboring elements.
+ * You can pass the `ignoreHerder` prop to not increase the `padding-top`
+ * of `Card.Content` immediately following `Card.Header`.
  *
  * The `Card.Header` component extends the `Card.Content` styles.
  * It also aligns the content vertically and has a bottom margin if it is not the last among its neighbors
@@ -30,13 +51,20 @@ const meta = {
       description: 'Any arbitrary `ReactNode` component',
       table: { type: { summary: 'ReactNode' } },
     },
+    ignoreHeader: {
+      control: { type: 'boolean' },
+      defaultValue: false,
+      description: `STORYBOOK_SPECIFIC_SETTING: Can be passed to \`Card.Content\` to avoid
+        adding an increased \`padding-top\` to it if the preceding child component is \`Card.
+        Header\`. By default, the indentation is increased.`,
+      table: { type: { summary: 'boolean' } },
+    },
     ref: {
       control: false,
       description: 'The `ref` is forwarded to the root `div` element',
       table: { type: { summary: 'ForwardedRef<HTMLDivElement>' } },
     },
   },
-  component: Card,
   decorators: [
     Story => (
       <div style={{ maxWidth: 400 }}>
@@ -49,12 +77,14 @@ const meta = {
     ),
   ],
   excludeStories: ['cardHeader', 'cardContent'],
+  render: CustomRender,
   tags: ['autodocs'],
   title: 'UI/Card',
-} satisfies Meta<typeof Card>;
+  // manually add the `ref` type to the `CustomRenderProps` to add its description to the `meta` object.
+} satisfies Meta<CustomRenderProps & { ref: ForwardedRef<ElementRef<'div'>> }>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<CustomRenderProps>;
 
 export const cardHeader = (
   <>
@@ -90,16 +120,22 @@ export const HeaderOnly: Story = {
 
 export const ContentOnly: Story = {
   args: {
-    children: cardContent.map((content, i) => <Card.Content key={i}>{content}</Card.Content>),
+    renderChildren: props =>
+      cardContent.map((content, i) => (
+        <Card.Content {...props} key={i}>
+          {content}
+        </Card.Content>
+      )),
   },
 };
 
 export const Basic: Story = {
   args: {
-    children: (
+    ignoreHeader: false,
+    renderChildren: props => (
       <>
         {HeaderOnly.args?.children}
-        {ContentOnly.args?.children}
+        {ContentOnly.args?.renderChildren?.(props)}
       </>
     ),
   },
