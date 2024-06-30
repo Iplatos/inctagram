@@ -36,3 +36,18 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+@mixin webkit-custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--color-dark-100);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgb(100 99 99);
+    border-radius: 10px;
+  }
+}
