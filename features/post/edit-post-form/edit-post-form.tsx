@@ -1,27 +1,21 @@
 import React, { ComponentPropsWithoutRef } from 'react';
 import { useForm } from 'react-hook-form';
 
-//import { useTranslation } from '@/shared/hooks/useTranslation';
+import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Nullable } from '@/shared/types/helpers';
 import { Button, Typography } from '@/shared/ui';
-import { ControlledTextArea } from '@/shared/ui/controlled';
+import { ControlledTextField } from '@/shared/ui/controlled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { clsx } from 'clsx';
 import { z } from 'zod';
 
 import s from './edit-post-form.module.scss';
 
-const editPostSchema = z.object({
-  description: z.string().max(500, { message: 'Maximum number of characters 500' }),
-});
-
-export type EditPostFormValues = z.infer<typeof editPostSchema>;
-
 type EditPostFormProps = {
   classNameSubmit?: string;
   currentDescription?: Nullable<string>;
   disabled?: boolean;
-  onSubmit: (data: EditPostFormValues) => void;
+  onSubmit: (data: any) => void;
   titleSubmit?: string;
 } & Omit<ComponentPropsWithoutRef<'form'>, 'onSubmit'>;
 
@@ -35,10 +29,18 @@ export const EditPostForm = (props: EditPostFormProps) => {
     titleSubmit,
     ...rest
   } = props;
+  const { t } = useTranslation();
+
+  const editPostSchema = z.object({
+    description: z.string().max(500, {
+      message:
+        useTranslation().t.myProfile.addPostModal.postDescriptionCard.postDescription.errors.tooBig,
+    }),
+  });
 
   const {
     control,
-    formState: { errors, isSubmitting, isValid, submitCount },
+    formState: { isSubmitting, isValid, submitCount },
     handleSubmit,
     watch,
   } = useForm({
@@ -48,29 +50,35 @@ export const EditPostForm = (props: EditPostFormProps) => {
     resolver: zodResolver(editPostSchema),
   });
 
-  const onSubmitHandler = (data: EditPostFormValues) => onSubmit(data);
+  type EditPostFormValues = z.infer<typeof editPostSchema>;
+  const onSubmitHandler = (data: EditPostFormValues) => {
+    onSubmit(data);
+  };
 
   const submitIsDisabled = (!isValid && !!submitCount) || isSubmitting;
 
   return (
     <form className={clsx(s.form, className)} onSubmit={handleSubmit(onSubmitHandler)} {...rest}>
       <div className={s.area}>
-        <ControlledTextArea
-          error={errors.description?.message}
-          classNameTextArea={s.area__textarea}
+        <ControlledTextField
+          as={'textarea'}
+          className={s.area__textarea}
           control={control}
-          name={'description'}
           disabled={isSubmitting}
-          label={'Add publication descriptions'}
-          placeholder={'Text-area'}
-          resize="none"
-          rows={3}
+          label={t.myProfile.addPostModal.postDescriptionCard.postDescription.label}
+          name={'description'}
+          placeholder={t.myProfile.addPostModal.postDescriptionCard.postDescription.placeholder}
         />
-        <Typography.SmallLink className={s.valueLength}>{`${
-          watch('description').length
-        }/500`}</Typography.SmallLink>
+        <Typography.SmallLink className={s.valueLength}>
+          {`${watch('description') === undefined ? 0 : watch('description').length}/500`}
+        </Typography.SmallLink>
       </div>
-      <Button className={clsx(s.btn, classNameSubmit)} disabled={submitIsDisabled} type={'submit'} variant={'text'}>
+      <Button
+        className={clsx(s.btn, classNameSubmit)}
+        disabled={submitIsDisabled}
+        type={'submit'}
+        variant={'text'}
+      >
         {titleSubmit || 'Save changes'}
       </Button>
     </form>

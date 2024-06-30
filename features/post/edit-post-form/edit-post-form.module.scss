@@ -10,9 +10,11 @@
   flex-direction: column;
   box-sizing: border-box;
 
-  div{
-    margin-bottom: 0;
+  div {
+    height: max-content;
+    margin: 0;
   }
+
 
   &__textarea {
     height: 120px;

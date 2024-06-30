@@ -18,13 +18,21 @@ export const UserBanner = (props: UserBannerProps) => {
   const { actions, avatar, avatarSize, className, name } = props;
 
   const getInitial = () => {
-    return name.split(' ').map(word => word[0].toUpperCase()).join('');
-  }
+    return name
+      .split(' ')
+      .map(word => word[0].toUpperCase())
+      .join('');
+  };
 
   return (
     <div className={clsx(s.userBanner, className)}>
       <div className={s.userInfo}>
-        <Avatar content={name} size={avatarSize || 'small'} src={avatar} fallback={avatar===undefined && <Typography.Bold14>{getInitial()}</Typography.Bold14>} />
+        <Avatar
+          content={name}
+          fallback={avatar === undefined && <Typography.Bold14>{getInitial()}</Typography.Bold14>}
+          size={avatarSize || 'small'}
+          src={avatar}
+        />
         <Typography.Medium16 className={s.name}>
           {name.length > 15 ? name.slice(0, 15) + '...' : name}
         </Typography.Medium16>

@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { ArrowLeft } from '@/assets/icons/arrow-left';
-import { EditPostForm, EditPostFormValues } from '@/features/post/edit-post-form/edit-post-form';
-import { Button, Card, IconButton, Typography } from '@/shared/ui';
+import { EditPostForm } from '@/features/post/edit-post-form/edit-post-form';
+import { useTranslation } from '@/shared/hooks/useTranslation';
+import { Card, IconButton, Typography } from '@/shared/ui';
 import { UserBanner } from '@/shared/ui/user-banner';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
@@ -15,6 +16,15 @@ type DescriptionPhotoCardProps = {
 
 export const DescriptionPhotoCard = (props: DescriptionPhotoCardProps) => {
   const { avatar, userName } = props;
+  const { t } = useTranslation();
+
+  const labelCard = t.myProfile.addPostModal.postDescriptionCard.labelCard;
+  const titleBtnSubmit =
+    t.myProfile.addPostModal.postDescriptionCard.postDescription.titleBtnSubmit;
+
+  const handleSubmit = (data: FormData) => {
+    console.log(data);
+  };
 
   return (
     <Card.Root className={s.root}>
@@ -22,18 +32,18 @@ export const DescriptionPhotoCard = (props: DescriptionPhotoCardProps) => {
         <IconButton>
           <ArrowLeft />
         </IconButton>
-        <Typography.H1>Publication</Typography.H1>
+        <Typography.H1>{labelCard}</Typography.H1>
         <div></div>
-        {/*<Button variant={'text'}>Publish</Button>*/}
+        {/* <Button variant="text">{titleBtnSubmit}</Button> */}
       </Card.Header>
       <Card.Content className={s.content}>
         <div className={s.slider}></div>
         <div className={s.description}>
           <UserBanner avatar={avatar} name={userName} />
           <EditPostForm
-            onSubmit={(data: EditPostFormValues) => console.log(data)}
-            titleSubmit={'Publish'}
             classNameSubmit={s.submit}
+            onSubmit={handleSubmit}
+            titleSubmit={titleBtnSubmit}
           />
         </div>
       </Card.Content>
