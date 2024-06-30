@@ -1,6 +1,6 @@
 import { useEffect, useId, useMemo } from 'react';
 
-import Arrow from '@/assets/icons/arrow-ios-back';
+import { ArrowIOSBack } from '@/assets/icons/arrow-ios-back';
 import { Button, Card, IconButton, Typography } from '@/shared/ui';
 import { CroppedImage } from '@/shared/ui/croppedImage';
 import { createFilter } from 'cc-gram';
@@ -30,7 +30,7 @@ export const FilterPhotoCard = (props: FilterPhotoCardProps) => {
     <Card>
       <Card.Header className={s.header}>
         <IconButton onClick={() => props.onPrevClick()}>
-          <Arrow />
+          <ArrowIOSBack />
         </IconButton>
         <Typography.H1>Filters</Typography.H1>
         <Button onClick={() => props.onNextClick()} variant={'text'}>
