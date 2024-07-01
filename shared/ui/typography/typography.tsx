@@ -59,6 +59,7 @@ export const Typography = {
   RegularLink: createTypography('regularLink'),
   Semibold12: createTypography('semibold12'),
   SmallLink: createTypography('smallLink'),
+  SmallText: createTypography('smallText'),
 };
 
 const COMPONENTS = {
@@ -75,6 +76,7 @@ const COMPONENTS = {
   regularLink: 'a',
   semibold12: 'span',
   smallLink: 'a',
+  smallText: 'p',
 } as const;
 
 type Component = keyof typeof COMPONENTS;

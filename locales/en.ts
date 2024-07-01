@@ -309,4 +309,16 @@ export const en: LocaleType = {
     newNotification: 'New notification!',
     notifications: 'Notifications',
   },
+
+  post: {
+    comment: {
+      answer: 'Answer',
+      like: 'Like',
+      likes: 'Likes',
+      viewAnswersBth: {
+        close: 'View Answer',
+        open: 'Show Answers',
+      },
+    },
+  },
 };
