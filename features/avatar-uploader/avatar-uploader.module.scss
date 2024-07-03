@@ -58,6 +58,12 @@ $canvas-width: 330px;
   height: em(48);
 }
 
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .buttonsGroup {
   display: flex;
   gap: em(16);

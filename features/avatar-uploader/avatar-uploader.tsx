@@ -107,8 +107,32 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
   };
 
   const previewOrAvatar = state.preview ?? avatar;
-  const renderButtons = () => {
-    return !!previewOrAvatar;
+
+  const renderSaveButton = () => {
+    return (
+      <div>
+        {!previewOrAvatar || (
+          <Button className={s.selectButton} disabled={!!state.error} onClick={saveAvatar}>
+            {t.buttons.save}
+          </Button>
+        )}
+      </div>
+    );
+  };
+  const renderSelectButton = () => {
+    return (
+      <div className={s.buttonContainer}>
+        {!!previewOrAvatar || (
+          <Button
+            className={s.buttonsGroup}
+            onClick={() => inputRef.current?.click()}
+            variant={previewOrAvatar ? 'tertiary' : 'primary'}
+          >
+            {t.buttons.select}
+          </Button>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -118,8 +142,8 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
       onConfirm={saveAvatar}
       onOpenChange={handleClose}
       open={open}
-      renderCancelButton={renderButtons}
-      renderConfirmButton={renderButtons}
+      renderCancelButton={renderSaveButton}
+      renderConfirmButton={renderSelectButton}
     >
       <div className={s.content}>
         {state.error && (
@@ -132,7 +156,6 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
             </Typography.Regular14>
           </Alert>
         )}
-
         {previewOrAvatar ? (
           <div className={s.canvasWrapper} onWheel={changeImageScale}>
             <div className={s.canvasBackground} />
@@ -155,7 +178,6 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
             <AvatarFallback className={s.image} />
           </div>
         )}
-
         <input
           accept={'image/png, image/jpeg'}
           onChange={uploadFromDevice}
@@ -163,8 +185,8 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
           style={{ display: 'none' }}
           type={'file'}
         />
-        <div className={s.buttonsGroup}>
-          {!previewOrAvatar || (
+        {/* <div className={s.buttonsGroup}>
+          {!!previewOrAvatar || (
             <Button
               onClick={() => inputRef.current?.click()}
               variant={previewOrAvatar ? 'tertiary' : 'primary'}
@@ -177,7 +199,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
               {t.buttons.save}
             </Button>
           )}
-        </div>
+        </div> */}
       </div>
     </ConfirmModal>
   );

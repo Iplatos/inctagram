@@ -83,7 +83,7 @@ export const ConfirmModal = ({
                 onClick={handleConfirmClick}
                 variant={'tertiary'}
               >
-                {confirmButtonTitle}
+                Yes
               </ConfirmButtonComponent>
             </Modal.Close>
 
@@ -93,7 +93,7 @@ export const ConfirmModal = ({
                 disabled={disabled}
                 onClick={handleCancelClick}
               >
-                {cancelButtonTitle}
+                No
               </CancelButtonComponent>
             </Modal.Close>
           </div>
