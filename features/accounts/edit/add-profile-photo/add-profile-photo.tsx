@@ -18,7 +18,12 @@ import clsx from 'clsx';
 import s from './add-profile-photo.module.scss';
 
 export const AddProfilePhoto = () => {
-  const { addPhotoButton: tButton, deleteAvatarModal: tModal } = useTranslation().t.editProfile;
+  const {
+    t: {
+      common: tCommon,
+      editProfile: { addPhotoButton: tButton, deleteAvatarModal: tModal },
+    },
+  } = useTranslation();
 
   const [uploaderOpen, setUploaderOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -117,8 +122,8 @@ export const AddProfilePhoto = () => {
       />
 
       <ConfirmModal
-        cancelButtonTitle={tModal.buttons.deny}
-        confirmButtonTitle={tModal.buttons.confirm}
+        cancelButtonTitle={tCommon.modal.buttonNames.cancel}
+        confirmButtonTitle={tCommon.modal.buttonNames.confirm}
         disabled={isDeletingAvatar}
         headerTitle={tModal.title}
         onCancel={onCloseModal}

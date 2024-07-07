@@ -213,6 +213,16 @@ export const en: LocaleType = {
     datePicker: {
       locale: gregorian_en,
     },
+    logOutModal: {
+      description: 'Are you really want to log out of your account <email></email>?',
+      title: 'Log Out',
+    },
+    modal: {
+      buttonNames: {
+        cancel: 'No',
+        confirm: 'Yes',
+      },
+    },
     postsList: {
       addPostButton: 'Create Post',
       noPostsMessage: 'There are not posts yet',
@@ -223,10 +233,6 @@ export const en: LocaleType = {
     addPhotoButton: 'Add a Profile Photo',
 
     deleteAvatarModal: {
-      buttons: {
-        confirm: 'Yes',
-        deny: 'No',
-      },
       message: 'Are you sure you want to delete the photo?',
       title: 'Delete Photo',
     },
@@ -279,11 +285,6 @@ export const en: LocaleType = {
       generalInformation: { label: 'General Information' },
       myPayments: { label: 'My payments' },
     },
-  },
-
-  logOut: {
-    logOut: 'Log Out',
-    reallyWantToLogOut: 'Are you really want to log out of your account <email></email>?',
   },
 
   myProfile: {

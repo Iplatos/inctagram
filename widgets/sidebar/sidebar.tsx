@@ -22,7 +22,7 @@ import s from './sidebar.module.scss';
 import { Trans } from '../Trans/Trans';
 
 export const Sidebar = () => {
-  const { t } = useTranslation();
+  const t = useTranslation().t.common;
   const [open, setOpen] = useState(false);
 
   const [logoutTrigger, { isLoading: isLogOutLoading }] = useLogoutMutation();
@@ -96,10 +96,9 @@ export const Sidebar = () => {
       </Typography.Regular14>
 
       <ConfirmModal
-        cancelButtonTitle={t.editProfile.deleteAvatarModal.buttons.deny}
-        confirmButtonTitle={t.editProfile.deleteAvatarModal.buttons.confirm}
-        disabled={isLogOutLoading}
-        headerTitle={t.logOut.logOut}
+        cancelButtonTitle={t.modal.buttonNames.cancel}
+        confirmButtonTitle={t.modal.buttonNames.confirm}
+        headerTitle={t.logOutModal.title}
         onCancel={closeModal}
         onConfirm={handleLogout}
         open={open}
@@ -109,7 +108,7 @@ export const Sidebar = () => {
             tags={{
               email: () => <Typography.Bold16>{meResponse?.data.email}</Typography.Bold16>,
             }}
-            text={t.logOut.reallyWantToLogOut}
+            text={t.logOutModal.description}
           />
         </Typography.Regular14>
       </ConfirmModal>
