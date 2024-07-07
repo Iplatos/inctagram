@@ -8,7 +8,6 @@ import { ImageCropper } from '@/features/photo-slider/thumbnails/imageCropper';
 import { Zoom } from '@/features/photo-slider/zoom/zoom';
 import { CroppedImage } from '@/shared/ui/croppedImage';
 import { original } from '@reduxjs/toolkit';
-import useImageSize from '@use-hooks/image-size';
 
 import 'react-image-gallery/styles/scss/image-gallery.scss';
 
@@ -45,7 +44,7 @@ export const PhotoSlider = () => {
 
   const [imgAfterCrop, setImgAfterCrop] = useState<string>('');
 
-  const onCropDone = imgCroppedArea => {
+  const onCropDone = (imgCroppedArea: any) => {
     const canvasElem = document.createElement('canvas');
 
     canvasElem.width = imgCroppedArea.width;
@@ -96,9 +95,9 @@ export const PhotoSlider = () => {
   );
 
   return (
-    <div ref={refGallery} style={{ width: '503px' }}>
+    <div ref={refGallery} style={{ width: 490 }}>
       <ImageGallery
-        items={images.map(i => ({ original: i, originalHeight: 490 }))}
+        items={addedImages.map(i => ({ original: i, originalHeight: 490 }))}
         renderCustomControls={renderCustomControls}
         renderItem={({ original, originalHeight, originalWidth }) => (
           <ImageCropper

@@ -17,12 +17,14 @@ export const PopoverContent = React.forwardRef(
     { children, ...props }: PopoverPropsType,
     forwardedRef: ForwardedRef<ElementRef<typeof PopoverPrimitive.Content>>
   ) => {
+    console.log('collision boundary', props.boundary);
+
     return (
       <>
         <PopoverPrimitive.Portal>
           <PopoverPrimitive.Content
             {...props}
-            align={'start'}
+            align={'end'}
             className={style.content}
             ref={forwardedRef}
             side={'top'}

@@ -8,11 +8,13 @@ import ZoomImg from 'assets/icons/zoomImg.svg';
 import style from './trigger-button.module.scss';
 
 type TriggerPropsType = {
+  disabled?: boolean;
+  onClick?: () => void;
   variant: 'crop' | 'image' | 'upload' | 'zoom';
 };
 
 export const TriggerButton = (props: TriggerPropsType) => {
-  const { variant } = props;
+  const { disabled, onClick, variant } = props;
 
   let button;
 
@@ -27,7 +29,12 @@ export const TriggerButton = (props: TriggerPropsType) => {
   }
 
   return (
-    <button className={variant === 'upload' ? style.buttonPlus : style.button} type={'button'}>
+    <button
+      className={variant === 'upload' ? style.buttonPlus : style.button}
+      disabled={disabled}
+      onClick={onClick}
+      type={'button'}
+    >
       {button}
     </button>
   );

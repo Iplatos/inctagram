@@ -13,7 +13,7 @@ export const ImageCropper = (props: any) => {
 
   const [croppedArea, setCroppedArea] = useState(null);
 
-  const onCropComplete = (croppedAreaPercentage, croppedAreaPixels) => {
+  const onCropComplete = (croppedAreaPercentage: any, croppedAreaPixels: any) => {
     setCroppedArea(croppedAreaPixels);
   };
 
@@ -33,9 +33,11 @@ export const ImageCropper = (props: any) => {
           containerStyle: {
             backgroundColor: 'var(--color-dark-100)',
             height: '503px',
+            // height: '100%',
             margin: 0,
             position: 'relative',
             width: '490px',
+            // width: '100%',
           },
           // cropAreaStyle: {
           //   width: '490px',

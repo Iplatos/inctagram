@@ -11,7 +11,7 @@ const meta = {
       control: false,
       description: 'description for Popover',
     },
-    trigger: { control: false },
+    // trigger: { control: false },
   },
   component: Popover,
   tags: ['autodocs'],
@@ -24,20 +24,20 @@ type Story = StoryObj<typeof meta>;
 export const PopoverWithThumbnails: Story = {
   args: {
     children: <div>some children</div>,
-    trigger: <button>Open Modal</button>,
+    // trigger: <button>Open Modal</button>,
   },
 };
 
 export const PopoverWithZoom: Story = {
   args: {
     children: <div>some children zoom</div>,
-    trigger: <div>zoom</div>,
+    // trigger: <div>zoom</div>,
   },
 };
 
 export const PopoverWithCropping: Story = {
   args: {
     children: <div>some children crop</div>,
-    trigger: <div>crop</div>,
+    // trigger: <div>crop</div>,
   },
 };

@@ -1,34 +1,45 @@
-.button, .buttonPlus {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 36px;
-    height: 36px;
-    padding: 0;
-
-    border-radius: 2px;
-}
-
 .button {
-    background-color: rgb(23 23 23 / 80%);
-
+  background-color: rgb(23 23 23 / 80%);
 }
 
-.button:hover, .buttonPlus:hover {
-    cursor: pointer;
+.button,
+.buttonPlus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+  padding: 0;
+
+  border-radius: 2px;
+}
+
+.button:hover,
+.buttonPlus:hover {
+  cursor: pointer;
 }
 
 .svg {
-    & * {
+  & * {
     transition: fill 0.2s;
-    }
+  }
 }
 
- .button:active, .button:hover, .buttonPlus:hover {
-    .svg {
-        & * {
-          fill: var(--color-accent-500);
-        }
+.button:active,
+.button:hover,
+.buttonPlus:hover {
+  color: var(--color-accent-500);
+
+  .svg {
+    & * {
+      //   fill: var(--color-accent-500);
     }
+  }
+}
+
+.button:disabled,
+.buttonPlus:disabled {
+  pointer-events: none;
+  color: var(--color-light-900);
 }

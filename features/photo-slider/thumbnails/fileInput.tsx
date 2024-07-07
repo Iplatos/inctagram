@@ -5,10 +5,11 @@ import AddImage from 'assets/icons/plus-circle-outline.svg';
 import { TriggerButton } from '../trigger-button/trigger-button';
 
 type FileInputPropsType = {
+  disabled?: boolean;
   onImageSelected: (res: string) => void;
 };
 
-export const FileInput: FC<FileInputPropsType> = ({ onImageSelected }) => {
+export const FileInput: FC<FileInputPropsType> = ({ disabled, onImageSelected }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -32,15 +33,14 @@ export const FileInput: FC<FileInputPropsType> = ({ onImageSelected }) => {
     <>
       <input
         accept={'image/*'}
+        disabled={disabled}
         onChange={handleOnChange}
         ref={inputRef}
         style={{ display: 'none' }}
         type={'file'}
       />
 
-      <div onClick={onChooseImage}>
-        <TriggerButton variant={'upload'} />
-      </div>
+      <TriggerButton disabled={disabled} onClick={onChooseImage} variant={'upload'} />
     </>
   );
 };
