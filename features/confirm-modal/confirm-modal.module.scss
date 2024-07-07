@@ -2,9 +2,6 @@
 @use '../../styles/mixins' as *;
 
 .modalContent {
-  display: flex;
-  max-height: 100vh;
-
   .cardRoot {
     @include flex($justify: null, $align: null, $direction: column);
     @include thin-scrollbar;
