@@ -18,8 +18,6 @@ import clsx from 'clsx';
 import s from './add-profile-photo.module.scss';
 
 export const AddProfilePhoto = () => {
-  const { t } = useTranslation();
-
   const { addPhotoButton: tButton, deleteAvatarModal: tModal } = useTranslation().t.editProfile;
 
   const [uploaderOpen, setUploaderOpen] = useState(false);
@@ -41,7 +39,7 @@ export const AddProfilePhoto = () => {
 
     if (!isValidAvatar) {
       console.warn(
-        `Can't specify the MIME type of the loaded file from user device. Loaded image must be of either JPEG of PNG type. When sent to the server, the user's avatar will not be provided with metadata about the image type. Received MIME type: ${mediaType}.`
+        `Can't specify the MIME type of the loaded file from user device. Loaded image must be of either JPEG or PNG type. When sent to the server, the user's avatar will not be provided with metadata about the image type. Received MIME type: ${mediaType}.`
       );
     }
 
@@ -53,8 +51,13 @@ export const AddProfilePhoto = () => {
     uploadAvatar(formData);
   };
 
-  const handleAvatarDelete = () => {
-    deleteAvatar();
+  const handleAvatarDelete = async () => {
+    try {
+      await deleteAvatar().unwrap();
+      setDeleteModalOpen(false);
+    } catch (error) {
+      console.error('Failed to delete avatar:', error);
+    }
   };
 
   // Manual destructuring to prevent unrecognized props from backend such as `updatedAt` from being passed to the internal `img` component.
@@ -67,8 +70,11 @@ export const AddProfilePhoto = () => {
   } = meResponse?.data.avatar ?? {};
 
   const isUploaderDisabled = isUploadingAvatar || isDeletingAvatar || isFetchingMyProfile;
+
   const onCloseModal = () => {
-    setDeleteModalOpen(false);
+    if (!isDeletingAvatar) {
+      setDeleteModalOpen(false);
+    }
   };
 
   return (
@@ -111,8 +117,9 @@ export const AddProfilePhoto = () => {
       />
 
       <ConfirmModal
-        cancelButtonTitle={t.editProfile.deleteAvatarModal.buttons.deny}
-        confirmButtonTitle={t.editProfile.deleteAvatarModal.buttons.confirm}
+        cancelButtonTitle={tModal.buttons.deny}
+        confirmButtonTitle={tModal.buttons.confirm}
+        disabled={isDeletingAvatar}
         headerTitle={tModal.title}
         onCancel={onCloseModal}
         onConfirm={handleAvatarDelete}
