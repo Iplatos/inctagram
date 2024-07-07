@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { DEPRECATED_Modal } from '@/features/DEPRECATED_Modal';
 import { ConfirmModal } from '@/features/confirm-modal';
 import { useLogoutMutation, useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { useLazyGetMeQuery } from '@/shared/api/users-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button, Typography } from '@/shared/ui';
+import { Typography } from '@/shared/ui';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
 import HomeOutline from 'assets/icons/home-outline.svg';
 import LogOutOutline from 'assets/icons/log-out-outline.svg';

@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactNode } from 'react';
+import { MouseEventHandler, PropsWithChildren, ReactNode } from 'react';
 
 import { Replace } from '@/shared/types/helpers';
 import { Button, ButtonVariant } from '@/shared/ui/Button';
@@ -66,7 +66,7 @@ export const ConfirmModal = ({
           {children}
 
           <div className={cls.buttonsGroup}>
-            <Modal.Close asChild>
+            <ControlButtonWrapper open={props.open}>
               <ConfirmButtonComponent
                 className={cls.button}
                 disabled={disabled}
@@ -75,13 +75,13 @@ export const ConfirmModal = ({
               >
                 {confirmButtonTitle}
               </ConfirmButtonComponent>
-            </Modal.Close>
+            </ControlButtonWrapper>
 
-            <Modal.Close asChild>
+            <ControlButtonWrapper open={props.open}>
               <CancelButtonComponent className={cls.button} disabled={disabled} onClick={onCancel}>
                 {cancelButtonTitle}
               </CancelButtonComponent>
-            </Modal.Close>
+            </ControlButtonWrapper>
           </div>
         </ModalCard.Content>
       </ModalCard.Root>
@@ -93,3 +93,7 @@ const getClassNames = (classes: ConfirmModalClasses): ConfirmModalClasses => ({
   button: clsx(s.button, classes.button),
   buttonsGroup: clsx(s.buttonsGroup, classes.buttonsGroup),
 });
+
+const ControlButtonWrapper = ({ children, open }: PropsWithChildren<{ open?: boolean }>) => {
+  return open === undefined ? <Modal.Close asChild>{children}</Modal.Close> : children;
+};
