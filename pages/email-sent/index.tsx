@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { CloseDialog, Modal } from '@/features/modal';
+import { CloseDialog, DEPRECATED_Modal } from '@/features/DEPRECATED_Modal';
 import { Button } from '@/shared/ui/Button';
 import { Typography } from '@/shared/ui/typography';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
@@ -18,7 +18,12 @@ const EmailSent = () => {
   return (
     <>
       <HeadMeta title={'Email Sent'} />
-      <Modal onClose={handleModalClosed} open={open} showCloseButton title={'Email sent'}>
+      <DEPRECATED_Modal
+        onClose={handleModalClosed}
+        open={open}
+        showCloseButton
+        title={'Email sent'}
+      >
         <Typography.Regular16>
           <Trans
             tags={{
@@ -34,7 +39,7 @@ const EmailSent = () => {
             </div>
           </CloseDialog>
         </div>
-      </Modal>
+      </DEPRECATED_Modal>
     </>
   );
 };

@@ -3,10 +3,8 @@ import { useForm } from 'react-hook-form';
 
 import { useLoginMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button } from '@/shared/ui/Button/button';
-import { Card } from '@/shared/ui/Card/Card';
+import { Button, DEPRECATED_Card, Typography } from '@/shared/ui';
 import { ControlledTextField } from '@/shared/ui/controlled';
-import { Typography } from '@/shared/ui/typography';
 import { GitHubGoogleContainer } from '@/widgets/auth/gitHubGoogleContainer/gitHubGoogleContainer';
 import { zodResolver } from '@hookform/resolvers/zod';
 import dynamic from 'next/dynamic';
@@ -64,7 +62,7 @@ export const SignInForm = () => {
   const submitIsDisabled = !isDirty || (!isValid && !!submitCount) || isSubmitting;
 
   return (
-    <Card className={s.signInFormContainer}>
+    <DEPRECATED_Card className={s.signInFormContainer}>
       <Typography.H1>{t.navbar.signIn}</Typography.H1>
       <GitHubGoogleContainer />
 
@@ -104,6 +102,6 @@ export const SignInForm = () => {
           <Link href={'/signUp'}>{t.navbar.signUp}</Link>
         </Button>
       </form>
-    </Card>
+    </DEPRECATED_Card>
   );
 };
