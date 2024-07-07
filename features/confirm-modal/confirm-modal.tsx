@@ -52,9 +52,21 @@ export const ConfirmModal = ({
   ...props
 }: ConfirmModalProps) => {
   const cls = getClassNames(classes);
+  // It is necessary to call the `onCancel` handler inside the callback for `onOpenChange`
+  //  in controlled mode to preserve the ability of `Radix.Modal` to close automatically
+  //  when clicked outside the window, as well as when the `Esc` key is pressed
+  const closeModalOnOpenChange = () => {
+    if (props.open !== undefined) {
+      onCancel?.();
+    }
+  };
 
   return (
-    <Modal.Root classes={{ content: s.modalContent }} {...props}>
+    <Modal.Root
+      classes={{ content: s.modalContent }}
+      onOpenChange={closeModalOnOpenChange}
+      {...props}
+    >
       <ModalCard.Root
         classes={{ cardRoot: s.cardRoot }}
         disabled={disabled}
