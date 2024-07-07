@@ -12,7 +12,7 @@ type CustomButtonRenderProps = {
   children: string;
   className?: string;
   disabled?: boolean;
-  onClick: MouseEventHandler;
+  onClick?: MouseEventHandler;
   variant?: ButtonVariant;
 };
 export type CustomButtonRender = (props: CustomButtonRenderProps) => ReactNode;
@@ -25,8 +25,8 @@ type OwnProps = {
   classes?: ConfirmModalClasses;
 
   confirmButtonTitle?: string;
-  onCancel?: MouseEventHandler;
-  onConfirm?: MouseEventHandler;
+  onCancel?: () => void;
+  onConfirm?: () => void;
   renderCancelButton?: CustomButtonRender;
   renderConfirmButton?: CustomButtonRender;
 };
@@ -34,15 +34,15 @@ type OwnProps = {
 type PickedModalCardProps = Pick<ModalCardProps, 'disabled' | 'headerTitle'>;
 // prettier-ignore
 export type ConfirmModalProps = Replace<
-  Omit<ModalProps & PickedModalCardProps, 'classes' >,
+  Omit<Omit <ModalProps, "onOpenChange" > & PickedModalCardProps, 'classes' >,
   OwnProps
 >;
 
 export const ConfirmModal = ({
-  cancelButtonTitle,
+  cancelButtonTitle = 'No',
   children,
   classes = {},
-  confirmButtonTitle,
+  confirmButtonTitle = 'Yes',
   disabled,
   headerTitle,
   onCancel,
@@ -51,16 +51,6 @@ export const ConfirmModal = ({
   renderConfirmButton: ConfirmButtonComponent = Button,
   ...props
 }: ConfirmModalProps) => {
-  const handleConfirmClick: MouseEventHandler = e => {
-    onConfirm?.(e);
-    props.onOpenChange?.(false);
-  };
-
-  const handleCancelClick: MouseEventHandler = e => {
-    onCancel?.(e);
-    props.onOpenChange?.(false);
-  };
-
   const cls = getClassNames(classes);
 
   return (
@@ -69,7 +59,7 @@ export const ConfirmModal = ({
         classes={{ cardRoot: s.cardRoot }}
         disabled={disabled}
         headerTitle={headerTitle}
-        onClose={() => props.onOpenChange?.(false)}
+        onClose={onCancel}
         style={{ overflow: 'auto' }}
       >
         <ModalCard.Content className={s.cardContent}>
@@ -80,7 +70,7 @@ export const ConfirmModal = ({
               <ConfirmButtonComponent
                 className={cls.button}
                 disabled={disabled}
-                onClick={handleConfirmClick}
+                onClick={onConfirm}
                 variant={'tertiary'}
               >
                 {confirmButtonTitle}
@@ -88,11 +78,7 @@ export const ConfirmModal = ({
             </Modal.Close>
 
             <Modal.Close asChild>
-              <CancelButtonComponent
-                className={cls.button}
-                disabled={disabled}
-                onClick={handleCancelClick}
-              >
+              <CancelButtonComponent className={cls.button} disabled={disabled} onClick={onCancel}>
                 {cancelButtonTitle}
               </CancelButtonComponent>
             </Modal.Close>

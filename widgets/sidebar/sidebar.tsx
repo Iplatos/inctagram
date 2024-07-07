@@ -95,7 +95,6 @@ export const Sidebar = () => {
         headerTitle={t.logOut.logOut}
         onCancel={closeModal}
         onConfirm={handleLogout}
-        onOpenChange={closeModal}
         open={open}
       >
         <Typography.Regular14>

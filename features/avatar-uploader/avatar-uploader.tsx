@@ -116,7 +116,6 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
       headerTitle={t.title}
       onCancel={handleClose}
       onConfirm={saveAvatar}
-      onOpenChange={handleClose}
       open={open}
       renderCancelButton={renderButtons}
       renderConfirmButton={renderButtons}

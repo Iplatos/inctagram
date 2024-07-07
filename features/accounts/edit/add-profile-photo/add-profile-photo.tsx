@@ -116,7 +116,6 @@ export const AddProfilePhoto = () => {
         headerTitle={tModal.title}
         onCancel={onCloseModal}
         onConfirm={handleAvatarDelete}
-        onOpenChange={onCloseModal}
         open={deleteModalOpen}
       >
         <Typography.Regular16>{tModal.message}</Typography.Regular16>
