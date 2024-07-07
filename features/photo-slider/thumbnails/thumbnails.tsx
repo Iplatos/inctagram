@@ -25,9 +25,7 @@ export const Thumbnails = (props: ThumbnailsPropsType) => {
   const onImageSelected = async (selectedImg: string) => {
     await setImage(selectedImg);
     imgArray.push(image);
-    console.log(imgArray);
-
-    // setAddedImages([...addedImages, image]);
+    // console.log(imgArray);
   };
 
   return (

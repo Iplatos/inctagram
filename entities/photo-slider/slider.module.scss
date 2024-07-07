@@ -1,6 +1,9 @@
+@use '../../styles/z-index' as *;
+
 .customControls {
+    @include z-index('slider');
+
     position:absolute;
-    z-index: 1;
     bottom:0;
     left:0;
 
