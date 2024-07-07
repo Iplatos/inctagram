@@ -25,7 +25,7 @@ export const Sidebar = () => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
-  const [logoutTrigger] = useLogoutMutation();
+  const [logoutTrigger, { isLoading: isLogOutLoading }] = useLogoutMutation();
   const { isSuccess: isAuthSuccess } = useRefreshTokenQuery();
   const [getMyProfile, { data: meResponse }] = useLazyGetMeQuery();
 
@@ -35,12 +35,18 @@ export const Sidebar = () => {
     }
   }, [isAuthSuccess, getMyProfile]);
 
-  const handleLogout = () => {
-    setOpen(false);
-    logoutTrigger();
+  const handleLogout = async () => {
+    try {
+      await logoutTrigger();
+      setOpen(false);
+    } catch (error) {
+      console.error('Failed to delete avatar:', error);
+    }
   };
   const closeModal = () => {
-    setOpen(false);
+    if (!isLogOutLoading) {
+      setOpen(false);
+    }
   };
 
   return (
@@ -92,6 +98,7 @@ export const Sidebar = () => {
       <ConfirmModal
         cancelButtonTitle={t.editProfile.deleteAvatarModal.buttons.deny}
         confirmButtonTitle={t.editProfile.deleteAvatarModal.buttons.confirm}
+        disabled={isLogOutLoading}
         headerTitle={t.logOut.logOut}
         onCancel={closeModal}
         onConfirm={handleLogout}
