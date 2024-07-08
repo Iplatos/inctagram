@@ -8,6 +8,7 @@
 .ScrollAreaViewport {
   width: 100%;
   height: 100%;
+  padding-right: 10px;
   border-radius: inherit;
 }
 
@@ -49,10 +50,11 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-60%, -60%);
 
   width: 100%;
-  min-width: 44px;
+  min-width: 10px;
   height: 100%;
   min-height: 44px;
+  margin-left: 10px;
 }
