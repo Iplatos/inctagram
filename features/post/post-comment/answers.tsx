@@ -30,7 +30,8 @@ const Answers = (props: AnswersT) => {
   const setOpenHandler = () => setOpen(!open);
 
   return (
-    answers && (
+    answers &&
+    answers?.length > 0 && (
       <div className={s.answers}>
         <div className={s.btnOpenAnswers}>
           <p></p>
@@ -89,6 +90,7 @@ export const PrivateAnswersPostComment = ({ answers }: PrivateAnswersPostComment
               </IconButton>
             }
             key={index}
+            textWidth={s.answerTextWidth}
             {...answer}
           />
         );
