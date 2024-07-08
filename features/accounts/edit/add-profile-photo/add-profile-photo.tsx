@@ -34,7 +34,7 @@ export const AddProfilePhoto = () => {
   const [deleteAvatar, { isLoading: isDeletingAvatar }] = useDeleteMyAvatarMutation();
   const [uploadAvatar, { isLoading: isUploadingAvatar }] = useSetMyAvatarMutation();
 
-  const handleAvatarUpload: AvatarUploaderProps['onImageSave'] = (
+  const handleAvatarUpload: AvatarUploaderProps['onImageSave'] = async (
     image,
     { mediaType, offsetX, offsetY, scale }
   ) => {
@@ -53,7 +53,7 @@ export const AddProfilePhoto = () => {
     formData.append('scale', scale.toString());
     formData.append('file', image, nanoid() + (isValidAvatar ? `.${subtype}` : ''));
 
-    uploadAvatar(formData);
+    await uploadAvatar(formData);
   };
 
   const handleAvatarDelete = async () => {
@@ -77,8 +77,9 @@ export const AddProfilePhoto = () => {
   const isUploaderDisabled = isUploadingAvatar || isDeletingAvatar || isFetchingMyProfile;
 
   const onCloseModal = () => {
-    if (!isDeletingAvatar) {
+    if (!isUploaderDisabled) {
       setDeleteModalOpen(false);
+      setUploaderOpen(false);
     }
   };
 
@@ -115,8 +116,9 @@ export const AddProfilePhoto = () => {
 
       <AvatarUploader
         avatar={avatarBase64 ?? undefined}
+        disabled={isUploaderDisabled}
         initCropProps={{ offsetX, offsetY, scale }}
-        onClose={() => setUploaderOpen(false)}
+        onClose={onCloseModal}
         onImageSave={handleAvatarUpload}
         open={uploaderOpen}
       />
@@ -124,7 +126,7 @@ export const AddProfilePhoto = () => {
       <ConfirmModal
         cancelButtonTitle={tCommon.modal.buttonNames.cancel}
         confirmButtonTitle={tCommon.modal.buttonNames.confirm}
-        disabled={isDeletingAvatar}
+        disabled={isUploaderDisabled}
         headerTitle={tModal.title}
         onCancel={onCloseModal}
         onConfirm={handleAvatarDelete}
