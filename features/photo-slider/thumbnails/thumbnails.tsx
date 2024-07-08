@@ -22,13 +22,9 @@ type ThumbnailsPropsType = {
 export const Thumbnails = (props: ThumbnailsPropsType) => {
   const { addedImages, boundary, setAddedImages, setImage } = props;
 
-  const imgArray: string[] = [];
-
   const onImageSelected = async (selectedImg: string) => {
     await setImage(selectedImg);
     setAddedImages(prev => [...prev, selectedImg]);
-    // imgArray.push(image);
-    // console.log(imgArray);
   };
 
   return (

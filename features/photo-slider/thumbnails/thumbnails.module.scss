@@ -16,8 +16,13 @@
 }
 
 .scrollContainer {
+  scrollbar-color: var(--color-dark-100) rgb(23 23 23 / 80%);
+  scrollbar-width: thin;
+
   overflow: auto hidden;
   display: flex;
   flex-direction: row;
   gap: 12px;
+
+  max-width: 400px;
 }
