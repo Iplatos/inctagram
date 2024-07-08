@@ -3,6 +3,7 @@ import React, { ReactNode } from 'react';
 import useRelativeTime from '@/shared/hooks/useRelativeTime';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Avatar, Typography } from '@/shared/ui';
+import clsx from 'clsx';
 
 import s from './post-comment.module.scss';
 
@@ -14,6 +15,7 @@ export type PostCommentT = {
   iconElement?: ReactNode;
   likesCount: number;
   text: string;
+  textWidth?: string;
   userName: string;
 };
 
@@ -26,6 +28,7 @@ export const PostComment = (props: PostCommentT) => {
     iconElement,
     likesCount,
     text,
+    textWidth,
     userName,
   } = props;
   const relativeTime = useRelativeTime(createdAt);
@@ -36,7 +39,7 @@ export const PostComment = (props: PostCommentT) => {
       <div className={s.comment}>
         <Avatar size={'small'} src={avatar} />
         <div className={s.body}>
-          <Typography.Regular14 className={s.body__text}>
+          <Typography.Regular14 className={clsx(s.body__text, textWidth)}>
             <Typography.Bold14>{userName}</Typography.Bold14>
             {' ' + text}
           </Typography.Regular14>
