@@ -18,6 +18,7 @@ import { useAvatarUploader } from './useAvatarUploader';
 // TODO: add missing common components to index file in shared/ui
 export type AvatarUploaderProps = {
   avatar?: File | string;
+  disabled: boolean;
   initCropProps?: CropProps;
   onClose: () => void;
   onImageSave: (image: Blob, cropProps: CropProps & { mediaType: string }) => void;
@@ -26,6 +27,7 @@ export type AvatarUploaderProps = {
 
 export const AvatarUploader: FC<AvatarUploaderProps> = ({
   avatar,
+  disabled,
   initCropProps,
   onClose,
   onImageSave,
@@ -48,12 +50,17 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
   const changeImageScale = (e: React.WheelEvent<HTMLDivElement>) => {
     const offset = e.deltaY > 0 ? -0.1 : 0.1;
 
+    if (disabled) {
+      return;
+    }
     dispatch(scaleChanged(offset));
   };
 
   const handleClose = () => {
-    dispatch(editorClosed());
-    onClose();
+    if (!disabled) {
+      dispatch(editorClosed());
+      onClose();
+    }
   };
 
   const uploadFromDevice = (e: ChangeEvent<HTMLInputElement>) => {
@@ -77,7 +84,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
     }
   };
 
-  const saveAvatar = () => {
+  const saveAvatar = async () => {
     const editor = editorRef.current;
 
     if (!editor) {
@@ -92,7 +99,8 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
     };
 
     if (state.preview) {
-      onImageSave(state.preview, { ...cropProps, mediaType: state.preview.type });
+      await onImageSave(state.preview, { ...cropProps, mediaType: state.preview.type });
+
       handleClose();
 
       return;
@@ -100,7 +108,8 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
     if (avatar) {
       const file = typeof avatar === 'string' ? dataURLToBlob(avatar) : avatar;
 
-      onImageSave(file, { ...cropProps, mediaType: file.type });
+      await onImageSave(file, { ...cropProps, mediaType: file.type });
+
       handleClose();
     }
   };
@@ -110,6 +119,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
   return (
     <ConfirmModal
       classes={{ button: s.button, buttonsGroup: s.buttonsGroup }}
+      disabled={disabled}
       headerTitle={t.title}
       onCancel={handleClose}
       onConfirm={saveAvatar}
@@ -122,6 +132,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
         >
           <input
             accept={'image/png, image/jpeg'}
+            disabled={disabled}
             onChange={uploadFromDevice}
             style={{ display: 'none' }}
             type={'file'}
@@ -159,7 +170,11 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
               color={[23, 23, 23, 0.75]} // --color-dark-500 with transparency
               image={previewOrAvatar}
               onImageReady={initEditorPosition}
-              onPositionChange={pos => dispatch(editorPositionChanged(pos))}
+              onPositionChange={pos => {
+                if (!disabled) {
+                  dispatch(editorPositionChanged(pos));
+                }
+              }}
               position={state.editorPosition}
               ref={editorRef}
               scale={state.scale}
