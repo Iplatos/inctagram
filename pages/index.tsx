@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
+import { Crop } from '@/entities/photo-slider/crop/crop';
+import { Popover } from '@/entities/photo-slider/popover';
+import { TriggerButton } from '@/entities/photo-slider/trigger-button/trigger-button';
+import { Zoom } from '@/entities/photo-slider/zoom/zoom';
 import { DEPRECATED_Modal, PhotoSlider, Thumbnails } from '@/features';
-import { Crop } from '@/features/photo-slider/crop/crop';
-import { Popover } from '@/features/photo-slider/popover';
-import { TriggerButton } from '@/features/photo-slider/trigger-button/trigger-button';
-import { Zoom } from '@/features/photo-slider/zoom/zoom';
 import { useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { Button } from '@/shared/ui';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';

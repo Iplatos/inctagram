@@ -1,12 +1,9 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 
 import { Typography } from '@/shared/ui';
-import { CropProps } from '@/shared/ui/croppedImage';
-import * as Popover from '@radix-ui/react-popover';
 
 import style from './crop.module.scss';
 
-import SquareSvg from '../../../assets/icons/aspect-ratio-square.svg';
 import OriginalSvg from '../../../assets/icons/uploadImg.svg';
 import { PopoverContent, PopoverRoot, PopoverTrigger } from '../popover';
 import { TriggerButton } from '../trigger-button/trigger-button';

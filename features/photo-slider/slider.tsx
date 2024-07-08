@@ -1,13 +1,10 @@
-import { ChangeEvent, ElementRef, useRef, useState } from 'react';
+import { ElementRef, useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 
-import { Thumbnails } from '@/features';
-import { Crop } from '@/features/photo-slider/crop/crop';
-import { Popover, PopoverContent, PopoverTrigger } from '@/features/photo-slider/popover';
-import { ImageCropper } from '@/features/photo-slider/thumbnails/imageCropper';
-import { Zoom } from '@/features/photo-slider/zoom/zoom';
-import { CroppedImage } from '@/shared/ui/croppedImage';
-import { original } from '@reduxjs/toolkit';
+import { Crop } from '@/entities/photo-slider/crop/crop';
+import { Thumbnails } from '@/entities/photo-slider/thumbnails';
+import { ImageCropper } from '@/entities/photo-slider/thumbnails/imageCropper';
+import { Zoom } from '@/entities/photo-slider/zoom/zoom';
 
 import 'react-image-gallery/styles/scss/image-gallery.scss';
 
@@ -15,15 +12,6 @@ import style from './slider.module.scss';
 
 import { LeftNav } from './controls/leftNav';
 import { RightNav } from './controls/rightNav';
-
-const images = [
-  'https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'https://images.pexels.com/photos/707344/pexels-photo-707344.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'https://images.pexels.com/photos/446462/pexels-photo-446462.jpeg?auto=compress&cs=tinysrgb&w=800',
-];
-//images - array of objects
-
-//onSlide: Function, callback(currentIndex) get curr index and setState(currentIndex)
 
 export const PhotoSlider = () => {
   const refGallery = useRef<ElementRef<'div'>>(null);
