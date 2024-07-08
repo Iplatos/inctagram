@@ -5,7 +5,7 @@ import { Typography } from '@/shared/ui';
 import style from './crop.module.scss';
 
 import OriginalSvg from '../../../assets/icons/uploadImg.svg';
-import { PopoverContent, PopoverRoot, PopoverTrigger } from '../popover';
+import { PopoverContent, PopoverRoot, PopoverTrigger } from '../popover-root';
 import { TriggerButton } from '../trigger-button/trigger-button';
 
 type CropPropsType = {

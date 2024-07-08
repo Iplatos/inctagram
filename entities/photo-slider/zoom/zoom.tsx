@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Slider } from '@/shared/ui/slider/slider';
 
-import { PopoverContent, PopoverRoot, PopoverTrigger } from '../popover';
+import { PopoverContent, PopoverRoot, PopoverTrigger } from '../popover-root';
 import { TriggerButton } from '../trigger-button/trigger-button';
 
 export const Zoom = () => {

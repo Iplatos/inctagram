@@ -1,9 +1,7 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 import Cropper from 'react-easy-crop';
 
-import clsx from 'clsx';
-
-import style from './imageCropper.module.scss';
+import style from './image-cropper.module.scss';
 
 export const ImageCropper = (props: any) => {
   const { aspectRatio, image, onCropCancel, onCropDone, setDefaultAspectRatio } = props;
@@ -39,9 +37,6 @@ export const ImageCropper = (props: any) => {
             width: '490px',
             // width: '100%',
           },
-          // cropAreaStyle: {
-          //   width: '490px',
-          // },
         }}
         zoom={zoom}
       />

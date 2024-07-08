@@ -2,8 +2,8 @@ import { ElementRef, useRef, useState } from 'react';
 import ImageGallery from 'react-image-gallery';
 
 import { Crop } from '@/entities/photo-slider/crop/crop';
+import { ImageCropper } from '@/entities/photo-slider/image-cropper/image-cropper';
 import { Thumbnails } from '@/entities/photo-slider/thumbnails';
-import { ImageCropper } from '@/entities/photo-slider/thumbnails/imageCropper';
 import { Zoom } from '@/entities/photo-slider/zoom/zoom';
 
 import 'react-image-gallery/styles/scss/image-gallery.scss';

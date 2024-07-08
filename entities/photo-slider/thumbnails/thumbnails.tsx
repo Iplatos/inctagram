@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 import style from './thumbnails.module.scss';
 
-import { PopoverContent, PopoverRoot, PopoverTrigger } from '../popover';
+import { PopoverContent, PopoverRoot, PopoverTrigger } from '../popover-root';
 import { ThumbnailImage } from '../thumbnail-image';
 import { TriggerButton } from '../trigger-button/trigger-button';
 import { FileInput } from './fileInput';
