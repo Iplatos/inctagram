@@ -56,13 +56,6 @@ const CustomRender: FC<CustomRenderProps> = ({ specifiedImage }) => {
 
   return (
     <>
-      <style>
-        {`
-        .container { display: flex; flex-direction: column; align-items: center; gap: 1rem; width: fit-content; }
-        .avatar { width: 10rem; height: 10rem; }
-        .button { width: 7rem; }
-        `}
-      </style>
       <div className={'container'}>
         <Avatar classes={{ avatarRoot: 'avatar' }} src={avatarBase64} {...cropProps} />
         <Button className={'button'} onClick={() => setOpen(true)}>
@@ -91,6 +84,20 @@ const meta = {
     },
   },
   component: CustomRender,
+  decorators: [
+    Story => (
+      <>
+        <style>
+          {`
+          .container { display: flex; flex-direction: column; align-items: center; gap: 1rem; width: fit-content; }
+          .avatar { width: 10rem; height: 10rem; }
+          .button { width: 7rem; }
+          `}
+        </style>
+        <Story />
+      </>
+    ),
+  ],
   tags: ['autodocs'],
   title: 'UI/AvatarUploader',
 } satisfies Meta<CustomRenderProps>;
