@@ -237,6 +237,15 @@ export const en: LocaleType = {
       title: 'Delete Photo',
     },
 
+    photoSlider: {
+      deletePhoto: {
+        cancelButtonTitle: 'Cancel',
+        confirmButtonTitle: 'Delete',
+        headerTitle: 'Delete photo?',
+        message: 'The photo will be removed from your publication.',
+      },
+    },
+
     profileForm: {
       aboutMe: {
         label: 'About Me',

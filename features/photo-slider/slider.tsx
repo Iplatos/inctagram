@@ -62,9 +62,9 @@ export const PhotoSlider = () => {
     };
   };
 
-  const onCropCancel = () => {
-    setImage('');
-  };
+  // const onCropCancel = () => {
+  //   setImage('');
+  // };
 
   const renderCustomControls = () => (
     <div className={style.customControls}>
