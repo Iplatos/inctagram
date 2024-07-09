@@ -9,6 +9,7 @@ import { CropProps } from '@/shared/ui/croppedImage';
 import { Typography } from '@/shared/ui/typography';
 import { Trans } from '@/widgets/Trans/Trans';
 import { AvatarFallback } from 'assets/icons/avatar-fallback';
+import clsx from 'clsx';
 
 import s from './avatar-uploader.module.scss';
 
@@ -18,9 +19,13 @@ import { useAvatarUploader } from './useAvatarUploader';
 // TODO: add missing common components to index file in shared/ui
 export type AvatarUploaderProps = {
   avatar?: File | string;
-  disabled: boolean;
+  disabled?: boolean;
   initCropProps?: CropProps;
-  onClose: () => void;
+  /**
+   * `onClose` callback should return `true` if you want the loader to reset its state when closed.
+   * In particular, this means resetting the preview loaded from the device along with the error message.
+   * */
+  onClose: () => boolean | void;
   onImageSave: (image: Blob, cropProps: CropProps & { mediaType: string }) => void;
   open: boolean;
 };
@@ -50,16 +55,14 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
   const changeImageScale = (e: React.WheelEvent<HTMLDivElement>) => {
     const offset = e.deltaY > 0 ? -0.1 : 0.1;
 
-    if (disabled) {
-      return;
-    }
     dispatch(scaleChanged(offset));
   };
 
   const handleClose = () => {
-    if (!disabled) {
+    const shouldResetState = onClose();
+
+    if (shouldResetState === true) {
       dispatch(editorClosed());
-      onClose();
     }
   };
 
@@ -84,7 +87,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
     }
   };
 
-  const saveAvatar = async () => {
+  const saveAvatar = () => {
     const editor = editorRef.current;
 
     if (!editor) {
@@ -99,18 +102,14 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
     };
 
     if (state.preview) {
-      await onImageSave(state.preview, { ...cropProps, mediaType: state.preview.type });
-
-      handleClose();
+      onImageSave(state.preview, { ...cropProps, mediaType: state.preview.type });
 
       return;
     }
     if (avatar) {
       const file = typeof avatar === 'string' ? dataURLToBlob(avatar) : avatar;
 
-      await onImageSave(file, { ...cropProps, mediaType: file.type });
-
-      handleClose();
+      onImageSave(file, { ...cropProps, mediaType: file.type });
     }
   };
 
@@ -159,9 +158,11 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
             </Typography.Regular14>
           </Alert>
         )}
-
         {previewOrAvatar ? (
-          <div className={s.canvasWrapper} onWheel={changeImageScale}>
+          <div
+            className={clsx(s.canvasWrapper, disabled && s.canvasWrapperDisabled)}
+            onWheel={changeImageScale}
+          >
             <div className={s.canvasBackground} />
             <AvatarEditor
               border={12}

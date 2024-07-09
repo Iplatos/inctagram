@@ -53,7 +53,12 @@ export const AddProfilePhoto = () => {
     formData.append('scale', scale.toString());
     formData.append('file', image, nanoid() + (isValidAvatar ? `.${subtype}` : ''));
 
-    await uploadAvatar(formData);
+    try {
+      await uploadAvatar(formData).unwrap();
+      setUploaderOpen(false);
+    } catch (error) {
+      console.error('Failed to upload avatar:', error);
+    }
   };
 
   const handleAvatarDelete = async () => {
@@ -76,10 +81,20 @@ export const AddProfilePhoto = () => {
 
   const isUploaderDisabled = isUploadingAvatar || isDeletingAvatar || isFetchingMyProfile;
 
-  const onCloseModal = () => {
-    if (!isUploaderDisabled) {
-      setDeleteModalOpen(false);
+  const handleUploaderModalClose = () => {
+    const shouldCloseAndResetModal = !isUploaderDisabled;
+
+    if (shouldCloseAndResetModal) {
       setUploaderOpen(false);
+    }
+
+    // Returns `true` when the uploader unlocks, to explicitly tell it to clear its state when it closes.
+    return shouldCloseAndResetModal;
+  };
+
+  const handleDeleteModalClose = () => {
+    if (!isDeletingAvatar) {
+      setDeleteModalOpen(false);
     }
   };
 
@@ -118,7 +133,7 @@ export const AddProfilePhoto = () => {
         avatar={avatarBase64 ?? undefined}
         disabled={isUploaderDisabled}
         initCropProps={{ offsetX, offsetY, scale }}
-        onClose={onCloseModal}
+        onClose={handleUploaderModalClose}
         onImageSave={handleAvatarUpload}
         open={uploaderOpen}
       />
@@ -128,7 +143,7 @@ export const AddProfilePhoto = () => {
         confirmButtonTitle={tCommon.modal.buttonNames.confirm}
         disabled={isUploaderDisabled}
         headerTitle={tModal.title}
-        onCancel={onCloseModal}
+        onCancel={handleDeleteModalClose}
         onConfirm={handleAvatarDelete}
         open={deleteModalOpen}
       >

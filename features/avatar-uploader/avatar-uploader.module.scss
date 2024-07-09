@@ -15,9 +15,22 @@ $canvas-width: 330px;
   }
 }
 
+.canvas {
+  position: relative;
+  display: block;
+}
+
 .canvasWrapper {
   position: relative;
   width: 100%;
+
+  &Disabled {
+    pointer-events: none;
+
+    & .canvas {
+      filter: grayscale(100%);
+    }
+  }
 }
 
 .canvasBackground {
@@ -38,11 +51,6 @@ $canvas-width: 330px;
   background-image: repeating-linear-gradient($gradient-value),
     repeating-linear-gradient(90deg, $gradient-value);
   background-blend-mode: difference;
-}
-
-.canvas {
-  position: relative;
-  display: block;
 }
 
 .placeholder {
