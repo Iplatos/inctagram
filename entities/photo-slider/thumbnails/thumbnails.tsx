@@ -64,9 +64,8 @@ export const Thumbnails = (props: ThumbnailsPropsType) => {
                   return <ThumbnailImage key={index} onRemoveImage={handleRemoveImage} src={img} />;
                 })
               : null}
+            <FileInput disabled={addedImages.length === 10} onImageSelected={onImageSelected} />
           </div>
-
-          <FileInput disabled={addedImages.length === 10} onImageSelected={onImageSelected} />
         </PopoverContent>
       </PopoverRoot>
 

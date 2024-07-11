@@ -32,6 +32,8 @@ export const PhotoSlider = () => {
 
   const [imgAfterCrop, setImgAfterCrop] = useState<string>('');
 
+  const [zoom, setZoom] = useState<number>(1);
+
   const onCropDone = (imgCroppedArea: any) => {
     const canvasElem = document.createElement('canvas');
 
@@ -70,7 +72,7 @@ export const PhotoSlider = () => {
     <div className={style.customControls}>
       <div className={style.customControls__inner}>
         <Crop onAspectRatioChange={onAspectRatioChange} />
-        <Zoom />
+        <Zoom setZoom={setZoom} zoom={zoom} />
       </div>
       <Thumbnails
         addedImages={addedImages}
@@ -83,15 +85,17 @@ export const PhotoSlider = () => {
   );
 
   return (
-    <div ref={refGallery} style={{ width: 490 }}>
+    <div ref={refGallery} style={{ width: '490px' }}>
       <ImageGallery
-        items={addedImages.map(i => ({ original: i, originalHeight: 490 }))}
+        items={addedImages.map(i => ({ original: i }))}
         renderCustomControls={renderCustomControls}
-        renderItem={({ original, originalHeight, originalWidth }) => (
+        renderItem={({ original }) => (
           <ImageCropper
             aspectRatio={aspectRatio}
             image={original}
             setDefaultAspectRatio={setDefaultAspectRatio}
+            setZoom={setZoom}
+            zoom={zoom}
           />
         )}
         renderLeftNav={(onClick, disabled) => <LeftNav disabled={disabled} onClick={onClick} />}

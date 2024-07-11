@@ -27,8 +27,6 @@ function Home() {
       <style>{`
       .modalContainer {
         width: fit-content; !important;
-        /* width: 490px; */
-        /* height: 503px;  */
       }
     `}</style>
       <HeadMeta title={'main'} />
