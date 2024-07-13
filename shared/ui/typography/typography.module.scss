@@ -39,6 +39,10 @@
     @include typography(var(--font-size-s), var(--line-height-m), var(--font-weight-medium));
   }
   
+.medium16 {
+  @include typography(var(--font-size-m), var(--line-height-m), var(--font-weight-medium));
+}
+  
   .bold14 {
     @include typography(var(--font-size-s), var(--line-height-m), var(--font-weight-bold));
   }

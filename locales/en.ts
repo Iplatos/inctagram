@@ -311,6 +311,25 @@ export const en: LocaleType = {
   },
 
   post: {
+    card: {
+      addNewComment: {
+        error: 'Maximum number of characters is 150',
+        placeholder: 'Add a Сomment...',
+        submit: 'Publish',
+      },
+      header: {
+        buttons: {
+          copyLink: 'Copy Link',
+          deletePost: 'Delete Post',
+          editPost: 'Edit Post',
+          follow: 'Follow',
+          unfollow: 'Unfollow',
+        },
+      },
+      info: {
+        likes: 'Like',
+      },
+    },
     comment: {
       answer: 'Answer',
       like: 'Like',

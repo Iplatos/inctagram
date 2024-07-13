@@ -1,0 +1,85 @@
+@use '../../../styles/mixins' as *;
+@use '../../../styles/helpers' as *;
+
+.root {
+  width: rem(962);
+  height: rem(562);
+}
+
+.content {
+  display: flex;
+  width: rem(961);
+  height: rem(560);
+  padding: 0;
+}
+
+.header {
+  padding: 0;
+}
+
+.gallery {
+  width: 50%;
+  height: 100%;
+  padding: 0;
+  background-color: red;
+}
+
+.postDetails {
+  display: flex;
+  flex-direction: column;
+
+  width: 50%;
+  height: 100%;
+  padding: 0;
+
+  &__comments {
+    position: relative;
+
+    overflow-y: auto;
+
+    height: 100%;
+    min-height: rem(328);
+    max-height: rem(410);
+    padding-top: rem(6);
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      margin: rem(5);
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--color-light-900);
+      border-radius: 3px;
+    }
+  }
+
+  &__infoSection{
+    padding-bottom: rem(7);
+  }
+
+  &__addNewCommentForm{
+    min-height: rem(58);
+
+    input {
+      height: rem(30);
+    }
+
+    button {
+      height: rem(30);
+    }
+  }
+
+}
+
+.addNewCommentForm {
+  display: flex;
+}
+
+
+
+
+
