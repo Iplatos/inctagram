@@ -7,16 +7,16 @@ import { Button, IconButton, Typography } from '@/shared/ui';
 
 import s from '@/features/post/post-comment/post-comment.module.scss';
 
-import { PrivateAnswerT, PrivateAnswersPostComment } from './answers';
-import { PostComment, PostCommentT } from './post-comment';
+import { PrivateAnswerProps, PrivateAnswersPostComment } from './answers';
+import { PostComment, PostCommentProps } from './post-comment';
 
-export type PrivatePostCommentT = {
-  answers?: [] | PrivateAnswerT[];
+export type PrivatePostCommentProps = {
+  answers?: [] | PrivateAnswerProps[];
   isLiked: boolean;
   // toggleIsLiked: (isLiked: boolean) => void;
-} & PostCommentT;
+} & PostCommentProps;
 
-export const PrivatePostComment = (props: PrivatePostCommentT) => {
+export const PrivatePostComment = (props: PrivatePostCommentProps) => {
   const { answers, isLiked, ...res } = props;
   const { t } = useTranslation();
 

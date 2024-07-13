@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { AnswerT, PublicPostAnswer } from './answers';
-import { PostComment, PostCommentT } from './post-comment';
+import { AnswerProps, PublicPostAnswer } from './answers';
+import { PostComment, PostCommentProps } from './post-comment';
 
-export type PublicPostCommentT = {
-  answers?: [] | AnswerT[];
-} & PostCommentT;
+export type PublicPostCommentProps = {
+  answers?: [] | AnswerProps[];
+} & PostCommentProps;
 
-export const PublicPostComment = (props: PublicPostCommentT) => {
+export const PublicPostComment = (props: PublicPostCommentProps) => {
   const { answers, ...res } = props;
 
   return (

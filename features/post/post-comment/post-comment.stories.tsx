@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Meta, StoryObj } from '@storybook/react';
 
-import { PostComment, PostCommentT } from './post-comment';
-import { PrivatePostComment, PrivatePostCommentT } from './privat-post-comment';
-import { PublicPostComment, PublicPostCommentT } from './public-post-comment';
+import { PostComment, PostCommentProps } from './post-comment';
+import { PrivatePostComment, PrivatePostCommentProps } from './privat-post-comment';
+import { PublicPostComment, PublicPostCommentProps } from './public-post-comment';
 
 const meta = {
   component: PostComment,
@@ -17,7 +17,7 @@ export default meta;
 // @ts-ignore
 type Story<T> = StoryObj<typeof meta, T>;
 
-const samplePostCommentData: PostCommentT = {
+const samplePostCommentData: PostCommentProps = {
   avatar: 'https://via.placeholder.com/150',
   createdAt: '2024-07-01T11:39:03.738Z',
   likesCount: 2,
@@ -25,7 +25,7 @@ const samplePostCommentData: PostCommentT = {
   userName: 'John Doe',
 };
 
-const samplePrivatePostCommentData: PrivatePostCommentT = {
+const samplePrivatePostCommentData: PrivatePostCommentProps = {
   avatar: 'https://via.placeholder.com/150',
   createdAt: '2024-07-01T11:39:03.738Z',
   isLiked: true,
@@ -45,24 +45,24 @@ const samplePrivatePostCommentData: PrivatePostCommentT = {
 // };
 // Enable errors time
 
-export const Public: Story<PublicPostCommentT> = {
+export const Public: Story<PublicPostCommentProps> = {
   args: {
     ...samplePostCommentData,
     answers: [samplePostCommentData, samplePostCommentData],
   },
 
-  render: function Render(args: PublicPostCommentT) {
+  render: function Render(args: PublicPostCommentProps) {
     return <PublicPostComment {...args} />;
   },
 };
 
-export const Private: Story<PrivatePostCommentT> = {
+export const Private: Story<PrivatePostCommentProps> = {
   args: {
     ...samplePrivatePostCommentData,
     answers: [samplePrivatePostCommentData, samplePrivatePostCommentData],
   },
 
-  render: function Render(args: PrivatePostCommentT) {
+  render: function Render(args: PrivatePostCommentProps) {
     return <PrivatePostComment {...args} />;
   },
 };
