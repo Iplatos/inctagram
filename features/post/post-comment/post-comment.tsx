@@ -34,10 +34,17 @@ export const PostComment = (props: PostCommentT) => {
   const relativeTime = useRelativeTime(createdAt);
   const { t } = useTranslation();
 
+  const getInitials = (userName: string): string => {
+    const words = userName.split(' ');
+    const initials = words.map(word => word.charAt(0).toUpperCase());
+
+    return initials.join('');
+  };
+
   return (
     <div className={s.root}>
       <div className={s.comment}>
-        <Avatar size={'small'} src={avatar} />
+        <Avatar fallback={getInitials(userName)} size={'small'} src={avatar} />
         <div className={s.body}>
           <Typography.Regular14 className={clsx(s.body__text, textWidth)}>
             <Typography.Bold14>{userName}</Typography.Bold14>
