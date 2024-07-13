@@ -9,7 +9,7 @@ import s from './post-comment.module.scss';
 
 import { PostComment } from './post-comment';
 
-export type AnswerT = {
+export type AnswerProps = {
   avatar?: string;
   createdAt: string;
   likesCount: number;
@@ -17,12 +17,12 @@ export type AnswerT = {
   userName: string;
 };
 
-type AnswersT = {
-  answers?: [] | AnswerT[];
+type AnswersProps = {
+  answers?: [] | AnswerProps[];
   children?: ReactNode;
 };
 
-const Answers = (props: AnswersT) => {
+const Answers = (props: AnswersProps) => {
   const { answers, children } = props;
   const { t } = useTranslation();
 
@@ -47,9 +47,9 @@ const Answers = (props: AnswersT) => {
   );
 };
 
-type PublicPostAnswerT = {} & AnswersT;
+type PublicPostAnswerProps = {} & AnswersProps;
 
-export const PublicPostAnswer = (props: PublicPostAnswerT) => {
+export const PublicPostAnswer = (props: PublicPostAnswerProps) => {
   const { answers } = props;
 
   return (
@@ -61,17 +61,17 @@ export const PublicPostAnswer = (props: PublicPostAnswerT) => {
   );
 };
 
-export type PrivateAnswerT = {
+export type PrivateAnswerProps = {
   isLiked: boolean;
   likesCount: number;
-} & AnswerT;
+} & AnswerProps;
 
-type PrivateAnswersPostCommentT = {
-  answers?: [] | PrivateAnswerT[];
+type PrivateAnswersPostCommentProps = {
+  answers?: [] | PrivateAnswerProps[];
   //toggleIsLiked: (isLiked: boolean) => void;
 };
 
-export const PrivateAnswersPostComment = ({ answers }: PrivateAnswersPostCommentT) => {
+export const PrivateAnswersPostComment = ({ answers }: PrivateAnswersPostCommentProps) => {
   const { t } = useTranslation();
 
   return (

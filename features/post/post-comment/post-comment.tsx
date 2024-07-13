@@ -7,7 +7,7 @@ import clsx from 'clsx';
 
 import s from './post-comment.module.scss';
 
-export type PostCommentT = {
+export type PostCommentProps = {
   avatar?: string;
   children?: ReactNode;
   childrenInfoSection?: ReactNode;
@@ -19,7 +19,7 @@ export type PostCommentT = {
   userName: string;
 };
 
-export const PostComment = (props: PostCommentT) => {
+export const PostComment = (props: PostCommentProps) => {
   const {
     avatar,
     children,
