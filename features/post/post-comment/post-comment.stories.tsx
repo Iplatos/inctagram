@@ -3,7 +3,7 @@ import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { PostComment, PostCommentProps } from './post-comment';
-import { PrivatePostComment, PrivatePostCommentProps } from './privat-post-comment';
+import { PrivatePostComment, PrivatePostCommentProps } from './private-post-comment';
 import { PublicPostComment, PublicPostCommentProps } from './public-post-comment';
 
 const meta = {
@@ -34,17 +34,6 @@ const samplePrivatePostCommentData: PrivatePostCommentProps = {
   userName: 'Jane Smith',
 };
 
-// export const PostCommentDefault: Story<PostCommentT> = {
-//   arg: {
-//     ...samplePostCommentData,
-//   },
-//
-//   render: function Render(arg: PostCommentT) {
-//     return <PostComment {...arg} />;
-//   },
-// };
-// Enable errors time
-
 export const Public: Story<PublicPostCommentProps> = {
   args: {
     ...samplePostCommentData,
@@ -56,10 +45,30 @@ export const Public: Story<PublicPostCommentProps> = {
   },
 };
 
+export const PublicWithNoAnswers: Story<PublicPostCommentProps> = {
+  args: {
+    ...samplePostCommentData,
+  },
+
+  render: function Render(args: PublicPostCommentProps) {
+    return <PublicPostComment {...args} />;
+  },
+};
+
 export const Private: Story<PrivatePostCommentProps> = {
   args: {
     ...samplePrivatePostCommentData,
     answers: [samplePrivatePostCommentData, samplePrivatePostCommentData],
+  },
+
+  render: function Render(args: PrivatePostCommentProps) {
+    return <PrivatePostComment {...args} />;
+  },
+};
+
+export const PrivateWithNoAnswers: Story<PrivatePostCommentProps> = {
+  args: {
+    ...samplePrivatePostCommentData,
   },
 
   render: function Render(args: PrivatePostCommentProps) {

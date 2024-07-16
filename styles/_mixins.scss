@@ -36,3 +36,16 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+@mixin hover{
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+  @media (hover: none) {
+    &:active {
+      @content;
+    }
+  }
+}

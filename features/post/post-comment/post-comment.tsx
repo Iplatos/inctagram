@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 
 import useRelativeTime from '@/shared/hooks/useRelativeTime';
 import { useTranslation } from '@/shared/hooks/useTranslation';
@@ -7,13 +7,23 @@ import clsx from 'clsx';
 
 import s from './post-comment.module.scss';
 
+export type CommentSlot =
+  | 'answerSection'
+  | 'bottomSection'
+  | 'commentRoot'
+  | 'primaryAction'
+  | 'sectionComment';
+export type CommentClasses = { [P in CommentSlot]?: string };
+
 export type PostCommentProps = {
+  answersCount?: number;
+  answersSection?: ReactNode;
   avatar?: string;
-  children?: ReactNode;
-  childrenInfoSection?: ReactNode;
+  bottomSection?: ReactNode;
+  classes?: CommentClasses;
   createdAt: string;
-  iconElement?: ReactNode;
   likesCount: number;
+  primaryAction?: ReactNode;
   text: string;
   textWidth?: string;
   userName: string;
@@ -21,14 +31,15 @@ export type PostCommentProps = {
 
 export const PostComment = (props: PostCommentProps) => {
   const {
+    answersCount,
+    answersSection,
     avatar,
-    children,
-    childrenInfoSection,
+    bottomSection,
+    classes = {},
     createdAt,
-    iconElement,
     likesCount,
+    primaryAction,
     text,
-    textWidth,
     userName,
   } = props;
   const relativeTime = useRelativeTime(createdAt);
@@ -41,28 +52,62 @@ export const PostComment = (props: PostCommentProps) => {
     return initials.join('');
   };
 
+  const cls = getClassNames(classes);
+
+  const [open, setOpen] = useState<boolean>(false);
+  const setOpenHandler = () => setOpen(!open);
+
   return (
-    <div className={s.root}>
-      <div className={s.comment}>
-        <Avatar fallback={getInitials(userName)} size={'small'} src={avatar} />
-        <div className={s.body}>
-          <Typography.Regular14 className={clsx(s.body__text, textWidth)}>
+    <div className={cls.commentRoot}>
+      <div className={cls.sectionComment}>
+        <Avatar
+          classes={{ avatarRoot: s.commentAvatar }}
+          fallback={getInitials(userName)}
+          size={'small'}
+          src={avatar}
+        />
+        <div className={s.commentBody}>
+          <div className={s.commentBodyText}>
             <Typography.Bold14>{userName}</Typography.Bold14>
-            {' ' + text}
-          </Typography.Regular14>
-          <div className={s.body__info}>
+            <Typography.Regular14>{' ' + text}</Typography.Regular14>
+          </div>
+          <div className={s.commentBodyInfo}>
             <Typography.SmallText>{relativeTime}</Typography.SmallText>
             {likesCount > 0 && (
               <Typography.Semibold12>
                 {`${likesCount > 1 ? t.post.comment.likes : t.post.comment.like}: ${likesCount}`}
               </Typography.Semibold12>
             )}
-            {childrenInfoSection}
+            <div className={cls.bottomSection}>{bottomSection}</div>
           </div>
         </div>
-        {iconElement}
+        <div className={cls.primaryAction}>{primaryAction}</div>
       </div>
-      <div>{children}</div>
+      {answersSection && (
+        <div className={cls.answerSection}>
+          <div className={s.btnOpenAnswers}>
+            <p></p>
+            <Typography.Semibold12 className={s.btnOpenAnswersTitle} onClick={setOpenHandler}>
+              {`${
+                open ? t.post.comment.viewAnswersBth.close : t.post.comment.viewAnswersBth.open
+              } (${answersCount ?? 0})`}
+            </Typography.Semibold12>
+          </div>
+          <div className={s.answerList}>{open && answersSection}</div>
+        </div>
+      )}
     </div>
   );
 };
+
+PostComment.AnswersSectionWrapper = ({ children }: { children: ReactNode }) => {
+  return <div className={s.bottomSectionWrapper}>{children}</div>;
+};
+
+const getClassNames = (classes: CommentClasses): Required<CommentClasses> => ({
+  answerSection: clsx(s.answersSection, classes.answerSection),
+  bottomSection: clsx(s.bottomSection, classes.bottomSection),
+  commentRoot: clsx(s.root, classes.commentRoot),
+  primaryAction: clsx(s.primaryAction, classes.primaryAction),
+  sectionComment: clsx(s.comment, classes.sectionComment),
+});

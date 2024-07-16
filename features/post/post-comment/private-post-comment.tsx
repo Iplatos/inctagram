@@ -7,11 +7,16 @@ import { Button, IconButton, Typography } from '@/shared/ui';
 
 import s from '@/features/post/post-comment/post-comment.module.scss';
 
-import { PrivateAnswerProps, PrivateAnswersPostComment } from './answers';
 import { PostComment, PostCommentProps } from './post-comment';
+import { Answer } from './post-comment.types';
+
+export type PrivateAnswer = {
+  isLiked: boolean;
+  likesCount: number;
+} & Answer;
 
 export type PrivatePostCommentProps = {
-  answers?: [] | PrivateAnswerProps[];
+  answers?: PrivateAnswer[];
   isLiked: boolean;
   // toggleIsLiked: (isLiked: boolean) => void;
 } & PostCommentProps;
@@ -22,19 +27,34 @@ export const PrivatePostComment = (props: PrivatePostCommentProps) => {
 
   return (
     <PostComment
-      childrenInfoSection={
+      answersCount={answers?.length}
+      answersSection={answers?.map((answer, index) => (
+        <PostComment
+          bottomSection={
+            <Button as={'span'} className={s.textBth} variant={'text'}>
+              <Typography.Semibold12>{t.post.comment.answer}</Typography.Semibold12>
+            </Button>
+          }
+          key={index}
+          primaryAction={
+            <IconButton className={s.iconBth} size={'small'}>
+              {answer.isLiked ? <HeartFilled style={{ fill: 'red' }} /> : <HeartOutlined />}
+            </IconButton>
+          }
+          {...answer}
+        />
+      ))}
+      bottomSection={
         <Button as={'span'} className={s.textBth} variant={'text'}>
           <Typography.Semibold12>{t.post.comment.answer}</Typography.Semibold12>
         </Button>
       }
-      iconElement={
+      primaryAction={
         <IconButton className={s.iconBth} size={'small'}>
           {isLiked ? <HeartFilled style={{ fill: 'red' }} /> : <HeartOutlined />}
         </IconButton>
       }
       {...res}
-    >
-      <PrivateAnswersPostComment answers={answers} />
-    </PostComment>
+    />
   );
 };
