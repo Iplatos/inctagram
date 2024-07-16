@@ -1,33 +1,60 @@
-.comment {
-  display: flex;
-  gap: 5px;
+@use '../../../styles/helpers' as *;
+@use '../../../styles/mixins' as *;
+
+.root {
+
 }
 
-.body {
+.comment {
   display: flex;
-  flex-direction: column;
-  
-  &__text {
-    max-width: 345px;
+  gap: rem(12);
+
+  &Avatar {
+    flex-shrink: 0;
   }
 
-  &__info {
+  &Body {
+    display: flex;
+    flex-direction: column;
+
+    &Text {}
+
+    &Info {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+
+      p, span {
+        user-select: none;
+        color: var(--color-light-900);
+      }
+    }
+  }
+}
+
+.bottomSection {
+    cursor: pointer;
     display: flex;
     gap: 12px;
     align-items: center;
 
-    p, span {
+    p {
       user-select: none;
       color: var(--color-light-900);
     }
+}
 
-  }
+.primaryAction {
+  margin-top: 8px;
+  margin-left: 8px;
 }
 
 .answers {
-  padding-left: 48px;
+  &Section {
+    padding-left: 48px;
+  }
 
-  &__list {
+  &List {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -45,35 +72,31 @@
     border-bottom: 1px solid var(--color-light-900);
   }
   
-  &__title {
-    cursor: pointer;
-    user-select: none;
-    color: var(--color-light-900);
+  &Title {
 
-    &:hover {
+    @include hover {
       color: var(--color-light-700);
       text-decoration: underline;
     }
+
+    cursor: pointer;
+    user-select: none;
+    color: var(--color-light-900);
   }
 }
 
-.iconBth {
-  height: 24px;
-  margin-top: 7px;
-  margin-left: auto;
-}
-
 .textBth {
-  height: 18px;
-  padding: 0;
 
-  &:hover {
+  @include hover {
     text-decoration: underline;
 
     span{
       color: var(--color-light-700);
     }
   }
+
+  height: 18px;
+  padding: 0;
 }
 
 .answerTextWidth {

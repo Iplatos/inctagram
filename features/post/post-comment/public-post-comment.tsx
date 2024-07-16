@@ -1,18 +1,22 @@
 import React from 'react';
 
-import { AnswerProps, PublicPostAnswer } from './answers';
 import { PostComment, PostCommentProps } from './post-comment';
+import { Answer } from './post-comment.types';
 
 export type PublicPostCommentProps = {
-  answers?: [] | AnswerProps[];
+  answers?: [] | Answer[];
 } & PostCommentProps;
 
 export const PublicPostComment = (props: PublicPostCommentProps) => {
   const { answers, ...res } = props;
 
   return (
-    <PostComment {...res}>
-      <PublicPostAnswer answers={answers} />
-    </PostComment>
+    <PostComment
+      answersCount={answers?.length}
+      answersSection={answers?.map((answer, index) => {
+        return <PostComment key={index} {...answer} />;
+      })}
+      {...res}
+    />
   );
 };
