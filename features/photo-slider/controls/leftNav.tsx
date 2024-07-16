@@ -1,5 +1,6 @@
 import React, { MouseEventHandler } from 'react';
 
+import { ArrowLeft } from '@/assets/icons/arrowLeft';
 import Arrow from 'assets/icons/arrowLeft.svg';
 
 import style from './controls.module.scss';
@@ -21,7 +22,7 @@ export const LeftNav = React.memo((props: NavProps) => {
       style={{ marginLeft: '12px' }}
       type={'button'}
     >
-      <Arrow className={style.svg} />
+      <ArrowLeft className={style.svg} />
     </button>
   );
 });

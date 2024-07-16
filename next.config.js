@@ -11,7 +11,9 @@ module.exports = {
         pathname: '/incta-back/**',
         protocol: 'https',
       },
-      { hostname: 'cdn.pixabay.com' },
+      {
+        hostname: 'images.pexels.com',
+      },
     ],
   },
   reactStrictMode: true,

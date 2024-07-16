@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Arrow from 'assets/icons/arrowRight.svg';
+import { ArrowRight } from '@/assets/icons/arrowRight';
 
 import style from './controls.module.scss';
 
@@ -18,7 +18,7 @@ export const RightNav = React.memo((props: NavProps) => {
       style={{ marginRight: '12px' }}
       type={'button'}
     >
-      <Arrow className={style.svg} />
+      <ArrowRight className={style.svg} />
     </button>
   );
 });

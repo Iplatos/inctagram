@@ -8,7 +8,6 @@
     display: flex;
     flex-direction: row;
 
-    // gap: 12px;
 }
 
 .image {
@@ -41,14 +40,14 @@
 
 .svg {
     & * {
-    transition: fill 0.2s;
+        transition: fill 0.2s;
     }
 }
 
- .button:active, .button:hover, .buttonPlus:hover {
+.button:active, .button:hover, .buttonPlus:hover {
     .svg {
         & * {
-          fill: var(--color-accent-500);
+            fill: var(--color-accent-500);
         }
     }
 }

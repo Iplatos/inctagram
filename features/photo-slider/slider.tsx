@@ -10,6 +10,7 @@ import 'react-image-gallery/styles/scss/image-gallery.scss';
 
 import style from './slider.module.scss';
 
+import { PhotoGallery } from '../photo-gallery';
 import { LeftNav } from './controls/leftNav';
 import { RightNav } from './controls/rightNav';
 
@@ -85,26 +86,40 @@ export const PhotoSlider = () => {
   );
 
   return (
-    <div ref={refGallery} style={{ width: '490px' }}>
-      <ImageGallery
-        items={addedImages.map(i => ({ original: i }))}
-        renderCustomControls={renderCustomControls}
-        renderItem={({ original }) => (
-          <ImageCropper
-            aspectRatio={aspectRatio}
-            image={original}
-            setDefaultAspectRatio={setDefaultAspectRatio}
-            setZoom={setZoom}
-            zoom={zoom}
-          />
-        )}
-        renderLeftNav={(onClick, disabled) => <LeftNav disabled={disabled} onClick={onClick} />}
-        renderRightNav={(onClick, disabled) => <RightNav disabled={disabled} onClick={onClick} />}
-        showBullets
-        showFullscreenButton={false}
-        showPlayButton={false}
-        showThumbnails={false}
-      />
-    </div>
+    // <div ref={refGallery} style={{ width: '490px' }}>
+    //   <ImageGallery
+    //     items={addedImages.map(i => ({ original: i }))}
+    //     renderCustomControls={renderCustomControls}
+    //     renderItem={({ original }) => (
+    //       <ImageCropper
+    //         aspectRatio={aspectRatio}
+    //         image={original}
+    //         setDefaultAspectRatio={setDefaultAspectRatio}
+    //         setZoom={setZoom}
+    //         zoom={zoom}
+    //       />
+    //     )}
+    //     renderLeftNav={(onClick, disabled) => <LeftNav disabled={disabled} onClick={onClick} />}
+    //     renderRightNav={(onClick, disabled) => <RightNav disabled={disabled} onClick={onClick} />}
+    //     showBullets
+    //     showFullscreenButton={false}
+    //     showPlayButton={false}
+    //     showThumbnails={false}
+    //   />
+    // </div>
+
+    <PhotoGallery
+      items={addedImages.map(i => ({ original: i }))}
+      renderCustomControls={renderCustomControls}
+      renderItem={({ original }) => (
+        <ImageCropper
+          aspectRatio={aspectRatio}
+          image={original}
+          setDefaultAspectRatio={setDefaultAspectRatio}
+          setZoom={setZoom}
+          zoom={zoom}
+        />
+      )}
+    />
   );
 };
