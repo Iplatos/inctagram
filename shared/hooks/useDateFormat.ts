@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-type DateFormatter = (parts: Intl.DateTimeFormatPart[]) => any;
+export type DateFormatter = (parts: Intl.DateTimeFormatPart[]) => any;
 type DefaultDateFormatter = (parts: Intl.DateTimeFormatPart[]) => {
   stringDateFormat: string;
   tokensSeparator: string;

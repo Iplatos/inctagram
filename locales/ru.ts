@@ -308,6 +308,37 @@ export const ru = {
     newNotification: 'Новое уведомление!',
     notifications: 'Уведомления',
   },
+
+  post: {
+    card: {
+      addNewComment: {
+        error: 'Максимальная длина комментария - 150 символов',
+        placeholder: 'Добавить комментарий...',
+        submit: 'Опубликовать',
+      },
+      header: {
+        buttons: {
+          copyLink: 'Скопировать ссылку',
+          deletePost: 'Удалить пост',
+          editPost: 'Редактировать пост',
+          follow: 'Подписаться',
+          unfollow: 'Отписаться',
+        },
+      },
+      info: {
+        likes: 'Нравится',
+      },
+    },
+    comment: {
+      answer: 'Ответить',
+      like: 'Отметка "Нравиться"',
+      likes: 'Отметок "Нравиться"',
+      viewAnswersBth: {
+        close: 'Скрыть ответы',
+        open: 'Показать ответы',
+      },
+    },
+  },
 };
 
 export type LocaleType = typeof ru;
