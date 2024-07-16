@@ -331,8 +331,8 @@ export const ru = {
     },
     comment: {
       answer: 'Ответить',
-      like: 'Отметка "Нравиться"',
-      likes: 'Отметок "Нравиться"',
+      like: '"Нравиться"',
+      likes: '"Нравиться"',
       viewAnswersBth: {
         close: 'Скрыть ответы',
         open: 'Показать ответы',

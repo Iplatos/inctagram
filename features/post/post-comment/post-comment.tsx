@@ -83,7 +83,7 @@ export const PostComment = (props: PostCommentProps) => {
         </div>
         <div className={cls.primaryAction}>{primaryAction}</div>
       </div>
-      {answersSection && (
+      {!!answersCount && (
         <div className={cls.answerSection}>
           <div className={s.btnOpenAnswers}>
             <p></p>
@@ -98,10 +98,6 @@ export const PostComment = (props: PostCommentProps) => {
       )}
     </div>
   );
-};
-
-PostComment.AnswersSectionWrapper = ({ children }: { children: ReactNode }) => {
-  return <div className={s.bottomSectionWrapper}>{children}</div>;
 };
 
 const getClassNames = (classes: CommentClasses): Required<CommentClasses> => ({
