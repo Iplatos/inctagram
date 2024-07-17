@@ -1,11 +1,11 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
 
 import { CloseIcon } from '@/assets/icons/close';
-import { CloseDialog } from '@/features/modal';
 import { Replace } from '@/shared/types/helpers';
 import { IconButton } from '@/shared/ui/IconButton';
 import { Card } from '@/shared/ui/card';
 import { Typography } from '@/shared/ui/typography';
+import { DialogClose } from '@radix-ui/react-dialog';
 import clsx from 'clsx';
 
 import s from './modal-card.module.scss';
@@ -23,7 +23,7 @@ type OmittedDivElementProps = Omit<ComponentPropsWithoutRef<'div'>, 'className'>
 
 export type ModalCardProps = Replace<OmittedDivElementProps, OwnProps>;
 
-export const CommonCardRoot = forwardRef<ElementRef<'div'>, ModalCardProps>(
+export const ModalCardRoot = forwardRef<ElementRef<'div'>, ModalCardProps>(
   ({ children, classes = {}, disabled, headerTitle, onClose, ...props }, ref) => {
     const cls = getClassNames(classes);
 
@@ -34,11 +34,11 @@ export const CommonCardRoot = forwardRef<ElementRef<'div'>, ModalCardProps>(
             {headerTitle}
           </Typography.H1>
 
-          <CloseDialog asChild>
+          <DialogClose asChild>
             <IconButton className={cls.closeButton} disabled={disabled} onClick={onClose}>
               <CloseIcon />
             </IconButton>
-          </CloseDialog>
+          </DialogClose>
         </Card.Header>
         {children}
       </Card>
@@ -48,8 +48,9 @@ export const CommonCardRoot = forwardRef<ElementRef<'div'>, ModalCardProps>(
 
 export const ModalCardContent = Card.Content;
 
-export const ModalCard = Object.assign(CommonCardRoot, {
+export const ModalCard = Object.assign(ModalCardRoot, {
   Content: ModalCardContent,
+  Root: ModalCardRoot,
 });
 
 const getClassNames = (classes: ModalCardClasses): ModalCardClasses => ({

@@ -1,0 +1,30 @@
+import { Meta, Title, Subtitle, Description, Primary, Controls, Stories } from '@storybook/blocks';
+import * as ModalStories from './modal.stories';
+import * as ModalContentStories from './modal-content.stories';
+import * as ModalPortalStories from './modal-portal.stories';
+
+<Meta of={ModalStories} />
+
+<Title />
+
+<Subtitle />
+
+<Description />
+
+<Primary />
+
+<Controls of={ModalStories.BasicModalCard} />
+
+#### ModalContent props
+
+This props will be passed to the `DialogPrimitive.Content` internal component via `contentProps`.
+
+<Controls of={ModalContentStories.Primary} />
+
+#### ModalPortal props
+
+This props will be passed to the `DialogPrimitive.Portal` internal component via `portalProps`.
+
+<Controls of={ModalPortalStories.Primary} />
+
+<Stories />

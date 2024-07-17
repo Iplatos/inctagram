@@ -73,7 +73,7 @@ const meta = {
         <Story />
       </Dialog>
     ),
-    ...CardStories.default.decorators,
+    CardStories.commonDecorator,
   ],
   tags: ['autodocs'],
   title: 'UI/ModalCard',
@@ -87,6 +87,7 @@ export const Basic: Story = {
     children: CardStories.cardContent.map((content, i) => (
       <ModalCard.Content key={i}>{content}</ModalCard.Content>
     )),
+    classes: { cardRoot: 'card-content' },
     disabled: false,
     headerTitle: 'Pretty Header',
   },

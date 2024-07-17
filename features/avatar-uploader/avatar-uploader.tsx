@@ -1,7 +1,7 @@
 import React, { ChangeEvent, ElementRef, FC, useRef } from 'react';
 import AvatarEditor, { CroppedRect } from 'react-avatar-editor';
 
-import { Modal } from '@/features/modal';
+import { DEPRECATED_Modal } from '@/features/DEPRECATED_Modal';
 import { dataURLToBlob } from '@/shared/helpers';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
@@ -109,7 +109,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
   const previewOrAvatar = state.preview ?? avatar;
 
   return (
-    <Modal onClose={handleClose} open={open} showCloseButton title={t.title}>
+    <DEPRECATED_Modal onClose={handleClose} open={open} showCloseButton title={t.title}>
       <div className={s.content}>
         {state.error && (
           <Alert classes={{ alertRoot: s.error }} severity={'error'}>
@@ -166,7 +166,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
           )}
         </div>
       </div>
-    </Modal>
+    </DEPRECATED_Modal>
   );
 };
 
