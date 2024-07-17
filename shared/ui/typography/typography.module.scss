@@ -72,3 +72,7 @@
   
     text-decoration-line: underline;
   }
+
+  .smallText {
+    @include typography(var(--font-size-xs), var(--line-height-m), var(--font-weight-regular));
+  }

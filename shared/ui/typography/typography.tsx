@@ -65,6 +65,7 @@ export const Typography = {
   RegularLink: createTypography('regularLink'),
   Semibold12: createTypography('semibold12'),
   SmallLink: createTypography('smallLink'),
+  SmallText: createTypography('smallText'),
 };
 
 const TYPOGRAPHY_VARIANT_MAP = {
@@ -81,6 +82,7 @@ const TYPOGRAPHY_VARIANT_MAP = {
   regularLink: 'a',
   semibold12: 'span',
   smallLink: 'a',
+  smallText: 'p',
 } as const;
 
 type TypographyVariant = keyof typeof TYPOGRAPHY_VARIANT_MAP;

@@ -308,6 +308,18 @@ export const ru = {
     newNotification: 'Новое уведомление!',
     notifications: 'Уведомления',
   },
+
+  post: {
+    comment: {
+      answer: 'Ответить',
+      like: '"Нравиться"',
+      likes: '"Нравиться"',
+      viewAnswersBth: {
+        close: 'Скрыть ответы',
+        open: 'Показать ответы',
+      },
+    },
+  },
 };
 
 export type LocaleType = typeof ru;
