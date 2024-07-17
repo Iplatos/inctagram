@@ -23,7 +23,7 @@ type OmittedDivElementProps = Omit<ComponentPropsWithoutRef<'div'>, 'className'>
 
 export type ModalCardProps = Replace<OmittedDivElementProps, OwnProps>;
 
-export const CommonCardRoot = forwardRef<ElementRef<'div'>, ModalCardProps>(
+export const ModalCardRoot = forwardRef<ElementRef<'div'>, ModalCardProps>(
   ({ children, classes = {}, disabled, headerTitle, onClose, ...props }, ref) => {
     const cls = getClassNames(classes);
 
@@ -48,8 +48,9 @@ export const CommonCardRoot = forwardRef<ElementRef<'div'>, ModalCardProps>(
 
 export const ModalCardContent = Card.Content;
 
-export const ModalCard = Object.assign(CommonCardRoot, {
+export const ModalCard = Object.assign(ModalCardRoot, {
   Content: ModalCardContent,
+  Root: ModalCardRoot,
 });
 
 const getClassNames = (classes: ModalCardClasses): ModalCardClasses => ({
