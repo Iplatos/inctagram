@@ -42,5 +42,5 @@ export const baseApi = createApi({
   baseQuery,
   endpoints: _builder => ({}),
   reducerPath: 'baseApi',
-  tagTypes: ['Auth', 'Me', 'MyAvatarBase64'],
+  tagTypes: ['Auth', 'Me', 'MyAvatarBase64', 'Posts'],
 });
