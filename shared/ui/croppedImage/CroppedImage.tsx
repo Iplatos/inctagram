@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, useMemo } from 'react';
+import React, { CSSProperties, ElementRef, FC, forwardRef, useMemo } from 'react';
 
 import { getDefaultCropProps } from '@/shared/helpers/getDefaultCropProps';
 import { resolveImageSrcToString } from '@/shared/helpers/resolveImageSrcToString';
@@ -33,75 +33,81 @@ export type CroppedImageProps = Omit<ImageProps, 'className'> & {
   classes?: CroppedImageClasses;
 } & Partial<CropProps>;
 
-export const CroppedImage: FC<CroppedImageProps> = ({
-  classes = {},
-  fill,
-  height,
-  offsetX = DEFAULT_CROP_PROPS.offsetX,
-  offsetY = DEFAULT_CROP_PROPS.offsetY,
-  scale = DEFAULT_CROP_PROPS.scale,
-  style,
-  width,
-  ...props
-}) => {
-  const { cropProps: finalCropProps, errors } = useCropPropsValidation(offsetX, offsetY, scale);
-  const imageSizeIsSetExplicitly = Boolean(fill || (width && height));
+export const CroppedImage = forwardRef<ElementRef<'img'>, CroppedImageProps>(
+  (
+    {
+      classes = {},
+      fill,
+      height,
+      offsetX = DEFAULT_CROP_PROPS.offsetX,
+      offsetY = DEFAULT_CROP_PROPS.offsetY,
+      scale = DEFAULT_CROP_PROPS.scale,
+      style,
+      width,
+      ...props
+    },
+    ref
+  ) => {
+    const { cropProps: finalCropProps, errors } = useCropPropsValidation(offsetX, offsetY, scale);
+    const imageSizeIsSetExplicitly = Boolean(fill || (width && height));
 
-  ({ offsetX, offsetY, scale } = imageSizeIsSetExplicitly ? finalCropProps : DEFAULT_CROP_PROPS);
+    ({ offsetX, offsetY, scale } = imageSizeIsSetExplicitly ? finalCropProps : DEFAULT_CROP_PROPS);
 
-  if (!imageSizeIsSetExplicitly) {
-    console.warn(getCropPropsError('implicitSize', props.src, errors));
-  } else if (errors.length) {
-    console.error(getCropPropsError('invalidCropProps', props.src, errors));
-  }
+    if (!imageSizeIsSetExplicitly) {
+      console.warn(getCropPropsError('implicitSize', props.src, errors));
+    } else if (errors.length) {
+      console.error(getCropPropsError('invalidCropProps', props.src, errors));
+    }
 
-  // Using the `style` instead of `className` ensures that the necessary CSS properties are not overwritten
-  const viewBoxStyle: CSSProperties = {
-    overflow: 'hidden',
-    ...(fill ? { height: '100%', position: 'absolute', width: '100%' } : { height, width }),
-  };
+    // Using the `style` instead of `className` ensures that the necessary CSS properties are not overwritten
+    const viewBoxStyle: CSSProperties = {
+      overflow: 'hidden',
+      ...(fill ? { height: '100%', position: 'absolute', width: '100%' } : { height, width }),
+    };
 
-  // Once the scaling box has been scaled, we need to move it back by the scale value
-  // to return the picture to its original position.
-  // Since the offset is applied to the enlarged scaling box,
-  // we need to convert the size increment of the original scaling box to the size increment of the enlarged box.
-  const getScalingBoxOffset = (pos: number, scale: number) => (pos * scale - pos) / scale;
-  const toCSSPercentage = (...args: number[]) => args.map(arg => arg * 100 + '%').join(' ');
+    // Once the scaling box has been scaled, we need to move it back by the scale value
+    // to return the picture to its original position.
+    // Since the offset is applied to the enlarged scaling box,
+    // we need to convert the size increment of the original scaling box to the size increment of the enlarged box.
+    const getScalingBoxOffset = (pos: number, scale: number) => (pos * scale - pos) / scale;
+    const toCSSPercentage = (...args: number[]) => args.map(arg => arg * 100 + '%').join(' ');
 
-  const scalingBoxOffsetX = getScalingBoxOffset(offsetX, scale) * -1;
-  const scalingBoxOffsetY = getScalingBoxOffset(offsetY, scale) * -1;
-  const scalingBoxStyle: CSSProperties = {
-    display: 'block',
-    height: toCSSPercentage(scale),
-    position: 'relative',
-    translate: toCSSPercentage(scalingBoxOffsetX, scalingBoxOffsetY),
-    width: toCSSPercentage(scale),
-  };
+    const scalingBoxOffsetX = getScalingBoxOffset(offsetX, scale) * -1;
+    const scalingBoxOffsetY = getScalingBoxOffset(offsetY, scale) * -1;
+    const scalingBoxStyle: CSSProperties = {
+      display: 'block',
+      height: toCSSPercentage(scale),
+      position: 'relative',
+      translate: toCSSPercentage(scalingBoxOffsetX, scalingBoxOffsetY),
+      width: toCSSPercentage(scale),
+    };
 
-  const imageStyle: CSSProperties = {
-    ...style,
-    objectPosition: toCSSPercentage(offsetX, offsetY),
-  };
+    const imageStyle: CSSProperties = {
+      ...style,
+      objectPosition: toCSSPercentage(offsetX, offsetY),
+    };
 
-  const cls = getClassNames(classes);
-  const scaleImageSize = (size: `${number}` | number | undefined) =>
-    size ? Number(size) * scale : size;
+    const cls = getClassNames(classes);
+    const scaleImageSize = (size: `${number}` | number | undefined) =>
+      size ? Number(size) * scale : size;
 
-  return (
-    <span className={cls.viewBox} style={viewBoxStyle}>
-      <span className={s.scalingBox} style={scalingBoxStyle}>
-        <Image
-          className={cls.image}
-          fill={fill}
-          height={scaleImageSize(height)}
-          style={imageStyle}
-          width={scaleImageSize(width)}
-          {...props}
-        />
+    return (
+      <span className={cls.viewBox} style={viewBoxStyle}>
+        <span className={s.scalingBox} style={scalingBoxStyle}>
+          <Image
+            className={cls.image}
+            fill={fill}
+            height={scaleImageSize(height)}
+            ref={ref}
+            style={imageStyle}
+            width={scaleImageSize(width)}
+            {...props}
+          />
+        </span>
       </span>
-    </span>
-  );
-};
+    );
+  }
+);
 
 const getClassNames = (classes: CroppedImageClasses): Required<CroppedImageClasses> => ({
   image: clsx(s.image, classes.image),

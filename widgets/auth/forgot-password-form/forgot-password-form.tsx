@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { ReCAPTCHA } from 'react-google-recaptcha';
 import { Controller, useForm } from 'react-hook-form';
 
-import { CloseDialog, Modal } from '@/features/modal';
+import { CloseDialog, DEPRECATED_Modal } from '@/features/DEPRECATED_Modal';
 import { useForgotPasswordMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, DEPRECATED_Card, TextField, Typography } from '@/shared/ui';
@@ -102,7 +102,7 @@ export const ForgotPasswordForm = () => {
         >
           {t.auth.forgotPasswordPage.sendLink}
         </Button>
-        <Modal
+        <DEPRECATED_Modal
           onClose={handleModalClosed}
           open={open}
           showCloseButton
@@ -123,7 +123,7 @@ export const ForgotPasswordForm = () => {
               </Button>
             </CloseDialog>
           </div>
-        </Modal>
+        </DEPRECATED_Modal>
         <Button className={style.buttonBack} fullWidth variant={'tertiary'}>
           <Link href={'/signIn'}>{t.auth.forgotPasswordPage.backToSignIn}</Link>
         </Button>

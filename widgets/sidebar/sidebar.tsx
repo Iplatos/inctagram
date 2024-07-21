@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { Modal } from '@/features/modal';
+import { ConfirmModal } from '@/features/confirm-modal';
 import { useLogoutMutation, useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { useLazyGetMeQuery } from '@/shared/api/users-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button, Typography } from '@/shared/ui';
+import { Typography } from '@/shared/ui';
 import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
 import HomeOutline from 'assets/icons/home-outline.svg';
 import LogOutOutline from 'assets/icons/log-out-outline.svg';
@@ -21,10 +21,10 @@ import s from './sidebar.module.scss';
 import { Trans } from '../Trans/Trans';
 
 export const Sidebar = () => {
-  const { t } = useTranslation();
+  const t = useTranslation().t.common;
   const [open, setOpen] = useState(false);
 
-  const [logoutTrigger] = useLogoutMutation();
+  const [logoutTrigger, { isLoading: isLogOutLoading }] = useLogoutMutation();
   const { isSuccess: isAuthSuccess } = useRefreshTokenQuery();
   const [getMyProfile, { data: meResponse }] = useLazyGetMeQuery();
 
@@ -34,9 +34,18 @@ export const Sidebar = () => {
     }
   }, [isAuthSuccess, getMyProfile]);
 
-  const handleLogout = () => {
-    setOpen(false);
-    logoutTrigger();
+  const handleLogout = async () => {
+    try {
+      await logoutTrigger();
+      setOpen(false);
+    } catch (error) {
+      console.error('Failed to delete avatar:', error);
+    }
+  };
+  const closeModal = () => {
+    if (!isLogOutLoading) {
+      setOpen(false);
+    }
   };
 
   return (
@@ -85,24 +94,23 @@ export const Sidebar = () => {
         Log Out
       </Typography.Regular14>
 
-      <Modal onClose={() => setOpen(false)} open={open} showCloseButton title={'Log Out'}>
+      <ConfirmModal
+        cancelButtonTitle={t.modal.buttonNames.cancel}
+        confirmButtonTitle={t.modal.buttonNames.confirm}
+        headerTitle={t.logOutModal.title}
+        onCancel={closeModal}
+        onConfirm={handleLogout}
+        open={open}
+      >
         <Typography.Regular14>
           <Trans
             tags={{
               email: () => <Typography.Bold16>{meResponse?.data.email}</Typography.Bold16>,
             }}
-            text={t.logOut.reallyWantToLogOut}
+            text={t.logOutModal.description}
           />
         </Typography.Regular14>
-        <div className={s.modalButtonsGroup}>
-          <Button className={s.modalButton} onClick={handleLogout} variant={'tertiary'}>
-            Yes
-          </Button>
-          <Button className={s.modalButton} onClick={() => setOpen(false)}>
-            No
-          </Button>
-        </div>
-      </Modal>
+      </ConfirmModal>
     </div>
   );
 };
