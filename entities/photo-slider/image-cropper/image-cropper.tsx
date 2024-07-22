@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
-import Cropper from 'react-easy-crop';
+import Cropper, { Area } from 'react-easy-crop';
 
-export const ImageCropper = (props: any) => {
-  const { aspectRatio, image, onCropCancel, onCropDone, setDefaultAspectRatio, setZoom, zoom } =
-    props;
+type ImageCropperPropsType = {
+  aspectRatio: number | undefined;
+  image: string;
+  setCroppedArea: (croppedAreaPixels: Area) => void;
+  setDefaultAspectRatio: (aspect: number) => void;
+  setZoom: (zoom: number) => void;
+  zoom: number;
+};
+
+export const ImageCropper = (props: ImageCropperPropsType) => {
+  const { aspectRatio, image, setCroppedArea, setDefaultAspectRatio, setZoom, zoom } = props;
 
   const [crop, setCrop] = useState({ x: 0, y: 0 });
 
-  const [croppedArea, setCroppedArea] = useState(null);
-
-  const onCropComplete = (croppedAreaPercentage: any, croppedAreaPixels: any) => {
+  const onCropComplete = (croppedAreaPixels: Area) => {
     setCroppedArea(croppedAreaPixels);
   };
 
@@ -30,7 +36,6 @@ export const ImageCropper = (props: any) => {
             backgroundColor: 'var(--color-dark-100)',
             height: '503px',
             margin: 0,
-            // width: '490px',
             maxWidth: '490px',
             position: 'relative',
           },

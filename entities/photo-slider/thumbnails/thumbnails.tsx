@@ -1,10 +1,9 @@
-import React, { Dispatch, Ref, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 
 import { ConfirmModal } from '@/features/confirm-modal';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
 import * as Popover from '@radix-ui/react-popover';
-import Image from 'next/image';
 
 import style from './thumbnails.module.scss';
 
@@ -13,7 +12,7 @@ import { ThumbnailImage } from '../thumbnail-image';
 import { TriggerButton } from '../trigger-button/trigger-button';
 import { FileInput } from './fileInput';
 
-type SetAddedImagesCallback = (images: string[]) => string[];
+export type SetAddedImagesCallback = (images: string[]) => string[];
 type ThumbnailsPropsType = {
   addedImages: string[];
   boundary: Popover.PopperContentProps['collisionBoundary'];
@@ -57,7 +56,6 @@ export const Thumbnails = (props: ThumbnailsPropsType) => {
 
                       return;
                     }
-
                     setAddedImages(prev => prev.filter((_, i) => i !== index));
                   };
 

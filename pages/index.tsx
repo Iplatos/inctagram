@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { Crop } from '@/entities/photo-slider/crop/crop';
-import { Popover } from '@/entities/photo-slider/popover';
 import { TriggerButton } from '@/entities/photo-slider/trigger-button/trigger-button';
 import { Zoom } from '@/entities/photo-slider/zoom/zoom';
-import { DEPRECATED_Modal, PhotoGallery, PhotoSlider, Thumbnails } from '@/features';
+import { DEPRECATED_Modal, PhotoGallery, PhotoSlider, SliderRef } from '@/features';
 import { useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { resolveImageSrcToString } from '@/shared/helpers';
 import { Button } from '@/shared/ui';
@@ -33,6 +32,12 @@ function Home() {
     // ]
   );
 
+  const ref = useRef<SliderRef>(null);
+
+  const saveCroppedImage = () => {
+    ref.current?.saveCroppedImage();
+  };
+
   return (
     <>
       <style>{`
@@ -45,7 +50,11 @@ function Home() {
       <Button onClick={() => setOpen(true)}>Open Modal</Button>
 
       {/* <DEPRECATED_Modal className={'modalContainer'} onClose={() => setOpen(false)} open={open}> */}
-      <PhotoSlider />
+      <PhotoSlider addedImages={addedImages} ref={ref} setAddedImages={setAddedImages} />
+
+      <button onClick={saveCroppedImage} style={{ background: 'aqua', cursor: 'pointer' }}>
+        save cropped images
+      </button>
       {/* <PhotoGallery images={addedImages} /> */}
       {/* </DEPRECATED_Modal> */}
     </>

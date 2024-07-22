@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { SetStateAction } from 'react';
 
 import { Slider } from '@/shared/ui/slider/slider';
 
 import { PopoverContent, PopoverRoot, PopoverTrigger } from '../popover-root';
 import { TriggerButton } from '../trigger-button/trigger-button';
 
-export const Zoom = (props: any) => {
+type ZoomPropsType = {
+  setZoom: React.Dispatch<SetStateAction<number[]>>;
+  zoom: number;
+};
+export const Zoom = (props: ZoomPropsType) => {
   const { setZoom, zoom } = props;
 
   return (

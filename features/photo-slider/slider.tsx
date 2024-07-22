@@ -1,9 +1,9 @@
-import { ElementRef, useRef, useState } from 'react';
-import ImageGallery from 'react-image-gallery';
+import { ElementRef, forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import { Area } from 'react-easy-crop';
 
 import { Crop } from '@/entities/photo-slider/crop/crop';
 import { ImageCropper } from '@/entities/photo-slider/image-cropper/image-cropper';
-import { Thumbnails } from '@/entities/photo-slider/thumbnails';
+import { SetAddedImagesCallback, Thumbnails } from '@/entities/photo-slider/thumbnails';
 import { Zoom } from '@/entities/photo-slider/zoom/zoom';
 
 import 'react-image-gallery/styles/scss/image-gallery.scss';
@@ -11,14 +11,22 @@ import 'react-image-gallery/styles/scss/image-gallery.scss';
 import style from './slider.module.scss';
 
 import { PhotoGallery } from '../photo-gallery';
-import { LeftNav } from './controls/leftNav';
-import { RightNav } from './controls/rightNav';
 
-export const PhotoSlider = () => {
+type SliderPropsType = {
+  addedImages: string[];
+  onCropDone?: (imgCroppedArea: Area) => void;
+  setAddedImages: (images: SetAddedImagesCallback | string[]) => void;
+};
+export type SliderRef = {
+  saveCroppedImage: () => void;
+};
+export const PhotoSlider = forwardRef<SliderRef, SliderPropsType>((props, ref) => {
+  const { addedImages, setAddedImages } = props;
+
   const refGallery = useRef<ElementRef<'div'>>(null);
 
   const [image, setImage] = useState<string>('');
-  const [addedImages, setAddedImages] = useState<string[]>([]);
+  const [croppedArea, setCroppedArea] = useState<Area>();
 
   const [defaultAspectRatio, setDefaultAspectRatio] = useState<number | undefined>(undefined);
   const [aspectRatio, setAspectRatio] = useState(defaultAspectRatio);
@@ -35,7 +43,7 @@ export const PhotoSlider = () => {
 
   const [zoom, setZoom] = useState<number>(1);
 
-  const onCropDone = (imgCroppedArea: any) => {
+  const onCropDone = (imgCroppedArea: Area) => {
     const canvasElem = document.createElement('canvas');
 
     canvasElem.width = imgCroppedArea.width;
@@ -43,12 +51,16 @@ export const PhotoSlider = () => {
 
     const context = canvasElem.getContext('2d');
 
-    const imageObj1 = new Image();
+    const imageObj = new Image();
 
-    imageObj1.src = image;
-    imageObj1.onload = function () {
-      context?.drawImage(
-        imageObj1,
+    imageObj.src = image;
+
+    imageObj.onload = function () {
+      if (!context) {
+        return;
+      }
+      context.drawImage(
+        imageObj,
         imgCroppedArea.x,
         imgCroppedArea.y,
         imgCroppedArea.width,
@@ -65,9 +77,11 @@ export const PhotoSlider = () => {
     };
   };
 
-  // const onCropCancel = () => {
-  //   setImage('');
-  // };
+  useImperativeHandle(ref, () => ({
+    saveCroppedImage: () => {
+      onCropDone(croppedArea);
+    },
+  }));
 
   const renderCustomControls = () => (
     <div className={style.customControls}>
@@ -86,28 +100,6 @@ export const PhotoSlider = () => {
   );
 
   return (
-    // <div ref={refGallery} style={{ width: '490px' }}>
-    //   <ImageGallery
-    //     items={addedImages.map(i => ({ original: i }))}
-    //     renderCustomControls={renderCustomControls}
-    //     renderItem={({ original }) => (
-    //       <ImageCropper
-    //         aspectRatio={aspectRatio}
-    //         image={original}
-    //         setDefaultAspectRatio={setDefaultAspectRatio}
-    //         setZoom={setZoom}
-    //         zoom={zoom}
-    //       />
-    //     )}
-    //     renderLeftNav={(onClick, disabled) => <LeftNav disabled={disabled} onClick={onClick} />}
-    //     renderRightNav={(onClick, disabled) => <RightNav disabled={disabled} onClick={onClick} />}
-    //     showBullets
-    //     showFullscreenButton={false}
-    //     showPlayButton={false}
-    //     showThumbnails={false}
-    //   />
-    // </div>
-
     <PhotoGallery
       items={addedImages.map(i => ({ original: i }))}
       renderCustomControls={renderCustomControls}
@@ -115,6 +107,7 @@ export const PhotoSlider = () => {
         <ImageCropper
           aspectRatio={aspectRatio}
           image={original}
+          setCroppedArea={setCroppedArea}
           setDefaultAspectRatio={setDefaultAspectRatio}
           setZoom={setZoom}
           zoom={zoom}
@@ -122,4 +115,4 @@ export const PhotoSlider = () => {
       )}
     />
   );
-};
+});
