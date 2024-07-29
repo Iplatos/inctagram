@@ -6,6 +6,7 @@ import { Zoom } from '@/entities/photo-slider/zoom/zoom';
 import { DEPRECATED_Modal, PhotoGallery, PhotoSlider, SliderRef } from '@/features';
 import { useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { resolveImageSrcToString } from '@/shared/helpers';
+import { onCropDone } from '@/shared/helpers/onCropDone';
 import { Button } from '@/shared/ui';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
@@ -26,17 +27,9 @@ function Home() {
 
   const [addedImages, setAddedImages] = useState<string[]>(
     new Array(5).fill(0).map(i => resolveImageSrcToString(MockImage)) as string[]
-    // [MockImage].map(resolveImageSrcToString) as string[]
-    // [
-    //   'https://images.pexels.com/photos/25961526/pexels-photo-25961526.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    // ]
   );
 
-  const ref = useRef<SliderRef>(null);
-
-  const saveCroppedImage = () => {
-    ref.current?.saveCroppedImage();
-  };
+  const [imgAfterCrop, setImgAfterCrop] = useState<string>('');
 
   return (
     <>
@@ -46,16 +39,16 @@ function Home() {
       }
     `}</style>
       <HeadMeta title={'main'} />
-      <div style={{ marginLeft: '300px' }}>Hello World!</div>
-      <Button onClick={() => setOpen(true)}>Open Modal</Button>
+      {/* <div style={{ marginLeft: '300px' }}>Hello World!</div> */}
 
-      {/* <DEPRECATED_Modal className={'modalContainer'} onClose={() => setOpen(false)} open={open}> */}
-      <PhotoSlider addedImages={addedImages} ref={ref} setAddedImages={setAddedImages} />
+      <PhotoSlider
+        addedImages={addedImages}
+        imgAfterCrop={imgAfterCrop}
+        setAddedImages={setAddedImages}
+        setImgAfterCrop={setImgAfterCrop}
+      />
 
-      <button onClick={saveCroppedImage} style={{ background: 'aqua', cursor: 'pointer' }}>
-        save cropped images
-      </button>
-      {/* <PhotoGallery images={addedImages} /> */}
+      <PhotoGallery items={addedImages.map(i => ({ original: i }))} />
       {/* </DEPRECATED_Modal> */}
     </>
   );

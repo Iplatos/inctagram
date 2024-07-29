@@ -14,13 +14,12 @@ import { PhotoGallery } from '../photo-gallery';
 
 type SliderPropsType = {
   addedImages: string[];
-  onCropDone?: (imgCroppedArea: Area) => void;
+  imgAfterCrop?: string;
   setAddedImages: (images: SetAddedImagesCallback | string[]) => void;
+  setImgAfterCrop?: (imgAfterCrop: string) => void;
 };
-export type SliderRef = {
-  saveCroppedImage: () => void;
-};
-export const PhotoSlider = forwardRef<SliderRef, SliderPropsType>((props, ref) => {
+
+export const PhotoSlider = (props: SliderPropsType) => {
   const { addedImages, setAddedImages } = props;
 
   const refGallery = useRef<ElementRef<'div'>>(null);
@@ -39,49 +38,7 @@ export const PhotoSlider = forwardRef<SliderRef, SliderPropsType>((props, ref) =
     }
   };
 
-  const [imgAfterCrop, setImgAfterCrop] = useState<string>('');
-
   const [zoom, setZoom] = useState<number>(1);
-
-  const onCropDone = (imgCroppedArea: Area) => {
-    const canvasElem = document.createElement('canvas');
-
-    canvasElem.width = imgCroppedArea.width;
-    canvasElem.height = imgCroppedArea.height;
-
-    const context = canvasElem.getContext('2d');
-
-    const imageObj = new Image();
-
-    imageObj.src = image;
-
-    imageObj.onload = function () {
-      if (!context) {
-        return;
-      }
-      context.drawImage(
-        imageObj,
-        imgCroppedArea.x,
-        imgCroppedArea.y,
-        imgCroppedArea.width,
-        imgCroppedArea.height,
-        0,
-        0,
-        imgCroppedArea.width,
-        imgCroppedArea.height
-      );
-
-      const dataURL = canvasElem.toDataURL('image/jpeg');
-
-      setImgAfterCrop(dataURL);
-    };
-  };
-
-  useImperativeHandle(ref, () => ({
-    saveCroppedImage: () => {
-      onCropDone(croppedArea);
-    },
-  }));
 
   const renderCustomControls = () => (
     <div className={style.customControls}>
@@ -100,19 +57,21 @@ export const PhotoSlider = forwardRef<SliderRef, SliderPropsType>((props, ref) =
   );
 
   return (
-    <PhotoGallery
-      items={addedImages.map(i => ({ original: i }))}
-      renderCustomControls={renderCustomControls}
-      renderItem={({ original }) => (
-        <ImageCropper
-          aspectRatio={aspectRatio}
-          image={original}
-          setCroppedArea={setCroppedArea}
-          setDefaultAspectRatio={setDefaultAspectRatio}
-          setZoom={setZoom}
-          zoom={zoom}
-        />
-      )}
-    />
+    <>
+      <PhotoGallery
+        items={addedImages.map(i => ({ original: i }))}
+        renderCustomControls={renderCustomControls}
+        renderItem={({ original }) => (
+          <ImageCropper
+            aspectRatio={aspectRatio}
+            image={original}
+            setCroppedArea={setCroppedArea}
+            setDefaultAspectRatio={setDefaultAspectRatio}
+            setZoom={setZoom}
+            zoom={zoom}
+          />
+        )}
+      />
+    </>
   );
-});
+};

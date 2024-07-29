@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Cropper, { Area } from 'react-easy-crop';
+import Cropper, { Area, CropperProps } from 'react-easy-crop';
 
 type ImageCropperPropsType = {
   aspectRatio: number | undefined;
@@ -15,7 +15,7 @@ export const ImageCropper = (props: ImageCropperPropsType) => {
 
   const [crop, setCrop] = useState({ x: 0, y: 0 });
 
-  const onCropComplete = (croppedAreaPixels: Area) => {
+  const onCropComplete: CropperProps['onCropComplete'] = (_, croppedAreaPixels) => {
     setCroppedArea(croppedAreaPixels);
   };
 

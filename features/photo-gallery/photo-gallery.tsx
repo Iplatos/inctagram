@@ -1,4 +1,4 @@
-import React, { ElementRef, ReactNode, useRef, useState } from 'react';
+import React, { ElementRef, MouseEventHandler, ReactNode, useRef, useState } from 'react';
 import ImageGallery, { ReactImageGalleryProps } from 'react-image-gallery';
 
 import clsx from 'clsx';
@@ -17,8 +17,11 @@ export type PhotoGalleryPropsType = Omit<
 >;
 
 export const PhotoGallery = ({ additionalClass, ...props }: PhotoGalleryPropsType) => {
+  const ref = useRef<ImageGallery>(null);
+
   return (
     <ImageGallery
+      ref={ref}
       renderItem={({ original }) => (
         <Image
           alt={'user image'}
@@ -28,8 +31,24 @@ export const PhotoGallery = ({ additionalClass, ...props }: PhotoGalleryPropsTyp
           width={400}
         />
       )}
-      renderLeftNav={(onClick, disabled) => <LeftNav disabled={disabled} onClick={onClick} />}
-      renderRightNav={(onClick, disabled) => <RightNav disabled={disabled} onClick={onClick} />}
+      renderLeftNav={(onClick, disabled) => {
+        const handleClick: MouseEventHandler<HTMLElement> = e => {
+          onClick(e);
+
+          // console.log(ref.current?.getCurrentIndex());
+        };
+
+        return <LeftNav disabled={disabled} onClick={handleClick} />;
+      }}
+      renderRightNav={(onClick, disabled) => {
+        const handleClick: MouseEventHandler<HTMLElement> = e => {
+          onClick(e);
+
+          // console.log(ref.current?.getCurrentIndex());
+        };
+
+        return <RightNav disabled={disabled} onClick={handleClick} />;
+      }}
       showBullets
       showFullscreenButton={false}
       showPlayButton={false}

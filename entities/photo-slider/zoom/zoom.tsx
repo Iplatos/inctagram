@@ -6,7 +6,7 @@ import { PopoverContent, PopoverRoot, PopoverTrigger } from '../popover-root';
 import { TriggerButton } from '../trigger-button/trigger-button';
 
 type ZoomPropsType = {
-  setZoom: React.Dispatch<SetStateAction<number[]>>;
+  setZoom: React.Dispatch<SetStateAction<number>> | React.Dispatch<SetStateAction<number[]>>;
   zoom: number;
 };
 export const Zoom = (props: ZoomPropsType) => {
