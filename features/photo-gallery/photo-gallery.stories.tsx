@@ -1,36 +1,37 @@
-import { resolveImageSrcToString } from '@/shared/helpers';
+import { ReactImageGalleryItem } from 'react-image-gallery';
+
+import EmailConfirmedImage from '@/assets/img/email-confirmed-image.svg?url';
+import LinkExpiredImage from '@/assets/img/link-expired-image.svg?url';
+import MockUserAvatar from '@/assets/img/mock-user-avatar.jpg';
 import { Meta, StoryObj } from '@storybook/react';
 
 import 'react-image-gallery/styles/scss/image-gallery.scss';
 
-import MockImage from '../../assets/img/mock-user-avatar.jpg';
-import { PhotoGallery, PhotoGalleryPropsType } from './photo-gallery';
+import { PhotoGallery, PhotoGalleryProps } from './photo-gallery';
+
+export const getPhotoGalleryMockImages = (count: number) => {
+  const DEFAULT_IMAGES = [MockUserAvatar, LinkExpiredImage, EmailConfirmedImage];
+
+  return new Array(count).fill(0).map<ReactImageGalleryItem>((_, i) => ({
+    original: DEFAULT_IMAGES[i % DEFAULT_IMAGES.length].src,
+  }));
+};
 
 type CustomRenderProps = {
   imagesCount: number;
-} & PhotoGalleryPropsType;
+} & PhotoGalleryProps;
 
-const CustomRender = ({ imagesCount, items, ...rest }: CustomRenderProps) => {
-  const imagesArray = new Array(imagesCount)
-    .fill(0)
-    .concat(items)
-    .map(i => {
-      return { original: i === 0 ? (resolveImageSrcToString(MockImage) as string) : i };
-    });
-
-  return <PhotoGallery {...rest} items={imagesArray} />;
+const CustomRender = ({ imagesCount, items, ...props }: CustomRenderProps) => {
+  return <PhotoGallery {...props} items={getPhotoGalleryMockImages(imagesCount).concat(items)} />;
 };
 
 const meta = {
   argTypes: {
     imagesCount: {
-      control: {
-        max: '10',
-        min: '1',
-        type: 'number',
-      },
+      control: { type: 'number' },
     },
   },
+  excludeStories: ['getPhotoGalleryMockImages'],
   render: CustomRender,
   tags: ['autodocs'],
   title: 'FEATURES/PhotoGallery',
