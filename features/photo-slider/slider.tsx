@@ -40,6 +40,11 @@ export const PhotoSlider = (props: SliderPropsType) => {
 
   const [zoom, setZoom] = useState<number>(1);
 
+  const initializeAspectRatio = (aspect: number) => {
+    setAspectRatio(aspect);
+    setDefaultAspectRatio(aspect);
+  };
+
   const renderCustomControls = () => (
     <div className={style.customControls}>
       <div className={style.customControls__inner}>
@@ -65,8 +70,8 @@ export const PhotoSlider = (props: SliderPropsType) => {
           <ImageCropper
             aspectRatio={aspectRatio}
             image={original}
+            initializeAspectRatio={initializeAspectRatio}
             setCroppedArea={setCroppedArea}
-            setDefaultAspectRatio={setDefaultAspectRatio}
             setZoom={setZoom}
             zoom={zoom}
           />

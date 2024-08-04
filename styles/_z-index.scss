@@ -4,7 +4,7 @@ $z-index: (
   content: 1500,
   form: 100,
   modal: 1000,
-  slider: 10000,
+  slider: 100,
 );
 
 @function z-index($key) {

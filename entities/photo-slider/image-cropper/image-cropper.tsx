@@ -4,14 +4,14 @@ import Cropper, { Area, CropperProps } from 'react-easy-crop';
 type ImageCropperPropsType = {
   aspectRatio: number | undefined;
   image: string;
+  initializeAspectRatio: (aspect: number) => void;
   setCroppedArea: (croppedAreaPixels: Area) => void;
-  setDefaultAspectRatio: (aspect: number) => void;
   setZoom: (zoom: number) => void;
   zoom: number;
 };
 
 export const ImageCropper = (props: ImageCropperPropsType) => {
-  const { aspectRatio, image, setCroppedArea, setDefaultAspectRatio, setZoom, zoom } = props;
+  const { aspectRatio, image, initializeAspectRatio, setCroppedArea, setZoom, zoom } = props;
 
   const [crop, setCrop] = useState({ x: 0, y: 0 });
 
@@ -28,7 +28,7 @@ export const ImageCropper = (props: ImageCropperPropsType) => {
         onCropChange={setCrop}
         onCropComplete={onCropComplete}
         onMediaLoaded={mediaSize => {
-          setDefaultAspectRatio(mediaSize.naturalWidth / mediaSize.naturalHeight);
+          initializeAspectRatio(mediaSize.naturalWidth / mediaSize.naturalHeight);
         }}
         onZoomChange={setZoom}
         style={{

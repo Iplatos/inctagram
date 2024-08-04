@@ -13,6 +13,12 @@ import { getLayout } from '@/widgets/Layout/Layout';
 
 import MockImage from '../assets/img/mock-user-avatar.jpg';
 
+type UploadedImagesType = {
+  id: number;
+  imageSrc: string;
+  imgAfterCrop: string;
+};
+
 function Home() {
   // const { error, isLoading } = useRefreshTokenQuery();
 
@@ -23,10 +29,22 @@ function Home() {
   // if (error && 'status' in error && error.status === 401) {
   //   return <div style={{ marginLeft: '300px' }}>Unauthorized</div>;
   // }
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
-  const [addedImages, setAddedImages] = useState<string[]>(
-    new Array(5).fill(0).map(i => resolveImageSrcToString(MockImage)) as string[]
+  const [addedImages, setAddedImages] = useState<UploadedImagesType[]>(
+    // new Array(5).fill(0).map(i => resolveImageSrcToString(MockImage)) as string[]
+    [
+      {
+        id: 1,
+        imageSrc: resolveImageSrcToString(MockImage) as string,
+        imgAfterCrop: '',
+      },
+      {
+        id: 2,
+        imageSrc: resolveImageSrcToString(MockImage) as string,
+        imgAfterCrop: '',
+      },
+    ]
   );
 
   const [imgAfterCrop, setImgAfterCrop] = useState<string>('');
@@ -42,13 +60,12 @@ function Home() {
       {/* <div style={{ marginLeft: '300px' }}>Hello World!</div> */}
 
       <PhotoSlider
-        addedImages={addedImages}
+        addedImages={addedImages.map(i => i.imageSrc)}
         imgAfterCrop={imgAfterCrop}
-        setAddedImages={setAddedImages}
         setImgAfterCrop={setImgAfterCrop}
       />
 
-      <PhotoGallery items={addedImages.map(i => ({ original: i }))} />
+      <PhotoGallery items={addedImages.map(i => i.imageSrc).map(i => ({ original: i }))} />
       {/* </DEPRECATED_Modal> */}
     </>
   );
