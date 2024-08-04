@@ -51,13 +51,14 @@
 
 .answers {
   &Section {
+    margin-bottom: 8px;
     padding-left: 48px;
   }
 
   &List {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
   }
 }
 

@@ -93,7 +93,7 @@ export const PostComment = (props: PostCommentProps) => {
               } (${answersCount ?? 0})`}
             </Typography.Semibold12>
           </div>
-          <div className={s.answerList}>{open && answersSection}</div>
+          <div className={s.answersList}>{open && answersSection}</div>
         </div>
       )}
     </div>

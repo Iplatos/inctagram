@@ -1,9 +1,12 @@
 import { PostCard } from '@/features/post/post-card/post-card';
-import { PrivatePostCard, PrivatePostCardProps } from '@/features/post/post-card/private-post-card';
+import { PrivatePostCardProps } from '@/features/post/post-card/private-post-card';
+import { ProfilePrivatePostCard } from '@/features/post/post-card/profile-post-card';
 import { PublicPostCard, PublicPostCardProps } from '@/features/post/post-card/public-post-card';
-import { PrivatePostCommentProps } from '@/features/post/post-comment/privat-post-comment';
+import { PrivatePostCommentProps } from '@/features/post/post-comment/private-post-comment';
 import { PublicPostCommentProps } from '@/features/post/post-comment/public-post-comment';
 import { Meta, StoryObj } from '@storybook/react';
+
+import { FriendPrivatePostCard } from './friend-post-card';
 
 const meta = {
   component: PostCard,
@@ -129,7 +132,7 @@ export const Public: Story<PublicPostCardProps> = {
   },
 };
 
-export const UserCard: Story<PrivatePostCardProps> = {
+export const ProfilePostCard: Story<Omit<PrivatePostCardProps, 'headerSection'>> = {
   args: {
     comments: privateComments,
     createdAt: '2024-07-01T10:00:00Z',
@@ -141,12 +144,12 @@ export const UserCard: Story<PrivatePostCardProps> = {
     userName: 'Patrik',
   },
 
-  render: function Render(args: PrivatePostCardProps) {
-    return <PrivatePostCard {...args} />;
+  render: function Render(args: Omit<PrivatePostCardProps, 'headerSection'>) {
+    return <ProfilePrivatePostCard {...args} />;
   },
 };
 
-export const FriendCard: Story<PrivatePostCardProps> = {
+export const FriendPostCard: Story<Omit<PrivatePostCardProps, 'headerSection'>> = {
   args: {
     comments: privateComments,
     createdAt: '2024-07-01T10:00:00Z',
@@ -158,7 +161,7 @@ export const FriendCard: Story<PrivatePostCardProps> = {
     userName: 'Frank',
   },
 
-  render: function Render(args: PrivatePostCardProps) {
-    return <PrivatePostCard {...args} />;
+  render: function Render(args: Omit<PrivatePostCardProps, 'headerSection'>) {
+    return <FriendPrivatePostCard {...args} />;
   },
 };

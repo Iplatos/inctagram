@@ -2,84 +2,103 @@
 @use '../../../styles/helpers' as *;
 
 .root {
-  width: rem(962);
-  height: rem(562);
+  width: 960px;
+  height: 562px;
 }
+
+
 
 .content {
-  display: flex;
-  width: rem(961);
-  height: rem(560);
-  padding: 0;
-}
+  display: grid;
+  grid-template-areas:
+    'slider header'
+    'slider content'
+    'slider footer'
+    'slider form';
+  grid-template-columns: 1fr 1fr;
 
-.header {
+  width: 100%;
+  height: 100%;
   padding: 0;
 }
 
 .gallery {
-  width: 50%;
-  height: 100%;
-  padding: 0;
+  grid-area: slider;
+  width: 100%;
   background-color: red;
 }
 
 .postDetails {
   display: flex;
   flex-direction: column;
-
-  width: 50%;
-  height: 100%;
+  width: 480px;
   padding: 0;
-
-  &__comments {
-    position: relative;
-
-    overflow-y: auto;
-
-    height: 100%;
-    min-height: rem(328);
-    max-height: rem(410);
-    padding-top: rem(6);
-
-    &::-webkit-scrollbar {
-      width: 5px;
-    }
-
-    &::-webkit-scrollbar-track {
-      margin: rem(5);
-      background: transparent;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: var(--color-light-900);
-      border-radius: 3px;
-    }
-  }
-
-  &__infoSection{
-    padding-bottom: rem(7);
-  }
-
-  &__addNewCommentForm{
-    min-height: rem(58);
-
-    input {
-      height: rem(30);
-    }
-
-    button {
-      height: rem(30);
-    }
-  }
-
 }
 
-.addNewCommentForm {
+.header {
+  grid-area: header;
+  height: 59px;
+}
+
+.commentsSection {
+  scrollbar-width: thin;
+
+  overflow-y: auto;
+
+  height: 330px;
+  max-height: 420px;
+  margin-top: -5px;
+  padding-top: 6px;
+
+  //&::-webkit-scrollbar {
+  //  width: 5px;
+  //}
+  //
+  //&::-webkit-scrollbar-track {
+  //  margin: rem(5);
+  //  background: transparent;
+  //}
+  //
+  //&::-webkit-scrollbar-thumb {
+  //  background-color: var(--color-light-900);
+  //  border-radius: 3px;
+  //}
+
+  &Publick {
+    height: 410px;
+  }
+}
+
+.commentsDetails {
+  grid-area: footer;
+  padding-top: 9px;
+  padding-bottom: 9px;
+
+  &Publick {
+    height: 83px;
+  }
+}
+
+.addNewCommentSection {
   display: flex;
+  grid-area: form;
+
+  width: 100%;
+  height: 100%;
+  max-height: 60px;
+  padding-bottom: 6px ;
+
+  div {
+    margin: 0;
+  }
+
+  input {
+    width: 100%;
+    height: 30px;
+    color: var(--color-light-300);
+  }
+
+  button {
+    height: 30px;
+  }
 }
-
-
-
-
-

@@ -8,6 +8,8 @@ import {
   PublicPostCommentProps,
 } from '@/features/post/post-comment/public-post-comment';
 
+import s from './post-card.module.scss';
+
 export type PublicPostCardProps = {
   avatar?: string;
   comments: [] | PublicPostCommentProps[];
@@ -35,10 +37,14 @@ export const PublicPostCard = (props: PublicPostCardProps) => {
 
   return (
     <PostCard
-      comments={comments.map((comment, index) => (
+      classes={{
+        commentsDetails: s.commentsDetailsPublick,
+        commentsSection: s.commentsSectionPublick,
+      }}
+      commentsSection={comments.map((comment, index) => (
         <PublicPostComment {...comment} key={index} />
       ))}
-      header={<HeaderPostCard userName={userName} />}
+      headerSection={<HeaderPostCard userName={userName} />}
       infoSection={<PostInfoSection createdAt={createdAt} icons={icons} likesCount={likesCount} />}
     />
   );

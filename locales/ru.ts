@@ -312,7 +312,7 @@ export const ru = {
   post: {
     card: {
       addNewComment: {
-        error: 'Максимальная длина комментария - 150 символов',
+        error: 'макс. длина 150 символов',
         placeholder: 'Добавить комментарий...',
         submit: 'Опубликовать',
       },
