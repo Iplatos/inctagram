@@ -8,7 +8,7 @@ import { Typography } from '@/shared/ui/typography';
 import { DialogClose } from '@radix-ui/react-dialog';
 import clsx from 'clsx';
 
-import s from './modal-card.module.scss';
+import s from './modal-card-root.module.scss';
 
 export type ModalCardSlot = 'cardRoot' | 'closeButton' | 'header' | 'title';
 export type ModalCardClasses = { [P in ModalCardSlot]?: string };

@@ -211,6 +211,16 @@ export const ru = {
     datePicker: {
       locale: gregorian_ru,
     },
+    logOutModal: {
+      description: 'Вы действительно хотите выйти из аккаунта <email></email>?',
+      title: 'Выход',
+    },
+    modal: {
+      buttonNames: {
+        cancel: 'Нет',
+        confirm: 'Да',
+      },
+    },
     postsList: {
       addPostButton: 'Создать Пост',
       noPostsMessage: 'Здесь пока нет постов',
@@ -221,12 +231,17 @@ export const ru = {
     addPhotoButton: 'Добавить Фото Пользователя',
 
     deleteAvatarModal: {
-      buttons: {
-        confirm: 'Да',
-        deny: 'Нет',
-      },
       message: 'Вы уверены, что хотите удалить это фото?',
       title: 'Удалить Фото',
+    },
+
+    photoSlider: {
+      deletePhoto: {
+        cancelButtonTitle: 'Отмена',
+        confirmButtonTitle: 'Удалить',
+        headerTitle: 'Удалить фото?',
+        message: 'Фото будет удалено из вашей публикации.',
+      },
     },
 
     profileForm: {
@@ -278,10 +293,6 @@ export const ru = {
       generalInformation: { label: 'Общая информация' },
       myPayments: { label: 'Мои платежи' },
     },
-  },
-
-  logOut: {
-    reallyWantToLogOut: 'Вы действительно хотите выйти из аккаунта <email></email>?',
   },
 
   myProfile: {

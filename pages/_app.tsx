@@ -8,6 +8,7 @@ import { useLoader } from '@/features/hooks/progressLoader/useLoader';
 import { store } from '@/shared/api/store';
 
 import '../styles/index.scss';
+import '../styles/nprogress.css';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';

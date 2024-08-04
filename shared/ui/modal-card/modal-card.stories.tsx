@@ -2,7 +2,7 @@ import * as CardStories from '@/shared/ui/card/card.stories';
 import { Dialog } from '@radix-ui/react-dialog';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { ModalCard, ModalCardSlot } from './modal-card';
+import { ModalCard, ModalCardSlot } from './index';
 
 const CardStoriesArgTypes = CardStories.default.argTypes;
 

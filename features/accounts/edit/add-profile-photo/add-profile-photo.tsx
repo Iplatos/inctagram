@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import { CloseIcon } from '@/assets/icons/close';
-import { DEPRECATED_Modal } from '@/features';
 import { AvatarUploader, AvatarUploaderProps } from '@/features/avatar-uploader';
+import { ConfirmModal } from '@/features/confirm-modal';
 import {
   useDeleteMyAvatarMutation,
   useGetMeQuery,
@@ -18,7 +18,12 @@ import clsx from 'clsx';
 import s from './add-profile-photo.module.scss';
 
 export const AddProfilePhoto = () => {
-  const { addPhotoButton: tButton, deleteAvatarModal: tModal } = useTranslation().t.editProfile;
+  const {
+    t: {
+      common: tCommon,
+      editProfile: { addPhotoButton: tButton, deleteAvatarModal: tModal },
+    },
+  } = useTranslation();
 
   const [uploaderOpen, setUploaderOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -39,7 +44,7 @@ export const AddProfilePhoto = () => {
 
     if (!isValidAvatar) {
       console.warn(
-        `Can't specify the MIME type of the loaded file from user device. Loaded image must be of either JPEG of PNG type. When sent to the server, the user's avatar will not be provided with metadata about the image type. Received MIME type: ${mediaType}.`
+        `Can't specify the MIME type of the loaded file from user device. Loaded image must be of either JPEG or PNG type. When sent to the server, the user's avatar will not be provided with metadata about the image type. Received MIME type: ${mediaType}.`
       );
     }
 
@@ -51,9 +56,13 @@ export const AddProfilePhoto = () => {
     uploadAvatar(formData);
   };
 
-  const handleAvatarDelete = () => {
-    deleteAvatar();
-    setDeleteModalOpen(false);
+  const handleAvatarDelete = async () => {
+    try {
+      await deleteAvatar().unwrap();
+      setDeleteModalOpen(false);
+    } catch (error) {
+      console.error('Failed to delete avatar:', error);
+    }
   };
 
   // Manual destructuring to prevent unrecognized props from backend such as `updatedAt` from being passed to the internal `img` component.
@@ -66,6 +75,12 @@ export const AddProfilePhoto = () => {
   } = meResponse?.data.avatar ?? {};
 
   const isUploaderDisabled = isUploadingAvatar || isDeletingAvatar || isFetchingMyProfile;
+
+  const onCloseModal = () => {
+    if (!isDeletingAvatar) {
+      setDeleteModalOpen(false);
+    }
+  };
 
   return (
     <div className={s.photoContainer}>
@@ -106,22 +121,17 @@ export const AddProfilePhoto = () => {
         open={uploaderOpen}
       />
 
-      <DEPRECATED_Modal
-        onClose={() => setDeleteModalOpen(false)}
+      <ConfirmModal
+        cancelButtonTitle={tCommon.modal.buttonNames.cancel}
+        confirmButtonTitle={tCommon.modal.buttonNames.confirm}
+        disabled={isDeletingAvatar}
+        headerTitle={tModal.title}
+        onCancel={onCloseModal}
+        onConfirm={handleAvatarDelete}
         open={deleteModalOpen}
-        showCloseButton
-        title={tModal.title}
       >
         <Typography.Regular16>{tModal.message}</Typography.Regular16>
-        <div className={s.modalButtonsGroup}>
-          <Button className={s.modalButton} onClick={handleAvatarDelete} variant={'tertiary'}>
-            {tModal.buttons.confirm}
-          </Button>
-          <Button className={s.modalButton} onClick={() => setDeleteModalOpen(false)}>
-            {tModal.buttons.deny}
-          </Button>
-        </div>
-      </DEPRECATED_Modal>
+      </ConfirmModal>
     </div>
   );
 };
