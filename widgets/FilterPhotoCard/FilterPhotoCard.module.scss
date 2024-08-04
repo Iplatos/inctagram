@@ -17,6 +17,11 @@
     justify-content: space-between;
   }
 
+  .galleryWrapper {
+    grid-area: preview;
+    height: 100%;
+  }
+
   .filtersList {
     $filters-list-adaptive-padding: get-adaptive-size(
       $min-size: 16,
@@ -28,7 +33,6 @@
 
     --columns-count: 3;
 
-    // TODO: add a normalized scrollbar, either by adding some kind of mixin or using Radix's ScrollArea component
     @include webkit-custom-scrollbar;
 
     overflow: auto;
@@ -85,21 +89,12 @@
 
   overflow: hidden;
   display: grid;
-  grid-template: 'preview filters' / 1fr min(50%, $adaptive-filters-list-width);
+  grid-template: 'preview filters' / 1fr min(49.5%, $adaptive-filters-list-width);
   flex: 1 1 auto;
 
   @include media-breakpoint('tablet-m') {
     grid-template: 'preview' 1fr 'filters' min-content;
   }
-}
-
-.previewWrapper {
-  @extend %filter-preview-image;
-
-  position: relative;
-  grid-area: preview;
-  width: 100%;
-  height: 100%;
 }
 
 .filterItem {

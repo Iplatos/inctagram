@@ -1,111 +1,110 @@
 import { ElementRef, useEffect, useRef, useState } from 'react';
 
-import MockUserAvatar from '@/assets/img/mock-user-avatar.jpg';
-import { blobToBase64, dataURLToBlob } from '@/shared/helpers';
-import {
-  CCGramFilter,
-  CCGramFilterOrString,
-  CCGramImageParsers,
-  useCCGramFilter,
-} from '@/shared/hooks';
-import { Replace } from '@/shared/types/helpers';
+import { getPhotoGalleryMockImages } from '@/features/photo-gallery/photo-gallery.stories';
+import { dataURLToBlob } from '@/shared/helpers';
+import { CCGramImageParsers } from '@/shared/hooks';
 import { Button } from '@/shared/ui/Button';
-import { Typography } from '@/shared/ui/typography';
 import { Meta, StoryObj } from '@storybook/react';
-import { DEFAULT_FILTERS } from 'cc-gram';
 
-import { FilterPhotoCard, FilterPhotoCardProps } from './FilterPhotoCard';
+import { FilterPhotoCard, FilterPhotoCardItem, FilterPhotoCardProps } from './FilterPhotoCard';
+import { FilterPhotoCardRefObject } from './useFilterPhotoCardHandle';
 
-type CustomRenderProps = Replace<
-  FilterPhotoCardProps,
-  {
-    initialFilter: CCGramFilter;
-    parserFunction: keyof CCGramImageParsers;
-  }
->;
+type CustomRenderProps = FilterPhotoCardProps & {
+  imagesCount: number;
+  parserFunction: keyof CCGramImageParsers;
+  startIndex?: number;
+};
 
-const CustomRender = ({ onFilterChange, parserFunction, ...props }: CustomRenderProps) => {
-  const [filter, setFilter] = useState<CCGramFilterOrString>(props.initialFilter);
-  const [imageUrl, setImageUrl] = useState('');
+const getImagesArray = (count: number) =>
+  getPhotoGalleryMockImages(count).map<FilterPhotoCardItem>(item => ({
+    filter: 'normal',
+    src: item.original,
+  }));
 
-  const imageRef = useRef<ElementRef<'img'>>();
+const CustomRender = ({
+  imagesCount,
+  items: additionalImages,
+  onFilterChange,
+  parserFunction,
+  startIndex,
+  ...props
+}: CustomRenderProps) => {
+  const [images, setImages] = useState(getImagesArray(imagesCount));
+
+  const previewItemsRef = useRef<Map<FilterPhotoCardItem, ElementRef<'img'>>>(new Map());
+  const galleryRef = useRef<FilterPhotoCardRefObject>(null);
 
   // Hack to achieve behavior similar to the usual use of `useRef`
-  //  (Storybook 7.6 can't pass refs because it clones components somehow)
+  // (Storybook 7.6 can't pass refs because it clones components somehow)
+  // Do not pass `previewItemsRef` to the `PhotoGallery` component, because the ref-callbacks inside it will not be called anyway in Storybook
   useEffect(() => {
-    if (!imageRef.current) {
-      imageRef.current = document.querySelector(
-        '[data-test-id="preview-filtered-image"]'
+    images.forEach((_, i) => {
+      const node = document.querySelector(
+        `[data-test-id='preview-filtered-image-${i}']`
       ) as HTMLImageElement;
-    }
-  }, []);
 
-  const { getBlob, getDataURL } = useCCGramFilter();
-
-  useEffect(() => {
-    getImageUrl().then(url => {
-      if (url) {
-        setImageUrl(url);
-      }
+      previewItemsRef.current?.set(images[i], node);
     });
+  }, [images]);
 
-    async function getImageUrl() {
-      if (!imageRef.current) {
-        return;
-      }
-
-      if (parserFunction === 'getBlob') {
-        const blob = await getBlob(imageRef.current);
-
-        if (blob) {
-          return blobToBase64(blob);
-        }
-      }
-
-      return getDataURL(imageRef.current);
+  const handleFilterChange = (filter: string) => {
+    if (!galleryRef.current) {
+      return;
     }
-  }, [filter, parserFunction, getBlob, getDataURL]);
 
-  const handleFilterChange: FilterPhotoCardProps['onFilterChange'] = (filter, imageIndex) => {
-    setFilter(filter);
-    onFilterChange?.(filter, imageIndex);
+    const selectedImageIndex = galleryRef.current.getCurrentIndex();
+
+    setImages(images =>
+      images.map((image, index) => (index === selectedImageIndex ? { ...image, filter } : image))
+    );
+    onFilterChange?.(filter);
   };
 
-  const navigateToParsedImage = () => {
-    // `ObjectURL` is required to open the parsed image in a new tab, as the base64 string is blocked by chrome as a potential security threat
-    const blob = dataURLToBlob(imageUrl);
+  const navigateToParsedImage = async () => {
+    if (!galleryRef.current) {
+      return;
+    }
+    const index = galleryRef.current.getCurrentIndex();
 
-    window.open(URL.createObjectURL(blob), '_blank');
+    if (index !== -1) {
+      const imageElement = previewItemsRef.current.get?.(images[index]);
+
+      if (!imageElement) {
+        return;
+      }
+      const parsedImage = await galleryRef.current?.[parserFunction](imageElement);
+
+      if (!parsedImage) {
+        return;
+      }
+      const blob = typeof parsedImage === 'string' ? dataURLToBlob(parsedImage) : parsedImage;
+
+      // `ObjectURL` is required to open the parsed image in a new tab, as the base64 string is blocked by chrome as a potential security threat
+      window.open(URL.createObjectURL(blob), '_blank');
+    }
   };
 
   return (
     <>
-      <div className={'controls-wrapper'}>
-        <Button disabled={!imageUrl} onClick={navigateToParsedImage}>
-          Open parsed image
-        </Button>
-        {!imageUrl && (
-          <Typography.Regular16>
-            Select the filter manually to enable the navigation button
-          </Typography.Regular16>
-        )}
-      </div>
+      <Button onClick={navigateToParsedImage} style={{ marginBottom: '1rem' }}>
+        Open parsed image
+      </Button>
 
       <div style={{ height: 'calc(100vh - 5.3rem)' }}>
-        <FilterPhotoCard onFilterChange={handleFilterChange} {...props} />
+        <FilterPhotoCard
+          galleryProps={{ startIndex }}
+          galleryRef={galleryRef}
+          items={images.concat(additionalImages)}
+          onFilterChange={handleFilterChange}
+          {...props}
+        />
       </div>
     </>
   );
 };
 
-const filterOptions = [
-  'normal',
-  ...Array.from(DEFAULT_FILTERS.keys()).sort((a, b) => a.localeCompare(b)),
-] satisfies CCGramFilterOrString[];
-
 const meta = {
   argTypes: {
-    initialFilter: { control: 'select', options: filterOptions },
     onFilterChange: { control: 'action' },
     onNextClick: { control: 'action' },
     onPrevClick: { control: 'action' },
@@ -113,19 +112,9 @@ const meta = {
       control: 'inline-radio',
       options: ['getBlob', 'getDataURL'] satisfies (keyof CCGramImageParsers)[],
     },
+    startIndex: { control: 'number' },
   },
-  decorators: [
-    Story => (
-      // TODO: add a description of the various possible height settings to achieve adjustable card height and automatic scrolling on overflow
-      <>
-        <style>{`
-          .controls-wrapper { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
-        `}</style>
-        <Story />
-      </>
-    ),
-  ],
-  render: args => <CustomRender key={args.initialFilter} {...args} />,
+  render: props => <CustomRender key={props.imagesCount} {...props} />,
   tags: ['autodocs'],
   title: 'WIDGETS/FilterPhotoCard',
 } satisfies Meta<CustomRenderProps>;
@@ -134,5 +123,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: { initialFilter: 'inkwell', parserFunction: 'getBlob', src: [MockUserAvatar.src] },
+  args: { imagesCount: 5, items: [], parserFunction: 'getBlob' },
 };
