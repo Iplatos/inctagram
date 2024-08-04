@@ -2,18 +2,17 @@ import { ElementRef, ForwardedRef, useMemo } from 'react';
 
 import { ArrowIOSBack } from '@/assets/icons/arrow-ios-back';
 import { capitalise } from '@/shared/helpers';
-import { Button, Card, IconButton, Typography } from '@/shared/ui';
-import { StaticImport } from 'next/dist/shared/lib/get-img-props';
-import Image from 'next/image';
-
-import s from './FilterPhotoCard.module.scss';
-
 import {
   CCGramFilter,
   CCGramFilterOrString,
   CCGramImageParsers,
   useCCGramFilter,
-} from './useFilter';
+} from '@/shared/hooks';
+import { Button, Card, IconButton, Typography } from '@/shared/ui';
+import { StaticImport } from 'next/dist/shared/lib/get-img-props';
+import Image from 'next/image';
+
+import s from './FilterPhotoCard.module.scss';
 
 export type FilterPhotoCardNavHandler = (
   params: { parsers: CCGramImageParsers } & { selectedFilter: string }

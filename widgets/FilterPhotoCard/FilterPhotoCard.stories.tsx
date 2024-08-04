@@ -2,20 +2,19 @@ import { ElementRef, useEffect, useRef, useState } from 'react';
 
 import MockUserAvatar from '@/assets/img/mock-user-avatar.jpg';
 import { blobToBase64, dataURLToBlob } from '@/shared/helpers';
-import { Replace } from '@/shared/types/helpers';
-import { Button } from '@/shared/ui/Button';
-import { Typography } from '@/shared/ui/typography';
-import { Meta, StoryObj } from '@storybook/react';
-
 import {
   CCGramFilter,
   CCGramFilterOrString,
   CCGramImageParsers,
-  DEFAULT_FILTERS,
-  FilterPhotoCard,
-  FilterPhotoCardProps,
   useCCGramFilter,
-} from '.';
+} from '@/shared/hooks';
+import { Replace } from '@/shared/types/helpers';
+import { Button } from '@/shared/ui/Button';
+import { Typography } from '@/shared/ui/typography';
+import { Meta, StoryObj } from '@storybook/react';
+import { DEFAULT_FILTERS } from 'cc-gram';
+
+import { FilterPhotoCard, FilterPhotoCardProps } from './FilterPhotoCard';
 
 type CustomRenderProps = Replace<
   FilterPhotoCardProps,

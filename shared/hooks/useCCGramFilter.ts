@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import { useEffectEvent } from '@/shared/hooks/useEffectEvent';
 import { FilterSetting, createFilter } from 'cc-gram';
 
 export { DEFAULT_FILTERS } from 'cc-gram';
@@ -40,7 +41,6 @@ type useCCGramFilterParameters = {
 
 export type CCGramImageParsers = Pick<ReturnType<typeof useCCGramFilter>, 'getBlob' | 'getDataURL'>;
 
-// TODO: rename file according to variable name
 // The logic of using the custom data-attribute from the cc-gram documentation doesn't work.
 //  Therefore there is no support for this functionality. Link to docs: https://github.com/EastSun5566/cc-gram#javascript
 export const useCCGramFilter = ({
@@ -67,10 +67,9 @@ export const useCCGramFilter = ({
     filterInstance.applyFilter(selector);
   }, [filterInstance, selectedFilter, selector]);
 
-  // TODO: add handy description for `registerImage`, `applyFilter` functions
-  const registerImage = (filter: CCGramFilterOrString = selectedFilter) => ({
+  const registerImage = useEffectEvent((filter: CCGramFilterOrString = selectedFilter) => ({
     ['data-filter']: filter,
-  });
+  }));
 
   const applyFilter = useCallback((filter: CCGramFilterOrString, selector?: string) => {
     setSelectedFilter(filter);
@@ -78,8 +77,8 @@ export const useCCGramFilter = ({
   }, []);
 
   // No need to re-apply filters by calling `filterInstance.apply` when adding a new filter.
-  //  It is enough to rerender the component caused by a local state change.
-  //  Same with removing the filter.
+  // It is enough to rerender the component caused by a local state change.
+  // Same with removing the filter.
   const setFilter = useCallback(
     (filter: string, options: FilterSetting) => {
       filterInstance.setFilter(filter, options);
