@@ -1,5 +1,6 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useState } from 'react';
 
+import { useDebouncedCallBack } from '@/shared/hooks/useDebouncedCallback';
 import { TextField } from '@/shared/ui';
 import { Button } from '@/shared/ui/Button';
 import { Modal } from '@/shared/ui/modal';
@@ -24,32 +25,13 @@ export const LikesModal = (props: LikesModalProps) => {
     }
   };
 
-  const Debounce = (
-    array: { followed: boolean; name: string }[],
-    inputValue: string,
-    delay: number
-  ) => {
-    const [debouncedValue, setDebouncedValue] = useState(array);
+  const [filter, setFilter] = useState('');
 
-    useEffect(
-      () => {
-        const t = setTimeout(() => {
-          setDebouncedValue(
-            array.filter(p => p.name.toLowerCase().includes(inputValue.toLowerCase()))
-          );
-        }, delay);
+  const setDebouncedFilter = useDebouncedCallBack((e: string) => {
+    setFilter(e);
+  }, 1000);
 
-        // clean up the timeout after value changes
-        return () => {
-          clearTimeout(t);
-        };
-      },
-      [array, inputValue, delay] // re-run if value or delay changes
-    );
-
-    return debouncedValue;
-  };
-  const NewArr = Debounce(people, inputValue, 1000);
+  const filteredPeople = people.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()));
 
   return (
     <Modal.Root
@@ -64,14 +46,25 @@ export const LikesModal = (props: LikesModalProps) => {
         style={{ overflow: 'auto' }}
       >
         <ModalCard.Content className={s.cardContent}>
+          <input
+            onChange={event => {
+              setDebouncedFilter(event.currentTarget.value);
+              setInputValue(event.currentTarget.value);
+            }}
+            type={'text'}
+            value={inputValue}
+          />
           <TextField
             inputType={'search'}
-            onChange={setInputValue}
+            onChange={value => {
+              setDebouncedFilter(value);
+              setInputValue(value);
+            }}
             placeholder={'Search'}
             value={inputValue}
           />
           {props.children}
-          {NewArr.map(p => (
+          {filteredPeople.map(p => (
             <div className={s.buttonsGroup} key={p.name}>
               {p.name}
               <span>
