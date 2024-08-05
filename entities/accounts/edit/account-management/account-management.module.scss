@@ -1,0 +1,47 @@
+@use '../../../../styles/helpers' as *;
+@use '../../../../styles/mixins' as *;
+
+.card {
+    margin-top: em(6);
+    padding: em(12) em(23);
+}
+
+.businessContainer {
+    margin-top: em(42);
+}
+
+.payment {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    margin-top: em(24);
+
+    .paymentContainer {
+        display: flex;
+        flex-direction: row;
+        gap: em(54);
+        align-items: center;
+
+        @include media-breakpoint('tablet-s') {
+            flex-direction: column;
+            gap: 0;
+        }
+    }
+
+    @include media-breakpoint('tablet-m') {
+        justify-content: center;
+    }
+}
+
+.paymentCard {
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: em(96);
+    height: em(64);
+
+    border-radius: 5px;
+}

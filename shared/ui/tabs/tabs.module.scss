@@ -3,11 +3,14 @@
 .root {
   display: flex;
   flex-direction: column;
+  
 }
 
 .list {
+  overflow: scroll hidden;
   display: flex;
   flex-shrink: 0;
+
   border-bottom: 2px solid var(--color-dark-100);
 }
 
@@ -28,6 +31,7 @@
   font-weight: 600;
   color: var(--color-dark-100);
   text-align: center;
+
 
   &.fullWidth {
     flex-grow: 1;

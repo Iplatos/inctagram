@@ -10,9 +10,9 @@ import { useTranslation } from '@/shared/hooks/useTranslation';
 import { TabContent, Tabs } from '@/shared/ui';
 
 const tabs = [
-  { key: 'accountManagement', value: 'general information' } as const,
+  { key: 'generalInformation', value: 'general information' } as const,
   { key: 'devices', value: 'devices' } as const,
-  { key: 'generalInformation', value: 'account management' } as const,
+  { key: 'accountManagement', value: 'account management' } as const,
   { key: 'myPayments', value: 'my payments' } as const,
 ] as const;
 
