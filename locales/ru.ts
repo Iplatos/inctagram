@@ -235,6 +235,15 @@ export const ru = {
       title: 'Удалить Фото',
     },
 
+    photoSlider: {
+      deletePhoto: {
+        cancelButtonTitle: 'Отмена',
+        confirmButtonTitle: 'Удалить',
+        headerTitle: 'Удалить фото?',
+        message: 'Фото будет удалено из вашей публикации.',
+      },
+    },
+
     profileForm: {
       aboutMe: {
         label: 'Обо мне',

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useRef } from 'react';
+import React, { ChangeEvent, ElementRef, FC, useRef } from 'react';
 import AvatarEditor, { CroppedRect } from 'react-avatar-editor';
 
 import { dataURLToBlob } from '@/shared/helpers';
@@ -40,6 +40,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
 }) => {
   const { avatarUploader: t } = useTranslation().t.common;
   const editorRef = useRef<AvatarEditor>(null);
+  const inputRef = useRef<ElementRef<'input'>>(null);
   const {
     actions: {
       editorClosed,
@@ -64,6 +65,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
     if (shouldResetState === true) {
       dispatch(editorClosed());
     }
+    onClose();
   };
 
   const uploadFromDevice = (e: ChangeEvent<HTMLInputElement>) => {
@@ -158,6 +160,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
             </Typography.Regular14>
           </Alert>
         )}
+
         {previewOrAvatar ? (
           <div
             className={clsx(s.canvasWrapper, disabled && s.canvasWrapperDisabled)}
