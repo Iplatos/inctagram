@@ -65,7 +65,6 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
     if (shouldResetState === true) {
       dispatch(editorClosed());
     }
-    onClose();
   };
 
   const uploadFromDevice = (e: ChangeEvent<HTMLInputElement>) => {
