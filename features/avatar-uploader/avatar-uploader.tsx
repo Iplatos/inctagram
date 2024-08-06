@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useRef } from 'react';
+import React, { ChangeEvent, ElementRef, FC, useRef } from 'react';
 import AvatarEditor, { CroppedRect } from 'react-avatar-editor';
 
 import { dataURLToBlob } from '@/shared/helpers';
@@ -9,6 +9,7 @@ import { CropProps } from '@/shared/ui/croppedImage';
 import { Typography } from '@/shared/ui/typography';
 import { Trans } from '@/widgets/Trans/Trans';
 import { AvatarFallback } from 'assets/icons/avatar-fallback';
+import clsx from 'clsx';
 
 import s from './avatar-uploader.module.scss';
 
@@ -18,14 +19,20 @@ import { useAvatarUploader } from './useAvatarUploader';
 // TODO: add missing common components to index file in shared/ui
 export type AvatarUploaderProps = {
   avatar?: File | string;
+  disabled?: boolean;
   initCropProps?: CropProps;
-  onClose: () => void;
+  /**
+   * `onClose` callback should return `true` if you want the loader to reset its state when closed.
+   * In particular, this means resetting the preview loaded from the device along with the error message.
+   * */
+  onClose: () => boolean | void;
   onImageSave: (image: Blob, cropProps: CropProps & { mediaType: string }) => void;
   open: boolean;
 };
 
 export const AvatarUploader: FC<AvatarUploaderProps> = ({
   avatar,
+  disabled,
   initCropProps,
   onClose,
   onImageSave,
@@ -33,6 +40,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
 }) => {
   const { avatarUploader: t } = useTranslation().t.common;
   const editorRef = useRef<AvatarEditor>(null);
+  const inputRef = useRef<ElementRef<'input'>>(null);
   const {
     actions: {
       editorClosed,
@@ -52,8 +60,11 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
   };
 
   const handleClose = () => {
-    dispatch(editorClosed());
-    onClose();
+    const shouldResetState = onClose();
+
+    if (shouldResetState === true) {
+      dispatch(editorClosed());
+    }
   };
 
   const uploadFromDevice = (e: ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +104,6 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
 
     if (state.preview) {
       onImageSave(state.preview, { ...cropProps, mediaType: state.preview.type });
-      handleClose();
 
       return;
     }
@@ -101,7 +111,6 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
       const file = typeof avatar === 'string' ? dataURLToBlob(avatar) : avatar;
 
       onImageSave(file, { ...cropProps, mediaType: file.type });
-      handleClose();
     }
   };
 
@@ -110,6 +119,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
   return (
     <ConfirmModal
       classes={{ button: s.button, buttonsGroup: s.buttonsGroup }}
+      disabled={disabled}
       headerTitle={t.title}
       onCancel={handleClose}
       onConfirm={saveAvatar}
@@ -122,6 +132,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
         >
           <input
             accept={'image/png, image/jpeg'}
+            disabled={disabled}
             onChange={uploadFromDevice}
             style={{ display: 'none' }}
             type={'file'}
@@ -150,7 +161,10 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
         )}
 
         {previewOrAvatar ? (
-          <div className={s.canvasWrapper} onWheel={changeImageScale}>
+          <div
+            className={clsx(s.canvasWrapper, disabled && s.canvasWrapperDisabled)}
+            onWheel={changeImageScale}
+          >
             <div className={s.canvasBackground} />
             <AvatarEditor
               border={12}
@@ -159,7 +173,11 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
               color={[23, 23, 23, 0.75]} // --color-dark-500 with transparency
               image={previewOrAvatar}
               onImageReady={initEditorPosition}
-              onPositionChange={pos => dispatch(editorPositionChanged(pos))}
+              onPositionChange={pos => {
+                if (!disabled) {
+                  dispatch(editorPositionChanged(pos));
+                }
+              }}
               position={state.editorPosition}
               ref={editorRef}
               scale={state.scale}

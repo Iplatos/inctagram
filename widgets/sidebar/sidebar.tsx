@@ -97,6 +97,7 @@ export const Sidebar = () => {
       <ConfirmModal
         cancelButtonTitle={t.modal.buttonNames.cancel}
         confirmButtonTitle={t.modal.buttonNames.confirm}
+        disabled={isLogOutLoading}
         headerTitle={t.logOutModal.title}
         onCancel={closeModal}
         onConfirm={handleLogout}
