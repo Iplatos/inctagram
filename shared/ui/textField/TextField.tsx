@@ -2,7 +2,7 @@ import { ChangeEvent, ForwardedRef, ReactNode, forwardRef, useState } from 'reac
 
 import Close from '@/assets/icons/close.svg?url';
 import Eye from '@/assets/icons/eye-outline.svg?url';
-import SearchOutline from '@/assets/icons/searchOutline.svg?url';
+import SearchOutline from '@/assets/icons/search-outlined.svg?url';
 import { Typography } from '@/shared/ui/typography';
 import { clsx } from 'clsx';
 import Image from 'next/image';

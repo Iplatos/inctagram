@@ -1,39 +1,41 @@
-.icon {
-    margin-left: 10px;
-  }
+@use '../../../styles/helpers' as *;
+@use '../../../styles/mixins' as *;
 
-  .headblock {
-    display: flex
-  }
-  
-  .root {
-    position: relative;
-  
-    border-collapse: collapse;
-  
+.container {
     width: 100%;
-  
-    color: var(--color-light-100);
-  
-    border: 1px solid var(--color-dark-500);
-  }
-  
-  .tableRow {
-    border-bottom: 1px solid var(--color-dark-500);
-    transition: 0.3s;
-  }
-  
-  .tableHead {
-    background-color: var(--color-dark-500)
-  }
-  
-  .tableHeadCell {
-    cursor: pointer;
-    padding: 12px 24px;
-    text-align: left;
-  }
-  
-  .tableDataCell {
-    padding: 12px 24px;
-  }
-  
+
+    @include media-breakpoint('tablet-m') {
+        display: none;
+
+    }
+}
+
+.tableRow {
+    display: flex;
+    border-collapse: collapse;
+    flex-direction: row;
+
+    // gap: em(20);
+    align-items: center;
+    justify-content: space-around;
+
+    padding: em(12)  0 ;
+
+    border: em(1) solid var(--color-dark-500);
+    border-top: none;
+}
+
+.tableHeader {
+    background-color: var(--color-dark-500);
+}
+
+.checkboxContainer {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    padding: 0 em(6) em(12);
+}
+
+.inputContainer {
+    padding-bottom: em(24);
+}

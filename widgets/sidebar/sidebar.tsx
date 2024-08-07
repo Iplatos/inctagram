@@ -11,7 +11,7 @@ import LogOutOutline from 'assets/icons/log-out-outline.svg';
 import MessageCircleOutline from 'assets/icons/message-circle-outline.svg';
 import PersonOutline from 'assets/icons/person-outline.svg';
 import PlusSquareOutline from 'assets/icons/plus-square-outline.svg';
-import SearchOutline from 'assets/icons/searchOutline.svg';
+import SearchOutline from 'assets/icons/search-outlined.svg';
 import TrendingUpOutline from 'assets/icons/trending-up-outline.svg';
 import clsx from 'clsx';
 import Link from 'next/link';
