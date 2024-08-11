@@ -1,46 +1,20 @@
-import { ChangeEvent, useState } from 'react';
-
-import { useAvatarUploader } from '@/features/avatar-uploader/useAvatarUploader';
+import * as Dialog from '@radix-ui/react-dialog';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { AddPhotoCard } from './addPhotoCard';
 
-type CardRenderProps = {
-  draft?: boolean;
-  error: null | string;
-  title: string;
-};
-
-const CardRender = (props: CardRenderProps) => {
-  const [open, setOpen] = useState<boolean>(true);
-  const {
-    actions: { loadedFromDevice },
-    dispatch,
-  } = useAvatarUploader();
-  const uploadFromDevice = (e: ChangeEvent<HTMLInputElement>) => {
-    const preview = e.target.files?.[0];
-
-    if (!preview) {
-      return;
-    }
-
-    dispatch(loadedFromDevice(preview));
-  };
-
-  return (
-    <AddPhotoCard
-      draft={props.draft}
-      error={props.error}
-      onClose={() => setOpen(false)}
-      open={open}
-      setImg={uploadFromDevice}
-      title={props.title}
-    />
-  );
-};
-
 const meta = {
-  component: CardRender,
+  component: AddPhotoCard,
+  decorators: [
+    Story => (
+      <div style={{ width: 'min(370px, 100%)' }}>
+        {/* `Dialog.Root` is required to provide the necessary context for `Dialog.Close`  */}
+        <Dialog.Root>
+          <Story />
+        </Dialog.Root>
+      </div>
+    ),
+  ],
   tags: ['autodocs'],
   title: 'Components/AddPhotoCard',
 } satisfies Meta<typeof AddPhotoCard>;
@@ -48,24 +22,36 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const AddProfilePhoto: Story = {
+const longError =
+  // cSpell: disable-next-line
+  'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nihil inventore tempore quos quia voluptatem quibusdam soluta omnis nesciunt nobis! Autem?';
+
+export const Basic: Story = {
   args: {
+    disabled: false,
+    draft: false,
     error: null,
     title: 'Add a profile photo',
   },
 };
 
-export const AddPhotoWithDraft: Story = {
+export const WithDraft: Story = {
   args: {
+    ...Basic.args,
     draft: true,
-    error: null,
-    title: 'Add Photo',
   },
 };
 
-export const AddPhotoCardWithError: Story = {
+export const WithError: Story = {
   args: {
-    error: 'A photo size should be less than 10 MB',
-    title: 'Add a profile photo',
+    ...Basic.args,
+    error: '<bold>Error!</bold> A photo size should be less than 10 MB',
+  },
+};
+
+export const LongError: Story = {
+  args: {
+    ...Basic.args,
+    error: longError,
   },
 };

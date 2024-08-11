@@ -1,88 +1,83 @@
-import { ChangeEvent, useRef } from 'react';
+import { ChangeEvent, FC } from 'react';
 
 import { AvatarFallback } from '@/assets/icons/avatar-fallback';
 import { CloseIcon } from '@/assets/icons/close';
-import { CloseDialog } from '@/features';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Typography, Card } from '@/shared/ui';
 import { Alert } from '@/shared/ui/alert';
+import { Trans } from '@/widgets/Trans/Trans';
 import * as Dialog from '@radix-ui/react-dialog';
+import clsx from 'clsx';
 
 import s from './addPhotoCard.module.scss';
 
-import { Trans } from '../Trans/Trans';
-
-type Props = {
+export type AddPhotoCardProps = {
+  disabled?: boolean;
   draft?: boolean;
   error: null | string;
+  // TODO: add an imperative api for clicking on the button with access to the input ref
+  // TODO: add click handler for the "Draft" button
   onClose?: () => void;
-  open: boolean;
   setImg?: (e: ChangeEvent<HTMLInputElement>) => void;
   title: string;
 };
 
-export const AddPhotoCard = (props: Props) => {
-  const FileRef = useRef<HTMLInputElement>(null);
+export const AddPhotoCard: FC<AddPhotoCardProps> = ({
+  disabled,
+  draft,
+  error,
+  onClose,
+  setImg,
+  title,
+}) => {
   const { t } = useTranslation();
 
   return (
-    <Dialog.Root onOpenChange={props.onClose} open={props.open}>
-      <Dialog.Portal>
-        <Dialog.Overlay className={s.overlay} />
-        <Dialog.Content className={s.dialogContent}>
-          {props.open && (
-            <Card className={s.addPhotoCard}>
-              <Card.Header className={s.header}>
-                <Typography.H1>{props.title}</Typography.H1>
-                <CloseDialog className={s.closeButton}>
-                  <CloseIcon className={s.closeIcon} />
-                </CloseDialog>
-              </Card.Header>
-              <div className={s.content}>
-                <Card.Content>
-                  {props.error && (
-                    <Alert classes={{ alertRoot: s.error }} severity={'error'}>
-                      <Typography.Regular14>
-                        <Trans
-                          tags={{
-                            bold: ({ content }) => <Typography.Bold14>{content}</Typography.Bold14>,
-                          }}
-                          text={props.error}
-                        />
-                      </Typography.Regular14>
-                    </Alert>
-                  )}
-                  <div className={s.cardBody}>
-                    <div className={s.placeholder}>
-                      <AvatarFallback className={s.image} />
-                    </div>
+    <Card className={s.root}>
+      <Card.Header>
+        <Typography.H1 className={s.title}>{title}</Typography.H1>
+        <Dialog.Close
+          className={clsx(s.closeButton, disabled && s.closeButtonDisabled)}
+          disabled={disabled}
+          onClick={onClose}
+        >
+          <CloseIcon />
+        </Dialog.Close>
+      </Card.Header>
 
-                    <div className={s.buttonsGroup}>
-                      <label>
-                        <Button as={'span'} className={s.button}>
-                          {t.common.avatarUploader.buttons.select}
-                        </Button>
-                        <input
-                          className={s.inputFile}
-                          onChange={props.setImg}
-                          ref={FileRef}
-                          type={'file'}
-                        />
-                      </label>
+      <Card.Content className={s.content}>
+        {error && (
+          <Alert classes={{ alertRoot: s.error }} severity={'error'}>
+            <Typography.Regular14>
+              <Trans
+                tags={{
+                  bold: ({ content }) => <Typography.Bold14>{content}</Typography.Bold14>,
+                }}
+                text={error}
+              />
+            </Typography.Regular14>
+          </Alert>
+        )}
 
-                      {props.draft && (
-                        <Button className={s.draft} variant={'tertiary'}>
-                          {t.common.postsList.buttons.draftButton}
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                </Card.Content>
-              </div>
-            </Card>
+        <div className={s.placeholderWrapper}>
+          <div className={s.placeholderBackground}>
+            <AvatarFallback className={s.placeholderIcon} />
+          </div>
+        </div>
+
+        <div className={s.buttonsGroup}>
+          <Button as={'label'} className={s.button}>
+            {t.common.avatarUploader.buttons.select}
+            <input onChange={setImg} style={{ display: 'none' }} type={'file'} />
+          </Button>
+
+          {draft && (
+            <Button className={s.draft} variant={'tertiary'}>
+              {t.common.postsList.buttons.draftButton}
+            </Button>
           )}
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+        </div>
+      </Card.Content>
+    </Card>
   );
 };
