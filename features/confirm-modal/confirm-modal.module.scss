@@ -4,7 +4,6 @@
 .modalContent {
   .cardRoot {
     @include flex($justify: null, $align: null, $direction: column);
-    @include thin-scrollbar;
 
     width: 440px;
     max-width: 100%;

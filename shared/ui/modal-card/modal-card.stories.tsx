@@ -1,102 +1,142 @@
-import * as CardStories from '@/shared/ui/card/card.stories';
-import { Dialog } from '@radix-ui/react-dialog';
-import { Meta, StoryObj } from '@storybook/react';
+import { ElementRef, ForwardedRef, ReactNode } from 'react';
 
-import { ModalCard, ModalCardSlot } from './index';
+import { CloseIcon } from '@/assets/icons/close';
+import { Replace } from '@/shared/types/helpers';
+import { IconButton } from '@/shared/ui/IconButton';
+import * as CardStories from '@/shared/ui/card/card.stories';
+import { Typography } from '@/shared/ui/typography';
+import * as Dialog from '@radix-ui/react-dialog';
+import { Meta, StoryObj } from '@storybook/react';
+import clsx from 'clsx';
+
+import styles from './modal-card.module.scss';
+
+import { ModalCard, ModalCardContentProps, ModalCardProps } from './modal-card';
 
 const CardStoriesArgTypes = CardStories.default.argTypes;
 
+type PartialModalCardContentProps = Pick<ModalCardContentProps, 'ignoreHeader'>;
+
+type CustomRenderProps = PartialModalCardContentProps &
+  Replace<
+    ModalCardProps,
+    {
+      children?: undefined;
+      disabled?: boolean;
+      headerTitle: string;
+      renderChildren: ({ ignoreHeader }: PartialModalCardContentProps) => ReactNode;
+    }
+  >;
+
+export const CustomRender = ({
+  disabled,
+  headerTitle,
+  ignoreHeader,
+  renderChildren,
+  ...props
+}: CustomRenderProps) => (
+  <ModalCard.Root {...props}>
+    <ModalCard.Header>
+      <Typography.H2 className={styles.headerTitle}>{headerTitle}</Typography.H2>
+      <Dialog.Close asChild>
+        <IconButton className={styles.headerIconButtonLast} disabled={disabled} size={'medium'}>
+          <CloseIcon />
+        </IconButton>
+      </Dialog.Close>
+    </ModalCard.Header>
+    {renderChildren({ ignoreHeader })}
+  </ModalCard.Root>
+);
+
 /**
  * A handy component based on the [Card](/docs/ui-card--docs) common component.
- * It contains the required text header with a close button.
+ * It completely copies the behavior and features of `Card` while providing several service
+ * classes to reduce code duplication in different modal window variations.
+ * To access these service classes, you must import the `ModalCard` component's CSS module
+ * at the path `@/shared/ui/modal-card/modal-card.module.scss`. Service classes:
+ * * `headerIconButton` class contains styles for embedded `IconButtons`.
+ * For example, for `hover` and `active` states.
+ * * `headerIconButtonLast` duplicates the styles of the preceding class.
+ * Separates the leftmost button from the neighboring element.
+ * * `headerTitle` class contains styles for a template header for modal windows.
+ * Includes trimming of too long string.
+ * * `contentScrollable` adds the `overflow: auto` CSS property as well as a stylized scrollbar.
+ * __Important!__ To display the scrollbar, you must explicitly limit the height of the ancestor tag
+ * of the current tag to which this class is applied.
  *
- * The `ModalCard` component includes an additional service component `ModalCard.Content`,
- * which is just a wrapper for the `ModalCard` content. It completely copies `Card.Content`
- * from the [Card](/docs/ui-card--docs) component.
- *
- * __IMPORTANT:__ The internal component `CloseIcon` is wrapped by `DialogClose`
- * provided by [Radix](https://www.radix-ui.com/primitives/docs/components/dialog) library.
- * Therefore `ModalCard` can be used only as a child of `Dialog` component from [Radix](https://www.radix-ui.com/primitives/docs/components/dialog).
- * That is, `ModalCard` is assumed to be an integral part of custom modal windows.
- * It is not intended to be used as is.
+ * The `ModalCard` component includes additional service components `ModalCard.Content`
+ * and `ModalCard.Header`, which are wrappers for `Card.Content` and `Card.Header` respectively.
+ * They completely copy the behavior of the `Card` compound components.
  */
 const meta = {
   argTypes: {
     children: CardStoriesArgTypes.children,
-
-    classes: {
-      description: `An object containing the names of the classes corresponding to the
-        component slots. Provided classnames will be merged with default slots classnames.`,
-      table: {
-        defaultValue: { summary: '{}' },
-        type: {
-          detail: `Partial<${JSON.stringify(
-            {
-              cardRoot: 'string',
-              closeButton: 'string',
-              header: 'string',
-              title: 'string',
-            } satisfies Record<ModalCardSlot, string>,
-            null,
-            2
-          )}>`,
-          summary: 'ModalCardClasses',
-        },
-      },
-    },
-
-    disabled: {
-      description: `When \`true\`, prevents the user from interacting with the close button.
-        CSS-property \`pointer-events: none\` is set in this case.`,
-      table: { type: { summary: 'boolean' } },
-    },
-
+    className: CardStoriesArgTypes.className,
     headerTitle: {
-      description: `The title specified in the header section of the card. The html tag \`h2\`
+      description: `STORYBOOK_SPECIFIC_SETTING: The title specified in the header section of the card. The html tag \`h2\`
         is used internally. The header is truncated with a ellipsis if it exceeds the width of the card.`,
       table: { type: { summary: 'string' } },
     },
 
-    onClose: {
-      control: 'action',
-      description: 'Event handler called when the user clicks on the close icon',
-      table: { type: { summary: '() => void' } },
-    },
+    ignoreHeader: CardStoriesArgTypes.ignoreHeader,
 
     ref: CardStoriesArgTypes.ref,
   },
-  component: ModalCard,
   decorators: [
     Story => (
       // wrap `ModalCard` in `Dialog` to avoid the missing context provider error in `CloseDialog`.
-      <Dialog>
+      <Dialog.Root>
         <Story />
-      </Dialog>
+      </Dialog.Root>
     ),
     CardStories.commonDecorator,
+    Story => (
+      <>
+        <Typography.Regular16 className={'description'} component={'p'}>
+          <Typography.Bold16>TIP:</Typography.Bold16> The <em>.card-max-height</em> class name is
+          attached to the <em>ModalCard.Root</em> component to show the default styles for the
+          component&apos;s scroll.
+        </Typography.Regular16>
+        <Story />
+      </>
+    ),
   ],
+  excludeStories: ['CustomRender'],
+  render: CustomRender,
   tags: ['autodocs'],
   title: 'UI/ModalCard',
-} satisfies Meta<typeof ModalCard>;
+  // manually add the `ref` type to the `CustomRenderProps` to add its description to the `meta` object.
+} satisfies Meta<CustomRenderProps & { ref?: ForwardedRef<ElementRef<'div'>> }>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
   args: {
-    children: CardStories.cardContent.map((content, i) => (
-      <ModalCard.Content key={i}>{content}</ModalCard.Content>
-    )),
-    classes: { cardRoot: 'card-content' },
-    disabled: false,
+    className: clsx('card-root-wrapper', 'card-max-height'),
     headerTitle: 'Pretty Header',
+    ignoreHeader: false,
+    renderChildren: props =>
+      CardStories.cardContent.map((element, i) => {
+        const isLastContentItem = element.key === 'long';
+
+        return (
+          <ModalCard.Content
+            className={isLastContentItem ? styles.contentScrollable : undefined}
+            {...props}
+            key={i}
+          >
+            {element}
+          </ModalCard.Content>
+        );
+      }),
   },
 };
 
-export const Empty: Story = {
+export const HeaderOnly: Story = {
   args: {
     ...Basic.args,
-    children: undefined,
+    renderChildren: () => null,
   },
 };
 

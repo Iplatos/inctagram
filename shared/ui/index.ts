@@ -11,3 +11,4 @@ export * from './radio-group';
 export * from './card';
 export * from './IconButton';
 export * from './modal';
+export * from './modal-card';

@@ -108,7 +108,7 @@ const meta = {
 
   render: CustomRender,
   tags: ['autodocs'],
-  title: 'UI/ConfirmModal',
+  title: 'FEATURES/ConfirmModal',
 } satisfies Meta<typeof CustomRender>;
 
 export default meta;
@@ -144,7 +144,7 @@ export const LongText: Story = {
           test.
         </Typography.Regular16>
         <Typography.Regular16 className={'description'} component={'p'}>
-          <Typography.Bold16>TIP:</Typography.Bold16> The <em>[role=&quot;button&quot;]</em>{' '}
+          <Typography.Bold16>TIP:</Typography.Bold16> The <em>[role=&quot;dialog&quot;]</em>{' '}
           selector is used.
         </Typography.Regular16>
         <Story />
