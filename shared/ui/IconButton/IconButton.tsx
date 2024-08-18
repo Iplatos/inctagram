@@ -13,25 +13,26 @@ import clsx from 'clsx';
 import s from './iconButton.module.scss';
 
 export type IconButtonSize = 'large' | 'medium' | 'small';
-type OwnProps = {
+type OwnProps<T extends ElementType> = {
   children?: ReactNode;
   className?: string;
+  component?: T;
   disabled?: boolean;
   size?: IconButtonSize;
 };
 
-// prettier-ignore
-export type IconButtonProps<T extends ElementType> =
-  (T extends 'button' ? { component?: 'button' } : { component: T }) &
-  Replace<ComponentPropsWithoutRef<T>, OwnProps>;
+export type IconButtonProps<T extends ElementType> = Replace<
+  ComponentPropsWithoutRef<T>,
+  OwnProps<T>
+>;
 
 type IconButtonRenderType = {
-  (props: IconButtonProps<'button'>, ref: ForwardedRef<ElementRef<'button'>>): ReactNode;
-  (props: IconButtonProps<ElementType>, ref: ForwardedRef<ElementRef<ElementType>>): ReactNode;
+  (props: IconButtonProps<'button'>, ref?: ForwardedRef<ElementRef<'button'>>): ReactNode;
+  (props: IconButtonProps<ElementType>, ref?: ForwardedRef<ElementRef<ElementType>>): ReactNode;
 };
 
 export type IconButtonComponent = {
-  <T extends ElementType>(
+  <T extends ElementType = 'button'>(
     props: IconButtonProps<T> & { ref?: ForwardedRef<ElementRef<T>> }
   ): ReactNode;
 };
