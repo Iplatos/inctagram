@@ -1,51 +1,55 @@
-import { ChangeEvent, FC } from 'react';
+import { ChangeEventHandler, FC, MouseEventHandler, useRef } from 'react';
 
 import { AvatarFallback } from '@/assets/icons/avatar-fallback';
 import { CloseIcon } from '@/assets/icons/close';
-import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button, Typography, Card } from '@/shared/ui';
+import { Button, IconButton, ModalCard, Typography } from '@/shared/ui';
 import { Alert } from '@/shared/ui/alert';
-import { Trans } from '@/widgets/Trans/Trans';
-import * as Dialog from '@radix-ui/react-dialog';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
 import clsx from 'clsx';
 
 import s from './addPhotoCard.module.scss';
+import modalCardS from '@/shared/ui/modal-card/modal-card.module.scss';
 
 export type AddPhotoCardProps = {
   disabled?: boolean;
-  draft?: boolean;
   error: null | string;
-  // TODO: add an imperative api for clicking on the button with access to the input ref
-  // TODO: add click handler for the "Draft" button
   onClose?: () => void;
-  setImg?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onFileInputChange?: ChangeEventHandler<HTMLInputElement>;
+  onSecondaryClick?: MouseEventHandler<HTMLButtonElement>;
+  primaryButtonTitle?: string;
+  secondaryButtonTitle?: string;
   title: string;
 };
 
 export const AddPhotoCard: FC<AddPhotoCardProps> = ({
   disabled,
-  draft,
   error,
   onClose,
-  setImg,
+  onFileInputChange,
+  onSecondaryClick,
+  primaryButtonTitle = 'Primary',
+  secondaryButtonTitle = 'Secondary',
   title,
 }) => {
-  const { t } = useTranslation();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <Card className={s.root}>
-      <Card.Header>
-        <Typography.H1 className={s.title}>{title}</Typography.H1>
-        <Dialog.Close
-          className={clsx(s.closeButton, disabled && s.closeButtonDisabled)}
-          disabled={disabled}
-          onClick={onClose}
-        >
-          <CloseIcon />
-        </Dialog.Close>
-      </Card.Header>
+    <ModalCard className={s.root}>
+      <ModalCard.Header>
+        <Typography.H2 className={modalCardS.headerTitle}>{title}</Typography.H2>
+        <DialogPrimitive.Close asChild>
+          <IconButton
+            className={modalCardS.headerIconButtonLast}
+            disabled={disabled}
+            onClick={onClose}
+            size={'medium'}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogPrimitive.Close>
+      </ModalCard.Header>
 
-      <Card.Content className={s.content}>
+      <ModalCard.Content className={clsx(s.content, modalCardS.contentScrollable)}>
         {error && (
           <Alert classes={{ alertRoot: s.error }} severity={'error'}>
             <Typography.Regular14>
@@ -59,25 +63,40 @@ export const AddPhotoCard: FC<AddPhotoCardProps> = ({
           </Alert>
         )}
 
-        <div className={s.placeholderWrapper}>
+        <div className={s.adaptivePaddingBox}>
           <div className={s.placeholderBackground}>
             <AvatarFallback className={s.placeholderIcon} />
           </div>
-        </div>
 
-        <div className={s.buttonsGroup}>
-          <Button as={'label'} className={s.button}>
-            {t.common.avatarUploader.buttons.select}
-            <input onChange={setImg} style={{ display: 'none' }} type={'file'} />
-          </Button>
-
-          {draft && (
-            <Button className={s.draft} variant={'tertiary'}>
-              {t.common.postsList.buttons.draftButton}
+          <div className={s.buttonsGroup}>
+            <Button
+              className={s.button}
+              disabled={disabled}
+              onClick={() => fileInputRef.current?.click()}
+              tabIndex={0}
+            >
+              {primaryButtonTitle}
+              {/* TODO: Move file input to a separate file */}
             </Button>
-          )}
+            <input
+              onChange={onFileInputChange}
+              ref={fileInputRef}
+              style={{ display: 'none' }}
+              type={'file'}
+            />
+            {onSecondaryClick && (
+              <Button
+                className={s.button}
+                disabled={disabled}
+                onClick={onSecondaryClick}
+                variant={'tertiary'}
+              >
+                {secondaryButtonTitle}
+              </Button>
+            )}
+          </div>
         </div>
-      </Card.Content>
-    </Card>
+      </ModalCard.Content>
+    </ModalCard>
   );
 };

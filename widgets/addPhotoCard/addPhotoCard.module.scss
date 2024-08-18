@@ -3,9 +3,11 @@
 @use 'sass:math';
 
 .root {
-  .title {
-    line-height: rem(36);
-  }
+  // `{ display: flex; flex-direction: column }` are required to be paired with `thin-scrollbar` for one of the child elements,
+  // so that scrolling works when one of the parent elements is given an explicit height.
+  @include flex($justify: null, $align: null, $direction: column);
+
+  width: 100%;
 
   .content {
     @include flex($justify: null, $direction: column);
@@ -21,19 +23,30 @@
   }
 }
 
+.adaptivePaddingBox {
+  // TODO: add mixin for adaptive property customizations
+  // By increasing `max-device-size` by a coefficient,
+  // we “stretch” the range over which the adaptive padding value increment will occur.
+  // Thus the value will grow more smoothly.
+  $wrapper-adaptive-padding: get-adaptive-size(
+    $min-size: 0,
+    $max-size: 48,
+    $min-device-size: get-breakpoint('mobile-l'),
+    $max-device-size: get-breakpoint('tablet-s') + 130,
+    $unit: 1px,
+  );
+
+  display: grid;
+  width: 100%;
+  padding-inline: clamp(0px, $wrapper-adaptive-padding, 15%);
+}
+
 .placeholder {
-  &Wrapper {
-    width: 100%;
-    margin-bottom: 35px;
-
-    // TODO: make `padding-inline` responsive using appropriate mixin
-    padding-inline: 15%;
-  }
-
   &Background {
     @include flex;
 
     aspect-ratio: 1;
+    margin-bottom: 35px;
     background-color: var(--color-dark-500);
   }
 
@@ -44,30 +57,16 @@
   }
 }
 
-.closeButton {
-  @include flex;
-
-  cursor: pointer;
-  margin-left: em(20);
-  padding: em(6);
-  border-radius: 50%;
-
-  &:is(:hover, :focus-visible) {
-    background-color: var(--color-dark-500);
-  }
-
-  &:active {
-    background-color: var(--color-dark-700);
-  }
-
-  &Disabled {
-    pointer-events: none;
-    opacity: 0.65;
-  }
-}
-
 .buttonsGroup {
   display: grid;
   gap: em(16);
   margin-bottom: 30px;
+
+  @include media-breakpoint('mobile-l') {
+    width: 100%;
+
+    .button {
+      min-height: em(48);
+    }
+  }
 }
