@@ -89,7 +89,7 @@ const meta = {
         <Story />
       </Dialog.Root>
     ),
-    CardStories.commonDecorator,
+    CardStories.commonCardDecorator,
     Story => (
       <>
         <Typography.Regular16 className={'description'} component={'p'}>

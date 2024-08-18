@@ -10,7 +10,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Card, CardContentProps } from './card';
 
 type DecoratorFunction = Exclude<Meta['decorators'], undefined>[number];
-export const commonDecorator: DecoratorFunction = Story => (
+export const commonCardDecorator: DecoratorFunction = Story => (
   <>
     <style>{`
           .card-root-wrapper { width: 400px; max-width: 100%; display: flex; flex-direction: column; }
@@ -82,8 +82,8 @@ const meta = {
       table: { type: { summary: 'ForwardedRef<HTMLDivElement>' } },
     },
   },
-  decorators: [commonDecorator],
-  excludeStories: ['cardHeader', 'cardContent', 'commonDecorator'],
+  decorators: [commonCardDecorator],
+  excludeStories: ['cardHeader', 'cardContent', 'commonCardDecorator'],
   render: CustomRender,
   tags: ['autodocs'],
   title: 'UI/Card',

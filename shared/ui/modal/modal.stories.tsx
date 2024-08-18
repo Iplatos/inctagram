@@ -132,7 +132,7 @@ const meta = {
     },
   },
   component: Modal,
-  decorators: [CardStories.commonDecorator],
+  decorators: [CardStories.commonCardDecorator],
   title: 'UI/Modal',
 } satisfies Meta<typeof Modal>;
 
