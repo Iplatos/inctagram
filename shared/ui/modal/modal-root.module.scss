@@ -1,0 +1,63 @@
+@use '../../../styles/mixins' as *;
+@use '../../../styles/z-index' as *;
+
+.overlay {
+  position: fixed;
+  z-index: z-index('modal');
+  inset: 0;
+
+  opacity: 0.5;
+  background-color: var(--color-dark-900);
+
+  animation: overlay-show 300ms;
+}
+
+.content {
+  $header-half-height: var(--header-height) / 2;
+
+  position: fixed;
+  z-index: z-index('modal');
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% + $header-half-height));
+
+  // `display: flex` is required so that the child of the container can shrink.
+  //  This will allow you to set `overflow: hidden` to this child, so that you can then set `overflow: auto`
+  //  to any child element that involves scrolling the content.
+
+  // Remove `display: flex` and `max-height` if you are going to set a fixed height of the modal window
+  //  and at the same time retain the ability to auto-scroll an arbitrary child element
+  display: flex;
+
+  max-width: 100%;
+  max-height: calc(100vh - var(--header-height));
+  padding: 24px;
+
+  animation: content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  @include media-breakpoint('tablet-s') {
+    padding: 16px;
+  }
+}
+
+@keyframes overlay-show {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}
+
+@keyframes content-show {
+  from {
+    transform: translate(-50%, -48%) scale(0.96);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}

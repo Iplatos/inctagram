@@ -5,5 +5,4 @@ export * from './createPluralize';
 export * from './dataURLToBlob';
 export * from './resolveImageSrcToString';
 export * from './transformTaggedString';
-export * from './compartmentalize';
-export * from './extractInitials';
+export * from './onCropDone';

@@ -1,6 +1,6 @@
 .outerContainer {
   width: min(1280px, 100%);
-  margin-top: 60px;
+  margin-top: var(--header-height);
   margin-inline: auto;
 }
 

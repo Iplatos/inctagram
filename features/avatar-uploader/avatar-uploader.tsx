@@ -1,7 +1,6 @@
-import React, { ChangeEvent, ElementRef, FC, useRef } from 'react';
+import React, { ChangeEvent, FC, useRef } from 'react';
 import AvatarEditor, { CroppedRect } from 'react-avatar-editor';
 
-import { Modal } from '@/features/modal';
 import { dataURLToBlob } from '@/shared/helpers';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
@@ -13,6 +12,7 @@ import { AvatarFallback } from 'assets/icons/avatar-fallback';
 
 import s from './avatar-uploader.module.scss';
 
+import { ConfirmModal } from '../confirm-modal';
 import { useAvatarUploader } from './useAvatarUploader';
 
 // TODO: add missing common components to index file in shared/ui
@@ -33,7 +33,6 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
 }) => {
   const { avatarUploader: t } = useTranslation().t.common;
   const editorRef = useRef<AvatarEditor>(null);
-  const inputRef = useRef<ElementRef<'input'>>(null);
   const {
     actions: {
       editorClosed,
@@ -109,7 +108,35 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
   const previewOrAvatar = state.preview ?? avatar;
 
   return (
-    <Modal onClose={handleClose} open={open} showCloseButton title={t.title}>
+    <ConfirmModal
+      classes={{ button: s.button, buttonsGroup: s.buttonsGroup }}
+      headerTitle={t.title}
+      onCancel={handleClose}
+      onConfirm={saveAvatar}
+      open={open}
+      renderCancelButton={({ className, disabled }) => (
+        <Button
+          {...{ className, disabled }}
+          as={'label'}
+          variant={previewOrAvatar ? 'tertiary' : 'primary'}
+        >
+          <input
+            accept={'image/png, image/jpeg'}
+            onChange={uploadFromDevice}
+            style={{ display: 'none' }}
+            type={'file'}
+          />
+          {t.buttons.select}
+        </Button>
+      )}
+      renderConfirmButton={({ className, disabled }) =>
+        previewOrAvatar && (
+          <Button className={className} disabled={!!state.error || disabled} onClick={saveAvatar}>
+            {t.buttons.save}
+          </Button>
+        )
+      }
+    >
       <div className={s.content}>
         {state.error && (
           <Alert classes={{ alertRoot: s.error }} severity={'error'}>
@@ -144,29 +171,9 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
             <AvatarFallback className={s.image} />
           </div>
         )}
-
-        <input
-          accept={'image/png, image/jpeg'}
-          onChange={uploadFromDevice}
-          ref={inputRef}
-          style={{ display: 'none' }}
-          type={'file'}
-        />
-        <div className={s.buttonsGroup}>
-          <Button
-            onClick={() => inputRef.current?.click()}
-            variant={previewOrAvatar ? 'tertiary' : 'primary'}
-          >
-            {t.buttons.select}
-          </Button>
-          {previewOrAvatar && (
-            <Button disabled={!!state.error} onClick={saveAvatar}>
-              {t.buttons.save}
-            </Button>
-          )}
-        </div>
+        {/* TODO: Add a slider so that users on touch devices can adjust the avatar's scale */}
       </div>
-    </Modal>
+    </ConfirmModal>
   );
 };
 

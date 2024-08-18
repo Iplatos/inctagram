@@ -31,7 +31,7 @@ type IconButtonRenderType = {
 };
 
 export type IconButtonComponent = {
-  <T extends ElementType = 'button'>(
+  <T extends ElementType>(
     props: IconButtonProps<T> & { ref?: ForwardedRef<ElementRef<T>> }
   ): ReactNode;
 };

@@ -1,0 +1,21 @@
+@use '../../styles/z-index' as *;
+
+.customControls {
+    @include z-index('slider');
+
+    position:absolute;
+    bottom:0;
+    left:0;
+
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+    padding: 0 13px 13px;
+}
+
+.customControls__inner {
+    display: flex;
+    gap: 25px;
+}
+
