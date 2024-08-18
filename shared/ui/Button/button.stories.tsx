@@ -5,7 +5,7 @@ import { Button } from '@/shared/ui/Button/button';
 const meta = {
   argTypes: {
     variant: {
-      control: { type: 'radio' },
+      control: 'radio',
       options: ['primary', 'secondary', 'tertiary', 'text'],
     },
   },
@@ -51,5 +51,13 @@ export const FullWidth: Story = {
     ...Primary.args,
     children: 'Full Width Button',
     fullWidth: true,
+  },
+};
+
+export const AsLink: Story = {
+  args: {
+    ...Primary.args,
+    component: 'a',
+    href: '/',
   },
 };

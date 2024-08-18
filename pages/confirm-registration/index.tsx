@@ -37,7 +37,7 @@ export const ConfirmRegistration = () => {
             <>
               <Typography.H1>Congratulations!</Typography.H1>
               <Typography.Regular16>Your email has been confirmed</Typography.Regular16>
-              <Button as={'span'}>
+              <Button component={'span'}>
                 <Link href={'/sign-up'}>sign up</Link>
               </Button>
             </>

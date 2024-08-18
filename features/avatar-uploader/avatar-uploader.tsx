@@ -127,7 +127,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
       renderCancelButton={({ className, disabled }) => (
         <Button
           {...{ className, disabled }}
-          as={'label'}
+          component={'label'}
           variant={previewOrAvatar ? 'tertiary' : 'primary'}
         >
           <input

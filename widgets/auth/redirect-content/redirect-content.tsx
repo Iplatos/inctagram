@@ -32,9 +32,9 @@ export const RedirectContent = (props: ContentType) => {
       </div>
 
       {emailConfirmed && (
-        <Link href={'/signIn'}>
-          <Button className={style.buttonSignIn}>{t.auth.emailConfirmedPage.textButton}</Button>
-        </Link>
+        <Button className={style.buttonSignIn} component={'span'}>
+          <Link href={'/sign-in'}>{t.auth.emailConfirmedPage.textButton}</Link>
+        </Button>
       )}
 
       {linkExpired && (

@@ -98,8 +98,8 @@ export const SignInForm = () => {
 
         <Typography.Regular16>{t.auth.signInPage.dontHaveAcc}</Typography.Regular16>
 
-        <Button variant={'text'}>
-          <Link href={'/signUp'}>{t.navbar.signUp}</Link>
+        <Button component={'span'} variant={'text'}>
+          <Link href={'/sign-up'}>{t.navbar.signUp}</Link>
         </Button>
       </form>
     </DEPRECATED_Card>
