@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
 import { PostCard } from '@/features/post/post-card/post-card';
 import { PrivatePostInfoSection } from '@/features/post/post-card/post-info-section';
@@ -9,7 +9,6 @@ import {
 } from '@/features/post/post-comment/private-post-comment';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
-import { ControlledTextField } from '@/shared/ui/controlled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
@@ -80,13 +79,28 @@ export const PrivatePostCard = (props: PrivatePostCardProps) => {
     <PostCard
       addNewCommentForm={
         <form className={s.addNewCommentSection} onSubmit={handleSubmit(onSubmit)}>
-          <ControlledTextField
+          <Controller
             control={control}
-            disabled={isSubmitting}
             name={'comment'}
-            placeholder={t.post.card.addNewComment.placeholder}
+            render={({ field, fieldState }) => (
+              <div className={s.inputSection}>
+                <input
+                  {...field}
+                  className={s.input}
+                  placeholder={t.post.card.addNewComment.placeholder}
+                />
+                {fieldState.error && (
+                  <span className={s.errorTitle}>{fieldState.error.message}</span>
+                )}
+              </div>
+            )}
           />
-          <Button disabled={submitIsDisabled} type={'submit'} variant={'text'}>
+          <Button
+            className={s.btnSubmit}
+            disabled={submitIsDisabled}
+            type={'submit'}
+            variant={'text'}
+          >
             {t.post.card.addNewComment.submit}
           </Button>
         </form>
