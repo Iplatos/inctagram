@@ -1,5 +1,6 @@
 import React, { ReactNode, useState } from 'react';
 
+import { extractInitials } from '@/shared/helpers';
 import useRelativeTime from '@/shared/hooks/useRelativeTime';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Avatar, Typography } from '@/shared/ui';
@@ -25,7 +26,6 @@ export type PostCommentProps = {
   likesCount: number;
   primaryAction?: ReactNode;
   text: string;
-  textWidth?: string;
   userName: string;
 };
 
@@ -45,13 +45,6 @@ export const PostComment = (props: PostCommentProps) => {
   const relativeTime = useRelativeTime(createdAt);
   const { t } = useTranslation();
 
-  const getInitials = (userName: string): string => {
-    const words = userName.split(' ');
-    const initials = words.map(word => word.charAt(0).toUpperCase());
-
-    return initials.join('');
-  };
-
   const cls = getClassNames(classes);
 
   const [open, setOpen] = useState<boolean>(false);
@@ -62,7 +55,7 @@ export const PostComment = (props: PostCommentProps) => {
       <div className={cls.sectionComment}>
         <Avatar
           classes={{ avatarRoot: s.commentAvatar }}
-          fallback={getInitials(userName)}
+          fallback={extractInitials(userName)}
           size={'small'}
           src={avatar}
         />

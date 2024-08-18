@@ -7,12 +7,12 @@ type DefaultDateFormatter = (parts: Intl.DateTimeFormatPart[]) => {
 };
 
 export const useDateFormat = <T extends DateFormatter = DefaultDateFormatter>(
+  date?: Date,
   options?: Intl.DateTimeFormatOptions,
   formatter?: T
 ): ReturnType<T> => {
-  options ??= { day: '2-digit', month: '2-digit', year: 'numeric' };
   const { locale } = useRouter();
-  const partsArray = new Intl.DateTimeFormat(locale, options).formatToParts(new Date());
+  const partsArray = new Intl.DateTimeFormat(locale, options).formatToParts(date ?? new Date());
 
   return (formatter ?? defaultFormatter)(partsArray);
 };

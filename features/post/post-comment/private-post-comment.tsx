@@ -8,12 +8,11 @@ import { Button, IconButton, Typography } from '@/shared/ui';
 import s from '@/features/post/post-comment/post-comment.module.scss';
 
 import { PostComment, PostCommentProps } from './post-comment';
-import { Answer } from './post-comment.types';
 
 export type PrivateAnswer = {
   isLiked: boolean;
   likesCount: number;
-} & Answer;
+} & Omit<PostCommentProps, 'answersSection, answersCount'>;
 
 export type PrivatePostCommentProps = {
   answers?: PrivateAnswer[];

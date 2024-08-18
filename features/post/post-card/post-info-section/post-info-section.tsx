@@ -4,10 +4,10 @@ import { BookmarkOutline } from '@/assets/icons/bookmark-outline';
 import { HeartFilled } from '@/assets/icons/heart-filled';
 import { HeartOutlined } from '@/assets/icons/heart-outlined';
 import { PaperPlaneOutline } from '@/assets/icons/paper-plane-outline';
-import { DateFormatter, useDateFormat } from '@/shared/hooks/useDateFormat';
+import { compartmentalize, extractInitials } from '@/shared/helpers';
+import { useDateFormat } from '@/shared/hooks/useDateFormat';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Avatar, IconButton, Typography } from '@/shared/ui';
-import { useRouter } from 'next/router';
 
 import s from './post-info.module.scss';
 
@@ -23,34 +23,13 @@ type PostInfoProps = {
 
 export const PostInfoSection = (props: PostInfoProps) => {
   const { actions, createdAt, icons, likesCount } = props;
-  const { locale } = useRouter();
   const { t } = useTranslation();
 
-  const customDateTimeFormatter: DateFormatter = parts => {
-    const date = new Date(createdAt);
-
-    return new Intl.DateTimeFormat(locale, {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    }).format(date);
-  };
-
   const formattedDate = useDateFormat(
+    new Date(createdAt),
     { day: 'numeric', month: 'long', year: 'numeric' },
-    customDateTimeFormatter
+    (parts: Intl.DateTimeFormatPart[]) => parts.map(part => part.value).join('')
   );
-
-  const formatNumberWithSpaces = (num: number | string): string => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  };
-
-  const getInitials = (userName: string): string => {
-    const words = userName.split(' ');
-    const initials = words.map(word => word.charAt(0).toUpperCase());
-
-    return initials.join('');
-  };
 
   return (
     <div className={s.root}>
@@ -63,7 +42,7 @@ export const PostInfoSection = (props: PostInfoProps) => {
               .map((item, index) => (
                 <Avatar
                   classes={{ avatarRoot: s.icon }}
-                  fallback={getInitials(item.userName)}
+                  fallback={extractInitials(item.userName)}
                   key={index}
                   size={'small'}
                   src={item.avatar}
@@ -71,7 +50,7 @@ export const PostInfoSection = (props: PostInfoProps) => {
               ))}
           </div>
           <Typography.Regular14>
-            {`${formatNumberWithSpaces(likesCount)}`}
+            {`${compartmentalize(likesCount)}`}
             {' "'}
             <Typography.Bold14>{t.post.card.info.likes}</Typography.Bold14>
             {'"'}

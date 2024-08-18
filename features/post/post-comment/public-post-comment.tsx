@@ -1,10 +1,9 @@
 import React from 'react';
 
 import { PostComment, PostCommentProps } from './post-comment';
-import { Answer } from './post-comment.types';
 
 export type PublicPostCommentProps = {
-  answers?: [] | Answer[];
+  answers?: [] | Omit<PostCommentProps, 'answersSection, answersCount'>[];
 } & PostCommentProps;
 
 export const PublicPostComment = (props: PublicPostCommentProps) => {
