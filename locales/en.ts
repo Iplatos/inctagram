@@ -297,6 +297,19 @@ export const en: LocaleType = {
   },
 
   myProfile: {
+    addPostModal: {
+      postDescriptionCard: {
+        labelCard: 'Publication',
+        postDescription: {
+          errors: {
+            tooBig: 'Maximum number of characters 500',
+          },
+          label: 'Add publication descriptions',
+          placeholder: 'Text-area',
+          titleBtnSubmit: 'Publish',
+        },
+      },
+    },
     settingsButton: 'Profile Settings',
     statistics: {
       followers: { label: 'followers' },

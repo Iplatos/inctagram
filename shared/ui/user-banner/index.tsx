@@ -17,6 +17,13 @@ type UserBannerProps = {
 export const UserBanner = (props: UserBannerProps) => {
   const { actions, avatar, avatarSize, className, name } = props;
 
+  const getInitial = () => {
+    return name
+      .split(' ')
+      .map(word => word[0].toUpperCase())
+      .join('');
+  };
+
   return (
     <div className={clsx(s.userBanner, className)}>
       <div className={s.userInfo}>

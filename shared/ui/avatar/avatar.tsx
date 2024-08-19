@@ -13,7 +13,7 @@ import s from './avatar.module.scss';
 export type AvatarSlot = 'avatarRoot' | 'fallback' | Extract<CroppedImageSlot, 'image'>;
 export type AvatarClasses = { [P in AvatarSlot]?: string };
 export type AvatarSize = 'large' | 'medium' | 'small';
-type AvatarStatus = 'error' | 'pending' | 'success';
+export type AvatarStatus = 'error' | 'pending' | 'success';
 
 type OwnProps = {
   alt?: string;
