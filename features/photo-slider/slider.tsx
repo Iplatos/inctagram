@@ -1,16 +1,15 @@
-import { ElementRef, forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import { ElementRef, useRef, useState } from 'react';
 import { Area } from 'react-easy-crop';
 
 import { Crop } from '@/entities/photo-slider/crop/crop';
 import { ImageCropper } from '@/entities/photo-slider/image-cropper/image-cropper';
 import { SetAddedImagesCallback, Thumbnails } from '@/entities/photo-slider/thumbnails';
 import { Zoom } from '@/entities/photo-slider/zoom/zoom';
+import { PhotoGallery } from '@/features';
 
 import 'react-image-gallery/styles/scss/image-gallery.scss';
 
 import style from './slider.module.scss';
-
-import { PhotoGallery } from '../photo-gallery';
 
 type SliderPropsType = {
   addedImages: string[];

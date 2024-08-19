@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 
+import { PhotoGallery } from '@/features';
 import { Card } from '@/shared/ui';
 import clsx from 'clsx';
 
@@ -22,10 +23,18 @@ export const PostCard = (props: PostCardProps) => {
 
   const cls = getClassNames(classes);
 
+  const img = [
+    'https://images.pexels.com/photos/27308308/pexels-photo-27308308.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    'https://images.pexels.com/photos/27043375/pexels-photo-27043375.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    'https://images.pexels.com/photos/27350492/pexels-photo-27350492.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+  ];
+
   return (
     <Card.Root className={s.root}>
       <Card.Content className={s.content}>
-        <div className={s.gallery}></div>
+        <div className={s.gallery}>
+          <PhotoGallery items={img.map(i => ({ original: i }))} />
+        </div>
         <div className={s.postDetails}>
           <Card.Header className={cls.headerSection}>{headerSection}</Card.Header>
           <Card.Content className={cls.commentsSection}>{commentsSection}</Card.Content>

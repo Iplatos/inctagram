@@ -2,7 +2,7 @@
 @use '../../../styles/helpers' as *;
 
 .root {
-  width: 960px;
+  width: 982px;
   height: 562px;
 }
 
@@ -24,18 +24,17 @@
 
 .gallery {
   grid-area: slider;
-  width: 100%;
-  background-color: red;
 }
 
 .postDetails {
   display: flex;
   flex-direction: column;
-  width: 480px;
+  width: 490px;
   padding: 0;
 }
 
 .header {
+  width: 490px;
   grid-area: header;
   height: 59px;
 }

@@ -25,10 +25,10 @@ export const PhotoGallery = ({ additionalClass, ...props }: PhotoGalleryPropsTyp
       renderItem={({ original }) => (
         <Image
           alt={'user image'}
-          height={490}
+          height={560}
           src={original}
           style={{ objectFit: 'cover' }}
-          width={400}
+          width={490}
         />
       )}
       renderLeftNav={(onClick, disabled) => {
