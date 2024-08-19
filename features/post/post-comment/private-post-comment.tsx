@@ -15,14 +15,17 @@ export type PrivateAnswer = {
 } & Omit<PostCommentProps, 'answersSection, answersCount'>;
 
 export type PrivatePostCommentProps = {
+  addNewAnswer?: (id: string, userName: string, commentId: string) => void;
   answers?: PrivateAnswer[];
   isLiked: boolean;
-  // toggleIsLiked: (isLiked: boolean) => void;
+  toggleIsLiked?: (isLiked: boolean) => void;
 } & PostCommentProps;
 
 export const PrivatePostComment = (props: PrivatePostCommentProps) => {
-  const { answers, isLiked, ...res } = props;
+  const { addNewAnswer, answers, isLiked, ...res } = props;
   const { t } = useTranslation();
+
+  const addNewAnswerForComment = () => addNewAnswer?.(res.id, res.userName, res.commentId);
 
   return (
     <PostComment
@@ -30,7 +33,12 @@ export const PrivatePostComment = (props: PrivatePostCommentProps) => {
       answersSection={answers?.map((answer, index) => (
         <PostComment
           bottomSection={
-            <Button as={'span'} className={s.textBth} variant={'text'}>
+            <Button
+              as={'span'}
+              className={s.textBth}
+              onClick={() => addNewAnswer?.(answer.id, answer.userName, answer.commentId)}
+              variant={'text'}
+            >
               <Typography.Semibold12>{t.post.comment.answer}</Typography.Semibold12>
             </Button>
           }
@@ -44,7 +52,7 @@ export const PrivatePostComment = (props: PrivatePostCommentProps) => {
         />
       ))}
       bottomSection={
-        <Button as={'span'} className={s.textBth} variant={'text'}>
+        <Button as={'span'} className={s.textBth} onClick={addNewAnswerForComment} variant={'text'}>
           <Typography.Semibold12>{t.post.comment.answer}</Typography.Semibold12>
         </Button>
       }

@@ -22,7 +22,9 @@ export type PostCommentProps = {
   avatar?: string;
   bottomSection?: ReactNode;
   classes?: CommentClasses;
+  commentId: string;
   createdAt: string;
+  id: string;
   likesCount: number;
   primaryAction?: ReactNode;
   text: string;

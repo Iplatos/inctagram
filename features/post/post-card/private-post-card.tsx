@@ -42,6 +42,7 @@ export const PrivatePostCard = (props: PrivatePostCardProps) => {
     formState: { isDirty, isSubmitting, isValid, submitCount },
     handleSubmit,
     reset,
+    setValue,
   } = useForm({
     defaultValues: {
       comment: '',
@@ -57,6 +58,11 @@ export const PrivatePostCard = (props: PrivatePostCardProps) => {
   const addBookmarkPostHandler = () => console.log(['addBookmarkPostHandler', postId]);
   const sharePostHandler = () => console.log(['sharePostHandler', postId]);
   const toggleLikePostHandler = () => console.log(['toggleLikePostHandler', postId]);
+
+  const addNewAnswerHandler = (id: string, userName: string, commentId: string) => {
+    setValue('comment', `@${userName} `);
+    console.log(['addNewAnswerHandler', id, userName, commentId]);
+  };
 
   const submitIsDisabled = !isDirty || (!isValid && !!submitCount) || isSubmitting;
 
@@ -106,7 +112,7 @@ export const PrivatePostCard = (props: PrivatePostCardProps) => {
         </form>
       }
       commentsSection={comments.map((comment, index) => {
-        return <PrivatePostComment {...comment} key={index} />;
+        return <PrivatePostComment addNewAnswer={addNewAnswerHandler} {...comment} key={index} />;
       })}
       headerSection={headerSection}
       infoSection={
