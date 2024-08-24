@@ -2,6 +2,8 @@ import { ElementRef, PropsWithChildren, ReactElement, SyntheticEvent, forwardRef
 
 import { CloseIcon } from '@/assets/icons/close';
 import { capitalise } from '@/shared/helpers/capitalise';
+import { Typography } from '@/shared/ui/typography';
+import { Trans } from '@/widgets/Trans/Trans';
 import { clsx } from 'clsx';
 
 import s from './alert.module.scss';
@@ -32,7 +34,16 @@ export const Alert = forwardRef<ElementRef<'div'>, AlertProps>(
     return (
       <div className={cls.alertRoot} data-test-id={'alert'} ref={ref}>
         <div className={cls.message} data-test-id={'message'}>
-          {children}
+          {typeof children === 'string' ? (
+            <Trans
+              tags={{
+                bold: ({ content }) => <Typography.Bold14>{content}</Typography.Bold14>,
+              }}
+              text={children}
+            />
+          ) : (
+            children
+          )}
         </div>
         {showAction && (
           <div className={cls.action} data-test-id={'action'}>

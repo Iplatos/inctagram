@@ -151,12 +151,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
       <div className={s.content}>
         {state.error && (
           <Alert classes={{ alertRoot: s.error }} severity={'error'}>
-            <Typography.Regular14>
-              <Trans
-                tags={{ bold: ({ content }) => <Typography.Bold14>{content}</Typography.Bold14> }}
-                text={state.error}
-              />
-            </Typography.Regular14>
+            {state.error}
           </Alert>
         )}
 

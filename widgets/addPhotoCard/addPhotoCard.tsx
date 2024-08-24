@@ -52,14 +52,7 @@ export const AddPhotoCard: FC<AddPhotoCardProps> = ({
       <ModalCard.Content className={clsx(s.content, modalCardS.contentScrollable)}>
         {error && (
           <Alert classes={{ alertRoot: s.error }} severity={'error'}>
-            <Typography.Regular14>
-              <Trans
-                tags={{
-                  bold: ({ content }) => <Typography.Bold14>{content}</Typography.Bold14>,
-                }}
-                text={error}
-              />
-            </Typography.Regular14>
+            {error}
           </Alert>
         )}
 
