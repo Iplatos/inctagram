@@ -39,7 +39,6 @@ export const PostCard = (props: PostCardProps) => {
           <Card.Header className={cls.headerSection}>{headerSection}</Card.Header>
           <Card.Content className={cls.commentsSection}>{commentsSection}</Card.Content>
           <Card.Content className={cls.commentsDetails}>{infoSection}</Card.Content>
-          {/* post details ^ */}
           {addNewCommentForm && (
             <Card.Content className={s.addNewCommentSection}>{addNewCommentForm}</Card.Content>
           )}
@@ -48,6 +47,7 @@ export const PostCard = (props: PostCardProps) => {
     </Card.Root>
   );
 };
+
 const getClassNames = (classes: PostClasses): Required<PostClasses> => ({
   commentsDetails: clsx(s.commentsDetails, classes.commentsDetails),
   commentsSection: clsx(s.commentsSection, classes.commentsSection),

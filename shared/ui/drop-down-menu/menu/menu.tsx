@@ -16,16 +16,7 @@ type MenuProps = {
 export const Menu = forwardRef<ElementRef<typeof RadixDropDown.Content>, MenuProps>(
   ({ children, className, modal, onOpenChange, open, portal = true, trigger, ...rest }, ref) => {
     const menuContent = (
-      <RadixDropDown.Content
-        className={clsx(s.content, className)}
-        ref={ref}
-        {...rest}
-        onPointerDownOutside={e => {
-          if (!portal) {
-            e.detail.originalEvent.preventDefault();
-          }
-        }}
-      >
+      <RadixDropDown.Content className={clsx(s.content, className)} ref={ref} {...rest}>
         {children}
       </RadixDropDown.Content>
     );

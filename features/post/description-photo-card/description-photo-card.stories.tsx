@@ -12,6 +12,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    open: true,
+    setOpen: (open: boolean) => console.log(open),
     userName: 'User Name',
   },
 };

@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { EditOutline } from '@/assets/icons/edit-outline';
 import { TrashOutline } from '@/assets/icons/trash-outline';
 import { ConfirmModal } from '@/features/confirm-modal';
+import { DescriptionPhotoCard } from '@/features/post/description-photo-card';
 import { HeaderPostCard } from '@/features/post/post-card/header-post-card/header-post-card';
 import { PrivatePostCard, PrivatePostCardProps } from '@/features/post/post-card/private-post-card';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
 
-type Props = Omit<PrivatePostCardProps, 'headerSection'>;
+export type ProfilePrivatePostCardProps = Omit<PrivatePostCardProps, 'headerSection'>;
 
-export const ProfilePrivatePostCard = (props: Props) => {
+export const ProfilePrivatePostCard = (props: ProfilePrivatePostCardProps) => {
   const { avatar, postId, userName, ...rest } = props;
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const deletePost = () => {
     setIsModalOpen(false);
   };
-  const openEditPostCard = () => console.log('edit-post', postId);
+  const openEditPostCard = () => setIsEditModalOpen(true);
 
   const { t } = useTranslation();
   const btnNames = t.post.card.header.buttons;
@@ -34,6 +36,12 @@ export const ProfilePrivatePostCard = (props: Props) => {
           Are you sure you want to delete this post?
         </Typography.Regular16>
       </ConfirmModal>
+      <DescriptionPhotoCard
+        avatar={avatar}
+        open={isEditModalOpen}
+        setOpen={setIsEditModalOpen}
+        userName={userName}
+      />
       <PrivatePostCard
         headerSection={
           <HeaderPostCard

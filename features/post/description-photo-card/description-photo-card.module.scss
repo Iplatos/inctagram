@@ -1,40 +1,46 @@
 .root {
+  display: grid;
+  grid-template-areas:
+    'header'
+    'content';
+  grid-template-rows: 1fr auto;
   position: relative;
   max-width: 972px;
+  width: 100%;
 }
 
 .header {
+  grid-area: header;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 
-  &:not(:last-of-type) {
-    margin-bottom: 1px;
+  &:not(:last-child) {
+    margin-bottom: 0;
   }
 }
 
 .content {
-  display: flex;
-  width: 100%;
+  grid-area: content;
+  display: grid;
+  grid-template-areas: 'slider form';
+  grid-template-columns: 1fr 1fr;
+  min-width: 100%;
   padding: 0;
 }
 
 .slider {
-  width: 50%;
-  height: 503px;
-  background: red;
+  grid-area: slider;
 }
 
-.description {
-  width: 50%;
+.form {
+  grid-area: form;
   padding: 0;
 }
 
 .submit {
   position: absolute;
-  top: 12px;
-  right: 24px;
-
-  margin: 0;
+  top: 15px;
   padding: 0;
 }

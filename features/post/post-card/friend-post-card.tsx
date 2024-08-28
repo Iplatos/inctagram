@@ -8,7 +8,7 @@ import { PrivatePostCard, PrivatePostCardProps } from '@/features/post/post-card
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui/typography/typography';
 
-type FriendPrivatePostCardProps = Omit<PrivatePostCardProps, 'headerSection'>;
+export type FriendPrivatePostCardProps = Omit<PrivatePostCardProps, 'headerSection'>;
 
 export const FriendPrivatePostCard = (props: FriendPrivatePostCardProps) => {
   const { avatar, postId, userName, ...rest } = props;
