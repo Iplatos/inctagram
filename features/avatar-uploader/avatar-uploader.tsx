@@ -22,7 +22,7 @@ export type AvatarUploaderProps = {
    * In particular, this means resetting the preview loaded from the device along with the error message.
    * */
   onClose: () => boolean | void;
-  onImageSave: (image: Blob, cropProps: CropProps & { mediaType: string }) => void;
+  onImageSave: (image: Blob, cropProps: CropProps & { mediaType: string }) => Promise<void> | void;
   open: boolean;
 };
 
@@ -89,7 +89,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
     }
   };
 
-  const saveAvatar = () => {
+  const saveAvatar = async () => {
     const editor = editorRef.current;
 
     if (!editor) {
@@ -103,12 +103,21 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
       scale: state.scale,
     };
 
+    let maybePromise: Promise<void> | null | void = null;
+
     if (state.preview) {
-      onImageSave(state.preview, { ...cropProps, mediaType: state.preview.type });
+      maybePromise = onImageSave(state.preview, {
+        ...cropProps,
+        mediaType: state.preview.type,
+      });
     } else if (avatar) {
       const file = typeof avatar === 'string' ? dataURLToBlob(avatar) : avatar;
 
-      onImageSave(file, { ...cropProps, mediaType: file.type });
+      maybePromise = onImageSave(file, { ...cropProps, mediaType: file.type });
+    }
+
+    if (maybePromise instanceof Promise) {
+      await maybePromise;
     }
 
     dispatch(editorReset());
