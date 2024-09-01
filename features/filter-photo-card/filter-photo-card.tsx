@@ -8,9 +8,9 @@ import { CCGramFilterOrString } from '@/shared/hooks';
 import { Button, Card, IconButton, Typography } from '@/shared/ui';
 import Image from 'next/image';
 
-import s from './FilterPhotoCard.module.scss';
+import s from './filter-photo-card.module.scss';
 
-import { FilterPhotoCardRefObject, useFilterPhotoCardHandle } from './useFilterPhotoCardHandle';
+import { FilterPhotoCardRefObject, useFilterPhotoCardHandle } from './use-filter-photo-card-handle';
 
 export type FilterPhotoCardItem = { filter: CCGramFilterOrString; src: string };
 

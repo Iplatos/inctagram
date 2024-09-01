@@ -6,8 +6,8 @@ import { CCGramImageParsers } from '@/shared/hooks';
 import { Button } from '@/shared/ui/Button';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { FilterPhotoCard, FilterPhotoCardItem, FilterPhotoCardProps } from './FilterPhotoCard';
-import { FilterPhotoCardRefObject } from './useFilterPhotoCardHandle';
+import { FilterPhotoCard, FilterPhotoCardItem, FilterPhotoCardProps } from './filter-photo-card';
+import { FilterPhotoCardRefObject } from './use-filter-photo-card-handle';
 
 type CustomRenderProps = FilterPhotoCardProps & {
   imagesCount: number;
@@ -116,7 +116,7 @@ const meta = {
   },
   render: props => <CustomRender key={props.imagesCount} {...props} />,
   tags: ['autodocs'],
-  title: 'WIDGETS/FilterPhotoCard',
+  title: 'FEATURES/FilterPhotoCard',
 } satisfies Meta<CustomRenderProps>;
 
 export default meta;
