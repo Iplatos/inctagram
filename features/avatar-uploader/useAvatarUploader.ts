@@ -45,10 +45,6 @@ const slice = createSlice({
   initialState,
   name: 'avatarUploader',
   reducers: {
-    editorClosed(state) {
-      state.preview = undefined;
-      state.error = null;
-    },
     editorPositionChanged(state, { payload: pos }: PayloadAction<Position>) {
       state.editorPosition.x = pos.x;
       state.editorPosition.y = pos.y;
@@ -64,6 +60,10 @@ const slice = createSlice({
       state.scale = initialScale;
       state.editorPosition.x = getCanvasPositionFromOffset(width, initialOffsetX);
       state.editorPosition.y = getCanvasPositionFromOffset(height, initialOffsetY);
+    },
+    editorReset(state) {
+      state.preview = undefined;
+      state.error = null;
     },
     loadedFromDevice(state, { payload }: PayloadAction<File>) {
       if (!['image/jpeg', 'image/png'].includes(payload.type)) {
@@ -95,9 +95,9 @@ const slice = createSlice({
 });
 
 export const {
-  editorClosed,
   editorPositionChanged,
   editorPositionInitialized,
+  editorReset,
   loadedFromDevice,
   scaleChanged,
 } = slice.actions;

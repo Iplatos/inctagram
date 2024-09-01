@@ -46,6 +46,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
       editorClosed,
       editorPositionChanged,
       editorPositionInitialized,
+      editorReset,
       loadedFromDevice,
       scaleChanged,
     },
@@ -63,7 +64,7 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
     const shouldResetState = onClose();
 
     if (shouldResetState === true) {
-      dispatch(editorClosed());
+      dispatch(editorReset());
     }
   };
 
