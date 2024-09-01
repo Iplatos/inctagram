@@ -1,19 +1,15 @@
-import React, { ChangeEvent, ElementRef, FC, useRef } from 'react';
-import AvatarEditor, { CroppedRect } from 'react-avatar-editor';
+import React, { ChangeEvent, FC, useRef } from 'react';
+import AvatarEditor, { CroppedRect, Position } from 'react-avatar-editor';
 
+import { PreviewAvatarCard } from '@/features/avatar-uploader/preview-avatar-card';
 import { dataURLToBlob } from '@/shared/helpers';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button } from '@/shared/ui';
-import { Alert } from '@/shared/ui/alert';
+import { Modal } from '@/shared/ui';
 import { CropProps } from '@/shared/ui/croppedImage';
-import { Typography } from '@/shared/ui/typography';
-import { Trans } from '@/widgets/Trans/Trans';
-import { AvatarFallback } from 'assets/icons/avatar-fallback';
-import clsx from 'clsx';
+import { AddPhotoCard, AddPhotoCardProps } from '@/widgets/addPhotoCard';
 
 import s from './avatar-uploader.module.scss';
 
-import { ConfirmModal } from '../confirm-modal';
 import { useAvatarUploader } from './useAvatarUploader';
 
 // TODO: add missing common components to index file in shared/ui
@@ -40,10 +36,8 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
 }) => {
   const { avatarUploader: t } = useTranslation().t.common;
   const editorRef = useRef<AvatarEditor>(null);
-  const inputRef = useRef<ElementRef<'input'>>(null);
   const {
     actions: {
-      editorClosed,
       editorPositionChanged,
       editorPositionInitialized,
       editorReset,
@@ -58,6 +52,12 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
     const offset = e.deltaY > 0 ? -0.1 : 0.1;
 
     dispatch(scaleChanged(offset));
+  };
+
+  const handlePositionChange = (pos: Position) => {
+    if (!disabled) {
+      dispatch(editorPositionChanged(pos));
+    }
   };
 
   const handleClose = () => {
@@ -105,89 +105,53 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
 
     if (state.preview) {
       onImageSave(state.preview, { ...cropProps, mediaType: state.preview.type });
-
-      return;
-    }
-    if (avatar) {
+    } else if (avatar) {
       const file = typeof avatar === 'string' ? dataURLToBlob(avatar) : avatar;
 
       onImageSave(file, { ...cropProps, mediaType: file.type });
+    }
+
+    dispatch(editorReset());
+  };
+
+  const resetAndCloseEditor = (open: boolean): void => {
+    if (!open) {
+      handleClose();
     }
   };
 
   const previewOrAvatar = state.preview ?? avatar;
 
-  return (
-    <ConfirmModal
-      classes={{ button: s.button, buttonsGroup: s.buttonsGroup }}
-      disabled={disabled}
-      headerTitle={t.title}
-      onCancel={handleClose}
-      onConfirm={saveAvatar}
-      open={open}
-      renderCancelButton={({ className, disabled }) => (
-        <Button
-          {...{ className, disabled }}
-          component={'label'}
-          variant={previewOrAvatar ? 'tertiary' : 'primary'}
-        >
-          <input
-            accept={'image/png, image/jpeg'}
-            disabled={disabled}
-            onChange={uploadFromDevice}
-            style={{ display: 'none' }}
-            type={'file'}
-          />
-          {t.buttons.select}
-        </Button>
-      )}
-      renderConfirmButton={({ className, disabled }) =>
-        previewOrAvatar && (
-          <Button className={className} disabled={!!state.error || disabled} onClick={saveAvatar}>
-            {t.buttons.save}
-          </Button>
-        )
-      }
-    >
-      <div className={s.content}>
-        {state.error && (
-          <Alert classes={{ alertRoot: s.error }} severity={'error'}>
-            {state.error}
-          </Alert>
-        )}
+  const sharedProps = {
+    disabled,
+    error: state.error,
+    onFileInputChange: uploadFromDevice,
+    title: t.title,
+  } satisfies AddPhotoCardProps;
 
-        {previewOrAvatar ? (
-          <div
-            className={clsx(s.canvasWrapper, disabled && s.canvasWrapperDisabled)}
-            onWheel={changeImageScale}
-          >
-            <div className={s.canvasBackground} />
-            <AvatarEditor
-              border={12}
-              borderRadius={10_000}
-              className={s.canvas}
-              color={[23, 23, 23, 0.75]} // --color-dark-500 with transparency
-              image={previewOrAvatar}
-              onImageReady={initEditorPosition}
-              onPositionChange={pos => {
-                if (!disabled) {
-                  dispatch(editorPositionChanged(pos));
-                }
-              }}
-              position={state.editorPosition}
-              ref={editorRef}
-              scale={state.scale}
-              style={{ aspectRatio: 1, height: 'auto', width: '100%' }}
-            />
-          </div>
-        ) : (
-          <div className={s.placeholder}>
-            <AvatarFallback className={s.image} />
-          </div>
-        )}
-        {/* TODO: Add a slider so that users on touch devices can adjust the avatar's scale */}
-      </div>
-    </ConfirmModal>
+  return (
+    <Modal classes={{ content: s.modalContent }} onOpenChange={resetAndCloseEditor} open={open}>
+      {/* TODO: Add a slider so that users on touch devices can adjust the avatar's scale and prevent the card from scrolling on the `wheel` event (perhaps a better option would be to use useEffect) */}
+      {previewOrAvatar ? (
+        <PreviewAvatarCard
+          avatarEditorProps={{
+            onImageReady: initEditorPosition,
+            onPositionChange: handlePositionChange,
+            position: state.editorPosition,
+            scale: state.scale,
+          }}
+          editorRef={editorRef}
+          image={previewOrAvatar}
+          onChangeAvatarScale={changeImageScale}
+          onSaveAvatar={saveAvatar}
+          primaryButtonTitle={t.buttons.save}
+          secondaryButtonTitle={t.buttons.select}
+          {...sharedProps}
+        />
+      ) : (
+        <AddPhotoCard primaryButtonTitle={t.buttons.select} {...sharedProps} />
+      )}
+    </Modal>
   );
 };
 
