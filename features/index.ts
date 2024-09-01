@@ -1,4 +1,4 @@
 export * from './DEPRECATED_Modal';
 export * from './photo-slider';
 export * from './photo-gallery';
-export * from './addPhotoCard';
+export * from './add-photo-card';

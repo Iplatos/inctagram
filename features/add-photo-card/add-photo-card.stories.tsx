@@ -1,7 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { AddPhotoCard, AddPhotoCardProps } from './addPhotoCard';
+import { AddPhotoCard, AddPhotoCardProps } from './add-photo-card';
 
 type CustomRenderProps = AddPhotoCardProps & { showSecondaryButton: boolean };
 

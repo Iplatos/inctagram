@@ -1,7 +1,7 @@
 import { AddPhotoCardContent } from './add-photo-card-content';
 import { AddPhotoCardHeader } from './add-photo-card-header';
 import { AddPhotoCardRoot } from './add-photo-card-root';
-import { AddPhotoCard as AddPhotoCardInner, AddPhotoCardProps } from './addPhotoCard';
+import { AddPhotoCard as AddPhotoCardInner, AddPhotoCardProps } from './add-photo-card';
 
 export const AddPhotoCard = Object.assign(AddPhotoCardInner, {
   Content: AddPhotoCardContent,

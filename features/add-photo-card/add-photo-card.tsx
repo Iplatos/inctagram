@@ -3,7 +3,7 @@ import { ChangeEventHandler, FC, MouseEventHandler, useRef } from 'react';
 import { AvatarFallback } from '@/assets/icons/avatar-fallback';
 import { Button } from '@/shared/ui';
 
-import s from './addPhotoCard.module.scss';
+import s from './add-photo-card.module.scss';
 
 import { AddPhotoCardContent } from './add-photo-card-content';
 import { AddPhotoCardHeader } from './add-photo-card-header';

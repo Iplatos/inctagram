@@ -3,7 +3,7 @@ import { ElementRef, FC, forwardRef } from 'react';
 import { ModalCard, ModalCardProps } from '@/shared/ui';
 import clsx from 'clsx';
 
-import s from './addPhotoCard.module.scss';
+import s from './add-photo-card.module.scss';
 
 export type AddPhotoCardRootProps = ModalCardProps;
 

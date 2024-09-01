@@ -1,12 +1,12 @@
 import { FC, Ref, WheelEventHandler, useRef } from 'react';
 import AvatarEditor, { AvatarEditorProps } from 'react-avatar-editor';
 
-import { AddPhotoCard, AddPhotoCardProps } from '@/features/addPhotoCard';
+import { AddPhotoCard, AddPhotoCardProps } from '@/features/add-photo-card';
 import { Button } from '@/shared/ui';
 import clsx from 'clsx';
 
 import s from './preview-avatar-card.module.scss';
-import addPhotoCardS from '@/features/addPhotoCard/addPhotoCard.module.scss';
+import addPhotoCardS from '@/features/add-photo-card/add-photo-card.module.scss';
 
 type OmittedAddPhotoCardProps = Omit<AddPhotoCardProps, 'onSecondaryClick'>;
 

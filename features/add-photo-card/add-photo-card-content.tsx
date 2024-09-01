@@ -4,7 +4,7 @@ import { ModalCard } from '@/shared/ui';
 import { Alert } from '@/shared/ui/alert';
 import clsx from 'clsx';
 
-import s from './addPhotoCard.module.scss';
+import s from './add-photo-card.module.scss';
 import modalCardS from '@/shared/ui/modal-card/modal-card.module.scss';
 
 export type AddPhotoCardContentProps = PropsWithChildren<{
