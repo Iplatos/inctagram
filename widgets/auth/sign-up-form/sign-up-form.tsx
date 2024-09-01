@@ -151,7 +151,7 @@ export const SignUpForm = () => {
         <div className={s.bottom}>
           <Typography.Regular16>{t.auth.signUpPage.account}</Typography.Regular16>
         </div>
-        <Button className={clsx(s.center, s.signUp)} variant={'text'}>
+        <Button className={clsx(s.center, s.signUp)} component={'span'} variant={'text'}>
           <Link href={'/sign-in'}>{t.auth.signUpPage.signIn}</Link>
         </Button>
       </DEPRECATED_Card>

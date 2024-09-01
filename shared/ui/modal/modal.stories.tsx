@@ -1,6 +1,5 @@
 import { Button } from '@/shared/ui/Button';
 import * as CardStories from '@/shared/ui/card/card.stories';
-import { ModalCard } from '@/shared/ui/modal-card';
 import * as ModalCardStories from '@/shared/ui/modal-card/modal-card.stories';
 import { Meta, StoryObj } from '@storybook/react';
 
@@ -133,30 +132,32 @@ const meta = {
     },
   },
   component: Modal,
-  decorators: [CardStories.commonDecorator],
+  decorators: [CardStories.commonCardDecorator],
   title: 'UI/Modal',
 } satisfies Meta<typeof Modal>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const ModalCardCustomRender = ModalCardStories.CustomRender;
+
 export const BasicModalCard: Story = {
   args: {
-    children: <ModalCard {...ModalCardStories.Basic.args} />,
+    children: <ModalCardCustomRender {...ModalCardStories.Basic.args} />,
     trigger: <Button>Open Modal</Button>,
   },
 };
 
-export const EmptyModalCard: Story = {
+export const ModalCardWithHeaderOnly: Story = {
   args: {
     ...BasicModalCard.args,
-    children: <ModalCard {...ModalCardStories.Empty.args} />,
+    children: <ModalCardCustomRender {...ModalCardStories.HeaderOnly.args} />,
   },
 };
 
 export const ModalCardWithLongHeader: Story = {
   args: {
     ...BasicModalCard.args,
-    children: <ModalCard {...ModalCardStories.LongHeader.args} />,
+    children: <ModalCardCustomRender {...ModalCardStories.LongHeader.args} />,
   },
 };

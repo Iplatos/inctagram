@@ -43,8 +43,11 @@ const MyProfile: NextPageWithLayout = () => {
         aboutMe={aboutMe}
         avatarProps={avatar}
         primaryAction={
-          // TODO: fix button styles when it is used as span. Rename `as` prop to `component`
-          <Button as={'span'} style={{ height: '100%', width: '100%' }} variant={'secondary'}>
+          <Button
+            component={'span'}
+            style={{ height: '100%', width: '100%' }}
+            variant={'secondary'}
+          >
             <Link href={'/accounts/edit'}>{t.settingsButton}</Link>
           </Button>
         }

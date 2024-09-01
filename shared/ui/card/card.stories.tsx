@@ -10,10 +10,11 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Card, CardContentProps } from './card';
 
 type DecoratorFunction = Exclude<Meta['decorators'], undefined>[number];
-export const commonDecorator: DecoratorFunction = Story => (
+export const commonCardDecorator: DecoratorFunction = Story => (
   <>
     <style>{`
-          .card-content { width: 400px; max-width: 100%; }
+          .card-root-wrapper { width: 400px; max-width: 100%; display: flex; flex-direction: column; }
+          .card-max-height { max-height: 50vh; }
           .buttons-group { display: flex; gap: 16px; }
           .button { flex: 1 1 0; }
         `}</style>
@@ -30,9 +31,9 @@ type CustomRenderProps =
 
 const CustomRender = (props: CustomRenderProps) => {
   if (props.children === undefined) {
-    const { renderChildren, ...restProps } = props;
+    const { ignoreHeader, renderChildren, ...restProps } = props;
 
-    return <Card {...restProps}>{renderChildren({ ignoreHeader: props.ignoreHeader })}</Card>;
+    return <Card {...restProps}>{renderChildren({ ignoreHeader })}</Card>;
   }
 
   return <Card {...props} />;
@@ -71,8 +72,8 @@ const meta = {
       control: { type: 'boolean' },
       defaultValue: false,
       description: `STORYBOOK_SPECIFIC_SETTING: Can be passed to \`Card.Content\` to avoid
-        adding an increased \`padding-top\` to it if the preceding child component is \`Card.
-        Header\`. By default, the indentation is increased.`,
+        adding an increased \`padding-top\` to it if the preceding child component is \`Card.Header\`.
+        By default, the indentation is increased.`,
       table: { type: { summary: 'boolean' } },
     },
     ref: {
@@ -81,8 +82,8 @@ const meta = {
       table: { type: { summary: 'ForwardedRef<HTMLDivElement>' } },
     },
   },
-  decorators: [commonDecorator],
-  excludeStories: ['cardHeader', 'cardContent', 'commonDecorator'],
+  decorators: [commonCardDecorator],
+  excludeStories: ['cardHeader', 'cardContent', 'commonCardDecorator'],
   render: CustomRender,
   tags: ['autodocs'],
   title: 'UI/Card',
@@ -124,12 +125,12 @@ export const cardContent = [
 ];
 
 export const HeaderOnly: Story = {
-  args: { children: <Card.Header>{cardHeader}</Card.Header>, className: 'card-content' },
+  args: { children: <Card.Header>{cardHeader}</Card.Header>, className: 'card-root-wrapper' },
 };
 
 export const ContentOnly: Story = {
   args: {
-    className: 'card-content',
+    className: 'card-root-wrapper',
     renderChildren: props =>
       cardContent.map((content, i) => (
         <Card.Content {...props} key={i}>
@@ -141,7 +142,7 @@ export const ContentOnly: Story = {
 
 export const Basic: Story = {
   args: {
-    className: 'card-content',
+    className: 'card-root-wrapper',
     ignoreHeader: false,
     renderChildren: props => (
       <>

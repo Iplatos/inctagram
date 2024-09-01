@@ -225,6 +225,9 @@ export const en: LocaleType = {
     },
     postsList: {
       addPostButton: 'Create Post',
+      buttons: {
+        draftButton: 'Open Draft',
+      },
       noPostsMessage: 'There are not posts yet',
     },
   },

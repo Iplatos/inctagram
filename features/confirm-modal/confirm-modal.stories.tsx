@@ -108,7 +108,7 @@ const meta = {
 
   render: CustomRender,
   tags: ['autodocs'],
-  title: 'UI/ConfirmModal',
+  title: 'FEATURES/ConfirmModal',
 } satisfies Meta<typeof CustomRender>;
 
 export default meta;
@@ -126,7 +126,7 @@ export const Basic: Story = {
     trigger: <Button>Open Modal</Button>,
   },
   // the `commonDecorator` is required in each story to manage the styles of the internal `Card` component.
-  decorators: [CardStories.commonDecorator],
+  decorators: [CardStories.commonCardDecorator],
 };
 
 export const LongText: Story = {
@@ -136,7 +136,7 @@ export const LongText: Story = {
   },
 
   decorators: [
-    CardStories.commonDecorator,
+    CardStories.commonCardDecorator,
     Story => (
       <>
         <Typography.Regular16 className={'description'} component={'p'}>
@@ -144,7 +144,7 @@ export const LongText: Story = {
           test.
         </Typography.Regular16>
         <Typography.Regular16 className={'description'} component={'p'}>
-          <Typography.Bold16>TIP:</Typography.Bold16> The <em>[role=&quot;button&quot;]</em>{' '}
+          <Typography.Bold16>TIP:</Typography.Bold16> The <em>[role=&quot;dialog&quot;]</em>{' '}
           selector is used.
         </Typography.Regular16>
         <Story />
@@ -162,7 +162,7 @@ export const LongButtons: Story = {
   },
 
   decorators: [
-    CardStories.commonDecorator,
+    CardStories.commonCardDecorator,
     Story => (
       <>
         <Typography.Regular16 className={'description'} component={'p'}>
@@ -188,7 +188,7 @@ export const Empty: Story = {
     ...Basic.args,
     children: undefined,
   },
-  decorators: [CardStories.commonDecorator],
+  decorators: [CardStories.commonCardDecorator],
 };
 
 export const AlertModal: Story = {
@@ -197,7 +197,7 @@ export const AlertModal: Story = {
     renderCancelButton: () => null,
     renderConfirmButton: ({ variant, ...props }) => <Button {...props} fullWidth />,
   },
-  decorators: [CardStories.commonDecorator],
+  decorators: [CardStories.commonCardDecorator],
 };
 
 export const LongHeader: Story = {
@@ -205,5 +205,5 @@ export const LongHeader: Story = {
     ...Basic.args,
     headerTitle: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.',
   },
-  decorators: [CardStories.commonDecorator],
+  decorators: [CardStories.commonCardDecorator],
 };

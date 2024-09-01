@@ -1,6 +1,12 @@
 @use '../../../styles/mixins' as *;
 @use '../../../styles/z-index' as *;
 
+@function translate-with-half-header-offset($translateX, $translateY) {
+  $header-half-height: var(--header-height) / 2;
+
+  @return translate($translateX, calc($translateY + $header-half-height));
+}
+
 .overlay {
   position: fixed;
   z-index: z-index('modal');
@@ -13,13 +19,11 @@
 }
 
 .content {
-  $header-half-height: var(--header-height) / 2;
-
   position: fixed;
   z-index: z-index('modal');
   top: 50%;
   left: 50%;
-  transform: translate(-50%, calc(-50% + $header-half-height));
+  transform: translate-with-half-header-offset(-50%, -50%);
 
   // `display: flex` is required so that the child of the container can shrink.
   //  This will allow you to set `overflow: hidden` to this child, so that you can then set `overflow: auto`
@@ -52,12 +56,12 @@
 
 @keyframes content-show {
   from {
-    transform: translate(-50%, -48%) scale(0.96);
+    transform: translate-with-half-header-offset(-50%, -48%) scale(0.96);
     opacity: 0;
   }
 
   to {
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate-with-half-header-offset(-50%, -50%) scale(1);
     opacity: 1;
   }
 }

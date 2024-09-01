@@ -1,1 +1,1 @@
-export * from './modal-card-root';
+export * from './modal-card';

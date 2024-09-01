@@ -1,12 +1,20 @@
 import { MouseEventHandler, PropsWithChildren, ReactNode } from 'react';
 
+import { CloseIcon } from '@/assets/icons/close';
 import { Replace } from '@/shared/types/helpers';
-import { Button, ButtonVariant } from '@/shared/ui/Button';
-import { Modal, ModalProps } from '@/shared/ui/modal';
-import { ModalCard, ModalCardProps } from '@/shared/ui/modal-card';
+import {
+  Button,
+  ButtonVariant,
+  IconButton,
+  Modal,
+  ModalCard,
+  ModalProps,
+  Typography,
+} from '@/shared/ui';
 import clsx from 'clsx';
 
 import s from './confirm-modal.module.scss';
+import modalCardS from '@/shared/ui/modal-card/modal-card.module.scss';
 
 type CustomButtonRenderProps = {
   children: string;
@@ -23,20 +31,17 @@ type OwnProps = {
   cancelButtonTitle?: string;
   children?: ReactNode;
   classes?: ConfirmModalClasses;
-
   confirmButtonTitle?: string;
+  disabled?: boolean;
+
+  headerTitle: string;
   onCancel?: () => void;
   onConfirm?: () => void;
   renderCancelButton?: CustomButtonRender;
   renderConfirmButton?: CustomButtonRender;
 };
 
-type PickedModalCardProps = Pick<ModalCardProps, 'disabled' | 'headerTitle'>;
-// prettier-ignore
-export type ConfirmModalProps = Replace<
-  Omit<Omit <ModalProps, "onOpenChange" > & PickedModalCardProps, 'classes' >,
-  OwnProps
->;
+export type ConfirmModalProps = Replace<Omit<ModalProps, 'onOpenChange'>, OwnProps>;
 
 export const ConfirmModal = ({
   cancelButtonTitle = 'No',
@@ -55,6 +60,7 @@ export const ConfirmModal = ({
   // It is necessary to call the `onCancel` handler inside the callback for `onOpenChange`
   //  in controlled mode to preserve the ability of `Radix.Modal` to close automatically
   //  when clicked outside the window, as well as when the `Esc` key is pressed
+  // TODO: consider changing this condition to: `props.open === true`
   const closeModalOnOpenChange = () => {
     if (props.open !== undefined) {
       onCancel?.();
@@ -67,14 +73,22 @@ export const ConfirmModal = ({
       onOpenChange={closeModalOnOpenChange}
       {...props}
     >
-      <ModalCard.Root
-        classes={{ cardRoot: s.cardRoot }}
-        disabled={disabled}
-        headerTitle={headerTitle}
-        onClose={onCancel}
-        style={{ overflow: 'auto' }}
-      >
-        <ModalCard.Content className={s.cardContent}>
+      <ModalCard.Root className={s.cardRoot}>
+        <ModalCard.Header>
+          <Typography.H2 className={modalCardS.headerTitle}>{headerTitle}</Typography.H2>
+          <Modal.Close asChild>
+            <IconButton
+              className={modalCardS.headerIconButtonLast}
+              disabled={disabled}
+              onClick={onCancel}
+              size={'medium'}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Modal.Close>
+        </ModalCard.Header>
+
+        <ModalCard.Content className={clsx(s.cardContent, modalCardS.contentScrollable)}>
           {children}
 
           <div className={cls.buttonsGroup}>
