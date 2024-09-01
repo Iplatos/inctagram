@@ -1,0 +1,58 @@
+@use '../../../styles/mixins' as *;
+@use '../../../styles/helpers' as *;
+@use 'sass:math';
+
+.canvas {
+  position: relative;
+  display: block;
+
+  &PaddingBox {
+    // By increasing `max-device-size` by a coefficient,
+    // we “stretch” the range over which the adaptive padding value increment will occur.
+    // Thus the value will grow more smoothly.
+    $adaptive-padding: get-adaptive-size(
+      $min-size: 0,
+      $max-size: 16,
+      $min-device-size: get-breakpoint('mobile-l'),
+      $max-device-size: get-breakpoint('tablet-s') + 130,
+      $unit: 1px,
+    );
+
+    width: 100%;
+    margin-bottom: 35px;
+    padding-inline: clamp(0px, $adaptive-padding, 16px);
+  }
+
+  &Wrapper {
+    position: relative;
+    width: 100%;
+
+    &Disabled {
+      pointer-events: none;
+
+      & .canvas {
+        filter: grayscale(100%);
+      }
+    }
+  }
+
+  &Background {
+    $width-unit: math.div(330px, 40);
+    $line-size: rem(math.div($width-unit, 1px));
+    $gradient-value:
+      var(--color-dark-500) 0,
+      var(--color-dark-500) $line-size,
+      var(--color-light-900) $line-size,
+      var(--color-light-900) $line-size * 2;
+
+    position: absolute;
+
+    // hack to prevent canvas background to overflow its parent
+    inset: 1px;
+
+    background-color: var(--color-dark-500);
+    background-image: repeating-linear-gradient($gradient-value),
+      repeating-linear-gradient(90deg, $gradient-value);
+    background-blend-mode: difference;
+  }
+}
