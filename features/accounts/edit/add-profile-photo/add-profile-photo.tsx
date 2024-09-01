@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { CloseIcon } from '@/assets/icons/close';
-import { AvatarUploader, AvatarUploaderProps } from '@/features/avatar-uploader';
 import { ConfirmModal } from '@/features/confirm-modal';
 import {
   useDeleteMyAvatarMutation,
@@ -12,6 +11,7 @@ import {
 import { getDefaultCropProps } from '@/shared/helpers/getDefaultCropProps';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Avatar, Button, Typography } from '@/shared/ui';
+import { AvatarUploader, AvatarUploaderProps } from '@/widgets/avatar-uploader';
 import { nanoid } from '@reduxjs/toolkit';
 import clsx from 'clsx';
 

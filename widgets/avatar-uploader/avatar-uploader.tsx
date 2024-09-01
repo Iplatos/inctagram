@@ -10,7 +10,7 @@ import { AddPhotoCard, AddPhotoCardProps } from '@/widgets/addPhotoCard';
 
 import s from './avatar-uploader.module.scss';
 
-import { useAvatarUploader } from './useAvatarUploader';
+import { useAvatarUploader } from './use-avatar-uploader';
 
 // TODO: add missing common components to index file in shared/ui
 export type AvatarUploaderProps = {

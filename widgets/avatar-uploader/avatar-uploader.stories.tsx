@@ -109,7 +109,7 @@ const meta = {
     ),
   ],
   tags: ['autodocs'],
-  title: 'UI/AvatarUploader',
+  title: 'WIDGETS/AvatarUploader',
 } satisfies Meta<CustomRenderProps>;
 
 export default meta;
