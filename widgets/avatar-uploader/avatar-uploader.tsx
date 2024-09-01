@@ -1,12 +1,12 @@
 import React, { ChangeEvent, FC, useRef } from 'react';
 import AvatarEditor, { CroppedRect, Position } from 'react-avatar-editor';
 
+import { AddPhotoCard, AddPhotoCardProps } from '@/features';
 import { PreviewAvatarCard } from '@/features/avatar-uploader/preview-avatar-card';
 import { dataURLToBlob } from '@/shared/helpers';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Modal } from '@/shared/ui';
 import { CropProps } from '@/shared/ui/croppedImage';
-import { AddPhotoCard, AddPhotoCardProps } from '@/widgets/addPhotoCard';
 
 import s from './avatar-uploader.module.scss';
 
