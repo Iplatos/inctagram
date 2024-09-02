@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import styles from './truncatedText.module.scss';
+
 import { Button } from '../Button';
 
 type HederProps = {
@@ -11,72 +13,20 @@ export const TruncatedText = ({ text }: HederProps) => {
 
   return (
     <div>
-      <div
-        style={{
-          WebkitBoxOrient: 'vertical',
-          WebkitLineClamp: collapsed ? '3' : '',
-          border: '2px solid red',
-
-          display: '-webkit-box',
-          overflow: 'hidden',
-          position: 'relative',
-          textOverflow: '',
-          width: '300px',
-        }}
-      >
+      <div className={`${styles.truncatedText} ${collapsed ? styles.collapsed : styles.expanded}`}>
         {text}
-        <span
-          style={
-            collapsed
-              ? {
-                  border: 0,
-                  bottom: 0,
-                  height: '1.44em',
-                  padding: 0,
-                  position: 'absolute',
-                  right: 4,
-                }
-              : { border: 0, height: '1em', padding: 0 }
-          }
-        >
-          <span
-            style={
-              collapsed
-                ? {
-                    bottom: 0,
-                    display: 'inline-block',
-                    height: '1.44em',
-
-                    right: 4,
-
-                    width: '24px',
-                  }
-                : { height: '1em' }
-            }
-          >
+        <span className={`${styles.showMoreContainer} ${collapsed ? '' : styles.expanded}`}>
+          <span className={`${styles.ellipsis} ${collapsed ? '' : styles.expanded}`}>
             {collapsed ? '...' : ' '}
           </span>
 
           <Button
             as={'a'}
+            className={`${styles.button} ${collapsed ? '' : styles.expanded}`}
             onClick={() => setCollapsed(!collapsed)}
-            style={
-              collapsed
-                ? {
-                    backgroundColor: 'black',
-                    border: 0,
-
-                    height: '1.44em',
-                    overflow: 'hidden',
-                    padding: 0,
-
-                    width: 'max-content',
-                  }
-                : { border: 0, height: '1em', padding: 0 }
-            }
             variant={'tertiary'}
           >
-            {collapsed ? '  Show more' : 'Hide'}
+            {collapsed ? 'Show more' : 'Hide'}
           </Button>
         </span>
       </div>
