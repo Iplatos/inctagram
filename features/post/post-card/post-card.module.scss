@@ -1,66 +1,45 @@
 @use '../../../styles/mixins' as *;
 @use '../../../styles/helpers' as *;
 
+$max-card-width: 982px;
+$max-card-height: 562px;
+
 .root {
-  width: 982px;
-  height: 562px;
+  width: $max-card-width;
+  height: $max-card-height;
 }
-
-
 
 .content {
   display: grid;
-  grid-template-areas:
-    'slider header'
-    'slider content'
-    'slider footer'
-    'slider form';
+  grid-template-areas: 'gallery details';
   grid-template-columns: 1fr 1fr;
-
-  width: 100%;
-  height: 100%;
   padding: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .gallery {
-  grid-area: slider;
+  display: flex;
+  grid-area: gallery;
+  width: 100%;
 }
 
 .postDetails {
-  display: flex;
-  flex-direction: column;
-  width: 490px;
+  grid-area: details;
   padding: 0;
 }
 
 .header {
-  width: 490px;
+  width: 100%;
   grid-area: header;
   height: 59px;
 }
 
 .commentsSection {
-  scrollbar-color: var(--color-light-900) transparent;
-  scrollbar-width: thin;
-
   overflow-y: auto;
-
   height: 330px;
-  margin-top: -5px;
-  padding-top: 6px;
 
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--color-light-900);
-    border-radius: 3px;
-  }
+  @include thin-scrollbar;
 
   &Publick {
     height: 410px;
@@ -68,7 +47,6 @@
 }
 
 .commentsDetails {
-  grid-area: footer;
   padding-top: 9px;
   padding-bottom: 9px;
 
@@ -79,7 +57,6 @@
 
 .addNewCommentSection {
   display: flex;
-  grid-area: form;
   width: 100%;
   height: 64px;
 
@@ -90,33 +67,32 @@
 
 .inputSection {
   position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .input {
-    width: 100%;
-    height: 40px;
-    
+  width: 100%;
+  height: 40px;
 
-    color: var(--color-light-300);
+  color: var(--color-light-300);
 
+  background: transparent;
+  border: none;
+
+  &:active,
+  :focus,
+  :hover {
     background: transparent;
     border: none;
+    outline: none;
+  }
 
-    &:active,
-    :focus,
-    :hover{
-      background: transparent;
-      border: none;
-      outline: none
-    }
-
-    &:focus-visible{
-      border: none;
-      outline: none;
-    }
+  &:focus-visible {
+    border: none;
+    outline: none;
+  }
 }
 
 .errorTitle {

@@ -1,4 +1,6 @@
 .form {
+  min-width: 100%;
+  height: 87%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -8,13 +10,13 @@
 .area {
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
 
   div {
     height: max-content;
     margin: 0;
   }
-
 
   &__textarea {
     height: 120px;
@@ -40,8 +42,5 @@
   padding: 5px 0;
   color: var(--color-light-900);
   text-decoration: none;
-}
-
-.btn {
-  place-self: end;
+  margin-bottom: auto;
 }

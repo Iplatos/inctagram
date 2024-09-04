@@ -11,10 +11,10 @@ import style from './photo-gallery.module.scss';
 import { LeftNav } from '../photo-slider/controls/leftNav';
 import { RightNav } from '../photo-slider/controls/rightNav';
 
-export type PhotoGalleryProps = ReactImageGalleryProps & {
+export type PhotoGalleryProps = {
   galleryRef?: ForwardedRef<ReactImageGallery>;
   previewRef?: ForwardedRef<ElementRef<'img'>>;
-};
+} & ReactImageGalleryProps;
 
 const PhotoGalleryRoot = ({
   additionalClass,

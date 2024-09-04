@@ -363,5 +363,19 @@ export const en: LocaleType = {
         open: 'Show Answers',
       },
     },
+    editPostModalCard: {
+      descriptionCloseModal:
+        'Do you really want to close the edition of the publication? If you' +
+        ' close changes won’t be saved',
+      labelCard: 'Edit Post',
+      postDescription: {
+        errors: {
+          tooBig: 'Maximum number of characters 500',
+        },
+        label: 'Add publication descriptions',
+        placeholder: 'Text-area',
+        titleBtnSubmit: 'Save changes',
+      },
+    },
   },
 };

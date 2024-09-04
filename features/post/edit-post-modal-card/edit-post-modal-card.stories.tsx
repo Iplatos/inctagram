@@ -1,11 +1,11 @@
-import { DescriptionPhotoCard } from '@/features/post/description-photo-card/index';
+import { EditPostModalCard } from '@/features/post/edit-post-modal-card/index';
 import { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
-  component: DescriptionPhotoCard,
+  component: EditPostModalCard,
   tags: ['autodocs'],
   title: 'Feature/Post/DescriptionPhotoCard',
-} satisfies Meta<typeof DescriptionPhotoCard>;
+} satisfies Meta<typeof EditPostModalCard>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
