@@ -5,6 +5,7 @@ export * from './createPluralize';
 export * from './dataURLToBlob';
 export * from './resolveImageSrcToString';
 export * from './transformTaggedString';
+export * from './adjustArrayIndexByBoundaries';
 export * from './onCropDone';
 export * from './extractInitials';
 export * from './compartmentalize';

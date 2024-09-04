@@ -34,7 +34,7 @@ export const AddProfilePhoto = () => {
   const [deleteAvatar, { isLoading: isDeletingAvatar }] = useDeleteMyAvatarMutation();
   const [uploadAvatar, { isLoading: isUploadingAvatar }] = useSetMyAvatarMutation();
 
-  const handleAvatarUpload: AvatarUploaderProps['onImageSave'] = (
+  const handleAvatarUpload: AvatarUploaderProps['onImageSave'] = async (
     image,
     { mediaType, offsetX, offsetY, scale }
   ) => {
@@ -53,7 +53,12 @@ export const AddProfilePhoto = () => {
     formData.append('scale', scale.toString());
     formData.append('file', image, nanoid() + (isValidAvatar ? `.${subtype}` : ''));
 
-    uploadAvatar(formData);
+    try {
+      await uploadAvatar(formData).unwrap();
+      setUploaderOpen(false);
+    } catch (error) {
+      console.error('Failed to upload avatar:', error);
+    }
   };
 
   const handleAvatarDelete = async () => {
@@ -76,7 +81,18 @@ export const AddProfilePhoto = () => {
 
   const isUploaderDisabled = isUploadingAvatar || isDeletingAvatar || isFetchingMyProfile;
 
-  const onCloseModal = () => {
+  const handleUploaderModalClose = () => {
+    const shouldCloseAndResetModal = !isUploaderDisabled;
+
+    if (shouldCloseAndResetModal) {
+      setUploaderOpen(false);
+    }
+
+    // Returns `true` when the uploader unlocks, to explicitly tell it to clear its state when it closes.
+    return shouldCloseAndResetModal;
+  };
+
+  const handleDeleteModalClose = () => {
     if (!isDeletingAvatar) {
       setDeleteModalOpen(false);
     }
@@ -115,8 +131,9 @@ export const AddProfilePhoto = () => {
 
       <AvatarUploader
         avatar={avatarBase64 ?? undefined}
+        disabled={isUploaderDisabled}
         initCropProps={{ offsetX, offsetY, scale }}
-        onClose={() => setUploaderOpen(false)}
+        onClose={handleUploaderModalClose}
         onImageSave={handleAvatarUpload}
         open={uploaderOpen}
       />
@@ -124,9 +141,9 @@ export const AddProfilePhoto = () => {
       <ConfirmModal
         cancelButtonTitle={tCommon.modal.buttonNames.cancel}
         confirmButtonTitle={tCommon.modal.buttonNames.confirm}
-        disabled={isDeletingAvatar}
+        disabled={isUploaderDisabled}
         headerTitle={tModal.title}
-        onCancel={onCloseModal}
+        onCancel={handleDeleteModalClose}
         onConfirm={handleAvatarDelete}
         open={deleteModalOpen}
       >

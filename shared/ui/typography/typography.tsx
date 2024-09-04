@@ -1,13 +1,15 @@
 import {
   CSSProperties,
   ComponentProps,
+  ElementRef,
   ElementType,
-  FC,
   JSX,
   JSXElementConstructor,
   ReactNode,
+  forwardRef,
 } from 'react';
 
+import { capitalise } from '@/shared/helpers';
 import { clsx } from 'clsx';
 
 import s from './typography.module.scss';
@@ -24,25 +26,29 @@ export type TypographyProps<Ttag extends ReactTag> = {
   component?: Ttag;
 } & PropsOf<Ttag>;
 
-export const createTypography = <T extends ReactTag>(
-  basicClassName: Component
-): FC<TypographyProps<T>> => {
-  return ({ children, className, color, component, style, ...rest }) => {
-    const Component = component || COMPONENTS[basicClassName] || 'span';
+export const createTypography = <T extends ReactTag>(variant: TypographyVariant) => {
+  const TypographyExoticComponent = forwardRef<ElementRef<T>, TypographyProps<T>>(
+    ({ children, className, color, component, style, ...rest }, ref) => {
+      const Component = component || TYPOGRAPHY_VARIANT_MAP[variant];
 
-    const classNames = clsx(s[basicClassName], className);
+      const classNames = clsx(s[variant], className);
 
-    const styles = {
-      ...(color && { color }),
-      ...style,
-    };
+      const styles = {
+        ...(color && { color }),
+        ...style,
+      };
 
-    return (
-      <Component className={classNames} style={styles} {...rest}>
-        {children}
-      </Component>
-    );
-  };
+      return (
+        <Component className={classNames} ref={ref} style={styles} {...rest}>
+          {children}
+        </Component>
+      );
+    }
+  );
+
+  TypographyExoticComponent.displayName = `Typography.${capitalise(variant, true)}`;
+
+  return TypographyExoticComponent;
 };
 
 export const Typography = {
@@ -63,7 +69,7 @@ export const Typography = {
   SmallText: createTypography('smallText'),
 };
 
-const COMPONENTS = {
+const TYPOGRAPHY_VARIANT_MAP = {
   bold14: 'span',
   bold16: 'span',
   h1: 'h1',
@@ -81,4 +87,4 @@ const COMPONENTS = {
   smallText: 'p',
 } as const;
 
-type Component = keyof typeof COMPONENTS;
+type TypographyVariant = keyof typeof TYPOGRAPHY_VARIANT_MAP;

@@ -10,10 +10,11 @@ import { Meta, StoryObj } from '@storybook/react';
 import { AvatarUploader, AvatarUploaderProps } from './avatar-uploader';
 
 type CustomRenderProps = {
+  disabled?: boolean;
   specifiedImage: 'base64' | 'file' | 'none';
 };
 
-const CustomRender: FC<CustomRenderProps> = ({ specifiedImage }) => {
+const CustomRender: FC<CustomRenderProps> = ({ disabled, specifiedImage }) => {
   const [open, setOpen] = useState(false);
 
   const [avatar, setAvatar] = useState<File | string | undefined>(undefined);
@@ -52,17 +53,18 @@ const CustomRender: FC<CustomRenderProps> = ({ specifiedImage }) => {
     setAvatar(base64);
     setAvatarBase64(base64);
     setCropProps(cropProps);
+    setOpen(false);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+
+    // Return `true` to explicitly tell the uploader to clear its state when it closes.
+    return true;
   };
 
   return (
     <>
-      <style>
-        {`
-        .container { display: flex; flex-direction: column; align-items: center; gap: 1rem; width: fit-content; }
-        .avatar { width: 10rem; height: 10rem; }
-        .button { width: 7rem; }
-        `}
-      </style>
       <div className={'container'}>
         <Avatar classes={{ avatarRoot: 'avatar' }} src={avatarBase64} {...cropProps} />
         <Button className={'button'} onClick={() => setOpen(true)}>
@@ -74,8 +76,9 @@ const CustomRender: FC<CustomRenderProps> = ({ specifiedImage }) => {
       </div>
       <AvatarUploader
         avatar={avatar}
+        disabled={disabled}
         initCropProps={cropProps}
-        onClose={() => setOpen(false)}
+        onClose={handleClose}
         onImageSave={handleImageSave}
         open={open}
       />
@@ -91,6 +94,20 @@ const meta = {
     },
   },
   component: CustomRender,
+  decorators: [
+    Story => (
+      <>
+        <style>
+          {`
+          .container { display: flex; flex-direction: column; align-items: center; gap: 1rem; width: fit-content; }
+          .avatar { width: 10rem; height: 10rem; }
+          .button { width: 7rem; }
+          `}
+        </style>
+        <Story />
+      </>
+    ),
+  ],
   tags: ['autodocs'],
   title: 'UI/AvatarUploader',
 } satisfies Meta<CustomRenderProps>;
@@ -99,11 +116,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: { specifiedImage: 'none' },
+  args: { disabled: false, specifiedImage: 'none' },
 };
 export const AvatarAsBase64: Story = {
-  args: { specifiedImage: 'base64' },
+  args: { ...Primary.args, specifiedImage: 'base64' },
 };
 export const AvatarAsFile: Story = {
-  args: { specifiedImage: 'file' },
+  args: { ...Primary.args, specifiedImage: 'file' },
 };

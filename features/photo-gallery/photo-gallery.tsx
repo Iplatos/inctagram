@@ -1,5 +1,5 @@
-import React, { ElementRef, MouseEventHandler, ReactNode, useRef, useState } from 'react';
-import ImageGallery, { ReactImageGalleryProps } from 'react-image-gallery';
+import { ElementRef, FC, ForwardedRef, PropsWithChildren } from 'react';
+import ReactImageGallery, { ReactImageGalleryProps } from 'react-image-gallery';
 
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -11,50 +11,50 @@ import style from './photo-gallery.module.scss';
 import { LeftNav } from '../photo-slider/controls/leftNav';
 import { RightNav } from '../photo-slider/controls/rightNav';
 
-export type PhotoGalleryPropsType = Omit<
-  ReactImageGalleryProps,
-  'showBullets' | 'showFullscreenButton' | 'showPlayButton' | 'showThumbnails'
->;
+export type PhotoGalleryProps = ReactImageGalleryProps & {
+  galleryRef?: ForwardedRef<ReactImageGallery>;
+  previewRef?: ForwardedRef<ElementRef<'img'>>;
+};
 
-export const PhotoGallery = ({ additionalClass, ...props }: PhotoGalleryPropsType) => {
-  const ref = useRef<ImageGallery>(null);
-
+const PhotoGalleryRoot = ({
+  additionalClass,
+  galleryRef,
+  previewRef,
+  ...props
+}: PhotoGalleryProps) => {
   return (
-    <ImageGallery
-      ref={ref}
-      renderItem={({ original }) => (
-        <Image
-          alt={'user image'}
-          height={560}
-          src={original}
-          style={{ objectFit: 'cover' }}
-          width={490}
-        />
+    <ReactImageGallery
+      additionalClass={clsx(style.container, additionalClass)}
+      ref={galleryRef}
+      renderItem={({ original, originalAlt }) => (
+        <PhotoGalleryPreviewImageWrapper>
+          <Image
+            alt={originalAlt ?? ''}
+            className={'image-gallery-slide-image'}
+            fill
+            ref={previewRef}
+            src={original}
+          />
+        </PhotoGalleryPreviewImageWrapper>
       )}
-      renderLeftNav={(onClick, disabled) => {
-        const handleClick: MouseEventHandler<HTMLElement> = e => {
-          onClick(e);
-
-          // console.log(ref.current?.getCurrentIndex());
-        };
-
-        return <LeftNav disabled={disabled} onClick={handleClick} />;
-      }}
-      renderRightNav={(onClick, disabled) => {
-        const handleClick: MouseEventHandler<HTMLElement> = e => {
-          onClick(e);
-
-          // console.log(ref.current?.getCurrentIndex());
-        };
-
-        return <RightNav disabled={disabled} onClick={handleClick} />;
-      }}
+      renderLeftNav={(onClick, disabled) => <LeftNav disabled={disabled} onClick={onClick} />}
+      renderRightNav={(onClick, disabled) => <RightNav disabled={disabled} onClick={onClick} />}
       showBullets
       showFullscreenButton={false}
       showPlayButton={false}
       showThumbnails={false}
+      slideDuration={300}
       {...props}
-      additionalClass={clsx(style.container, additionalClass)}
     />
   );
 };
+
+export const PhotoGalleryPreviewImageWrapper: FC<PropsWithChildren> = ({ children }) => (
+  <div className={'image-gallery-image-outer-wrapper'}>
+    <div className={'image-gallery-image-inner-wrapper'}>{children}</div>
+  </div>
+);
+
+export const PhotoGallery = Object.assign(PhotoGalleryRoot, {
+  PreviewImageWrapper: PhotoGalleryPreviewImageWrapper,
+});
