@@ -238,6 +238,14 @@ export const ru = {
       title: 'Удалить Фото',
     },
 
+    draft: {
+      cancel: 'Отменить',
+      confirm: 'Сохранить черновик',
+      message:
+        'Вы действительно хотите отменить создание публикации? Когда окно будет закрыто все удалится',
+      title: 'Закрыть',
+    },
+
     photoSlider: {
       deletePhoto: {
         cancelButtonTitle: 'Отмена',

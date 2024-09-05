@@ -1,4 +1,6 @@
 /* eslint-disable max-lines -- useless rule for locale file */
+import { title } from 'process';
+
 import gregorian_en from 'react-date-object/locales/gregorian_en';
 
 import { LocaleType } from './ru';
@@ -238,6 +240,14 @@ export const en: LocaleType = {
     deleteAvatarModal: {
       message: 'Are you sure you want to delete the photo?',
       title: 'Delete Photo',
+    },
+
+    draft: {
+      cancel: 'Discard',
+      confirm: 'Save draft',
+      message:
+        'Do you really want to close the creation of a publication? If you close everything will be deleted',
+      title: 'Сlose',
     },
 
     photoSlider: {
