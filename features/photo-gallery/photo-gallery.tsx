@@ -9,8 +9,8 @@ import 'react-image-gallery/styles/scss/image-gallery.scss';
 
 import style from './photo-gallery.module.scss';
 
-import { LeftNav } from '../photo-slider/controls/leftNav';
-import { RightNav } from '../photo-slider/controls/rightNav';
+import { LeftNav } from './controls/leftNav';
+import { RightNav } from './controls/rightNav';
 
 export type PhotoGalleryProps = ReactImageGalleryProps & {
   aspectRatio?: PhotoAspectRatio;
