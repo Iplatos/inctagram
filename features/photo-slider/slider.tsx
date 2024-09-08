@@ -1,8 +1,7 @@
 import { ElementRef, useRef, useState } from 'react';
-import ImageGallery from 'react-image-gallery';
+import ReactEasyCropper from 'react-easy-crop';
 
 import { Crop } from '@/entities/photo-slider/crop/crop';
-import { ImageCropper } from '@/entities/photo-slider/image-cropper/image-cropper';
 import { Thumbnails } from '@/entities/photo-slider/thumbnails';
 import { Zoom } from '@/entities/photo-slider/zoom/zoom';
 
@@ -11,8 +10,6 @@ import 'react-image-gallery/styles/scss/image-gallery.scss';
 import style from './slider.module.scss';
 
 import { PhotoGallery } from '../photo-gallery';
-import { LeftNav } from './controls/leftNav';
-import { RightNav } from './controls/rightNav';
 
 export const PhotoSlider = () => {
   const refGallery = useRef<ElementRef<'div'>>(null);
@@ -32,7 +29,7 @@ export const PhotoSlider = () => {
   };
 
   const [imgAfterCrop, setImgAfterCrop] = useState<string>('');
-
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<number>(1);
 
   const onCropDone = (imgCroppedArea: any) => {
@@ -86,40 +83,31 @@ export const PhotoSlider = () => {
   );
 
   return (
-    // <div ref={refGallery} style={{ width: '490px' }}>
-    //   <ImageGallery
-    //     items={addedImages.map(i => ({ original: i }))}
-    //     renderCustomControls={renderCustomControls}
-    //     renderItem={({ original }) => (
-    //       <ImageCropper
-    //         aspectRatio={aspectRatio}
-    //         image={original}
-    //         setDefaultAspectRatio={setDefaultAspectRatio}
-    //         setZoom={setZoom}
-    //         zoom={zoom}
-    //       />
-    //     )}
-    //     renderLeftNav={(onClick, disabled) => <LeftNav disabled={disabled} onClick={onClick} />}
-    //     renderRightNav={(onClick, disabled) => <RightNav disabled={disabled} onClick={onClick} />}
-    //     showBullets
-    //     showFullscreenButton={false}
-    //     showPlayButton={false}
-    //     showThumbnails={false}
-    //   />
-    // </div>
-
+    <div ref={refGallery}>
     <PhotoGallery
       items={addedImages.map(i => ({ original: i }))}
       renderCustomControls={renderCustomControls}
       renderItem={({ original }) => (
-        <ImageCropper
-          aspectRatio={aspectRatio}
+          <PhotoGallery.PreviewImageWrapper>
+            <ReactEasyCropper
+              aspect={aspectRatio}
+              crop={crop}
           image={original}
-          setDefaultAspectRatio={setDefaultAspectRatio}
-          setZoom={setZoom}
+              onCropChange={setCrop}
+              onCropComplete={(croppedArea, croppedAreaPixels) => {
+                console.log('onCropComplete', croppedArea, croppedAreaPixels);
+              }}
+              onMediaLoaded={mediaSize => {
+                console.log('onMediaLoaded', { mediaSize });
+
+                setDefaultAspectRatio(mediaSize.naturalWidth / mediaSize.naturalHeight);
+              }}
+              onZoomChange={setZoom}
           zoom={zoom}
         />
+          </PhotoGallery.PreviewImageWrapper>
       )}
     />
+    </div>
   );
 };
