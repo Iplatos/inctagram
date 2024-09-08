@@ -1,7 +1,6 @@
 import React, { MouseEventHandler } from 'react';
 
 import { ArrowLeft } from '@/assets/icons/arrowLeft';
-import Arrow from 'assets/icons/arrowLeft.svg';
 
 import style from './controls.module.scss';
 

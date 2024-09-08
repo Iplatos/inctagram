@@ -1,6 +1,7 @@
 import { ElementRef, FC, ForwardedRef, PropsWithChildren } from 'react';
 import ReactImageGallery, { ReactImageGalleryProps } from 'react-image-gallery';
 
+import { PhotoAspectRatio } from '@/shared/constants';
 import clsx from 'clsx';
 import Image from 'next/image';
 
@@ -12,25 +13,33 @@ import { LeftNav } from '../photo-slider/controls/leftNav';
 import { RightNav } from '../photo-slider/controls/rightNav';
 
 export type PhotoGalleryProps = ReactImageGalleryProps & {
+  aspectRatio?: PhotoAspectRatio;
   galleryRef?: ForwardedRef<ReactImageGallery>;
   previewRef?: ForwardedRef<ElementRef<'img'>>;
 };
 
 const PhotoGalleryRoot = ({
   additionalClass,
+  aspectRatio,
   galleryRef,
   previewRef,
   ...props
 }: PhotoGalleryProps) => {
+  const getImageClassName = (aspectRatio?: boolean) => {
+    const baseClassName = 'image-gallery-slide-image';
+
+    return clsx(baseClassName, aspectRatio && `${baseClassName}-with-ar`);
+  };
+
   return (
     <ReactImageGallery
       additionalClass={clsx(style.container, additionalClass)}
       ref={galleryRef}
       renderItem={({ original, originalAlt }) => (
-        <PhotoGalleryPreviewImageWrapper>
+        <PhotoGalleryPreviewImageWrapper aspectRatio={aspectRatio}>
           <Image
             alt={originalAlt ?? ''}
-            className={'image-gallery-slide-image'}
+            className={getImageClassName(!!aspectRatio)}
             fill
             ref={previewRef}
             src={original}
@@ -49,11 +58,25 @@ const PhotoGalleryRoot = ({
   );
 };
 
-export const PhotoGalleryPreviewImageWrapper: FC<PropsWithChildren> = ({ children }) => (
-  <div className={'image-gallery-image-outer-wrapper'}>
-    <div className={'image-gallery-image-inner-wrapper'}>{children}</div>
-  </div>
-);
+export const PhotoGalleryPreviewImageWrapper: FC<
+  PropsWithChildren<{ aspectRatio?: PhotoAspectRatio }>
+> = ({ aspectRatio, children }) => {
+  const getWrapperClassName = (wrapper: 'inner' | 'outer', aspectRatio?: PhotoAspectRatio) => {
+    const baseClassName = `image-gallery-image-${wrapper}-wrapper`;
+
+    return clsx(baseClassName, aspectRatio && `${baseClassName}-with-ar`);
+  };
+
+  const outerWrapperStyle = {
+    ...(!!aspectRatio && ({ '--aspect-ratio': aspectRatio } as Record<string, string>)),
+  };
+
+  return (
+    <div className={getWrapperClassName('outer', aspectRatio)} style={outerWrapperStyle}>
+      <div className={getWrapperClassName('inner', aspectRatio)}>{children}</div>
+    </div>
+  );
+};
 
 export const PhotoGallery = Object.assign(PhotoGalleryRoot, {
   PreviewImageWrapper: PhotoGalleryPreviewImageWrapper,

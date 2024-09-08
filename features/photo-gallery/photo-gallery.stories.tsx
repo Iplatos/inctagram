@@ -3,6 +3,7 @@ import { ReactImageGalleryItem } from 'react-image-gallery';
 import EmailConfirmedImage from '@/assets/img/email-confirmed-image.svg?url';
 import LinkExpiredImage from '@/assets/img/link-expired-image.svg?url';
 import MockUserAvatar from '@/assets/img/mock-user-avatar.jpg';
+import { PhotoAspectRatio } from '@/shared/constants';
 import { Meta, StoryObj } from '@storybook/react';
 
 import 'react-image-gallery/styles/scss/image-gallery.scss';
@@ -18,15 +19,32 @@ export const getPhotoGalleryMockImages = (count: number) => {
 };
 
 type CustomRenderProps = {
+  aspectRatio: 'none' | PhotoAspectRatio;
   imagesCount: number;
-} & PhotoGalleryProps;
+} & Omit<PhotoGalleryProps, 'aspectRatio'>;
 
-const CustomRender = ({ imagesCount, items, ...props }: CustomRenderProps) => {
-  return <PhotoGallery {...props} items={getPhotoGalleryMockImages(imagesCount).concat(items)} />;
+const CustomRender = ({ aspectRatio, imagesCount, items, ...props }: CustomRenderProps) => {
+  return (
+    <PhotoGallery
+      aspectRatio={aspectRatio === 'none' ? undefined : aspectRatio}
+      items={getPhotoGalleryMockImages(imagesCount).concat(items)}
+      {...props}
+    />
+  );
 };
 
 const meta = {
   argTypes: {
+    aspectRatio: {
+      control: 'radio',
+      options: [
+        '4 / 5',
+        '4 / 3',
+        '16 / 9',
+        '1 / 1',
+        'none',
+      ] satisfies CustomRenderProps['aspectRatio'][],
+    },
     imagesCount: {
       control: { type: 'number' },
     },
@@ -41,9 +59,17 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Basic: Story = {
+export const StretchImage: Story = {
   args: {
+    aspectRatio: 'none',
     imagesCount: 5,
     items: [],
+  },
+};
+
+export const WithAspectRatio: Story = {
+  args: {
+    ...StretchImage.args,
+    aspectRatio: '4 / 5',
   },
 };

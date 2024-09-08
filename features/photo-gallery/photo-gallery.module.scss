@@ -15,8 +15,6 @@ $image-gallery-elements: 'content', 'slide-wrapper', 'swipe', 'slides', 'slide';
 }
 
 .container {
-  --aspect-ratio: 4 / 5;
-
   height: min(calc(100vh - 2rem), 500px);
 
   :global {
@@ -32,22 +30,37 @@ $image-gallery-elements: 'content', 'slide-wrapper', 'swipe', 'slides', 'slide';
       }
 
       &-image-outer-wrapper {
-        @include flex($align: null);
+        --resolved-aspect-ratio: var(--aspect-ratio, 4 / 5);
+
         @include flex;
 
-        aspect-ratio: var(--aspect-ratio);
-        max-width: 100%;
+        width: 100%;
         height: 100%;
+
+        &-with-ar {
+          aspect-ratio: var(--resolved-aspect-ratio);
+          width: auto;
+          max-width: 100%;
+        }
       }
 
       &-image-inner-wrapper {
         position: relative;
-        aspect-ratio: var(--aspect-ratio);
         width: 100%;
+        height: 100%;
+
+        &-with-ar {
+          aspect-ratio: var(--resolved-aspect-ratio);
+          height: auto;
+        }
       }
 
       &-slide-image {
-        object-fit: cover;
+        object-fit: contain;
+
+        &-with-ar {
+          object-fit: cover;
+        }
       }
     }
   }
