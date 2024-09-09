@@ -237,6 +237,11 @@ export const en: LocaleType = {
   editProfile: {
     addPhotoButton: 'Add a Profile Photo',
 
+    createPublication: {
+      primaryButtonTitle: 'Select from Device',
+      title: 'Add Photo',
+    },
+
     deleteAvatarModal: {
       message: 'Are you sure you want to delete the photo?',
       title: 'Delete Photo',

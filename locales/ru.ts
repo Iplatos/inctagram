@@ -233,11 +233,15 @@ export const ru = {
   editProfile: {
     addPhotoButton: 'Добавить Фото Пользователя',
 
+    createPublication: {
+      primaryButtonTitle: 'Загрузить с устройства',
+      title: 'Добавить фото',
+    },
+
     deleteAvatarModal: {
       message: 'Вы уверены, что хотите удалить это фото?',
       title: 'Удалить Фото',
     },
-
     draft: {
       cancel: 'Отменить',
       confirm: 'Сохранить черновик',
