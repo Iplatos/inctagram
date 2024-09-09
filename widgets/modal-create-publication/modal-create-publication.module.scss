@@ -1,0 +1,20 @@
+@use '../../styles/helpers' as *;
+@use '../../styles/mixins' as *;
+
+.modalContent {
+  .cardRoot {
+    @include flex($justify: null, $align: null, $direction: column);
+
+    width: 440px;
+    max-width: 100%;
+    min-height: 210px;
+  }
+
+  .cardContent {
+    @include flex($justify: null, $align: null, $direction: column);
+
+    flex: 1 1 auto;
+    gap: 24px;
+    padding-bottom: 24px;
+  }
+}
