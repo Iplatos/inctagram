@@ -1,9 +1,17 @@
-import { ElementRef, FC, ForwardedRef, PropsWithChildren } from 'react';
-import ReactImageGallery, { ReactImageGalleryProps } from 'react-image-gallery';
+import { ForwardedRef } from 'react';
+import ReactImageGallery, {
+  ReactImageGalleryItem,
+  ReactImageGalleryProps,
+} from 'react-image-gallery';
 
+import {
+  type PhotoGalleryItem,
+  PhotoGalleryItemRender,
+  PhotoGalleryPreviewImageWrapper,
+} from '@/entities/photo-gallery';
 import { PhotoAspectRatio } from '@/shared/constants';
+import { Replace } from '@/shared/types/helpers';
 import clsx from 'clsx';
-import Image from 'next/image';
 
 import 'react-image-gallery/styles/scss/image-gallery.scss';
 
@@ -12,40 +20,43 @@ import style from './photo-gallery.module.scss';
 import { LeftNav } from './controls/leftNav';
 import { RightNav } from './controls/rightNav';
 
-export type PhotoGalleryProps = ReactImageGalleryProps & {
-  aspectRatio?: PhotoAspectRatio;
-  galleryRef?: ForwardedRef<ReactImageGallery>;
-  previewRef?: ForwardedRef<ElementRef<'img'>>;
-};
+export type PhotoGalleryProps = Replace<
+  ReactImageGalleryProps,
+  {
+    aspectRatio?: PhotoAspectRatio;
+    galleryRef?: ForwardedRef<ReactImageGallery>;
+    items: PhotoGalleryItem[];
+  }
+>;
 
 const PhotoGalleryRoot = ({
   additionalClass,
-  aspectRatio,
+  aspectRatio: globalAspectRatio,
   galleryRef,
-  previewRef,
+  items,
   ...props
 }: PhotoGalleryProps) => {
-  const getImageClassName = (aspectRatio?: boolean) => {
-    const baseClassName = 'image-gallery-slide-image';
+  const itemsWithCustomRender = items.map<ReactImageGalleryItem>(({ aspectRatio, ...item }) => {
+    const renderSpecificItem: ReactImageGalleryProps['renderItem'] = props => (
+      <PhotoGalleryItemRender aspectRatio={aspectRatio ?? globalAspectRatio} {...props} />
+    );
 
-    return clsx(baseClassName, aspectRatio && `${baseClassName}-with-ar`);
-  };
+    // `renderSpecificItem` is used by default if `renderItem` prop is not passed to the component,
+    // either as a separate prop (to replace the render function for all slides) or as part of the `items` array
+    // (to render each slide individually).
+    // If either or both of these props are passed, they are applied as specified in the `ReactImageGallery` documentation.
+    // That is, `renderItem` (specific) > `renderItem` (general)
+    return {
+      renderItem: props.renderItem ? undefined : renderSpecificItem,
+      ...item,
+    };
+  });
 
   return (
     <ReactImageGallery
       additionalClass={clsx(style.container, additionalClass)}
+      items={itemsWithCustomRender}
       ref={galleryRef}
-      renderItem={({ original, originalAlt }) => (
-        <PhotoGalleryPreviewImageWrapper aspectRatio={aspectRatio}>
-          <Image
-            alt={originalAlt ?? ''}
-            className={getImageClassName(!!aspectRatio)}
-            fill
-            ref={previewRef}
-            src={original}
-          />
-        </PhotoGalleryPreviewImageWrapper>
-      )}
       renderLeftNav={(onClick, disabled) => <LeftNav disabled={disabled} onClick={onClick} />}
       renderRightNav={(onClick, disabled) => <RightNav disabled={disabled} onClick={onClick} />}
       showBullets
@@ -55,26 +66,6 @@ const PhotoGalleryRoot = ({
       slideDuration={300}
       {...props}
     />
-  );
-};
-
-export const PhotoGalleryPreviewImageWrapper: FC<
-  PropsWithChildren<{ aspectRatio?: PhotoAspectRatio }>
-> = ({ aspectRatio, children }) => {
-  const getWrapperClassName = (wrapper: 'inner' | 'outer', aspectRatio?: PhotoAspectRatio) => {
-    const baseClassName = `image-gallery-image-${wrapper}-wrapper`;
-
-    return clsx(baseClassName, aspectRatio && `${baseClassName}-with-ar`);
-  };
-
-  const outerWrapperStyle = {
-    ...(!!aspectRatio && ({ '--aspect-ratio': aspectRatio } as Record<string, string>)),
-  };
-
-  return (
-    <div className={getWrapperClassName('outer', aspectRatio)} style={outerWrapperStyle}>
-      <div className={getWrapperClassName('inner', aspectRatio)}>{children}</div>
-    </div>
   );
 };
 

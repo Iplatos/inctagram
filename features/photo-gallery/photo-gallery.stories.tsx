@@ -3,6 +3,7 @@ import { ReactImageGalleryItem } from 'react-image-gallery';
 import EmailConfirmedImage from '@/assets/img/email-confirmed-image.svg?url';
 import LinkExpiredImage from '@/assets/img/link-expired-image.svg?url';
 import MockUserAvatar from '@/assets/img/mock-user-avatar.jpg';
+import { PhotoGalleryItem } from '@/entities/photo-gallery';
 import { PhotoAspectRatio } from '@/shared/constants';
 import { Meta, StoryObj } from '@storybook/react';
 
@@ -15,6 +16,16 @@ export const getPhotoGalleryMockImages = (count: number) => {
 
   return new Array(count).fill(0).map<ReactImageGalleryItem>((_, i) => ({
     original: DEFAULT_IMAGES[i % DEFAULT_IMAGES.length].src,
+  }));
+};
+
+export const getPhotoGalleryMockImagesWithAR = (count: number) => {
+  const items = getPhotoGalleryMockImages(count);
+  const ASPECT_RATIOS: PhotoAspectRatio[] = ['4 / 5', '16 / 9', '4 / 3', '1 / 1'];
+
+  return items.map<PhotoGalleryItem>((item, i) => ({
+    aspectRatio: ASPECT_RATIOS[i % ASPECT_RATIOS.length],
+    ...item,
   }));
 };
 
@@ -49,7 +60,7 @@ const meta = {
       control: { type: 'number' },
     },
   },
-  excludeStories: ['getPhotoGalleryMockImages'],
+  excludeStories: ['getPhotoGalleryMockImages', 'getPhotoGalleryMockImagesWithAR'],
   render: CustomRender,
   tags: ['autodocs'],
   title: 'FEATURES/PhotoGallery',
@@ -71,5 +82,14 @@ export const WithAspectRatio: Story = {
   args: {
     ...StretchImage.args,
     aspectRatio: '4 / 5',
+    startIndex: 0,
+  },
+};
+
+export const CustomAspectRatios: Story = {
+  args: {
+    ...StretchImage.args,
+    imagesCount: 0,
+    items: getPhotoGalleryMockImagesWithAR(5),
   },
 };
