@@ -2,17 +2,15 @@ import { ElementRef, ForwardedRef, MutableRefObject, useMemo, useState } from 'r
 import { ReactImageGalleryItem } from 'react-image-gallery';
 
 import { ArrowIOSBack } from '@/assets/icons/arrow-ios-back';
+import { type FilterPhotoCardItem, FilterPhotoCardItemRender } from '@/entities/filter-photo-card';
 import { PhotoGallery, PhotoGalleryProps } from '@/features';
 import { adjustArrayIndexByBoundaries, capitalise } from '@/shared/helpers';
-import { CCGramFilterOrString } from '@/shared/hooks';
 import { Button, Card, IconButton, Typography } from '@/shared/ui';
 import Image from 'next/image';
 
 import s from './filter-photo-card.module.scss';
 
 import { FilterPhotoCardRefObject, useFilterPhotoCardHandle } from './use-filter-photo-card-handle';
-
-export type FilterPhotoCardItem = { filter: CCGramFilterOrString; src: string };
 
 export type FilterPhotoCardProps = {
   galleryProps?: Omit<PhotoGalleryProps, 'items'>;
@@ -39,7 +37,6 @@ export const FilterPhotoCard = ({
     filter: { applyFilter, filterNames, registerImage },
     innerGalleryRef,
   } = useFilterPhotoCardHandle(galleryRef);
-
   const [prevStartIndex, setPrevStartIndex] = useState(startIndex);
   const [selectedIndex, setSelectedIndex] = useState(
     adjustArrayIndexByBoundaries(items, startIndex)
@@ -71,26 +68,13 @@ export const FilterPhotoCard = ({
   const renderItems = items.map<ReactImageGalleryItem>((item, index) => ({
     original: item.src,
     renderItem: ({ original }) => (
-      <PhotoGallery.PreviewImageWrapper>
-        <Image
-          alt={'preview a photo with the selected filter'}
-          className={'image-gallery-slide-image'}
-          data-test-id={`preview-filtered-image-${index}`}
-          fill
-          priority
-          ref={node => {
-            const map = previewItemsRef?.current;
-
-            if (node) {
-              map?.set(item, node);
-            } else {
-              map?.delete(item);
-            }
-          }}
-          src={original}
-          {...registerImage(item.filter)}
-        />
-      </PhotoGallery.PreviewImageWrapper>
+      <FilterPhotoCardItemRender
+        index={index}
+        item={item}
+        previewItemsRef={previewItemsRef}
+        registerImage={registerImage}
+        src={original}
+      />
     ),
   }));
 

@@ -18,8 +18,6 @@ export const PhotoGalleryItemRender = memo(
       return clsx(baseClassName, hasAspectRatio && `${baseClassName}-with-ar`);
     };
 
-    console.log('render item');
-
     return (
       <PhotoGalleryPreviewImageWrapper aspectRatio={aspectRatio}>
         <Image
