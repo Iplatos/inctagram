@@ -12,7 +12,6 @@ export const en: LocaleType = {
       textButton: 'Sign In',
       title: 'Congratulations!',
     },
-
     forgotPasswordPage: {
       backToSignIn: 'Back to Sign In',
       invalidEmail: 'Invalid email',

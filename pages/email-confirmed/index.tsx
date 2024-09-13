@@ -8,8 +8,8 @@ function ConfirmedEmailPage() {
   return (
     <>
       <HeadMeta title={'Email Confirmed'} />
-      {/* <RedirectContent linkExpired /> */}
-      <RedirectContent emailConfirmed />
+      <RedirectContent linkExpired />
+      {/*<RedirectContent emailConfirmed />*/}
     </>
   );
 }
