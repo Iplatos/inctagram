@@ -76,7 +76,12 @@ export const SignUpForm = () => {
   // }
 
   const signUp = handleSubmit(({ email, nickname, password }) => {
-    return signUpTrigger({ email, password, username: nickname });
+    return signUpTrigger({
+      baseUrl: 'localhost:3000',
+      email,
+      password,
+      userName: nickname,
+    });
   });
 
   const submitIsDisabled = !isDirty || (!isValid && !!submitCount) || isSubmitting;
