@@ -10,7 +10,6 @@ export const en: LocaleType = {
       textButton: 'Sign In',
       title: 'Congratulations!',
     },
-
     forgotPasswordPage: {
       backToSignIn: 'Back to Sign In',
       invalidEmail: 'Invalid email',
@@ -236,7 +235,6 @@ export const en: LocaleType = {
       message: 'Are you sure you want to delete the photo?',
       title: 'Delete Photo',
     },
-
     photoSlider: {
       deletePhoto: {
         cancelButtonTitle: 'Cancel',
@@ -319,5 +317,11 @@ export const en: LocaleType = {
     new: 'New',
     newNotification: 'New notification!',
     notifications: 'Notifications',
+  },
+
+  publicPage: {
+    hide: 'Hide',
+    registeredUsers: 'Registered users',
+    showMore: 'Show more',
   },
 };

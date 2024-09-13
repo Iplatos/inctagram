@@ -24,7 +24,6 @@ export const ru = {
       textButton: 'Отправить еще раз',
       title: 'Срок действия ссылки истек',
     },
-
     passwordResetPage: {
       confirmPasswordZod: 'Подтверждение пароля обязательно',
       message: 'Ваш пароль должен содержать от 6 до 20 символов',
@@ -303,7 +302,6 @@ export const ru = {
       publications: { label: 'публикации' },
     },
   },
-
   navbar: {
     forgotPassword: 'Забыл пароль',
     main: 'Главная страница',
@@ -318,6 +316,12 @@ export const ru = {
     new: 'Новое',
     newNotification: 'Новое уведомление!',
     notifications: 'Уведомления',
+  },
+
+  publicPage: {
+    hide: 'Свернуть',
+    registeredUsers: 'Зарегистрировано пользователей',
+    showMore: 'Показать больше',
   },
 };
 
