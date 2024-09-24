@@ -29,7 +29,7 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  title: 'feature/Post/EditPostForm',
+  title: 'features/post/EditPostForm',
 } satisfies Meta<typeof EditPostForm>;
 
 export default meta;

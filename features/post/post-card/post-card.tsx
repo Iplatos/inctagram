@@ -33,7 +33,7 @@ export const PostCard = (props: PostCardProps) => {
     <Card.Root className={s.root}>
       <Card.Content className={s.content}>
         <div className={s.gallery}>
-          <PhotoGallery items={img.map(i => ({ original: i }))} />
+          <PhotoGallery additionalClass={s.slider} items={img.map(i => ({ original: i }))} />
         </div>
         <div className={s.postDetails}>
           <Card.Header className={cls.headerSection}>{headerSection}</Card.Header>

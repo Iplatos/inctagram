@@ -1,9 +1,11 @@
+$max-card-width: 962px;
+$max-card-height: 560px;
+
 .root {
-  // TODO: Add styles
+  width: $max-card-width;
+  height: $max-card-height;
   display: grid;
   grid-template-rows: auto 1fr;
-  height: 570px;
-  width: 972px;
 }
 
 .header {
@@ -18,23 +20,23 @@
 
 .content {
   padding: 0;
-  grid-row: 2/2;
   display: grid;
+  grid-template-areas: 'gallery details';
   grid-template-columns: 1fr 1fr;
+  height: 100%;
   width: 100%;
 }
 
-.slider {
-  grid-column: 1/2;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  box-sizing: border-box;
+.gallery {
+  --aspect-ratio: 1;
+  height: 100%;
+  max-width: 490px;
 }
 
 .form {
   padding: 12px 0 0 0;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
+  grid-area: details;
+  max-width: 470px;
 }
 
 .confirmModal {

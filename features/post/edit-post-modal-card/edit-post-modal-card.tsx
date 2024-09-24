@@ -75,9 +75,7 @@ export const EditPostModalCard = (props: Props) => {
           </ConfirmModal>
         </Card.Header>
         <Card.Content className={s.content} ignoreHeader>
-          <div>
-            <PhotoGallery additionalClass={s.gallery} items={img.map(i => ({ original: i }))} />
-          </div>
+          <PhotoGallery additionalClass={s.gallery} items={img.map(i => ({ original: i }))} />
           <div className={s.form}>
             <UserBanner avatar={avatar} name={userName} />
             <EditPostForm
