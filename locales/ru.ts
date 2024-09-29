@@ -299,6 +299,19 @@ export const ru = {
   },
 
   myProfile: {
+    addPostModal: {
+      postDescriptionCard: {
+        labelCard: 'Публикация',
+        postDescription: {
+          errors: {
+            tooBig: 'Максимальное количество символов 500',
+          },
+          label: 'Добавить описание публикации',
+          placeholder: 'Текстовое поле',
+          titleBtnSubmit: 'Опубликовать',
+        },
+      },
+    },
     settingsButton: 'Настройки Профиля',
     statistics: {
       followers: { label: 'подписчики' },
@@ -321,6 +334,50 @@ export const ru = {
     new: 'Новое',
     newNotification: 'Новое уведомление!',
     notifications: 'Уведомления',
+  },
+
+  post: {
+    card: {
+      addNewComment: {
+        error: 'макс. длина 150 символов',
+        placeholder: 'Добавить комментарий...',
+        submit: 'Опубликовать',
+      },
+      header: {
+        buttons: {
+          copyLink: 'Скопировать ссылку',
+          deletePost: 'Удалить пост',
+          editPost: 'Редактировать пост',
+          follow: 'Подписаться',
+          unfollow: 'Отписаться',
+        },
+      },
+      info: {
+        likes: 'Нравится',
+      },
+    },
+    comment: {
+      answer: 'Ответить',
+      like: '"Нравиться"',
+      likes: '"Нравиться"',
+      viewAnswersBth: {
+        close: 'Скрыть ответы',
+        open: 'Показать ответы',
+      },
+    },
+    editPostModalCard: {
+      descriptionCloseModal:
+        'Вы действительно хотите закрыть редактирование публикации? Если закрыть, изменения не будут сохранены',
+      labelCard: 'Редактирование публикации',
+      postDescription: {
+        errors: {
+          tooBig: 'Максимальное количество символов 500',
+        },
+        label: 'Добавить описание публикации',
+        placeholder: 'Текстовое поле',
+        titleBtnSubmit: 'Сохранить',
+      },
+    },
   },
 };
 

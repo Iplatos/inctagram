@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
-import Cropper from 'react-easy-crop';
+import Cropper, { Area, CropperProps } from 'react-easy-crop';
 
-export const ImageCropper = (props: any) => {
-  const { aspectRatio, image, onCropCancel, onCropDone, setDefaultAspectRatio, setZoom, zoom } =
-    props;
+type ImageCropperPropsType = {
+  aspectRatio: number | undefined;
+  image: string;
+  initializeAspectRatio: (aspect: number) => void;
+  setCroppedArea: (croppedAreaPixels: Area) => void;
+  setZoom: (zoom: number) => void;
+  zoom: number;
+};
+
+export const ImageCropper = (props: ImageCropperPropsType) => {
+  const { aspectRatio, image, initializeAspectRatio, setCroppedArea, setZoom, zoom } = props;
 
   const [crop, setCrop] = useState({ x: 0, y: 0 });
 
-  const [croppedArea, setCroppedArea] = useState(null);
-
-  const onCropComplete = (croppedAreaPercentage: any, croppedAreaPixels: any) => {
+  const onCropComplete: CropperProps['onCropComplete'] = (_, croppedAreaPixels) => {
     setCroppedArea(croppedAreaPixels);
   };
 
@@ -22,7 +28,7 @@ export const ImageCropper = (props: any) => {
         onCropChange={setCrop}
         onCropComplete={onCropComplete}
         onMediaLoaded={mediaSize => {
-          setDefaultAspectRatio(mediaSize.naturalWidth / mediaSize.naturalHeight);
+          initializeAspectRatio(mediaSize.naturalWidth / mediaSize.naturalHeight);
         }}
         onZoomChange={setZoom}
         style={{
@@ -30,7 +36,6 @@ export const ImageCropper = (props: any) => {
             backgroundColor: 'var(--color-dark-100)',
             height: '503px',
             margin: 0,
-            // width: '490px',
             maxWidth: '490px',
             position: 'relative',
           },

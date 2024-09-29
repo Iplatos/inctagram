@@ -300,6 +300,19 @@ export const en: LocaleType = {
   },
 
   myProfile: {
+    addPostModal: {
+      postDescriptionCard: {
+        labelCard: 'Publication',
+        postDescription: {
+          errors: {
+            tooBig: 'Maximum number of characters 500',
+          },
+          label: 'Add publication descriptions',
+          placeholder: 'Text-area',
+          titleBtnSubmit: 'Publish',
+        },
+      },
+    },
     settingsButton: 'Profile Settings',
     statistics: {
       followers: { label: 'followers' },
@@ -322,5 +335,50 @@ export const en: LocaleType = {
     new: 'New',
     newNotification: 'New notification!',
     notifications: 'Notifications',
+  },
+
+  post: {
+    card: {
+      addNewComment: {
+        error: 'Maximum number of characters is 150',
+        placeholder: 'Add a Сomment...',
+        submit: 'Publish',
+      },
+      header: {
+        buttons: {
+          copyLink: 'Copy Link',
+          deletePost: 'Delete Post',
+          editPost: 'Edit Post',
+          follow: 'Follow',
+          unfollow: 'Unfollow',
+        },
+      },
+      info: {
+        likes: 'Like',
+      },
+    },
+    comment: {
+      answer: 'Answer',
+      like: 'Like',
+      likes: 'Likes',
+      viewAnswersBth: {
+        close: 'View Answer',
+        open: 'Show Answers',
+      },
+    },
+    editPostModalCard: {
+      descriptionCloseModal:
+        'Do you really want to close the edition of the publication? If you' +
+        ' close changes won’t be saved',
+      labelCard: 'Edit Post',
+      postDescription: {
+        errors: {
+          tooBig: 'Maximum number of characters 500',
+        },
+        label: 'Add publication descriptions',
+        placeholder: 'Text-area',
+        titleBtnSubmit: 'Save changes',
+      },
+    },
   },
 };

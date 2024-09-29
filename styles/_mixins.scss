@@ -38,6 +38,19 @@
   white-space: nowrap;
 }
 
+@mixin hover{
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+  @media (hover: none) {
+    &:active {
+      @content;
+    }
+  }
+}
+
 // A mixin used to align the styles of a thin scrollbar in different browsers.
 @mixin thin-scrollbar {
   @supports not selector(::-webkit-scrollbar) {
