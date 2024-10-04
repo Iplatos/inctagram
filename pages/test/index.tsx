@@ -1,14 +1,14 @@
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
 
-function Home() {
+function TestPage() {
   return (
     <>
-      <HeadMeta title={'main'} />
-      <div>Hello World!</div>
+      <HeadMeta title={'test'} />
+      <div>Test Page</div>
     </>
   );
 }
 
-Home.getLayout = getLayout;
-export default Home;
+TestPage.getLayout = getLayout;
+export default TestPage;

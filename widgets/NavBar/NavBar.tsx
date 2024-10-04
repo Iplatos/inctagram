@@ -24,6 +24,7 @@ export const NavBar = () => {
           <Link href={'/terms-of-service'}>{t.navbar.termsOfService}</Link>
           <Link href={'/privacy-policy'}>{t.navbar.privacyPolicy}</Link>
           <Link href={'/confirm-registration'}>Confirm Registration</Link>
+          <Link href={'/test'}>Test Page</Link>
         </div>
       )}
     </div>
