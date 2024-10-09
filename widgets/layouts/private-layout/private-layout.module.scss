@@ -1,0 +1,11 @@
+.outerContainer {
+  width: min(1280px, 100%);
+  margin-top: var(--header-height);
+  margin-inline: auto;
+}
+
+.innerContainer {
+  margin-left: 220px;
+  padding-block: 36px;
+  padding-inline: 24px 60px;
+}

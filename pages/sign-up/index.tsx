@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
 import { SignUpForm } from '@/widgets/auth/sign-up-form';
+import { getPublicLayout } from '@/widgets/layouts';
 
 function SignUp() {
   return (
@@ -13,5 +13,5 @@ function SignUp() {
   );
 }
 
-SignUp.getLayout = getLayout;
+SignUp.getLayout = getPublicLayout;
 export default SignUp;
