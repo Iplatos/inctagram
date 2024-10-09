@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { ArrowIOSBack } from '@/assets/icons/arrow-ios-back';
-import { Button, IconButton, ModalCard, Typography } from '@/shared/ui';
-import { UserBanner } from '@/shared/ui/user-banner';
+import { Button, IconButton, ModalCard, Typography, UserBanner } from '@/shared/ui';
 
 import s from './publication-card.module.scss';
 
@@ -40,13 +39,13 @@ export const PublicationCard = (props: PublicationCardProps) => {
 
       <div className={s.contentWrapper}>
         <PhotoGallery items={items} />
-        <ModalCard.Content className={s.filtersList}>
-          <div className={s.form}>
-            {/* <UserBanner avatar={meResponse?.data.avatar?.url} name={meResponse?.data.username} /> */}
-            <UserBanner name={'Username'} />
+        <ModalCard.Content>
+          {/* <div className={s.form} style={{ background: 'green' }}> */}
+          {/* <UserBanner avatar={meResponse?.data.avatar?.url} name={meResponse?.data.username} /> */}
+          <UserBanner name={'Username'} />
 
-            <EditPostForm classNameActions={s.actions} onSubmit={handleSubmit} ref={formRef} />
-          </div>
+          <EditPostForm classNameActions={s.actions} onSubmit={handleSubmit} ref={formRef} />
+          {/* </div> */}
         </ModalCard.Content>
       </div>
     </ModalCard>

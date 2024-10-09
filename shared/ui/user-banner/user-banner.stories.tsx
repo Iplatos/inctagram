@@ -1,6 +1,7 @@
 import { Button } from '@/shared/ui/Button';
-import { UserBanner } from '@/shared/ui/user-banner/index';
 import { Meta, StoryObj } from '@storybook/react';
+
+import { UserBanner } from './user-banner';
 
 const meta: Meta<typeof UserBanner> = {
   argTypes: {
@@ -35,5 +36,11 @@ export const WithAction: Story = {
   args: {
     actions: <Button>Your component will be placed here.</Button>,
     name: 'UserName',
+  },
+};
+
+export const LongUserName: Story = {
+  args: {
+    name: 'UserWithVeryLongNameAndSurname',
   },
 };

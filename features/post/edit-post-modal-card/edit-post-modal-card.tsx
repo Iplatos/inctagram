@@ -5,8 +5,7 @@ import { PhotoGallery } from '@/features';
 import { ConfirmModal } from '@/features/confirm-modal';
 import { EditPostForm } from '@/features/post/edit-post-form/edit-post-form';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button, Card, IconButton, Modal, Typography } from '@/shared/ui';
-import { UserBanner } from '@/shared/ui/user-banner';
+import { Button, Card, IconButton, Modal, Typography, UserBanner } from '@/shared/ui';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
 import s from './edit-post-modal-card.module.scss';
