@@ -4,13 +4,14 @@ import { PublicAPIResponse } from '../types/common.types';
 import {
   GetPublicPostsRequest,
   PublicPostByIdResponse,
+  PublicPostsByUserIdResponse,
   PublicPostsResponse,
 } from '../types/public.types';
 import { PostByIdRequest } from './posts-api';
 
 export const publicPostsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getPublicPostById: builder.query<PublicAPIResponse<PublicPostByIdResponse>, PostByIdRequest>({
+    getPublicPostById: builder.query<PublicPostByIdResponse, PostByIdRequest>({
       providesTags: ['Public-Posts'],
       query: id => `/api/v1/public-posts/${id}`,
     }),
@@ -18,7 +19,7 @@ export const publicPostsApi = baseApi.injectEndpoints({
       providesTags: ['Public-Posts'],
       query: ({ pageSize }) => `/api/v1/public-posts/all/?pageSize=${pageSize}`,
     }),
-    getPublicPostsByUserId: builder.query<any, any>({
+    getPublicPostsByUserId: builder.query<PublicPostsByUserIdResponse, any>({
       providesTags: ['Public-Posts'],
       query: ({ userId }) => `/api/v1/public-posts/user/${userId}`,
     }),
