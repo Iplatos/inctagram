@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ArrowIOSBack } from '@/assets/icons/arrow-ios-back';
-import { Button, Card, IconButton, Typography } from '@/shared/ui';
+import { Button, IconButton, ModalCard, Typography } from '@/shared/ui';
 import { UserBanner } from '@/shared/ui/user-banner';
 
 import s from './publication-card.module.scss';
@@ -25,8 +25,8 @@ export const PublicationCard = (props: PublicationCardProps) => {
   // const [_, { data: meResponse }] = useLazyGetMeQuery();
 
   return (
-    <Card className={s.cardRoot}>
-      <Card.Header className={s.header}>
+    <ModalCard className={s.cardRoot}>
+      <ModalCard.Header className={s.header}>
         <IconButton onClick={onPrevClick}>
           <ArrowIOSBack />
         </IconButton>
@@ -36,19 +36,19 @@ export const PublicationCard = (props: PublicationCardProps) => {
         <Button onClick={onPublish} variant={'text'}>
           Publish
         </Button>
-      </Card.Header>
+      </ModalCard.Header>
 
       <div className={s.contentWrapper}>
         <PhotoGallery items={items} />
-        <Card.Content className={s.filtersList}>
+        <ModalCard.Content className={s.filtersList}>
           <div className={s.form}>
             {/* <UserBanner avatar={meResponse?.data.avatar?.url} name={meResponse?.data.username} /> */}
             <UserBanner name={'Username'} />
 
             <EditPostForm classNameActions={s.actions} onSubmit={handleSubmit} ref={formRef} />
           </div>
-        </Card.Content>
+        </ModalCard.Content>
       </div>
-    </Card>
+    </ModalCard>
   );
 };
