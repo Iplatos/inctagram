@@ -5,8 +5,8 @@ import { useLazyGetMeQuery } from '@/shared/api/users-api';
 import { Typography } from '@/shared/ui';
 import { NavBar } from '@/widgets/NavBar/NavBar';
 import { Header } from '@/widgets/header';
-import { Sidebar } from '@/widgets/sidebar';
 import { NextPage } from 'next';
+import { Sidebar } from 'widgets/layouts/private-layout/sidebar';
 
 import s from './Layout.module.scss';
 

@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
 
+import BookmarkOutline from '@/assets/icons/bookmark-outline.svg';
+import HomeOutline from '@/assets/icons/home-outline.svg';
+import LogOutOutline from '@/assets/icons/log-out-outline.svg';
+import MessageCircleOutline from '@/assets/icons/message-circle-outline.svg';
+import PersonOutline from '@/assets/icons/person-outline.svg';
+import PlusSquareOutline from '@/assets/icons/plus-square-outline.svg';
+import SearchOutline from '@/assets/icons/searchOutline.svg';
+import TrendingUpOutline from '@/assets/icons/trending-up-outline.svg';
 import { ConfirmModal } from '@/features/confirm-modal';
 import { useLogoutMutation, useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { useLazyGetMeQuery } from '@/shared/api/users-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
-import BookmarkOutline from 'assets/icons/bookmark-outline.svg';
-import HomeOutline from 'assets/icons/home-outline.svg';
-import LogOutOutline from 'assets/icons/log-out-outline.svg';
-import MessageCircleOutline from 'assets/icons/message-circle-outline.svg';
-import PersonOutline from 'assets/icons/person-outline.svg';
-import PlusSquareOutline from 'assets/icons/plus-square-outline.svg';
-import SearchOutline from 'assets/icons/searchOutline.svg';
-import TrendingUpOutline from 'assets/icons/trending-up-outline.svg';
 import clsx from 'clsx';
 import Link from 'next/link';
 
 import s from './sidebar.module.scss';
 
-import { Trans } from '../Trans/Trans';
+import { Trans } from '../../../Trans/Trans';
 
 export const Sidebar = () => {
   const t = useTranslation().t.common;
