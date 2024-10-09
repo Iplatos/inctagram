@@ -71,3 +71,52 @@ export type PublicPostsResponse = {
 export type PublicUsersResponse = {
   totalCount: number;
 };
+
+export type PublicPostsByUserIdResponse = {
+  items: [
+    {
+      avatarOwner: string;
+      createdAt: string;
+      description: null | string;
+      id: number;
+      images: [
+        {
+          createdAt: string;
+          fileSize: number;
+          height: number;
+          uploadId: string;
+          url: string;
+          width: number;
+        },
+      ];
+      isLiked: boolean;
+      likesCount: number;
+      location: string;
+      owner: {
+        firstName: string;
+        lastName: string;
+      };
+      ownerId: number;
+      updatedAt: string;
+      userName: string;
+    },
+  ];
+  pageSize: number;
+  totalCount: number;
+  totalUsers: number;
+};
+
+export type PublicProfileByIdResponse = {
+  aboutMe: null | string;
+  avatars: [
+    {
+      createdAt: string;
+      fileSize: number;
+      height: number;
+      url: string;
+      width: number;
+    },
+  ];
+  id: number;
+  userName: string;
+};

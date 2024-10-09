@@ -1,6 +1,7 @@
 import React, { ChangeEvent, ElementRef, FC, useRef } from 'react';
 import AvatarEditor, { CroppedRect } from 'react-avatar-editor';
 
+import { useLazyGetMyProfileQuery } from '@/shared/api/users-profile-api';
 import { dataURLToBlob } from '@/shared/helpers';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
@@ -91,6 +92,8 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
   const saveAvatar = () => {
     const editor = editorRef.current;
 
+    const canvas = editor?.getImage();
+
     if (!editor) {
       return;
     }
@@ -102,11 +105,17 @@ export const AvatarUploader: FC<AvatarUploaderProps> = ({
       scale: state.scale,
     };
 
-    if (state.preview) {
-      onImageSave(state.preview, { ...cropProps, mediaType: state.preview.type });
+    const img = canvas?.toBlob(blob => {
+      if (blob) {
+        onImageSave(blob, { ...cropProps, mediaType: '' });
+      }
+    }, 'image/jpeg');
 
-      return;
-    }
+    // if (state.preview) {
+    //  onImageSave(state.preview, { ...cropProps, mediaType: state.preview.type });
+
+    //   return;
+    // }
     if (avatar) {
       const file = typeof avatar === 'string' ? dataURLToBlob(avatar) : avatar;
 

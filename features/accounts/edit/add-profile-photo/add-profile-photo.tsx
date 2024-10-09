@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { CloseIcon } from '@/assets/icons/close';
 import { AvatarUploader, AvatarUploaderProps } from '@/features/avatar-uploader';
@@ -6,9 +6,13 @@ import { ConfirmModal } from '@/features/confirm-modal';
 import {
   useDeleteMyAvatarMutation,
   useGetMeQuery,
-  useLazyGetMyAvatarBase64Query,
   useSetMyAvatarMutation,
 } from '@/shared/api/users-api';
+import {
+  useGetMyProfileQuery,
+  useGetUsersProfileQuery,
+  useLazyGetMyProfileQuery,
+} from '@/shared/api/users-profile-api';
 import { getDefaultCropProps } from '@/shared/helpers/getDefaultCropProps';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Avatar, Button, Typography } from '@/shared/ui';
@@ -16,6 +20,10 @@ import { nanoid } from '@reduxjs/toolkit';
 import clsx from 'clsx';
 
 import s from './add-profile-photo.module.scss';
+
+type Props = {
+  handleAvatarUpload: () => void;
+};
 
 export const AddProfilePhoto = () => {
   const {
@@ -28,8 +36,7 @@ export const AddProfilePhoto = () => {
   const [uploaderOpen, setUploaderOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
-  const { data: meResponse, isFetching: isFetchingMyProfile } = useGetMeQuery();
-  const [getAvatarBase64, { data: avatarBase64 }] = useLazyGetMyAvatarBase64Query();
+  const { data: myProfile, isFetching: isFetchingMyProfile } = useGetMyProfileQuery();
 
   const [deleteAvatar, { isLoading: isDeletingAvatar }] = useDeleteMyAvatarMutation();
   const [uploadAvatar, { isLoading: isUploadingAvatar }] = useSetMyAvatarMutation();
@@ -72,12 +79,6 @@ export const AddProfilePhoto = () => {
 
   // Manual destructuring to prevent unrecognized props from backend such as `updatedAt` from being passed to the internal `img` component.
   const dCP = getDefaultCropProps();
-  const {
-    offsetX = dCP.offsetX,
-    offsetY = dCP.offsetY,
-    scale = dCP.scale,
-    url: src,
-  } = meResponse?.data.avatar ?? {};
 
   const isUploaderDisabled = isUploadingAvatar || isDeletingAvatar || isFetchingMyProfile;
 
@@ -98,6 +99,12 @@ export const AddProfilePhoto = () => {
     }
   };
 
+  if (!myProfile) {
+    return null;
+  }
+
+  const avatar = myProfile.avatars[0].url;
+
   return (
     <div className={s.photoContainer}>
       <div className={s.avatarWrapper}>
@@ -107,9 +114,9 @@ export const AddProfilePhoto = () => {
             image: clsx(isUploaderDisabled && s.avatarImage),
           }}
           priority
-          {...{ offsetX, offsetY, scale, src }}
+          src={avatar}
         />
-        {src && (
+        {avatar && (
           <button
             className={s.deleteButton}
             disabled={isUploaderDisabled}
@@ -123,16 +130,14 @@ export const AddProfilePhoto = () => {
       <Button
         disabled={isUploaderDisabled}
         onClick={() => setUploaderOpen(true)}
-        onMouseEnter={() => getAvatarBase64(undefined, true)}
         variant={'tertiary'}
       >
         {tButton}
       </Button>
 
       <AvatarUploader
-        avatar={avatarBase64 ?? undefined}
+        avatar={undefined}
         disabled={isUploaderDisabled}
-        initCropProps={{ offsetX, offsetY, scale }}
         onClose={handleUploaderModalClose}
         onImageSave={handleAvatarUpload}
         open={uploaderOpen}
