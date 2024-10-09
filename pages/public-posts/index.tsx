@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { getRunningQueriesThunk } from '@/shared/api/base-api';
 import { publicPageSlice } from '@/shared/api/public-page-slice';
 import { publicPostsApi } from '@/shared/api/public-posts-api';
 import { PublicUserApi } from '@/shared/api/public-user-api';
@@ -16,6 +17,8 @@ export const getStaticProps = wrapper.getStaticProps(store => async () => {
   const posts = await store.dispatch(
     publicPostsApi.endpoints.getPublicPosts.initiate({ pageSize: 4 })
   );
+
+  await Promise.all(store.dispatch(getRunningQueriesThunk()));
 
   return {
     props: {

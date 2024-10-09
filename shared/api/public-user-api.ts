@@ -1,7 +1,7 @@
 import { baseApi } from '@/shared/api/base-api';
 
 import { PublicAPIResponse } from '../types/common.types';
-import { PublicUsersResponse } from '../types/public.types';
+import { PublicProfileByIdResponse, PublicUsersResponse } from '../types/public.types';
 
 export const PublicUserApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -10,6 +10,14 @@ export const PublicUserApi = baseApi.injectEndpoints({
       query: () => {
         return {
           url: '/api/v1/public-user',
+        };
+      },
+    }),
+    getUserPublicProfile: builder.query<PublicProfileByIdResponse, number>({
+      providesTags: ['PublicUsers'],
+      query: profileId => {
+        return {
+          url: `/api/v1/public-user/profile/${profileId}`,
         };
       },
     }),

@@ -1,16 +1,18 @@
 import { CloseIcon } from '@/assets/icons/close';
 import { PublicPostByIdResponse } from '@/shared/types/public.types';
-import { Card, Modal } from '@/shared/ui';
+import { Button, Card, Modal } from '@/shared/ui';
 import Image from 'next/image';
 import Link from 'next/link';
 
 type Props = {
+  open: boolean;
   post: PublicPostByIdResponse;
+  setOpen: (open: boolean) => void;
 };
 
 export const TestPostModal = (props: Props) => {
   return (
-    <Modal open>
+    <Modal open={props.open}>
       <Card
         style={{
           alignItems: 'center',
@@ -43,9 +45,9 @@ export const TestPostModal = (props: Props) => {
           {props.post.userName}
         </div>
       </Card>
-      <Link href={`/public-posts`}>
+      <Button onClick={() => props.setOpen(false)} variant={'text'}>
         <CloseIcon />
-      </Link>
+      </Button>
     </Modal>
   );
 };
