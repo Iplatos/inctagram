@@ -5,7 +5,7 @@ import { ArrowIOSBack } from '@/assets/icons/arrow-ios-back';
 import { PhotoGallery, PhotoGalleryProps } from '@/features';
 import { adjustArrayIndexByBoundaries, capitalise } from '@/shared/helpers';
 import { CCGramFilterOrString } from '@/shared/hooks';
-import { Button, Card, IconButton, Typography } from '@/shared/ui';
+import { Button, IconButton, ModalCard, Typography } from '@/shared/ui';
 import Image from 'next/image';
 
 import s from './filter-photo-card.module.scss';
@@ -122,8 +122,8 @@ export const FilterPhotoCard = ({
   });
 
   return (
-    <Card className={s.cardRoot}>
-      <Card.Header className={s.header}>
+    <ModalCard className={s.cardRoot}>
+      <ModalCard.Header className={s.header}>
         <IconButton onClick={onPrevClick}>
           <ArrowIOSBack />
         </IconButton>
@@ -133,7 +133,7 @@ export const FilterPhotoCard = ({
         <Button onClick={onNextClick} variant={'text'}>
           Next
         </Button>
-      </Card.Header>
+      </ModalCard.Header>
 
       <div className={s.contentWrapper}>
         <PhotoGallery
@@ -144,8 +144,8 @@ export const FilterPhotoCard = ({
           startIndex={selectedIndex}
           {...restGalleryProps}
         />
-        <Card.Content className={s.filtersList}>{filterPreviewArray}</Card.Content>
+        <ModalCard.Content className={s.filtersList}>{filterPreviewArray}</ModalCard.Content>
       </div>
-    </Card>
+    </ModalCard>
   );
 };
