@@ -1,7 +1,7 @@
-@use '../../styles/mixins' as *;
-@use '../../styles/helpers' as *;
+@use '../../../styles/mixins' as *;
+@use '../../../styles/helpers' as *;
 
-.container {
+.root {
   scrollbar-width: thin;
 
   position: fixed;
@@ -11,15 +11,14 @@
   overflow: auto;
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  padding-inline: rem(60) rem(10);
 
   width: 220px;
-  padding: 60px 0 36px 60px;
-
   border-right: 1px solid var(--color-dark-300);
 }
 
-.buttonsGroup {
+.section {
+  margin-top: em(60);
   @include flex($justify: null, $align: null, $direction: column);
 
   gap: 24px;
@@ -27,7 +26,11 @@
 
 .button {
   @include flex($justify: null);
-
+  color: var(--color-light-100);
+  font-size: var(--font-size-s);
+  padding: 0;
+  justify-content: start;
+  user-select: none;
   cursor: pointer;
   gap: 12px;
 
@@ -39,16 +42,20 @@
     color: var(--color-accent-100);
   }
 
-  // doesn't work properly
+  &Active {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent-500);
+  }
+
   &:active {
     font-weight: var(--font-weight-bold);
     color: var(--color-accent-500);
   }
-}
 
-.svg {
-  & * {
-    fill: currentcolor;
+  svg {
+    & * {
+      fill: currentcolor;
+    }
   }
 }
 
@@ -61,4 +68,10 @@
 
 .modalButton {
   flex-basis: em(96);
+}
+
+.footer {
+  margin-top: auto;
+  padding-top: em(60);
+  margin-bottom: em(20);
 }
