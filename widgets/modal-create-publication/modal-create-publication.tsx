@@ -25,6 +25,7 @@ export const ModalCreatePublication = () => {
 
   const closeModalHandler = () => {
     dispatch(closeModal(false));
+    //open save draft modal
   };
 
   const [files, setFiles] = useState<File[]>([]);

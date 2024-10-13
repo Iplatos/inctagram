@@ -30,6 +30,7 @@ const meta = {
       </div>
     ),
   ],
+  excludeStories: ['getMockImages'],
   parameters: {
     docs: {
       description: {

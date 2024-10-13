@@ -15,7 +15,7 @@ import { FileInput } from './fileInput';
 export type SetAddedImagesCallback = (images: string[]) => string[];
 type ThumbnailsPropsType = {
   addedImages: string[];
-  boundary: Popover.PopperContentProps['collisionBoundary'];
+  boundary: Popover.PopoverContentProps['collisionBoundary'];
   image: string;
   setAddedImages: (images: SetAddedImagesCallback | string[]) => void;
   setImage: (selectedImg: string) => void;
@@ -42,7 +42,7 @@ export const Thumbnails = (props: ThumbnailsPropsType) => {
     <>
       <PopoverRoot>
         <PopoverTrigger>
-          <button aria-label={'Update dimensions'}>
+          <button aria-label={'Update dimensions'} type={'button'}>
             <TriggerButton variant={'image'} />
           </button>
         </PopoverTrigger>

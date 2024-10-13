@@ -5,7 +5,7 @@ import * as PopoverPrimitive from '@radix-ui/react-popover';
 import style from './popover-root.module.scss';
 
 type PopoverPropsType = {
-  boundary?: PopoverPrimitive.PopperContentProps['collisionBoundary'];
+  boundary?: PopoverPrimitive.PopoverContentProps['collisionBoundary'];
   children?: ReactNode;
   contentRef?: Ref<ElementRef<typeof PopoverPrimitive.Content>>;
   trigger?: ReactNode;
