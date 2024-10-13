@@ -1,9 +1,9 @@
 import { ElementRef, useRef, useState } from 'react';
 import ReactEasyCropper from 'react-easy-crop';
 
+import { Zoom } from '@/entities/photo-slider/';
 import { Crop } from '@/entities/photo-slider/crop/crop';
 import { Thumbnails } from '@/entities/photo-slider/thumbnails';
-import { Zoom } from '@/entities/photo-slider/zoom/zoom';
 
 import 'react-image-gallery/styles/scss/image-gallery.scss';
 
@@ -70,7 +70,7 @@ export const PhotoSlider = () => {
     <div className={style.customControls}>
       <div className={style.customControls__inner}>
         <Crop onAspectRatioChange={onAspectRatioChange} />
-        <Zoom setZoom={([value]) => setZoom(value)} zoom={zoom} />
+        <Zoom onZoomChange={setZoom} zoom={zoom} />
       </div>
       <Thumbnails
         addedImages={addedImages}
