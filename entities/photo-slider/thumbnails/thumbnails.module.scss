@@ -1,3 +1,5 @@
+@use '../../../styles/mixins' as *;
+
 .content {
   padding: 12px;
   background-color: rgb(23 23 23 / 80%);
@@ -16,13 +18,12 @@
 }
 
 .scrollContainer {
-  scrollbar-color: var(--color-dark-100) rgb(23 23 23 / 80%);
-  scrollbar-width: thin;
+  @include thin-scrollbar;
 
   overflow: auto hidden;
   display: flex;
-  flex-direction: row;
   gap: 12px;
 
   max-width: 400px;
+  padding-bottom: 6px;
 }
