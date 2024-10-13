@@ -1,53 +1,68 @@
-import React, { PropsWithChildren } from 'react';
+import React, { ReactElement } from 'react';
 
 import { AvatarFallback } from '@/assets/icons/avatar-fallback';
+import { PhotoSliderRenderItemAspectRatio } from '@/entities/photo-slider';
+import { PropsWithoutChildren } from '@/shared/types/helpers';
 import { Typography } from '@/shared/ui';
-import { PopoverContentProps } from '@radix-ui/react-popover';
+import { PopperContentProps } from '@radix-ui/react-popover';
+import clsx from 'clsx';
 
 import style from './crop.module.scss';
 
-import { PopoverContent, PopoverRoot, PopoverTrigger } from '../popover-root';
+import { Popover } from '../popover-root';
 import { TriggerButton } from '../trigger-button/trigger-button';
 
-type CropPropsType = {
-  onAspectRatioChange: (value: 'original' | number) => void;
-  popoverContentProps?: PropsWithChildren<PopoverContentProps>;
+type CropListItem = { icon: () => ReactElement; label: string };
+
+export type CropProps = {
+  onAspectRatioChange: (value: PhotoSliderRenderItemAspectRatio) => void;
+
+  popoverContentProps?: PropsWithoutChildren<PopperContentProps>;
+  selectedAspectRatio?: PhotoSliderRenderItemAspectRatio;
 };
 
-export const Crop = (props: CropPropsType) => {
-  const { onAspectRatioChange, popoverContentProps } = props;
+export const Crop = ({
+  onAspectRatioChange,
+  popoverContentProps,
+  selectedAspectRatio,
+}: CropProps) => {
+  /* eslint-disable perfectionist/sort-objects -- preserve the natural order of the aspect ratio list */
+  const aspectRatioMap = {
+    original: { label: 'Original', icon: () => <AvatarFallback /> },
+    '1 / 1': { label: '1:1', icon: () => <div className={style.aspectRatioIcon} /> },
+    '4 / 5': { label: '4:5', icon: () => <div className={style.aspectRatioIconVertical} /> },
+    '16 / 9': { label: '16:9', icon: () => <div className={style.aspectRatioIconHorizontal} /> },
+  } satisfies { [P in PhotoSliderRenderItemAspectRatio]?: CropListItem };
+
+  const aspectRatioEntries = Object.entries(aspectRatioMap) as [
+    PhotoSliderRenderItemAspectRatio,
+    CropListItem,
+  ][];
+  /* eslint-enable perfectionist/sort-objects */
 
   return (
-    <>
-      <PopoverRoot>
-        <PopoverTrigger>
-          <button aria-label={'Crop'}>
-            <TriggerButton variant={'crop'} />
-          </button>
-        </PopoverTrigger>
-        <PopoverContent {...popoverContentProps}>
-          <div className={style.content}>
-            <div className={style.aspectRatio} onClick={() => onAspectRatioChange('original')}>
-              <Typography.Regular16 className={style.text}>Original</Typography.Regular16>
-              <AvatarFallback className={style.svg} />
-            </div>
+    <Popover.Root>
+      <Popover.Trigger asChild>
+        <TriggerButton variant={'crop'} />
+      </Popover.Trigger>
 
-            <div className={style.aspectRatio} onClick={() => onAspectRatioChange(1 / 1)}>
-              <Typography.Regular16 className={style.text}>1:1</Typography.Regular16>
-              <div className={style.aspectRatio_square}></div>
+      <Popover.Content {...popoverContentProps}>
+        <div className={style.content}>
+          {aspectRatioEntries.map(([aspectRatio, { icon: Icon, label }]) => (
+            <div
+              className={clsx(
+                style.aspectRatio,
+                aspectRatio === selectedAspectRatio && style.aspectRatioSelected
+              )}
+              key={label}
+              onClick={() => onAspectRatioChange(aspectRatio)}
+            >
+              <Typography.Regular16 className={style.text}>{label}</Typography.Regular16>
+              <Icon />
             </div>
-
-            <div className={style.aspectRatio} onClick={() => onAspectRatioChange(4 / 5)}>
-              <Typography.Regular16 className={style.text}>4:5</Typography.Regular16>
-              <div className={style.aspectRatio_vertical}></div>
-            </div>
-            <div className={style.aspectRatio} onClick={() => onAspectRatioChange(16 / 9)}>
-              <Typography.Regular16 className={style.text}>16:9</Typography.Regular16>
-              <div className={style.aspectRatio_horizontal}></div>
-            </div>
-          </div>
-        </PopoverContent>
-      </PopoverRoot>
-    </>
+          ))}
+        </div>
+      </Popover.Content>
+    </Popover.Root>
   );
 };
