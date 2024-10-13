@@ -1,41 +1,39 @@
-import React from 'react';
+import { ComponentPropsWithoutRef, ElementRef, FC, forwardRef } from 'react';
 
-import CropImg from 'assets/icons/cropImg.svg';
-import UploadImg from 'assets/icons/plus-circle-outline.svg';
-import Img from 'assets/icons/uploadImg.svg';
-import ZoomImg from 'assets/icons/zoomImg.svg';
+import { ExpandOutline } from '@/assets/icons/expand-outline';
+import { PropsWithoutChildren } from '@/shared/types/helpers';
+import { AvatarFallback } from 'assets/icons/avatar-fallback';
+import { MaximizeOutline } from 'assets/icons/maximize-outline';
+import { PlusCircleOutline } from 'assets/icons/plus-circle-outline';
+import clsx from 'clsx';
 
 import style from './trigger-button.module.scss';
 
-type TriggerPropsType = {
-  disabled?: boolean;
-  onClick?: () => void;
-  variant: 'crop' | 'image' | 'upload' | 'zoom';
+type TriggerButtonVariant = 'crop' | 'image' | 'upload' | 'zoom';
+type TriggerPropsType = PropsWithoutChildren<ComponentPropsWithoutRef<'button'>> & {
+  variant: TriggerButtonVariant;
 };
 
-export const TriggerButton = (props: TriggerPropsType) => {
-  const { disabled, onClick, variant } = props;
+const iconsMap = {
+  crop: ExpandOutline,
+  image: AvatarFallback,
+  upload: PlusCircleOutline,
+  zoom: MaximizeOutline,
+} satisfies Record<TriggerButtonVariant, FC>;
 
-  let button;
+export const TriggerButton = forwardRef<ElementRef<'button'>, TriggerPropsType>(
+  ({ className, variant, ...props }, ref) => {
+    const IconComponent = iconsMap[variant];
 
-  if (variant === 'crop') {
-    button = <CropImg className={style.svg} />;
-  } else if (variant === 'image') {
-    button = <Img className={style.svg} />;
-  } else if (variant === 'zoom') {
-    button = <ZoomImg className={style.svg} />;
-  } else {
-    button = <UploadImg className={style.svg} />;
+    return (
+      <button
+        className={clsx(className, variant === 'upload' ? style.buttonPlus : style.button)}
+        ref={ref}
+        type={'button'}
+        {...props}
+      >
+        <IconComponent className={style.svg} />
+      </button>
+    );
   }
-
-  return (
-    <button
-      className={variant === 'upload' ? style.buttonPlus : style.button}
-      disabled={disabled}
-      onClick={onClick}
-      type={'button'}
-    >
-      {button}
-    </button>
-  );
-};
+);

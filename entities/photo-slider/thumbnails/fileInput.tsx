@@ -6,7 +6,7 @@ import { TriggerButton } from '../trigger-button/trigger-button';
 
 type FileInputPropsType = {
   disabled?: boolean;
-  onImageSelected: (res: string) => void;
+  onImageSelected?: (res: string) => void;
 };
 
 export const FileInput: FC<FileInputPropsType> = ({ disabled, onImageSelected }) => {
@@ -18,7 +18,7 @@ export const FileInput: FC<FileInputPropsType> = ({ disabled, onImageSelected })
 
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = function (e) {
-        onImageSelected(reader.result as string);
+        onImageSelected?.(reader.result as string);
       };
     }
   };

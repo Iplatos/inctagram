@@ -70,12 +70,12 @@ export const PhotoSlider = () => {
     <div className={style.customControls}>
       <div className={style.customControls__inner}>
         <Crop onAspectRatioChange={onAspectRatioChange} />
-        <Zoom setZoom={setZoom} zoom={zoom} />
+        <Zoom setZoom={([value]) => setZoom(value)} zoom={zoom} />
       </div>
       <Thumbnails
         addedImages={addedImages}
-        boundary={refGallery.current}
         image={image}
+        popoverContentProps={{ collisionBoundary: refGallery.current }}
         setAddedImages={setAddedImages}
         setImage={setImage}
       />
@@ -84,15 +84,15 @@ export const PhotoSlider = () => {
 
   return (
     <div ref={refGallery}>
-    <PhotoGallery
-      items={addedImages.map(i => ({ original: i }))}
-      renderCustomControls={renderCustomControls}
-      renderItem={({ original }) => (
+      <PhotoGallery
+        items={addedImages.map(i => ({ original: i }))}
+        renderCustomControls={renderCustomControls}
+        renderItem={({ original }) => (
           <PhotoGallery.PreviewImageWrapper>
             <ReactEasyCropper
               aspect={aspectRatio}
               crop={crop}
-          image={original}
+              image={original}
               onCropChange={setCrop}
               onCropComplete={(croppedArea, croppedAreaPixels) => {
                 console.log('onCropComplete', croppedArea, croppedAreaPixels);
@@ -103,11 +103,11 @@ export const PhotoSlider = () => {
                 setDefaultAspectRatio(mediaSize.naturalWidth / mediaSize.naturalHeight);
               }}
               onZoomChange={setZoom}
-          zoom={zoom}
-        />
+              zoom={zoom}
+            />
           </PhotoGallery.PreviewImageWrapper>
-      )}
-    />
+        )}
+      />
     </div>
   );
 };

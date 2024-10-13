@@ -1,43 +1,29 @@
-import React, { ElementRef, ForwardedRef, ReactNode, Ref, forwardRef } from 'react';
+import React, { ElementRef } from 'react';
 
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 
 import style from './popover-root.module.scss';
 
-type PopoverPropsType = {
-  boundary?: PopoverPrimitive.PopperContentProps['collisionBoundary'];
-  children?: ReactNode;
-  contentRef?: Ref<ElementRef<typeof PopoverPrimitive.Content>>;
-  trigger?: ReactNode;
-  triggerRef?: Ref<ElementRef<typeof PopoverPrimitive.Trigger>>;
-};
-
-export const PopoverContent = React.forwardRef(
-  (
-    { children, ...props }: PopoverPropsType,
-    forwardedRef: ForwardedRef<ElementRef<typeof PopoverPrimitive.Content>>
-  ) => {
-    // console.log('collision boundary', props.boundary);
-
-    return (
-      <>
-        <PopoverPrimitive.Portal>
-          <PopoverPrimitive.Content
-            {...props}
-            align={'end'}
-            className={style.content}
-            ref={forwardedRef}
-            side={'top'}
-            sideOffset={2}
-            sticky={'always'}
-          >
-            <div className={style.wrapper}>{children}</div>
-          </PopoverPrimitive.Content>
-        </PopoverPrimitive.Portal>
-      </>
-    );
-  }
-);
+export const PopoverContent = React.forwardRef<
+  ElementRef<'div'>,
+  PopoverPrimitive.PopoverContentProps
+>(({ children, ...props }, ref) => {
+  return (
+    <PopoverPrimitive.Portal>
+      <PopoverPrimitive.Content
+        align={'end'}
+        className={style.content}
+        ref={ref}
+        side={'top'}
+        sideOffset={4}
+        sticky={'always'}
+        {...props}
+      >
+        <div className={style.wrapper}>{children}</div>
+      </PopoverPrimitive.Content>
+    </PopoverPrimitive.Portal>
+  );
+});
 
 export const PopoverRoot = PopoverPrimitive.Root;
 export const PopoverTrigger = PopoverPrimitive.Trigger;

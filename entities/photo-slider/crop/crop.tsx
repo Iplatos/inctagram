@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 
+import { AvatarFallback } from '@/assets/icons/avatar-fallback';
 import { Typography } from '@/shared/ui';
+import { PopoverContentProps } from '@radix-ui/react-popover';
 
 import style from './crop.module.scss';
 
-import OriginalSvg from '../../../assets/icons/uploadImg.svg';
 import { PopoverContent, PopoverRoot, PopoverTrigger } from '../popover-root';
 import { TriggerButton } from '../trigger-button/trigger-button';
 
 type CropPropsType = {
   onAspectRatioChange: (value: 'original' | number) => void;
+  popoverContentProps?: PropsWithChildren<PopoverContentProps>;
 };
 
 export const Crop = (props: CropPropsType) => {
-  const { onAspectRatioChange } = props;
+  const { onAspectRatioChange, popoverContentProps } = props;
 
   return (
     <>
@@ -23,11 +25,11 @@ export const Crop = (props: CropPropsType) => {
             <TriggerButton variant={'crop'} />
           </button>
         </PopoverTrigger>
-        <PopoverContent>
+        <PopoverContent {...popoverContentProps}>
           <div className={style.content}>
             <div className={style.aspectRatio} onClick={() => onAspectRatioChange('original')}>
               <Typography.Regular16 className={style.text}>Original</Typography.Regular16>
-              <OriginalSvg className={style.svg} />
+              <AvatarFallback className={style.svg} />
             </div>
 
             <div className={style.aspectRatio} onClick={() => onAspectRatioChange(1 / 1)}>

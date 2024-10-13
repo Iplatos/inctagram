@@ -1,10 +1,9 @@
-import React, { Dispatch, Ref, SetStateAction, useState } from 'react';
+import { PropsWithChildren, useState } from 'react';
 
 import { ConfirmModal } from '@/features/confirm-modal';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
-import * as Popover from '@radix-ui/react-popover';
-import Image from 'next/image';
+import { PopoverContentProps } from '@radix-ui/react-popover';
 
 import style from './thumbnails.module.scss';
 
@@ -16,14 +15,15 @@ import { FileInput } from './fileInput';
 type SetAddedImagesCallback = (images: string[]) => string[];
 type ThumbnailsPropsType = {
   addedImages: string[];
-  boundary: Popover.PopperContentProps['collisionBoundary'];
   image: string;
+
+  popoverContentProps?: PropsWithChildren<PopoverContentProps>;
   setAddedImages: (images: SetAddedImagesCallback | string[]) => void;
   setImage: (selectedImg: string) => void;
 };
 
 export const Thumbnails = (props: ThumbnailsPropsType) => {
-  const { addedImages, boundary, setAddedImages, setImage } = props;
+  const { addedImages, popoverContentProps, setAddedImages, setImage } = props;
 
   const { t } = useTranslation();
 
@@ -47,7 +47,7 @@ export const Thumbnails = (props: ThumbnailsPropsType) => {
             <TriggerButton variant={'image'} />
           </button>
         </PopoverTrigger>
-        <PopoverContent boundary={boundary}>
+        <PopoverContent {...popoverContentProps}>
           <div className={style.scrollContainer}>
             {addedImages.length > 0
               ? addedImages.map((img, index) => {
