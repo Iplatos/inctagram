@@ -39,7 +39,7 @@ export const FilterPhotoCard = ({
   } = useFilterPhotoCardHandle(galleryRef);
   const [prevStartIndex, setPrevStartIndex] = useState(startIndex);
   const [selectedIndex, setSelectedIndex] = useState(
-    adjustArrayIndexByBoundaries(items, startIndex)
+    adjustArrayIndexByBoundaries(items.length, startIndex)
   );
 
   // The `startIndex` is not used to set the current value, as is usually the case
@@ -52,7 +52,7 @@ export const FilterPhotoCard = ({
   // if the `startIndex` prop of the `FilterPhotoCard` has been changed.
   if (prevStartIndex !== startIndex) {
     setPrevStartIndex(startIndex);
-    setSelectedIndex(adjustArrayIndexByBoundaries(items, startIndex));
+    setSelectedIndex(adjustArrayIndexByBoundaries(items.length, startIndex));
   }
 
   const handleSlideChange: PhotoGalleryProps['onSlide'] = currentIndex => {
