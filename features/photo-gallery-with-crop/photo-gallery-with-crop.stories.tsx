@@ -96,9 +96,11 @@ const meta = {
   decorators: [
     (Story, { args }) => (
       // reset story if the `imagesCount` prop has been changed
-      <Fragment key={args.imagesCount}>
-        <Story />
-      </Fragment>
+      <div style={{ height: 'calc(-2rem + 100vh)' }}>
+        <Fragment key={args.imagesCount}>
+          <Story />
+        </Fragment>
+      </div>
     ),
   ],
   excludeStories: ['getPGWithCropMockItems'],

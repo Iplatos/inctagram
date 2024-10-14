@@ -15,7 +15,8 @@ $image-gallery-elements: 'content', 'slide-wrapper', 'swipe', 'slides', 'slide';
 }
 
 .container {
-  height: min(calc(100vh - 2rem), 500px);
+  height: 100%;
+  padding: 1px;
 
   :global {
     @include full-parent-height;

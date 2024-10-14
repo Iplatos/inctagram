@@ -60,6 +60,14 @@ const meta = {
       control: { type: 'number' },
     },
   },
+  decorators: [
+    Story => (
+      // TODO:  add an explicit height clarification for all `PhotoGallery` related stories and components based on it
+      <div style={{ height: 'calc(-2rem + 100vh)' }}>
+        <Story />
+      </div>
+    ),
+  ],
   excludeStories: ['getPhotoGalleryMockImages', 'getPhotoGalleryMockImagesWithAR'],
   render: CustomRender,
   tags: ['autodocs'],
