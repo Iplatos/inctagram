@@ -1,13 +1,19 @@
 .closeBtn {
+  cursor: pointer;
+
   position: absolute;
   top: -20px;
   right: -20px;
+
   padding: 10px;
-  cursor: pointer;
-  color: #fff;
+
   font-size: 20px;
+  color: #fff;
+
   border-radius: 50%;
+
   transition: background-color 0.3s;
+
   &:hover {
     background-color: #333;
   }

@@ -34,8 +34,8 @@ export const PrivatePostComment = (props: PrivatePostCommentProps) => {
         <PostComment
           bottomSection={
             <Button
-              as={'span'}
               className={s.textBth}
+              component={'span'}
               onClick={() => addNewAnswer?.(answer.id, answer.userName, answer.commentId)}
               variant={'text'}
             >
@@ -52,7 +52,12 @@ export const PrivatePostComment = (props: PrivatePostCommentProps) => {
         />
       ))}
       bottomSection={
-        <Button as={'span'} className={s.textBth} onClick={addNewAnswerForComment} variant={'text'}>
+        <Button
+          className={s.textBth}
+          component={'span'}
+          onClick={addNewAnswerForComment}
+          variant={'text'}
+        >
           <Typography.Semibold12>{t.post.comment.answer}</Typography.Semibold12>
         </Button>
       }

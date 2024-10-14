@@ -1,10 +1,6 @@
 @use '../../../styles/helpers' as *;
 @use '../../../styles/mixins' as *;
 
-.root {
-
-}
-
 .comment {
   display: flex;
   gap: rem(12);
@@ -17,14 +13,13 @@
     display: flex;
     flex-direction: column;
 
-    &Text {}
-
     &Info {
       display: flex;
       gap: 12px;
       align-items: center;
 
-      p, span {
+      p,
+      span {
         user-select: none;
         color: var(--color-light-900);
       }
@@ -33,15 +28,15 @@
 }
 
 .bottomSection {
-    cursor: pointer;
-    display: flex;
-    gap: 12px;
-    align-items: center;
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  align-items: center;
 
-    p {
-      user-select: none;
-      color: var(--color-light-900);
-    }
+  p {
+    user-select: none;
+    color: var(--color-light-900);
+  }
 }
 
 .primaryAction {
@@ -72,9 +67,8 @@
     height: 1px;
     border-bottom: 1px solid var(--color-light-900);
   }
-  
-  &Title {
 
+  &Title {
     @include hover {
       color: var(--color-light-700);
       text-decoration: underline;
@@ -87,11 +81,10 @@
 }
 
 .textBth {
-
   @include hover {
     text-decoration: underline;
 
-    span{
+    span {
       color: var(--color-light-700);
     }
   }

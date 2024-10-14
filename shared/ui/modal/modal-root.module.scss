@@ -8,8 +8,9 @@
 }
 
 .overlay {
+  @include z-index('modal');
+
   position: fixed;
-  //z-index: z-index('modal');
   inset: 0;
 
   opacity: 0.5;
@@ -19,8 +20,9 @@
 }
 
 .content {
+  @include z-index('modal');
+
   position: fixed;
-  //z-index: z-index('modal');
   top: 50%;
   left: 50%;
   transform: translate-with-half-header-offset(-50%, -50%);

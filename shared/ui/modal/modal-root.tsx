@@ -11,7 +11,7 @@ import s from './modal-root.module.scss';
 type ModalPortalProps = PropsWithoutChildren<DialogPortalProps>;
 type ModalContentProps = PropsWithoutChildren<Omit<DialogContentProps, 'asChild' | 'className'>>;
 
-export type ModalSlot = 'content' | 'overlay' | 'trigger';
+export type ModalSlot = 'content' | 'overlay';
 export type ModalClasses = { [P in ModalSlot]?: string };
 
 type OwnProps = {
@@ -42,7 +42,7 @@ export const ModalRoot = ({
   return (
     <DialogPrimitive.Root modal {...props}>
       {trigger && (
-        <DialogPrimitive.Trigger asChild className={cls.trigger} ref={triggerRef}>
+        <DialogPrimitive.Trigger asChild ref={triggerRef}>
           {trigger}
         </DialogPrimitive.Trigger>
       )}
@@ -60,5 +60,4 @@ export const ModalRoot = ({
 const getClassNames = (classes: ModalClasses): ModalClasses => ({
   content: clsx(s.content, classes.content),
   overlay: clsx(s.overlay, classes.overlay),
-  trigger: clsx(s.trigger, classes.trigger),
 });

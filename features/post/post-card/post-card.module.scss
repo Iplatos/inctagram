@@ -13,15 +13,17 @@ $max-card-height: 560px;
   display: grid;
   grid-template-areas: 'gallery details';
   grid-template-columns: 1.03fr 1fr;
-  padding: 0;
-  height: 100%;
+
   width: 100%;
+  height: 100%;
+  padding: 0;
 }
 
 .slider {
   --aspect-ratio: 14 / 16;
-  height: 100%;
+
   max-width: 490px;
+  height: 100%;
 }
 
 .gallery {
@@ -35,29 +37,21 @@ $max-card-height: 560px;
 }
 
 .header {
-  width: 100%;
   grid-area: header;
+  width: 100%;
   height: 59px;
 }
 
 .commentsSection {
-  overflow-y: auto;
-  height: 330px;
-
   @include thin-scrollbar;
 
-  &Publick {
-    height: 410px;
-  }
+  overflow-y: auto;
+  height: 330px;
 }
 
 .commentsDetails {
   padding-top: 9px;
   padding-bottom: 9px;
-
-  &Publick {
-    height: 83px;
-  }
 }
 
 .addNewCommentSection {
