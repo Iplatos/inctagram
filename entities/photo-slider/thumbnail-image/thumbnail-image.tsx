@@ -15,7 +15,7 @@ export const ThumbnailImage = (props: ThumbnailImageProps) => {
 
   return (
     <div className={style.container}>
-      <Image alt={'thumbnail'} height={82} src={src} width={80} />
+      <Image alt={'thumbnail'} className={style.image} height={82} src={src} width={80} />
 
       <IconButton className={style.button} onClick={onRemoveImage} size={'small'}>
         <CloseIcon />

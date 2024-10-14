@@ -2,13 +2,17 @@
 
 .container {
   position: relative;
+}
 
-  .button {
-    position: absolute;
-    top: 2px;
-    right: 2px;
+.button {
+  position: absolute;
+  top: 2px;
+  right: 2px;
 
-    background-color: rgb(23 23 23 / 80%);
-    border-radius: 2px;
-  }
+  background-color: rgb(23 23 23 / 80%);
+  border-radius: 2px;
+}
+
+.image {
+  object-fit: cover;
 }

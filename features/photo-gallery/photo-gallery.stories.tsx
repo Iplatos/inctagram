@@ -82,7 +82,6 @@ export const WithAspectRatio: Story = {
   args: {
     ...StretchImage.args,
     aspectRatio: '4 / 5',
-    startIndex: 0,
   },
 };
 

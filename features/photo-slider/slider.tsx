@@ -1,112 +1,156 @@
-import { ElementRef, useRef, useState } from 'react';
-import ReactEasyCropper from 'react-easy-crop';
+import { ElementRef, FC, useRef, useState } from 'react';
 
-import { Zoom } from '@/entities/photo-slider/';
-import { Crop } from '@/entities/photo-slider/crop/crop';
-import { Thumbnails } from '@/entities/photo-slider/thumbnails';
+import { PhotoGalleryItem } from '@/entities/photo-gallery';
+import {
+  PhotoSliderCropArea,
+  PhotoSliderCroppingControls,
+  PhotoSliderItemRender,
+  PhotoSliderItemRenderProps,
+  PhotoSliderRenderItemAspectRatio,
+  ThumbnailsProps,
+} from '@/entities/photo-slider';
+import { PhotoGallery, PhotoGalleryProps } from '@/features/photo-gallery';
+import {
+  adjustArrayIndexByBoundaries,
+  getPhotoGalleryDefaultCropProps as getPhotoGalleryDCP,
+} from '@/shared/helpers';
+import { useEffectEvent } from '@/shared/hooks';
 
-import 'react-image-gallery/styles/scss/image-gallery.scss';
+export type PhotoGalleryCropProps = {
+  aspectRatio: PhotoSliderRenderItemAspectRatio;
+  maxZoom: number;
+  minZoom: number;
+  zoomSpeed: number;
+};
 
-import style from './slider.module.scss';
+export type PhotoSliderZoomHandler = (zoom: number, index: number) => void;
+export type PhotoSliderCropCompleteHandler = (
+  cropArea: PhotoSliderCropArea,
+  cropAreaPixels: PhotoSliderCropArea,
+  index: number
+) => void;
+export type PhotoSliderAspectRatioHandler = (
+  aspectRatio: PhotoSliderRenderItemAspectRatio,
+  index: number
+) => void;
 
-import { PhotoGallery } from '../photo-gallery';
+// TODO: think about "slider" naming including "PhotoGalleryWithCrop"
+export type PhotoSliderItem = Omit<PhotoGalleryItem, 'aspectRatio'> & {
+  cropperProps?: Omit<PhotoSliderItemRenderProps, 'src'>;
+};
 
-export const PhotoSlider = () => {
+export type PhotoSliderProps = {
+  cropProps?: Partial<PhotoGalleryCropProps>;
+  galleryProps?: Omit<PhotoGalleryProps, 'items'>;
+  items: PhotoSliderItem[];
+  onAspectRatioChange?: PhotoSliderAspectRatioHandler;
+  onCropComplete?: PhotoSliderCropCompleteHandler;
+  onItemAdd?: ThumbnailsProps['onItemAdd'];
+  onItemRemove?: (index: number) => true | void;
+  onZoomChange?: PhotoSliderZoomHandler;
+  showCropperControls?: boolean;
+};
+
+// TODO: add "disabled" styles and behavior
+export const PhotoSlider: FC<PhotoSliderProps> = ({
+  cropProps: globalCropProps,
+  galleryProps = {},
+  items,
+  onAspectRatioChange,
+  onCropComplete,
+  onItemAdd,
+  onItemRemove,
+  onZoomChange,
+  showCropperControls = true,
+}) => {
+  const { onSlide, startIndex, ...restGalleryProps } = galleryProps;
   const refGallery = useRef<ElementRef<'div'>>(null);
 
-  const [image, setImage] = useState<string>('');
-  const [addedImages, setAddedImages] = useState<string[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(() =>
+    adjustArrayIndexByBoundaries(items.length, startIndex)
+  );
 
-  const [defaultAspectRatio, setDefaultAspectRatio] = useState<number | undefined>(undefined);
-  const [aspectRatio, setAspectRatio] = useState(defaultAspectRatio);
+  const handleAspectRatioChange = (aspectRatio: PhotoSliderRenderItemAspectRatio) =>
+    onAspectRatioChange?.(aspectRatio, currentIndex);
 
-  const onAspectRatioChange = (value: 'original' | number) => {
-    if (value == 'original') {
-      setAspectRatio(defaultAspectRatio);
-    } else {
-      setAspectRatio(value);
+  const handleSlideChange = (currentIndex: number) => {
+    onSlide?.(currentIndex);
+    setCurrentIndex(currentIndex);
+  };
+
+  const handleItemRemove = (index: number) => {
+    const shouldAdjustCurrentIndex = onItemRemove?.(index);
+
+    // TODO: add description for this behavior
+    if (shouldAdjustCurrentIndex) {
+      const nextIndex = index <= currentIndex ? currentIndex - 1 : currentIndex;
+
+      setCurrentIndex(adjustArrayIndexByBoundaries(items.length - 1, nextIndex));
     }
   };
 
-  const [imgAfterCrop, setImgAfterCrop] = useState<string>('');
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState<number>(1);
-
-  const onCropDone = (imgCroppedArea: any) => {
-    const canvasElem = document.createElement('canvas');
-
-    canvasElem.width = imgCroppedArea.width;
-    canvasElem.height = imgCroppedArea.height;
-
-    const context = canvasElem.getContext('2d');
-
-    const imageObj1 = new Image();
-
-    imageObj1.src = image;
-    imageObj1.onload = function () {
-      context?.drawImage(
-        imageObj1,
-        imgCroppedArea.x,
-        imgCroppedArea.y,
-        imgCroppedArea.width,
-        imgCroppedArea.height,
-        0,
-        0,
-        imgCroppedArea.width,
-        imgCroppedArea.height
-      );
-
-      const dataURL = canvasElem.toDataURL('image/jpeg');
-
-      setImgAfterCrop(dataURL);
-    };
-  };
-
-  // const onCropCancel = () => {
-  //   setImage('');
-  // };
-
-  const renderCustomControls = () => (
-    <div className={style.customControls}>
-      <div className={style.customControls__inner}>
-        <Crop onAspectRatioChange={onAspectRatioChange} />
-        <Zoom onZoomChange={setZoom} zoom={zoom} />
-      </div>
-      <Thumbnails
-        addedImages={addedImages}
-        image={image}
-        popoverContentProps={{ collisionBoundary: refGallery.current }}
-        setAddedImages={setAddedImages}
-        setImage={setImage}
-      />
-    </div>
+  const handleCropComplete = useEffectEvent(
+    (cropArea: PhotoSliderCropArea, cropAreaPixels: PhotoSliderCropArea) =>
+      onCropComplete?.(cropArea, cropAreaPixels, currentIndex)
   );
+
+  const handleZoomChange = useEffectEvent((zoom: number) => onZoomChange?.(zoom, currentIndex));
+
+  const resolvedGlobalCropProps = { ...getPhotoGalleryDCP(), ...globalCropProps };
+  const currentCropProps = items[currentIndex]?.cropperProps ?? {};
+
+  const resolvedCurrentCropProps = (
+    Object.keys(resolvedGlobalCropProps) as (keyof PhotoGalleryCropProps)[]
+  ).reduce(
+    (acc, key) => ({ ...acc, [key]: currentCropProps[key] ?? resolvedGlobalCropProps[key] }),
+    {} as PhotoGalleryCropProps
+  );
+
+  const mappedItems = items.map<PhotoGalleryItem>(({ cropperProps, ...item }, index) => ({
+    renderItem: ({ original }) => {
+      return (
+        <PhotoSliderItemRender
+          {...resolvedGlobalCropProps}
+          onCropComplete={handleCropComplete}
+          onZoomChange={handleZoomChange}
+          selected={currentIndex === index}
+          src={original}
+          {...cropperProps}
+        />
+      );
+    },
+    ...item,
+  }));
 
   return (
     <div ref={refGallery}>
       <PhotoGallery
-        items={addedImages.map(i => ({ original: i }))}
-        renderCustomControls={renderCustomControls}
-        renderItem={({ original }) => (
-          <PhotoGallery.PreviewImageWrapper>
-            <ReactEasyCropper
-              aspect={aspectRatio}
-              crop={crop}
-              image={original}
-              onCropChange={setCrop}
-              onCropComplete={(croppedArea, croppedAreaPixels) => {
-                console.log('onCropComplete', croppedArea, croppedAreaPixels);
-              }}
-              onMediaLoaded={mediaSize => {
-                console.log('onMediaLoaded', { mediaSize });
-
-                setDefaultAspectRatio(mediaSize.naturalWidth / mediaSize.naturalHeight);
-              }}
-              onZoomChange={setZoom}
-              zoom={zoom}
-            />
-          </PhotoGallery.PreviewImageWrapper>
+        items={mappedItems}
+        onSlide={handleSlideChange}
+        renderCustomControls={() => (
+          <PhotoSliderCroppingControls
+            cropProps={{
+              onAspectRatioChange: handleAspectRatioChange,
+              popoverContentProps: { align: 'start' },
+              selectedAspectRatio: resolvedCurrentCropProps.aspectRatio,
+            }}
+            hidden={!showCropperControls}
+            thumbnailsProps={{
+              onItemAdd,
+              onItemRemove: handleItemRemove,
+              popoverContentProps: { collisionBoundary: refGallery.current },
+              thumbnails: items.map(({ original, thumbnail }) => thumbnail ?? original),
+            }}
+            zoomProps={{
+              onZoomChange: handleZoomChange,
+              popoverContentProps: { align: 'start' },
+              zoom: currentCropProps.zoom ?? resolvedCurrentCropProps.minZoom,
+              ...resolvedCurrentCropProps,
+            }}
+          />
         )}
+        startIndex={currentIndex}
+        {...restGalleryProps}
       />
     </div>
   );
