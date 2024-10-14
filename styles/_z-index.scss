@@ -4,20 +4,17 @@ $z-index: (
   content: 1500,
   form: 100,
   modal: 1000,
-  slider: 100,
 );
 
 @function z-index($key) {
   @warn 'z-index function deprecated. Use get-z-index instead.';
 
   @return get-z-index($key);
-
 }
 
 @mixin z-index($key) {
   z-index: z-index($key);
 }
-
 
 @function get-z-index($key) {
   $z-index-value: map.get($z-index, $key);
