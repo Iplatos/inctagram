@@ -1,0 +1,56 @@
+@use '../../../styles/mixins' as *;
+@use '../../../styles/helpers' as *;
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 129px;
+}
+
+.aspectRatio {
+  @include flex($justify: space-between);
+
+  color: var(--color-light-900);
+
+  &Selected {
+    font-weight: 600;
+    color: var(--color-light-100);
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: var(--color-light-100);
+  }
+
+  .text {
+    font-weight: inherit;
+    color: inherit;
+  }
+}
+
+.aspectRatioIcon {
+  min-width: em(18);
+  min-height: em(18);
+  margin-inline: em(3);
+
+  border: 2px solid currentcolor;
+  border-radius: 3px;
+
+  &:hover {
+    cursor: pointer;
+    border: 2px solid var(--color-light-100);
+  }
+
+  &Vertical {
+    @extend .aspectRatioIcon;
+
+    aspect-ratio: 4 / 5;
+  }
+
+  &Horizontal {
+    @extend .aspectRatioIcon;
+
+    aspect-ratio: 16 / 9;
+  }
+}

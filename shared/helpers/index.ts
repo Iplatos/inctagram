@@ -6,3 +6,6 @@ export * from './dataURLToBlob';
 export * from './resolveImageSrcToString';
 export * from './transformTaggedString';
 export * from './adjustArrayIndexByBoundaries';
+export * from './roundNumber';
+export * from './get-cropped-image-data-URL';
+export * from './get-photo-gallery-default-crop-props';

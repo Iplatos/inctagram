@@ -1,12 +1,13 @@
 import { ElementRef, useEffect, useRef, useState } from 'react';
 
+import { FilterPhotoCardItem } from '@/entities/filter-photo-card';
 import { getPhotoGalleryMockImages } from '@/features/photo-gallery/photo-gallery.stories';
 import { dataURLToBlob } from '@/shared/helpers';
 import { CCGramImageParsers } from '@/shared/hooks';
 import { Button } from '@/shared/ui/Button';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { FilterPhotoCard, FilterPhotoCardItem, FilterPhotoCardProps } from './filter-photo-card';
+import { FilterPhotoCard, FilterPhotoCardProps } from './filter-photo-card';
 import { FilterPhotoCardRefObject } from './use-filter-photo-card-handle';
 
 type CustomRenderProps = FilterPhotoCardProps & {

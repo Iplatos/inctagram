@@ -1,0 +1,16 @@
+@use '../../../styles/mixins' as *;
+
+.content {
+  width: var(--radix-popover-content-available-width);
+}
+
+.scrollContainer {
+  @include thin-scrollbar;
+
+  overflow: auto hidden;
+  display: flex;
+  flex: 1 1 auto;
+  gap: 12px;
+
+  padding-bottom: 6px;
+}
