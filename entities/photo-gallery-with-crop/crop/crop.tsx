@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import { AvatarFallback } from '@/assets/icons/avatar-fallback';
-import { PhotoSliderRenderItemAspectRatio } from '@/entities/photo-slider';
+import { PGWithCropAspectRatio } from '@/entities/photo-gallery-with-crop';
 import { PropsWithoutChildren } from '@/shared/types/helpers';
 import { Typography } from '@/shared/ui';
 import { PopperContentProps } from '@radix-ui/react-popover';
@@ -15,10 +15,10 @@ import { TriggerButton } from '../trigger-button/trigger-button';
 type CropListItem = { icon: () => ReactElement; label: string };
 
 export type CropProps = {
-  onAspectRatioChange: (value: PhotoSliderRenderItemAspectRatio) => void;
+  onAspectRatioChange: (value: PGWithCropAspectRatio) => void;
 
   popoverContentProps?: PropsWithoutChildren<PopperContentProps>;
-  selectedAspectRatio?: PhotoSliderRenderItemAspectRatio;
+  selectedAspectRatio?: PGWithCropAspectRatio;
 };
 
 export const Crop = ({
@@ -32,10 +32,10 @@ export const Crop = ({
     '1 / 1': { label: '1:1', icon: () => <div className={style.aspectRatioIcon} /> },
     '4 / 5': { label: '4:5', icon: () => <div className={style.aspectRatioIconVertical} /> },
     '16 / 9': { label: '16:9', icon: () => <div className={style.aspectRatioIconHorizontal} /> },
-  } satisfies { [P in PhotoSliderRenderItemAspectRatio]?: CropListItem };
+  } satisfies { [P in PGWithCropAspectRatio]?: CropListItem };
 
   const aspectRatioEntries = Object.entries(aspectRatioMap) as [
-    PhotoSliderRenderItemAspectRatio,
+    PGWithCropAspectRatio,
     CropListItem,
   ][];
   /* eslint-enable perfectionist/sort-objects */

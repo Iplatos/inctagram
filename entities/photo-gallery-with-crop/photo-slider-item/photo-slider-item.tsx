@@ -9,19 +9,19 @@ import { PhotoGalleryPreviewImageWrapper } from '@/entities/photo-gallery';
 import { PhotoAspectRatio } from '@/shared/constants';
 import { roundNumber } from '@/shared/helpers';
 
-const DEFAULT_CROP_OBJECT: PhotoSliderCropPoint = { x: 0, y: 0 };
+const DEFAULT_CROP_OBJECT: PGWithCropCropPoint = { x: 0, y: 0 };
 
-export type PhotoSliderCropPoint = Point;
-export type PhotoSliderCropArea = Area;
-export type PhotoSliderRenderItemAspectRatio = 'original' | PhotoAspectRatio;
+export type PGWithCropCropPoint = Point;
+export type PGWithCropCropArea = Area;
+export type PGWithCropAspectRatio = 'original' | PhotoAspectRatio;
 
-export type PhotoSliderItemRenderProps = Partial<Omit<ReactEasyCropperProps, 'aspect' | 'crop'>> & {
-  aspectRatio?: PhotoSliderRenderItemAspectRatio;
+export type PGWithCropItemRenderProps = Partial<Omit<ReactEasyCropperProps, 'aspect' | 'crop'>> & {
+  aspectRatio?: PGWithCropAspectRatio;
   selected?: boolean;
   src: string;
 };
 
-export const PhotoSliderItemRender = memo(
+export const PGWithCropItemRender = memo(
   ({
     aspectRatio,
     onCropAreaChange,
@@ -33,7 +33,7 @@ export const PhotoSliderItemRender = memo(
     setMediaSize,
     src,
     ...props
-  }: PhotoSliderItemRenderProps) => {
+  }: PGWithCropItemRenderProps) => {
     // ReactEasyCrop re-calculates the crop size and position for multiple slides
     //  when switching the current slide, placing a new object in the local state.
     //  Therefore, the cropper position and media sizes are stored separately in the local state
@@ -44,14 +44,14 @@ export const PhotoSliderItemRender = memo(
     const [mediaNaturalHeight, setMediaNaturalHeight] = useState(0);
 
     const cropAreaPixelsRef = useRef<{
-      cropArea: PhotoSliderCropArea;
-      cropAreaPixels: PhotoSliderCropArea;
+      cropArea: PGWithCropCropArea;
+      cropAreaPixels: PGWithCropCropArea;
     }>({
       cropArea: { height: 0, width: 0, x: 0, y: 0 },
       cropAreaPixels: { height: 0, width: 0, x: 0, y: 0 },
     });
 
-    const coerceAspectRatio = (aspectRatio: PhotoSliderRenderItemAspectRatio = 'original') => {
+    const coerceAspectRatio = (aspectRatio: PGWithCropAspectRatio = 'original') => {
       let result: number;
 
       if (mediaNaturalWidth === 0 || mediaNaturalHeight === 0) {
@@ -69,7 +69,7 @@ export const PhotoSliderItemRender = memo(
       return roundNumber(result);
     };
 
-    const handleCropChange = ({ x, y }: PhotoSliderCropPoint) => {
+    const handleCropChange = ({ x, y }: PGWithCropCropPoint) => {
       onCropChange?.({ x, y });
       // ReactEasyCropper implicitly calls the `handleCropChange` handler
       //  when the current slide is not displayed, resetting the user-set offset of the cropper.

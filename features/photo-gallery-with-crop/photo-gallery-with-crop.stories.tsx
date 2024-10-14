@@ -2,28 +2,28 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { Fragment, useState } from 'react';
 
-import { PhotoSliderRenderItemAspectRatio } from '@/entities/photo-slider';
+import { PGWithCropAspectRatio } from '@/entities/photo-gallery-with-crop';
 import { getPhotoGalleryMockImages } from '@/features/photo-gallery/photo-gallery.stories';
 
 import {
-  PhotoSlider,
-  PhotoSliderAspectRatioHandler,
-  PhotoSliderCropCompleteHandler,
-  PhotoSliderItem,
-  PhotoSliderProps,
-  PhotoSliderZoomHandler,
-} from './slider';
+  PGWithCropAspectRatioHandler,
+  PGWithCropCropCompleteHandler,
+  PGWithCropItem,
+  PGWithCropZoomHandler,
+  PhotoGalleryWithCrop,
+  PhotoGalleryWithCropProps,
+} from './photo-gallery-with-crop';
 
-export const getPhotoSliderMockItems = (count: number) => {
-  const aspectRatios: PhotoSliderRenderItemAspectRatio[] = ['original', '1 / 1', '4 / 5', '16 / 9'];
+export const getPGWithCropMockItems = (count: number) => {
+  const aspectRatios: PGWithCropAspectRatio[] = ['original', '1 / 1', '4 / 5', '16 / 9'];
 
-  return getPhotoGalleryMockImages(count).map<PhotoSliderItem>((item, i) => ({
+  return getPhotoGalleryMockImages(count).map<PGWithCropItem>((item, i) => ({
     ...item,
     cropperProps: { aspectRatio: aspectRatios[i % aspectRatios.length] },
   }));
 };
 
-type CustomRenderProps = Partial<PhotoSliderProps> & { imagesCount: number };
+type CustomRenderProps = Partial<PhotoGalleryWithCropProps> & { imagesCount: number };
 
 const CustomRender = ({
   imagesCount,
@@ -34,10 +34,10 @@ const CustomRender = ({
   ...props
 }: CustomRenderProps) => {
   const [items, setItems] = useState(() =>
-    getPhotoSliderMockItems(imagesCount).concat(initialItems)
+    getPGWithCropMockItems(imagesCount).concat(initialItems)
   );
 
-  const handleCropComplete: PhotoSliderCropCompleteHandler = (
+  const handleCropComplete: PGWithCropCropCompleteHandler = (
     cropArea,
     cropAreaPixels,
     currentIndex
@@ -55,7 +55,7 @@ const CustomRender = ({
     );
   };
 
-  const handleZoomChange: PhotoSliderZoomHandler = (zoom, currentIndex) => {
+  const handleZoomChange: PGWithCropZoomHandler = (zoom, currentIndex) => {
     onZoomChange?.(zoom, currentIndex);
     setItems(items =>
       items.map((item, i) =>
@@ -64,7 +64,7 @@ const CustomRender = ({
     );
   };
 
-  const handleAspectRatioChange: PhotoSliderAspectRatioHandler = (aspectRatio, currentIndex) => {
+  const handleAspectRatioChange: PGWithCropAspectRatioHandler = (aspectRatio, currentIndex) => {
     onAspectRatioChange?.(aspectRatio, currentIndex);
     setItems(items =>
       items.map((item, i) =>
@@ -74,7 +74,7 @@ const CustomRender = ({
   };
 
   return (
-    <PhotoSlider
+    <PhotoGalleryWithCrop
       items={items}
       key={imagesCount}
       onAspectRatioChange={handleAspectRatioChange}
@@ -101,10 +101,10 @@ const meta = {
       </Fragment>
     ),
   ],
-  excludeStories: ['getPhotoSliderMockItems'],
+  excludeStories: ['getPGWithCropMockItems'],
   render: CustomRender,
   tags: ['autodocs'],
-  title: 'FEATURES/PhotoSlider',
+  title: 'FEATURES/PhotoGalleryWithCrop',
 } satisfies Meta<CustomRenderProps>;
 
 export default meta;

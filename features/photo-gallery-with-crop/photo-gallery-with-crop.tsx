@@ -2,13 +2,13 @@ import { ElementRef, FC, useRef, useState } from 'react';
 
 import { PhotoGalleryItem } from '@/entities/photo-gallery';
 import {
-  PhotoSliderCropArea,
-  PhotoSliderCroppingControls,
-  PhotoSliderItemRender,
-  PhotoSliderItemRenderProps,
-  PhotoSliderRenderItemAspectRatio,
+  PGWithCropAspectRatio,
+  PGWithCropCropArea,
+  PGWithCropCroppingControls,
+  PGWithCropItemRender,
+  PGWithCropItemRenderProps,
   ThumbnailsProps,
-} from '@/entities/photo-slider';
+} from '@/entities/photo-gallery-with-crop';
 import { PhotoGallery, PhotoGalleryProps } from '@/features/photo-gallery';
 import {
   adjustArrayIndexByBoundaries,
@@ -16,43 +16,42 @@ import {
 } from '@/shared/helpers';
 import { useEffectEvent } from '@/shared/hooks';
 
-export type PhotoGalleryCropProps = {
-  aspectRatio: PhotoSliderRenderItemAspectRatio;
+export type PGWithCropCropProps = {
+  aspectRatio: PGWithCropAspectRatio;
   maxZoom: number;
   minZoom: number;
   zoomSpeed: number;
 };
 
-export type PhotoSliderZoomHandler = (zoom: number, index: number) => void;
-export type PhotoSliderCropCompleteHandler = (
-  cropArea: PhotoSliderCropArea,
-  cropAreaPixels: PhotoSliderCropArea,
+export type PGWithCropZoomHandler = (zoom: number, index: number) => void;
+export type PGWithCropCropCompleteHandler = (
+  cropArea: PGWithCropCropArea,
+  cropAreaPixels: PGWithCropCropArea,
   index: number
 ) => void;
-export type PhotoSliderAspectRatioHandler = (
-  aspectRatio: PhotoSliderRenderItemAspectRatio,
+export type PGWithCropAspectRatioHandler = (
+  aspectRatio: PGWithCropAspectRatio,
   index: number
 ) => void;
 
-// TODO: think about "slider" naming including "PhotoGalleryWithCrop"
-export type PhotoSliderItem = Omit<PhotoGalleryItem, 'aspectRatio'> & {
-  cropperProps?: Omit<PhotoSliderItemRenderProps, 'src'>;
+export type PGWithCropItem = Omit<PhotoGalleryItem, 'aspectRatio'> & {
+  cropperProps?: Omit<PGWithCropItemRenderProps, 'src'>;
 };
 
-export type PhotoSliderProps = {
-  cropProps?: Partial<PhotoGalleryCropProps>;
+export type PhotoGalleryWithCropProps = {
+  cropProps?: Partial<PGWithCropCropProps>;
   galleryProps?: Omit<PhotoGalleryProps, 'items'>;
-  items: PhotoSliderItem[];
-  onAspectRatioChange?: PhotoSliderAspectRatioHandler;
-  onCropComplete?: PhotoSliderCropCompleteHandler;
+  items: PGWithCropItem[];
+  onAspectRatioChange?: PGWithCropAspectRatioHandler;
+  onCropComplete?: PGWithCropCropCompleteHandler;
   onItemAdd?: ThumbnailsProps['onItemAdd'];
   onItemRemove?: (index: number) => true | void;
-  onZoomChange?: PhotoSliderZoomHandler;
+  onZoomChange?: PGWithCropZoomHandler;
   showCropperControls?: boolean;
 };
 
 // TODO: add "disabled" styles and behavior
-export const PhotoSlider: FC<PhotoSliderProps> = ({
+export const PhotoGalleryWithCrop: FC<PhotoGalleryWithCropProps> = ({
   cropProps: globalCropProps,
   galleryProps = {},
   items,
@@ -70,7 +69,7 @@ export const PhotoSlider: FC<PhotoSliderProps> = ({
     adjustArrayIndexByBoundaries(items.length, startIndex)
   );
 
-  const handleAspectRatioChange = (aspectRatio: PhotoSliderRenderItemAspectRatio) =>
+  const handleAspectRatioChange = (aspectRatio: PGWithCropAspectRatio) =>
     onAspectRatioChange?.(aspectRatio, currentIndex);
 
   const handleSlideChange = (currentIndex: number) => {
@@ -90,7 +89,7 @@ export const PhotoSlider: FC<PhotoSliderProps> = ({
   };
 
   const handleCropComplete = useEffectEvent(
-    (cropArea: PhotoSliderCropArea, cropAreaPixels: PhotoSliderCropArea) =>
+    (cropArea: PGWithCropCropArea, cropAreaPixels: PGWithCropCropArea) =>
       onCropComplete?.(cropArea, cropAreaPixels, currentIndex)
   );
 
@@ -100,16 +99,16 @@ export const PhotoSlider: FC<PhotoSliderProps> = ({
   const currentCropProps = items[currentIndex]?.cropperProps ?? {};
 
   const resolvedCurrentCropProps = (
-    Object.keys(resolvedGlobalCropProps) as (keyof PhotoGalleryCropProps)[]
+    Object.keys(resolvedGlobalCropProps) as (keyof PGWithCropCropProps)[]
   ).reduce(
     (acc, key) => ({ ...acc, [key]: currentCropProps[key] ?? resolvedGlobalCropProps[key] }),
-    {} as PhotoGalleryCropProps
+    {} as PGWithCropCropProps
   );
 
   const mappedItems = items.map<PhotoGalleryItem>(({ cropperProps, ...item }, index) => ({
     renderItem: ({ original }) => {
       return (
-        <PhotoSliderItemRender
+        <PGWithCropItemRender
           {...resolvedGlobalCropProps}
           onCropComplete={handleCropComplete}
           onZoomChange={handleZoomChange}
@@ -128,7 +127,7 @@ export const PhotoSlider: FC<PhotoSliderProps> = ({
         items={mappedItems}
         onSlide={handleSlideChange}
         renderCustomControls={() => (
-          <PhotoSliderCroppingControls
+          <PGWithCropCroppingControls
             cropProps={{
               onAspectRatioChange: handleAspectRatioChange,
               popoverContentProps: { align: 'start' },

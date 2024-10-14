@@ -7,17 +7,17 @@ import {
   ThumbnailsProps,
   Zoom,
   ZoomProps,
-} from '@/entities/photo-slider';
+} from '@/entities/photo-gallery-with-crop';
 
 import style from './cropping-controls.module.scss';
 
-export type PhotoSliderCroppingControlsProps = { hidden?: boolean } & {
+export type PGWithCropCroppingControlsProps = { hidden?: boolean } & {
   cropProps: CropProps;
   thumbnailsProps: ThumbnailsProps;
   zoomProps: ZoomProps;
 };
 
-export const PhotoSliderCroppingControls: FC<PhotoSliderCroppingControlsProps> = ({
+export const PGWithCropCroppingControls: FC<PGWithCropCroppingControlsProps> = ({
   cropProps,
   hidden = false,
   thumbnailsProps,

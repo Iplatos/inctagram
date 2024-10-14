@@ -1,8 +1,8 @@
-import { PhotoSliderCropArea } from '@/entities/photo-slider';
+import { PGWithCropCropArea } from '@/entities/photo-gallery-with-crop';
 
 export const getCroppedImageDataURL = (
   src: string,
-  cropArea: PhotoSliderCropArea,
+  cropArea: PGWithCropCropArea,
   onCropDone: (dataURL: string) => void
 ) => {
   const { height, width, x, y } = cropArea;

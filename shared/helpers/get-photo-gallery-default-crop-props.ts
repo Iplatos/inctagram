@@ -1,6 +1,6 @@
-import { PhotoGalleryCropProps } from '@/features/photo-slider';
+import { PGWithCropCropProps } from '@/features/photo-gallery-with-crop';
 
-export const getPhotoGalleryDefaultCropProps = (): PhotoGalleryCropProps => ({
+export const getPhotoGalleryDefaultCropProps = (): PGWithCropCropProps => ({
   aspectRatio: 'original',
   maxZoom: 2,
   minZoom: 1,
