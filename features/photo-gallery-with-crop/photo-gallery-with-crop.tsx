@@ -122,7 +122,7 @@ export const PhotoGalleryWithCrop: FC<PhotoGalleryWithCropProps> = ({
   }));
 
   return (
-    <div ref={refGallery}>
+    <div ref={refGallery} style={{ height: '100%', width: '100%' }}>
       <PhotoGallery
         items={mappedItems}
         onSlide={handleSlideChange}

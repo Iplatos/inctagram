@@ -1,20 +1,7 @@
 @use '../../../styles/mixins' as *;
 
 .content {
-  padding: 12px;
-  background-color: rgb(23 23 23 / 80%);
-  border-radius: 2px;
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-}
-
-.image {
-  width: 80px;
-  height: 82px;
+  width: var(--radix-popover-content-available-width);
 }
 
 .scrollContainer {
@@ -22,8 +9,8 @@
 
   overflow: auto hidden;
   display: flex;
+  flex: 1 1 auto;
   gap: 12px;
 
-  max-width: 400px;
   padding-bottom: 6px;
 }

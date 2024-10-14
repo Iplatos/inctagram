@@ -1,5 +1,6 @@
 import { PropsWithoutChildren } from '@/shared/types/helpers';
 import { PopperContentProps } from '@radix-ui/react-popover';
+import clsx from 'clsx';
 
 import style from './thumbnails.module.scss';
 
@@ -19,16 +20,21 @@ export type ThumbnailsProps = {
 export const Thumbnails = ({
   onItemAdd,
   onItemRemove,
-  popoverContentProps,
+  popoverContentProps = {},
   thumbnails,
 }: ThumbnailsProps) => {
+  const { className: popoverContentClass, ...restPopoverContentProps } = popoverContentProps;
+
   return (
     <PopoverRoot>
       <PopoverTrigger asChild>
         <TriggerButton variant={'image'} />
       </PopoverTrigger>
 
-      <PopoverContent {...popoverContentProps}>
+      <PopoverContent
+        className={clsx(style.content, popoverContentClass)}
+        {...restPopoverContentProps}
+      >
         <div className={style.scrollContainer}>
           {thumbnails.map((imageSrc, index) => (
             <ThumbnailImage
