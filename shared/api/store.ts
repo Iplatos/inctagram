@@ -6,8 +6,9 @@ import { combineSlices, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
 import { countriesApi } from './countries.api';
+import { modalSlice } from './modal-slice';
 
-const rootReducer = combineSlices(baseApi, countriesApi, appSlice);
+const rootReducer = combineSlices(baseApi, countriesApi, appSlice, modalSlice);
 
 export const store = configureStore({
   middleware: gDM => gDM().concat(baseApi.middleware, countriesApi.middleware),

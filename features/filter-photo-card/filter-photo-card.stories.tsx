@@ -48,7 +48,7 @@ const CustomRender = ({
     });
   }, [images]);
 
-  const handleFilterChange = (filter: string) => {
+  const handleFilterChange = (filter: string, selectedIndex: number) => {
     if (!galleryRef.current) {
       return;
     }
@@ -58,7 +58,7 @@ const CustomRender = ({
     setImages(images =>
       images.map((image, index) => (index === selectedImageIndex ? { ...image, filter } : image))
     );
-    onFilterChange?.(filter);
+    onFilterChange?.(filter, selectedIndex);
   };
 
   const navigateToParsedImage = async () => {

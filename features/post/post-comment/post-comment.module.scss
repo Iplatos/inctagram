@@ -1,0 +1,98 @@
+@use '../../../styles/helpers' as *;
+@use '../../../styles/mixins' as *;
+
+.comment {
+  display: flex;
+  gap: rem(12);
+
+  &Avatar {
+    flex-shrink: 0;
+  }
+
+  &Body {
+    display: flex;
+    flex-direction: column;
+
+    &Info {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+
+      p,
+      span {
+        user-select: none;
+        color: var(--color-light-900);
+      }
+    }
+  }
+}
+
+.bottomSection {
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  p {
+    user-select: none;
+    color: var(--color-light-900);
+  }
+}
+
+.primaryAction {
+  margin-top: 8px;
+  margin-left: 8px;
+}
+
+.answers {
+  &Section {
+    margin-bottom: 8px;
+    padding-left: 48px;
+  }
+
+  &List {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.btnOpenAnswers {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  p {
+    width: 24px;
+    height: 1px;
+    border-bottom: 1px solid var(--color-light-900);
+  }
+
+  &Title {
+    @include hover {
+      color: var(--color-light-700);
+      text-decoration: underline;
+    }
+
+    cursor: pointer;
+    user-select: none;
+    color: var(--color-light-900);
+  }
+}
+
+.textBth {
+  @include hover {
+    text-decoration: underline;
+
+    span {
+      color: var(--color-light-700);
+    }
+  }
+
+  height: 18px;
+  padding: 0;
+}
+
+.answerTextWidth {
+  max-width: 294px;
+}

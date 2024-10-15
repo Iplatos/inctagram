@@ -7,7 +7,6 @@ import {
   PGWithCropCroppingControls,
   PGWithCropItemRender,
   PGWithCropItemRenderProps,
-  ThumbnailsProps,
 } from '@/entities/photo-gallery-with-crop';
 import { PhotoGallery, PhotoGalleryProps } from '@/features/photo-gallery';
 import {
@@ -44,7 +43,7 @@ export type PhotoGalleryWithCropProps = {
   items: PGWithCropItem[];
   onAspectRatioChange?: PGWithCropAspectRatioHandler;
   onCropComplete?: PGWithCropCropCompleteHandler;
-  onItemAdd?: ThumbnailsProps['onItemAdd'];
+  onItemAdd?: (imageSrc: string) => true | void;
   onItemRemove?: (index: number) => true | void;
   onZoomChange?: PGWithCropZoomHandler;
   showCropperControls?: boolean;
@@ -69,12 +68,25 @@ export const PhotoGalleryWithCrop: FC<PhotoGalleryWithCropProps> = ({
     adjustArrayIndexByBoundaries(items.length, startIndex)
   );
 
+  const [submenuIsOpen, setSubmenuIsOpen] = useState(false);
+
   const handleAspectRatioChange = (aspectRatio: PGWithCropAspectRatio) =>
     onAspectRatioChange?.(aspectRatio, currentIndex);
 
   const handleSlideChange = (currentIndex: number) => {
     onSlide?.(currentIndex);
     setCurrentIndex(currentIndex);
+  };
+
+  const handleItemAdd = (imageSrc: string) => {
+    const shouldAdjustCurrentIndex = onItemAdd?.(imageSrc);
+
+    if (shouldAdjustCurrentIndex) {
+      const nextIndex = currentIndex === items.length - 1 ? items.length : currentIndex;
+
+      // TODO: disabled because of the bug of the gallery in `ModalCreatePublication`. Enable when bug is fixed;
+      // setCurrentIndex(adjustArrayIndexByBoundaries(items.length + 1, nextIndex));
+    }
   };
 
   const handleItemRemove = (index: number) => {
@@ -112,7 +124,7 @@ export const PhotoGalleryWithCrop: FC<PhotoGalleryWithCropProps> = ({
           {...resolvedGlobalCropProps}
           onCropComplete={handleCropComplete}
           onZoomChange={handleZoomChange}
-          selected={currentIndex === index}
+          selected={!submenuIsOpen && currentIndex === index}
           src={original}
           {...cropperProps}
         />
@@ -130,17 +142,20 @@ export const PhotoGalleryWithCrop: FC<PhotoGalleryWithCropProps> = ({
           <PGWithCropCroppingControls
             cropProps={{
               onAspectRatioChange: handleAspectRatioChange,
+              onOpenChange: setSubmenuIsOpen,
               popoverContentProps: { align: 'start' },
               selectedAspectRatio: resolvedCurrentCropProps.aspectRatio,
             }}
             hidden={!showCropperControls}
             thumbnailsProps={{
-              onItemAdd,
+              onItemAdd: handleItemAdd,
               onItemRemove: handleItemRemove,
+              onOpenChange: setSubmenuIsOpen,
               popoverContentProps: { collisionBoundary: refGallery.current },
               thumbnails: items.map(({ original, thumbnail }) => thumbnail ?? original),
             }}
             zoomProps={{
+              onOpenChange: setSubmenuIsOpen,
               onZoomChange: handleZoomChange,
               popoverContentProps: { align: 'start' },
               zoom: currentCropProps.zoom ?? resolvedCurrentCropProps.minZoom,

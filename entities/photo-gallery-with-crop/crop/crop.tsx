@@ -4,7 +4,7 @@ import { AvatarFallback } from '@/assets/icons/avatar-fallback';
 import { PGWithCropAspectRatio } from '@/entities/photo-gallery-with-crop';
 import { PropsWithoutChildren } from '@/shared/types/helpers';
 import { Typography } from '@/shared/ui';
-import { PopperContentProps } from '@radix-ui/react-popover';
+import { PopoverProps, PopperContentProps } from '@radix-ui/react-popover';
 import clsx from 'clsx';
 
 import style from './crop.module.scss';
@@ -17,12 +17,14 @@ type CropListItem = { icon: () => ReactElement; label: string };
 export type CropProps = {
   onAspectRatioChange: (value: PGWithCropAspectRatio) => void;
 
+  onOpenChange?: PopoverProps['onOpenChange'];
   popoverContentProps?: PropsWithoutChildren<PopperContentProps>;
   selectedAspectRatio?: PGWithCropAspectRatio;
 };
 
 export const Crop = ({
   onAspectRatioChange,
+  onOpenChange,
   popoverContentProps,
   selectedAspectRatio,
 }: CropProps) => {
@@ -41,7 +43,7 @@ export const Crop = ({
   /* eslint-enable perfectionist/sort-objects */
 
   return (
-    <Popover.Root>
+    <Popover.Root onOpenChange={onOpenChange}>
       <Popover.Trigger asChild>
         <TriggerButton variant={'crop'} />
       </Popover.Trigger>

@@ -11,24 +11,27 @@ import { NextPage } from 'next';
 import s from './Layout.module.scss';
 
 export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
-  const { isLoading: isAuthorizing, isSuccess: isAuthSuccess } = useRefreshTokenQuery();
-  const [getMyProfile, { isError: isMeError, isLoading: isMeLoading }] = useLazyGetMeQuery();
+  // FIXME: UNCOMMENT NEXT BLOCK OF CODE TO ENABLE AUTHENTICATION LOGIC!!!
+  //  IT WAS DISABLED ONLY FOR TESTING/DEVELOPMENT PURPOSES
 
-  useEffect(() => {
-    if (isAuthSuccess) {
-      getMyProfile(undefined, true);
-    }
-  }, [isAuthSuccess, getMyProfile]);
+  // const { isLoading: isAuthorizing, isSuccess: isAuthSuccess } = useRefreshTokenQuery();
+  // const [getMyProfile, { isError: isMeError, isLoading: isMeLoading }] = useLazyGetMeQuery();
 
-  if (isAuthorizing) {
-    children = <Typography.H1>Authorizing...</Typography.H1>;
-  }
-  if (isMeError) {
-    children = <Typography.H1>Profile loading error</Typography.H1>;
-  }
-  if (isMeLoading) {
-    children = <Typography.H1>Loading profile data...</Typography.H1>;
-  }
+  // useEffect(() => {
+  //   if (isAuthSuccess) {
+  //     getMyProfile(undefined, true);
+  //   }
+  // }, [isAuthSuccess, getMyProfile]);
+
+  // if (isAuthorizing) {
+  //   children = <Typography.H1>Authorizing...</Typography.H1>;
+  // }
+  // if (isMeError) {
+  //   children = <Typography.H1>Profile loading error</Typography.H1>;
+  // }
+  // if (isMeLoading) {
+  //   children = <Typography.H1>Loading profile data...</Typography.H1>;
+  // }
 
   return (
     <>
