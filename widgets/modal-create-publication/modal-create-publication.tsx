@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { ReactElement, useState } from 'react';
+import { batch } from 'react-redux';
 
-import { AddPhotoCard, FilterPhotoCard } from '@/features';
-import { closeModal } from '@/shared/api/modal-slice';
+import {
+  AddPhotoCard,
+  CropPhotoCard,
+  FilterPhotoCard,
+  PGWithCropCropCompleteHandler,
+} from '@/features';
+import {
+  addItem,
+  clearItems,
+  closeModal,
+  removeItem,
+  resetItemFilters,
+  selectCreatePostModalItems,
+  selectCreatePostModalOpen,
+  setItemCropParams,
+} from '@/shared/api/modal-slice';
+import { useAppDispatch } from '@/shared/api/pretyped-redux-hooks';
 import { useAppSelector } from '@/shared/api/store';
+import { blobToBase64 } from '@/shared/helpers';
 import { useTranslation } from '@/shared/hooks';
-import { Modal, ModalCard } from '@/shared/ui';
+import { Modal } from '@/shared/ui';
 
 import s from './modal-create-publication.module.scss';
 
-enum PostStatus {
+export enum PostStatus {
   Init,
   Cropping,
   Filter,
@@ -19,67 +35,112 @@ enum PostStatus {
 export const ModalCreatePublication = () => {
   const { t } = useTranslation();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const state = useAppSelector(state => state.modal);
+  const open = useAppSelector(selectCreatePostModalOpen);
+  const items = useAppSelector(selectCreatePostModalItems);
 
   const closeModalHandler = () => {
-    dispatch(closeModal(false));
+    dispatch(closeModal());
+    setPostStatus(PostStatus.Init);
     //open save draft modal
   };
 
-  const [files, setFiles] = useState<File[]>([]);
-
+  // TODO: consider moving the status to the redux store to allow manual reopening of the modal in a certain state.
   const [postStatus, setPostStatus] = useState<PostStatus>(PostStatus.Init);
 
-  // console.log(files);
+  const handleCropComplete: PGWithCropCropCompleteHandler = (cropArea, cropAreaPixels, index) => {
+    dispatch(setItemCropParams({ cropArea, cropAreaPixels, index }));
+  };
 
-  /* eslint-disable perfectionist/sort-objects -- preserve the natural order of post creation statuses */
+  const steps: Record<PostStatus, () => ReactElement> = {
+    [PostStatus.Cropping]: () => (
+      <div className={s.cropPhotoCardWrapper}>
+        <CropPhotoCard
+          galleryProps={{
+            items: items.map(item => {
+              const { aspectRatio, cropAreaPixels, src, zoom } = item;
 
-  const steps: Record<PostStatus, () => JSX.Element> = {
-    [PostStatus.Init]: () => (
-      <AddPhotoCard
-        error={null}
-        onClose={closeModalHandler}
-        onFileInputChange={e => {
-          if (e.target.files?.length) {
-            const file = e.target.files[0];
+              return {
+                cropperProps: { aspectRatio, initialCroppedAreaPixels: cropAreaPixels, zoom },
+                original: src,
+              };
+            }),
+            onAspectRatioChange: (aspectRatio, index) =>
+              dispatch(setItemCropParams({ aspectRatio, index })),
+            onCropComplete: handleCropComplete,
+            onItemAdd: src => {
+              dispatch(addItem({ filter: 'normal', src }));
 
-            setFiles([...files, file]);
-            setPostStatus(PostStatus.Filter);
-          }
-        }}
-        primaryButtonTitle={t.editProfile.createPublication.primaryButtonTitle}
-        title={t.editProfile.createPublication.title}
-      />
+              return true;
+            },
+            onItemRemove: index => {
+              dispatch(removeItem(index));
+
+              return true;
+            },
+            onZoomChange: (zoom, index) => dispatch(setItemCropParams({ index, zoom })),
+          }}
+          onNextClick={() => setPostStatus(PostStatus.Filter)}
+          onPrevClick={() => {
+            dispatch(clearItems());
+            setPostStatus(PostStatus.Init);
+          }}
+          // TODO: don't forget to add locales to all cards fields!
+          title={'Cropping'}
+        />
+      </div>
     ),
-    [PostStatus.Cropping]: () => <div>Cropping</div>,
     [PostStatus.Filter]: () => (
-      <FilterPhotoCard
-        items={[
-          {
-            filter: 'normal',
-            src: 'https://images.pexels.com/photos/17756265/pexels-photo-17756265.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-          },
-        ]}
-        onNextClick={() => {
-          setPostStatus(PostStatus.Publication);
-        }}
-        onPrevClick={() => {
-          setFiles([]);
-          setPostStatus(PostStatus.Init);
-        }}
-      />
+      <div className={s.filterPhotoCardWrapper}>
+        <FilterPhotoCard
+          items={items}
+          onFilterChange={(filter, index) => dispatch(setItemCropParams({ filter, index }))}
+          onNextClick={() => {
+            setPostStatus(PostStatus.Publication);
+          }}
+          onPrevClick={() => {
+            batch(() => {
+              dispatch(resetItemFilters());
+              setPostStatus(PostStatus.Cropping);
+            });
+          }}
+        />
+      </div>
+    ),
+    [PostStatus.Init]: () => (
+      <div className={s.addPhotoCardWrapper}>
+        <AddPhotoCard
+          error={null}
+          onClose={closeModalHandler}
+          onFileInputChange={async e => {
+            const file = e.target.files?.[0];
+
+            if (file) {
+              const src = await blobToBase64(file);
+
+              dispatch(addItem({ filter: 'normal', src }));
+              setPostStatus(PostStatus.Cropping);
+            }
+          }}
+          primaryButtonTitle={t.editProfile.createPublication.primaryButtonTitle}
+          title={t.editProfile.createPublication.title}
+        />
+      </div>
     ),
     [PostStatus.Publication]: () => <div>Publication</div>,
   };
-  /* eslint-enable perfectionist/sort-objects */
-
-  //<FilterPhotoCard items={[{ filter: 'valencia', src: '' }]} />
 
   return (
-    <Modal.Root classes={{ content: s.modalContent }} onOpenChange={closeModalHandler} open={state}>
-      <ModalCard.Root className={s.cardRoot}>{steps[postStatus]()}</ModalCard.Root>
-    </Modal.Root>
+    <Modal
+      onOpenChange={open => {
+        if (!open) {
+          closeModalHandler();
+        }
+      }}
+      open={open}
+    >
+      {steps[postStatus]()}
+    </Modal>
   );
 };

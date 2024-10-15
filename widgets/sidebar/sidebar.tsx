@@ -55,76 +55,73 @@ export const Sidebar = () => {
   };
 
   return (
-    <>
-      <div className={s.container}>
-        <div className={s.buttonsGroup}>
-          <Typography.Regular14 className={s.button} component={Link} href={'/'}>
-            <HomeOutline className={s.svg} />
-            Home
-          </Typography.Regular14>
-
-          <Typography.Regular14
-            className={s.button}
-            onClick={() => dispatch(openModal(true))}
-            tabIndex={1}
-          >
-            <PlusSquareOutline className={s.svg} />
-            Create
-          </Typography.Regular14>
-          <Typography.Regular14 className={s.button} component={Link} href={'/my-profile'}>
-            <PersonOutline className={s.svg} />
-            My Profile
-          </Typography.Regular14>
-          <Typography.Regular14 className={s.button} tabIndex={1}>
-            <MessageCircleOutline className={s.svg} />
-            Messenger
-          </Typography.Regular14>
-          <Typography.Regular14 className={s.button} tabIndex={1}>
-            <SearchOutline className={s.svg} />
-            Search
-          </Typography.Regular14>
-        </div>
-
-        <div className={s.buttonsGroup}>
-          <Typography.Regular14 className={s.button} tabIndex={1}>
-            <TrendingUpOutline className={s.svg} />
-            Statistics
-          </Typography.Regular14>
-          <Typography.Regular14 className={s.button} tabIndex={1}>
-            <BookmarkOutline className={s.svg} />
-            Favorites
-          </Typography.Regular14>
-        </div>
-
-        <Typography.Regular14
-          className={clsx(s.button, s.buttonLogout)}
-          onClick={() => setOpen(true)}
-          tabIndex={1}
-        >
-          <LogOutOutline className={s.svg} />
-          Log Out
+    <div className={s.container}>
+      <div className={s.buttonsGroup}>
+        <Typography.Regular14 className={s.button} component={Link} href={'/'}>
+          <HomeOutline className={s.svg} />
+          Home
         </Typography.Regular14>
 
-        <ConfirmModal
-          cancelButtonTitle={t.modal.buttonNames.cancel}
-          confirmButtonTitle={t.modal.buttonNames.confirm}
-          disabled={isLogOutLoading}
-          headerTitle={t.logOutModal.title}
-          onCancel={closeModal}
-          onConfirm={handleLogout}
-          open={open}
+        <Typography.Regular14
+          className={s.button}
+          onClick={() => dispatch(openModal())}
+          tabIndex={1}
         >
-          <Typography.Regular14>
-            <Trans
-              tags={{
-                email: () => <Typography.Bold16>{meResponse?.data.email}</Typography.Bold16>,
-              }}
-              text={t.logOutModal.description}
-            />
-          </Typography.Regular14>
-        </ConfirmModal>
+          <PlusSquareOutline className={s.svg} />
+          Create
+        </Typography.Regular14>
+        <Typography.Regular14 className={s.button} component={Link} href={'/my-profile'}>
+          <PersonOutline className={s.svg} />
+          My Profile
+        </Typography.Regular14>
+        <Typography.Regular14 className={s.button} tabIndex={1}>
+          <MessageCircleOutline className={s.svg} />
+          Messenger
+        </Typography.Regular14>
+        <Typography.Regular14 className={s.button} tabIndex={1}>
+          <SearchOutline className={s.svg} />
+          Search
+        </Typography.Regular14>
       </div>
-      <ModalCreatePublication />
-    </>
+
+      <div className={s.buttonsGroup}>
+        <Typography.Regular14 className={s.button} tabIndex={1}>
+          <TrendingUpOutline className={s.svg} />
+          Statistics
+        </Typography.Regular14>
+        <Typography.Regular14 className={s.button} tabIndex={1}>
+          <BookmarkOutline className={s.svg} />
+          Favorites
+        </Typography.Regular14>
+      </div>
+
+      <Typography.Regular14
+        className={clsx(s.button, s.buttonLogout)}
+        onClick={() => setOpen(true)}
+        tabIndex={1}
+      >
+        <LogOutOutline className={s.svg} />
+        Log Out
+      </Typography.Regular14>
+
+      <ConfirmModal
+        cancelButtonTitle={t.modal.buttonNames.cancel}
+        confirmButtonTitle={t.modal.buttonNames.confirm}
+        disabled={isLogOutLoading}
+        headerTitle={t.logOutModal.title}
+        onCancel={closeModal}
+        onConfirm={handleLogout}
+        open={open}
+      >
+        <Typography.Regular14>
+          <Trans
+            tags={{
+              email: () => <Typography.Bold16>{meResponse?.data.email}</Typography.Bold16>,
+            }}
+            text={t.logOutModal.description}
+          />
+        </Typography.Regular14>
+      </ConfirmModal>
+    </div>
   );
 };
