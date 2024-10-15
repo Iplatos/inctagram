@@ -16,7 +16,7 @@ export type FilterPhotoCardProps = {
   galleryProps?: Omit<PhotoGalleryProps, 'items'>;
   galleryRef?: ForwardedRef<FilterPhotoCardRefObject>;
   items: FilterPhotoCardItem[];
-  onFilterChange?: (selectedFilter: string) => void;
+  onFilterChange?: (selectedFilter: string, index: number) => void;
   onNextClick?: () => void;
   onPrevClick?: () => void;
   previewItemsRef?: MutableRefObject<Map<FilterPhotoCardItem, ElementRef<'img'>>>;
@@ -61,7 +61,7 @@ export const FilterPhotoCard = ({
   };
 
   const handleFilterChange = (filter: string) => {
-    onFilterChange?.(filter);
+    onFilterChange?.(filter, selectedIndex);
     applyFilter(filter);
   };
 
