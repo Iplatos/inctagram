@@ -13,6 +13,7 @@ export const PublicUserApi = baseApi.injectEndpoints({
         };
       },
     }),
+
     getUserPublicProfile: builder.query<PublicProfileByIdResponse, number>({
       providesTags: ['PublicUsers'],
       query: profileId => {
@@ -24,4 +25,4 @@ export const PublicUserApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetTotalUsersCountQuery } = PublicUserApi;
+export const { useGetTotalUsersCountQuery, useGetUserPublicProfileQuery } = PublicUserApi;

@@ -4,11 +4,14 @@ import { Typography } from '@/shared/ui';
 import clsx from 'clsx';
 
 import s from './profileSummary.module.scss';
-
 type ProfileSummarySlot = 'item' | 'itemName' | 'itemValue' | 'items';
 export type ProfileSummaryClasses = { [P in ProfileSummarySlot]?: string };
 
-export type ProfileSummaryItem = { action?: () => void; name: string; value: number };
+export type ProfileSummaryItem = {
+  action?: () => void;
+  name: string;
+  value: number;
+};
 
 type ProfileSummaryProps = {
   classes?: ProfileSummaryClasses;

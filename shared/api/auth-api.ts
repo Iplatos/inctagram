@@ -26,6 +26,7 @@ export const authApi = baseApi.injectEndpoints({
         };
       },
     }),
+
     confirmCode: builder.mutation<ConfirmCodeResponse, ConfirmCodeRequestData>({
       query: params => {
         return {
@@ -35,6 +36,7 @@ export const authApi = baseApi.injectEndpoints({
         };
       },
     }),
+
     forgotPassword: builder.mutation<any, PasswordRecoveryRequestType>({
       query: params => {
         return {
@@ -44,6 +46,7 @@ export const authApi = baseApi.injectEndpoints({
         };
       },
     }),
+
     login: builder.mutation<LoginResponse, LoginRequestData>({
       invalidatesTags: ['Me', 'Auth'],
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
@@ -61,6 +64,7 @@ export const authApi = baseApi.injectEndpoints({
         url: '/api/v1/auth/login',
       }),
     }),
+
     logout: builder.mutation<LogoutResponse, void>({
       invalidatesTags: ['Auth', 'Me'],
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
@@ -73,6 +77,7 @@ export const authApi = baseApi.injectEndpoints({
       },
       query: () => ({ method: 'POST', url: '/api/v1/auth/logout' }),
     }),
+
     refreshToken: builder.query<RefreshTokenResponse, void>({
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
@@ -97,6 +102,7 @@ export const authApi = baseApi.injectEndpoints({
         };
       },
     }),
+
     signUp: builder.mutation<SignUpResponse, SignUpRequestData>({
       query: body => {
         return {

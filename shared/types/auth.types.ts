@@ -41,7 +41,7 @@ export type ResendConfirmationCodeResponse = AuthResponseType;
 export type ConfirmCodeResponse = AuthResponseType;
 
 export type PasswordRecoveryRequestType = {
-  baseUrl: string;
+  baseUrl?: string;
   email: string;
   recaptcha: string;
 };

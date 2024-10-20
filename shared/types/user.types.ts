@@ -70,7 +70,7 @@ export type UpdateMeResponse = {
 
 export type SetMyAvatarResponse = AppResponse<{ id: string }>;
 
-export type deleteMyAvatarResponse = AppResponse<null | true>;
+export type DeleteMyAvatarResponse = AppResponse<null | true>;
 
 type AvatarResponse = {
   createdAt: string;

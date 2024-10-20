@@ -14,8 +14,6 @@ export const ConfirmRegistration = () => {
   const [confirmCode, { data: response }] = useConfirmCodeMutation();
   const { isReady, query } = router;
 
-  console.log(query);
-
   useEffect(() => {
     if (query.code) {
       confirmCode({ confirmationCode: query.code as string });
@@ -30,14 +28,12 @@ export const ConfirmRegistration = () => {
    */
   const success = response?.statusCode;
 
-  console.log({ success });
-
   const children =
     success === 204 ? (
       <>
         <Typography.H1>Congratulations!</Typography.H1>
         <Typography.Regular16>Your email has been confirmed</Typography.Regular16>
-        <Button as={'span'}>
+        <Button component={'span'}>
           <Link href={'/sign-up'}>sign up</Link>
         </Button>
       </>

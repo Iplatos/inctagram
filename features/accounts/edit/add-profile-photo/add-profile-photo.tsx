@@ -1,17 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { CloseIcon } from '@/assets/icons/close';
 import { ConfirmModal } from '@/features/confirm-modal';
-import {
-  useDeleteMyAvatarMutation,
-  useGetMeQuery,
-  useSetMyAvatarMutation,
-} from '@/shared/api/users-api';
-import {
-  useGetMyProfileQuery,
-  useGetUsersProfileQuery,
-  useLazyGetMyProfileQuery,
-} from '@/shared/api/users-profile-api';
+import { useDeleteMyAvatarMutation, useSetMyAvatarMutation } from '@/shared/api/users-api';
+import { useGetMyProfileQuery } from '@/shared/api/users-profile-api';
 import { getDefaultCropProps } from '@/shared/helpers/getDefaultCropProps';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Avatar, Button, Typography } from '@/shared/ui';
@@ -103,7 +95,7 @@ export const AddProfilePhoto = () => {
     return null;
   }
 
-  const avatar = myProfile.avatars[0].url;
+  const avatar = myProfile?.avatars[0]?.url;
 
   return (
     <div className={s.photoContainer}>
