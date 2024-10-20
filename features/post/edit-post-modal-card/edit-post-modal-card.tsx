@@ -53,43 +53,41 @@ export const EditPostModalCard = (props: Props) => {
   ];
 
   return (
-    <Modal.Root onOpenChange={setOpen} open={open}>
-      <Card.Root className={s.root}>
-        <Card.Header className={s.header}>
-          <Typography.H1 component={'h2'}>{labelCard}</Typography.H1>
-          <ConfirmModal
-            headerTitle={labelCloseModal}
-            onCancel={onCloseConfirmModal}
-            onConfirm={onCloseEditPostModalCard}
-            // open={openConfirmModal}
-            trigger={
-              <IconButton onClick={onOpenConfirmModal}>
-                <CloseIcon />
-              </IconButton>
+    <Card.Root className={s.root}>
+      <Card.Header className={s.header}>
+        <Typography.H1 component={'h2'}>{labelCard}</Typography.H1>
+        <ConfirmModal
+          headerTitle={labelCloseModal}
+          onCancel={onCloseConfirmModal}
+          onConfirm={onCloseEditPostModalCard}
+          // open={openConfirmModal}
+          trigger={
+            <IconButton onClick={onOpenConfirmModal}>
+              <CloseIcon />
+            </IconButton>
+          }
+        >
+          <Typography.Regular16 className={s.confirmModal}>
+            {descriptionCloseModal}
+          </Typography.Regular16>
+        </ConfirmModal>
+      </Card.Header>
+      <Card.Content className={s.content} ignoreHeader>
+        <PhotoGallery additionalClass={s.gallery} items={img.map(i => ({ original: i }))} />
+        <div className={s.form}>
+          <UserBanner avatar={avatar} name={userName} />
+          <EditPostForm
+            actions={
+              <Button className={s.submitBtn} onClick={handleButtonClick}>
+                {titleBtnSubmit}
+              </Button>
             }
-          >
-            <Typography.Regular16 className={s.confirmModal}>
-              {descriptionCloseModal}
-            </Typography.Regular16>
-          </ConfirmModal>
-        </Card.Header>
-        <Card.Content className={s.content} ignoreHeader>
-          <PhotoGallery additionalClass={s.gallery} items={img.map(i => ({ original: i }))} />
-          <div className={s.form}>
-            <UserBanner avatar={avatar} name={userName} />
-            <EditPostForm
-              actions={
-                <Button className={s.submitBtn} onClick={handleButtonClick}>
-                  {titleBtnSubmit}
-                </Button>
-              }
-              classNameActions={s.actions}
-              onSubmit={handleSubmit}
-              ref={formRef}
-            />
-          </div>
-        </Card.Content>
-      </Card.Root>
-    </Modal.Root>
+            classNameActions={s.actions}
+            onSubmit={handleSubmit}
+            ref={formRef}
+          />
+        </div>
+      </Card.Content>
+    </Card.Root>
   );
 };

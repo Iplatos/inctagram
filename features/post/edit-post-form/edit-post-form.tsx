@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Nullable } from '@/shared/types/helpers';
-import { Button, Typography } from '@/shared/ui';
+import { Typography } from '@/shared/ui';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { clsx } from 'clsx';
@@ -16,6 +16,7 @@ type EditPostFormProps = {
   classNameActions?: string;
   currentDescription?: Nullable<string>;
   disabled?: boolean;
+  onBlurHandler: (data: { description: string }) => void;
   onSubmit: (data: any) => void;
 } & Omit<ComponentPropsWithoutRef<'form'>, 'onSubmit'>;
 
@@ -27,6 +28,7 @@ export const EditPostForm = forwardRef<HTMLFormElement, EditPostFormProps>(
       classNameActions,
       currentDescription,
       disabled,
+      onBlurHandler,
       onSubmit,
       ...rest
     } = props;
@@ -44,6 +46,7 @@ export const EditPostForm = forwardRef<HTMLFormElement, EditPostFormProps>(
       control,
       formState: { isSubmitting },
       handleSubmit,
+      register,
       watch,
     } = useForm({
       defaultValues: {
@@ -55,6 +58,12 @@ export const EditPostForm = forwardRef<HTMLFormElement, EditPostFormProps>(
     type EditPostFormValues = z.infer<typeof editPostSchema>;
     const onSubmitHandler = (data: EditPostFormValues) => {
       onSubmit(data);
+    };
+
+    const onBlur = () => {
+      const currentData = watch();
+
+      onBlurHandler({ description: currentData.description });
     };
 
     return (
@@ -71,8 +80,8 @@ export const EditPostForm = forwardRef<HTMLFormElement, EditPostFormProps>(
             control={control}
             disabled={isSubmitting}
             label={t.myProfile.addPostModal.postDescriptionCard.postDescription.label}
-            name={'description'}
             placeholder={t.myProfile.addPostModal.postDescriptionCard.postDescription.placeholder}
+            {...register('description', { onBlur })}
           />
           <Typography.SmallLink className={s.valueLength}>
             {`${watch('description') === undefined ? 0 : watch('description').length}/500`}

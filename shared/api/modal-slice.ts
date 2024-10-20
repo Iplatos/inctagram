@@ -13,11 +13,13 @@ export type CreatePostModalItem = {
 };
 
 type InitialState = {
+  description?: string;
   items: CreatePostModalItem[];
   open: boolean;
 };
 
 const initialState: InitialState = {
+  description: '',
   items: [],
   open: false,
 };
@@ -47,6 +49,7 @@ export const modalSlice = createSlice({
 
       if (shouldClearItems) {
         state.items = [];
+        state.description = '';
       }
     },
     openModal: state => {
@@ -62,6 +65,12 @@ export const modalSlice = createSlice({
         }
       }
     },
+    setDescription: (state, action: PayloadAction<string>) => {
+      if (action.payload !== '') {
+        console.log('action payload', action.payload);
+        state.description = action.payload;
+      }
+    },
     setItemCropParams: (
       state,
       action: PayloadAction<Partial<Omit<CreatePostModalItem, 'src'>> & { index: number }>
@@ -75,6 +84,7 @@ export const modalSlice = createSlice({
     },
   },
   selectors: {
+    selectCreatePostModalDescription: state => state.description,
     selectCreatePostModalItems: state => state.items,
     selectCreatePostModalOpen: state => state.open,
   },
@@ -90,6 +100,11 @@ export const {
   openModal,
   removeItem,
   resetItemFilters,
+  setDescription,
   setItemCropParams,
 } = modalSlice.actions;
-export const { selectCreatePostModalItems, selectCreatePostModalOpen } = modalSlice.selectors;
+export const {
+  selectCreatePostModalDescription,
+  selectCreatePostModalItems,
+  selectCreatePostModalOpen,
+} = modalSlice.selectors;

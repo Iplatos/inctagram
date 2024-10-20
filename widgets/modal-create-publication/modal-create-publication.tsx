@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { batch } from 'react-redux';
 
 import {
@@ -7,6 +7,9 @@ import {
   FilterPhotoCard,
   PGWithCropCropCompleteHandler,
 } from '@/features';
+import { ConfirmModal } from '@/features/confirm-modal';
+import { CreatePostCard, EditPostModalCard } from '@/features/post';
+import { PublicationCard } from '@/features/publication-card';
 import {
   addItem,
   clearItems,
@@ -21,7 +24,8 @@ import { useAppDispatch } from '@/shared/api/pretyped-redux-hooks';
 import { useAppSelector } from '@/shared/api/store';
 import { blobToBase64 } from '@/shared/helpers';
 import { useTranslation } from '@/shared/hooks';
-import { Modal } from '@/shared/ui';
+import { Modal, Typography } from '@/shared/ui';
+import { FocusOutsideEvent, PointerDownOutsideEvent } from '@radix-ui/react-dismissable-layer';
 
 import s from './modal-create-publication.module.scss';
 
@@ -36,14 +40,23 @@ export const ModalCreatePublication = () => {
   const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
+  const [openConfirmModal, setOpenConfirmModal] = useState<boolean>(false);
 
-  const open = useAppSelector(selectCreatePostModalOpen);
+  const open: boolean = useAppSelector(selectCreatePostModalOpen);
   const items = useAppSelector(selectCreatePostModalItems);
+
+  const { descriptionCloseModal, labelCloseModal } = t.post.createPostCard;
 
   const closeModalHandler = () => {
     dispatch(closeModal());
     setPostStatus(PostStatus.Init);
+    setOpenConfirmModal(false);
     //open save draft modal
+  };
+
+  const handleInteractOutside = (event: Event) => {
+    event.preventDefault();
+    setOpenConfirmModal(true);
   };
 
   // TODO: consider moving the status to the redux store to allow manual reopening of the modal in a certain state.
@@ -51,6 +64,10 @@ export const ModalCreatePublication = () => {
 
   const handleCropComplete: PGWithCropCropCompleteHandler = (cropArea, cropAreaPixels, index) => {
     dispatch(setItemCropParams({ cropArea, cropAreaPixels, index }));
+  };
+
+  const confirmPublicationPost = () => {
+    console.log('Publication');
   };
 
   const steps: Record<PostStatus, () => ReactElement> = {
@@ -128,11 +145,26 @@ export const ModalCreatePublication = () => {
         />
       </div>
     ),
-    [PostStatus.Publication]: () => <div>Publication</div>,
+    [PostStatus.Publication]: () => (
+      <div>
+        <CreatePostCard
+          confirmPublication={confirmPublicationPost}
+          items={items}
+          onPrevClick={() => {
+            batch(() => {
+              setPostStatus(PostStatus.Filter);
+            });
+          }}
+          setOpen={closeModalHandler}
+          userName={'UserName'}
+        />
+      </div>
+    ),
   };
 
   return (
     <Modal
+      contentProps={{ onInteractOutside: handleInteractOutside }}
       onOpenChange={open => {
         if (!open) {
           closeModalHandler();
@@ -141,6 +173,16 @@ export const ModalCreatePublication = () => {
       open={open}
     >
       {steps[postStatus]()}
+      <ConfirmModal
+        headerTitle={labelCloseModal}
+        onCancel={() => setOpenConfirmModal(false)}
+        onConfirm={closeModalHandler}
+        open={openConfirmModal}
+      >
+        <Typography.Regular16 className={s.confirmModal}>
+          {descriptionCloseModal}
+        </Typography.Regular16>
+      </ConfirmModal>
     </Modal>
   );
 };

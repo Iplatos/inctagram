@@ -377,6 +377,20 @@ export const ru = {
         open: 'Показать ответы',
       },
     },
+    createPostCard: {
+      descriptionCloseModal:
+        'Вы действительно хотите закрыть создание публикации?\n' + 'Если закрыть все будет удалено',
+      labelCard: 'Публикация',
+      labelCloseModal: 'Отменить создание поста',
+      postDescription: {
+        errors: {
+          tooBig: 'Максимальное количество символов 500',
+        },
+        label: 'Добавить описание публикации',
+        placeholder: 'Текстовое поле',
+        titleBtnSubmit: 'Опубликовать',
+      },
+    },
     editPostModalCard: {
       descriptionCloseModal:
         'Вы действительно хотите закрыть редактирование публикации? Если закрыть, изменения не будут сохранены',

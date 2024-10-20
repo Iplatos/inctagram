@@ -381,6 +381,21 @@ export const en: LocaleType = {
         open: 'Show Answers',
       },
     },
+    createPostCard: {
+      descriptionCloseModal:
+        'Do you really want to close the creation of a publication? If you close everything will' +
+        ' be deleted',
+      labelCard: 'Publication',
+      labelCloseModal: 'Canceled create post',
+      postDescription: {
+        errors: {
+          tooBig: 'Maximum number of characters 500',
+        },
+        label: 'Add publication descriptions',
+        placeholder: 'Text-area',
+        titleBtnSubmit: 'Publish',
+      },
+    },
     editPostModalCard: {
       descriptionCloseModal:
         'Do you really want to close the edition of the publication? If you' +
