@@ -19,8 +19,6 @@ const MyProfile: NextPageWithLayout = () => {
   const [getMyProfile, { data: meResponse, isError }] = useLazyGetMeQuery();
   const [getUserProfile, { data, isError: isMyProfileError }] = useLazyGetUsersProfileQuery();
 
-  console.log(data);
-
   const isAuthSuccess = useAuthRedirect();
 
   useEffect(() => {
@@ -44,12 +42,12 @@ const MyProfile: NextPageWithLayout = () => {
   }
 
   const statistics = [
-    { name: 'following', value: data.followingCount },
-    { name: 'followers', value: data.followersCount },
-    { name: 'publications', value: data.publicationsCount },
-  ] as const satisfies ProfileSummaryItem[];
+    { name: 'following', value: data.followingCount } as const,
+    { name: 'followers', value: data.followersCount } as const,
+    { name: 'publications', value: data.publicationsCount } as const,
+  ] satisfies ProfileSummaryItem[];
 
-  const avatar = data.avatars[0].url;
+  const avatar = data?.avatars[0]?.url;
 
   return (
     <>

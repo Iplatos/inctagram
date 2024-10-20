@@ -39,8 +39,6 @@ const baseQuery = enhancedFetchBaseQuery({
   },
 });
 
-//
-
 export const baseApi = createApi({
   baseQuery,
   endpoints: _builder => ({}),

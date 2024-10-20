@@ -4,18 +4,10 @@ import { DateObject } from 'react-multi-date-picker';
 
 import { AddProfilePhoto } from '@/features/accounts/edit';
 import { FormValues, ProfileForm } from '@/features/accounts/edit/profile-form/profile-form';
-import {
-  useLazyGetMeQuery,
-  useSetMyAvatarMutation,
-  useUpdateMeMutation,
-} from '@/shared/api/users-api';
+import { useLazyGetMeQuery, useUpdateMeMutation } from '@/shared/api/users-api';
 import { useLazyGetUsersProfileQuery } from '@/shared/api/users-profile-api';
 import { useAuthRedirect } from '@/shared/hooks/useAuthRedirect';
-import {
-  GetUserProfileResponse,
-  UpdateMeRequestData,
-  UserProfile,
-} from '@/shared/types/user.types';
+import { GetUserProfileResponse, UpdateMeRequestData } from '@/shared/types/user.types';
 import { Typography } from '@/shared/ui';
 
 import style from './general-information.module.scss';
@@ -37,7 +29,7 @@ export const GeneralInformation = () => {
     if (meResponse) {
       getUserProfile(meResponse.userName);
     }
-  }, [meResponse]);
+  }, [meResponse, getUserProfile]);
 
   if (isError || !meResponse || isMyProfileError) {
     return <Typography.H1>Profile loading error</Typography.H1>;

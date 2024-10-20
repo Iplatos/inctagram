@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 
 import { getRunningQueriesThunk } from '@/shared/api/base-api';
+import { useAppDispatch } from '@/shared/api/pretyped-redux-hooks';
 import { publicPageSlice } from '@/shared/api/public-page-slice';
 import { publicPostsApi } from '@/shared/api/public-posts-api';
 import { PublicUserApi } from '@/shared/api/public-user-api';
-import { useAppDispatch, wrapper } from '@/shared/api/store';
+import { wrapper } from '@/shared/api/store';
 import { PublicAPIResponse } from '@/shared/types/common.types';
 import { PublicPostsResponse, PublicUsersResponse } from '@/shared/types/public.types';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';

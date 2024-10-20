@@ -1,18 +1,13 @@
 import type {
-  deleteMyAvatarResponse as DeleteMyAvatarResponse,
+  DeleteMyAvatarResponse,
   GetMeResponse,
-  SetMyAvatarResponse,
   UpdateMeRequestData,
   UpdateMeResponse,
 } from '@/shared/types/user.types';
 
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 
-import { blobToBase64 } from '../helpers';
-import { bufferToBase64 } from '../helpers/bufferToBase64';
 import { baseApi } from './base-api';
-import { RootState } from './store';
-import { UsersProfileApi } from './users-profile-api';
 
 // The `baseQuery` instance required to retrieve the user's avatar file. Used for convenience instead of native `fetch`.
 const customBaseQuery = fetchBaseQuery({
@@ -23,9 +18,13 @@ const customBaseQuery = fetchBaseQuery({
 export const usersApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     deleteMyAvatar: builder.mutation<DeleteMyAvatarResponse, void>({
-      invalidatesTags: ['Me'],
-      query: () => ({ method: 'DELETE', url: '/api/v1/users/profile/avatar' }),
+      invalidatesTags: ['Me', 'My-Profile'],
+      query: () => ({
+        method: 'DELETE',
+        url: '/api/v1/users/profile/avatar',
+      }),
     }),
+
     getMe: builder.query<GetMeResponse, void>({
       providesTags: ['Me'],
       query: () => ({
@@ -35,13 +34,14 @@ export const usersApi = baseApi.injectEndpoints({
     // downloading the user's avatar file for re-uploading if the user wants to use the same image but with different cropping props.
 
     setMyAvatar: builder.mutation<any, FormData>({
-      invalidatesTags: ['Me'],
+      invalidatesTags: ['Me', 'My-Profile'],
       query: body => ({
         body,
         method: 'POST',
         url: '/api/v1/users/profile/avatar',
       }),
     }),
+
     updateMe: builder.mutation<UpdateMeResponse, UpdateMeRequestData>({
       invalidatesTags: ['Me'],
       query: body => ({

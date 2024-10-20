@@ -10,6 +10,7 @@ export const postsApi = baseApi.injectEndpoints({
         url: '/api/v1/posts',
       }),
     }),
+
     deletePostById: builder.mutation<any, PostByIdRequest>({
       invalidatesTags: ['Posts'],
       query: params => ({
@@ -19,6 +20,7 @@ export const postsApi = baseApi.injectEndpoints({
         url: 'posts',
       }),
     }),
+
     getPostById: builder.query<any, PostByIdRequest>({
       providesTags: ['Posts'],
       query: id => ({
@@ -27,6 +29,7 @@ export const postsApi = baseApi.injectEndpoints({
         url: `posts/${id}`,
       }),
     }),
+
     getPosts: builder.query<PostsResponseType, getPostsRequestData>({
       providesTags: ['Posts'],
       query: params => ({
@@ -35,6 +38,7 @@ export const postsApi = baseApi.injectEndpoints({
         url: 'posts',
       }),
     }),
+
     updatePostById: builder.mutation<any, PostByIdRequest>({
       invalidatesTags: ['Posts'],
       query: params => ({

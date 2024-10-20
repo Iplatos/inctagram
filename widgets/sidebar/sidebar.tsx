@@ -106,7 +106,7 @@ export const Sidebar = () => {
         <Typography.Regular14>
           <Trans
             tags={{
-              email: () => <Typography.Bold16>{meResponse?.data.email}</Typography.Bold16>,
+              email: () => <Typography.Bold16>{meResponse?.email}</Typography.Bold16>,
             }}
             text={t.logOutModal.description}
           />

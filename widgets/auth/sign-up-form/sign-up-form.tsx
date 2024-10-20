@@ -77,6 +77,7 @@ export const SignUpForm = () => {
 
   const signUp = handleSubmit(({ email, nickname, password }) => {
     return signUpTrigger({
+      // FIXME: add different baseUrl for different environment variables
       baseUrl: 'localhost:3000',
       email,
       password,
