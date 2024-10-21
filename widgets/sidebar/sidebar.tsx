@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { ConfirmModal } from '@/features/confirm-modal';
 import { useLogoutMutation, useRefreshTokenQuery } from '@/shared/api/auth-api';
+import { openModal } from '@/shared/api/modal-slice';
 import { useLazyGetMeQuery } from '@/shared/api/users-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
@@ -19,9 +21,13 @@ import Link from 'next/link';
 import s from './sidebar.module.scss';
 
 import { Trans } from '../Trans/Trans';
+import { ModalCreatePublication } from '../modal-create-publication';
 
 export const Sidebar = () => {
   const t = useTranslation().t.common;
+
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
 
   const [logoutTrigger, { isLoading: isLogOutLoading }] = useLogoutMutation();
@@ -56,7 +62,11 @@ export const Sidebar = () => {
           Home
         </Typography.Regular14>
 
-        <Typography.Regular14 className={s.button} tabIndex={1}>
+        <Typography.Regular14
+          className={s.button}
+          onClick={() => dispatch(openModal())}
+          tabIndex={1}
+        >
           <PlusSquareOutline className={s.svg} />
           Create
         </Typography.Regular14>

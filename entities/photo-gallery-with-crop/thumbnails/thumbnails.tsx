@@ -1,5 +1,5 @@
 import { PropsWithoutChildren } from '@/shared/types/helpers';
-import { PopperContentProps } from '@radix-ui/react-popover';
+import { PopoverProps, PopperContentProps } from '@radix-ui/react-popover';
 import clsx from 'clsx';
 
 import style from './thumbnails.module.scss';
@@ -13,6 +13,7 @@ export type ThumbnailsProps = {
   onItemAdd?: (imageSrc: string) => void;
 
   onItemRemove?: (index: number) => void;
+  onOpenChange?: PopoverProps['onOpenChange'];
   popoverContentProps?: PropsWithoutChildren<PopperContentProps>;
   thumbnails: string[];
 };
@@ -20,13 +21,14 @@ export type ThumbnailsProps = {
 export const Thumbnails = ({
   onItemAdd,
   onItemRemove,
+  onOpenChange,
   popoverContentProps = {},
   thumbnails,
 }: ThumbnailsProps) => {
   const { className: popoverContentClass, ...restPopoverContentProps } = popoverContentProps;
 
   return (
-    <PopoverRoot>
+    <PopoverRoot onOpenChange={onOpenChange}>
       <PopoverTrigger asChild>
         <TriggerButton variant={'image'} />
       </PopoverTrigger>

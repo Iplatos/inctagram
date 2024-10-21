@@ -9,3 +9,6 @@ export * from './adjustArrayIndexByBoundaries';
 export * from './roundNumber';
 export * from './get-cropped-image-data-URL';
 export * from './get-photo-gallery-default-crop-props';
+export * from './onCropDone';
+export * from './extractInitials';
+export * from './compartmentalize';
