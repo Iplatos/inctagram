@@ -1,5 +1,5 @@
-import GitHubLogo from '@/assets/icons/gitHubLogo.svg';
-import GoogleLogo from '@/assets/icons/googleLogo.svg';
+import GitHubLogo from '@/assets/icons/github-logo.svg';
+import GoogleLogo from '@/assets/icons/google-logo.svg';
 import { useRouter } from 'next/navigation';
 
 import s from './gitHubGoogleContainer.module.scss';
