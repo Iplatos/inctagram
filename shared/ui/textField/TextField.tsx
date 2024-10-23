@@ -105,6 +105,7 @@ export const TextField: TextFieldComponent = forwardRef<
         className={sharedClassName}
         onChange={handleChange}
         ref={ref as unknown as ForwardedRef<HTMLTextAreaElement>}
+        spellCheck={'false'} // Remove annoying red underline text in Firefox browser
         {...restProps}
       />
     );
