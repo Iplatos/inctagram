@@ -1,4 +1,4 @@
-import Expand from '@/assets/icons/3dots.svg';
+import Expand from '@/assets/icons/dots.svg';
 
 import styles from './ExpandBtn.module.scss';
 

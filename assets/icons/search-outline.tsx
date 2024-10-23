@@ -1,26 +1,26 @@
 import React, { SVGProps, forwardRef, memo } from 'react';
 
-export const ArrowLeft = memo(
+export const SearchOutline = memo(
   forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
     <svg
       fill={'currentColor'}
       height={24}
-      viewBox={'0 0 24 24'}
+      ref={ref}
+      viewBox={'0 0 20 20'}
       width={24}
       xmlns={'http://www.w3.org/2000/svg'}
       {...props}
-      ref={ref}
     >
       <g clipPath={'url(#a)'}>
         <path
           d={
-            'M13.83 19a1 1 0 0 1-.78-.37l-4.83-6a1 1 0 0 1 0-1.27l5-6a1.001 1.001 0 1 1 1.54 1.28L10.29 12l4.32 5.36a1 1 0 0 1-.78 1.64Z'
+            'm17.258 16.075-2.833-2.825a6.6 6.6 0 0 0 1.408-4.083 6.667 6.667 0 1 0-6.666 6.666 6.6 6.6 0 0 0 4.083-1.408l2.825 2.833a.833.833 0 0 0 1.183 0 .832.832 0 0 0 0-1.183ZM4.167 9.167a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z'
           }
         />
       </g>
       <defs>
         <clipPath id={'a'}>
-          <path d={'M0 0h24v24H0z'} />
+          <path d={'M0 0h20v20H0z'} />
         </clipPath>
       </defs>
     </svg>

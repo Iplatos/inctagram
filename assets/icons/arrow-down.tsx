@@ -1,20 +1,19 @@
-import React, { SVGProps, forwardRef, memo } from 'react';
+import { SVGProps, forwardRef, memo } from 'react';
 
-export const ArrowLeft = memo(
+export const ArrowDown = memo(
   forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
     <svg
       fill={'currentColor'}
       height={24}
-      viewBox={'0 0 24 24'}
+      ref={ref}
       width={24}
       xmlns={'http://www.w3.org/2000/svg'}
       {...props}
-      ref={ref}
     >
       <g clipPath={'url(#a)'}>
         <path
           d={
-            'M13.83 19a1 1 0 0 1-.78-.37l-4.83-6a1 1 0 0 1 0-1.27l5-6a1.001 1.001 0 1 1 1.54 1.28L10.29 12l4.32 5.36a1 1 0 0 1-.78 1.64Z'
+            'M5.514 9.458a1 1 0 0 1 1.64-.77l5.36 4.48 5.37-4.32a1 1 0 0 1 1.41.15 1 1 0 0 1-.15 1.46l-6 4.83a1 1 0 0 1-1.27 0l-6-5a1 1 0 0 1-.36-.83Z'
           }
         />
       </g>

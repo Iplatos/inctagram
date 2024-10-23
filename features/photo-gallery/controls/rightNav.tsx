@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ArrowRight } from '@/assets/icons/arrowRight';
+import { ArrowRight } from '@/assets/icons/arrow-right';
 
 import style from './controls.module.scss';
 
