@@ -35,7 +35,7 @@ export const EditPostModalCard = (props: Props) => {
   const onOpenConfirmModal = () => setOpenConfirmModal(true);
   const onCloseConfirmModal = () => setOpenConfirmModal(false);
 
-  const handleSubmit = (data: FormData) => {
+  const handleSubmit = (data: { description: string }) => {
     setOpen(false);
     console.log(data);
   };

@@ -47,7 +47,7 @@ export const CreatePostCard = (props: Props) => {
 
   const formRef = React.useRef<HTMLFormElement>(null);
 
-  const handleSubmit = (data: FormData) => {
+  const handleSubmit = (data: { description: string }) => {
     setOpen(false);
     confirmPublication();
   };
@@ -86,8 +86,8 @@ export const CreatePostCard = (props: Props) => {
           <UserBanner avatar={avatar} name={userName} />
           <EditPostForm
             classNameActions={s.actions}
-            currentDescription={description}
-            onBlurHandler={onBlurHandler}
+            description={description}
+            onBlur={onBlurHandler}
             onSubmit={handleSubmit}
             ref={formRef}
           />

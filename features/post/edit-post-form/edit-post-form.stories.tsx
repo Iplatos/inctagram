@@ -1,6 +1,8 @@
 import { EditPostForm } from '@/features/post/edit-post-form/edit-post-form';
+import { Button } from '@/shared/ui';
 import { Meta, StoryObj } from '@storybook/react';
 
+/** Form for edit post description */
 const meta = {
   argTypes: {
     disabled: {
@@ -8,26 +10,21 @@ const meta = {
       description: 'disabled submit button when loading',
     },
     onSubmit: {
-      action: 'edit post',
+      control: 'action',
       description: 'function for edit post on the server',
     },
   },
   component: EditPostForm,
   decorators: [
-    Story => (
-      <div style={{ width: 600 }}>
+    (Story, { args }) => (
+      <div style={{ width: `min(100%, 400px)` }}>
+        <Button form={args.id} style={{ margin: '1rem' }} type={'submit'}>
+          Submit
+        </Button>
         <Story />
       </div>
     ),
   ],
-  parameters: {
-    docs: {
-      description: {
-        component: 'Form for edit post description',
-      },
-    },
-    layout: 'centered',
-  },
   tags: ['autodocs'],
   title: 'features/post/EditPostForm',
 } satisfies Meta<typeof EditPostForm>;
@@ -35,4 +32,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    id: 'edit-post-form',
+    textLimit: 50,
+  },
+};
