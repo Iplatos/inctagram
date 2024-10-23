@@ -12,3 +12,4 @@ export * from './get-photo-gallery-default-crop-props';
 export * from './onCropDone';
 export * from './extractInitials';
 export * from './compartmentalize';
+export * from './sleep';
