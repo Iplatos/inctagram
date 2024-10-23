@@ -29,3 +29,9 @@ $card-with-gallery-max-height: min(560px, $card-max-height);
 
   height: $card-with-gallery-max-height;
 }
+
+.descriptionPhotoCardWrapper {
+  @include card-max-width(970px);
+
+  height: $card-with-gallery-max-height;
+}

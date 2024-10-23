@@ -65,11 +65,8 @@ export const modalSlice = createSlice({
         }
       }
     },
-    setDescription: (state, action: PayloadAction<string>) => {
-      if (action.payload !== '') {
-        console.log('action payload', action.payload);
-        state.description = action.payload;
-      }
+    setDescription: (state, { payload }: PayloadAction<string>) => {
+      state.description = payload;
     },
     setItemCropParams: (
       state,

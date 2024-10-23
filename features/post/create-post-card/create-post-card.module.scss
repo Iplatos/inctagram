@@ -1,54 +1,47 @@
 @use '../../../styles/mixins' as *;
 @use '../../../styles/helpers' as *;
-$max-card-width: rem(962);
-$max-card-height: rem(560);
 
-.root {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  width: $max-card-width;
-  height: $max-card-height;
-}
+.cardRoot {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
-.header {
-  @include flex($justify: space-between, $align: center);
+  .header {
+    position: relative;
+  }
 
-  &:not(:last-child) {
-    margin-bottom: 0;
+  .publishButton {
+    --icon-button-padding: #{em(12)};
+
+    padding-inline: var(--icon-button-padding);
+  }
+
+  .content {
+    grid-area: details;
+    padding-top: 24px;
   }
 }
 
-.content {
+.headerTitle {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+}
+
+.contentWrapper {
+  overflow: hidden;
   display: grid;
   grid-template-areas: 'gallery details';
   grid-template-columns: 1fr 1fr;
 
-  @include media-breakpoint('tablet-m') {
-    grid-template: 'details' 1fr 'gallery' min-content;
-  }
-
-  //width: 100%;
-  //height: 100%;
-  padding: 0;
+  height: 100%;
 }
 
 .gallery {
-  --aspect-ratio: 1;
+  grid-area: gallery;
   background-color: var(--color-dark-900);
-  max-width: rem(490);
-  //height: 100%;
 }
 
-.form {
-  grid-area: details;
-  max-width: rem(470);
-  padding: 12px 0 0;
-}
-
-.confirmModal {
-  width: 100%;
-}
-
-.actions {
-  align-self: end;
+.userBanner {
+  margin-bottom: 24px;
 }

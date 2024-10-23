@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { batch } from 'react-redux';
 
 import {
@@ -7,25 +7,24 @@ import {
   FilterPhotoCard,
   PGWithCropCropCompleteHandler,
 } from '@/features';
-import { ConfirmModal } from '@/features/confirm-modal';
-import { CreatePostCard, EditPostModalCard } from '@/features/post';
-import { PublicationCard } from '@/features/publication-card';
+import { CreatePostCard } from '@/features/post';
 import {
   addItem,
   clearItems,
   closeModal,
   removeItem,
   resetItemFilters,
+  selectCreatePostModalDescription,
   selectCreatePostModalItems,
   selectCreatePostModalOpen,
+  setDescription,
   setItemCropParams,
 } from '@/shared/api/modal-slice';
 import { useAppDispatch } from '@/shared/api/pretyped-redux-hooks';
 import { useAppSelector } from '@/shared/api/store';
 import { blobToBase64 } from '@/shared/helpers';
 import { useTranslation } from '@/shared/hooks';
-import { Modal, Typography } from '@/shared/ui';
-import { FocusOutsideEvent, PointerDownOutsideEvent } from '@radix-ui/react-dismissable-layer';
+import { Modal } from '@/shared/ui';
 
 import s from './modal-create-publication.module.scss';
 
@@ -40,23 +39,18 @@ export const ModalCreatePublication = () => {
   const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
-  const [openConfirmModal, setOpenConfirmModal] = useState<boolean>(false);
 
   const open: boolean = useAppSelector(selectCreatePostModalOpen);
   const items = useAppSelector(selectCreatePostModalItems);
+  const description = useAppSelector(selectCreatePostModalDescription);
 
   const { descriptionCloseModal, labelCloseModal } = t.post.createPostCard;
 
   const closeModalHandler = () => {
     dispatch(closeModal());
     setPostStatus(PostStatus.Init);
-    setOpenConfirmModal(false);
-    //open save draft modal
-  };
-
-  const handleInteractOutside = (event: Event) => {
-    event.preventDefault();
-    setOpenConfirmModal(true);
+    // setOpenConfirmModal(false);
+    // open save draft modal
   };
 
   // TODO: consider moving the status to the redux store to allow manual reopening of the modal in a certain state.
@@ -67,7 +61,7 @@ export const ModalCreatePublication = () => {
   };
 
   const confirmPublicationPost = () => {
-    console.log('Publication');
+    console.log('Publication', { description });
   };
 
   const steps: Record<PostStatus, () => ReactElement> = {
@@ -146,16 +140,15 @@ export const ModalCreatePublication = () => {
       </div>
     ),
     [PostStatus.Publication]: () => (
-      <div>
+      <div className={s.descriptionPhotoCardWrapper}>
         <CreatePostCard
-          confirmPublication={confirmPublicationPost}
+          description={description}
           items={items}
-          onPrevClick={() => {
-            batch(() => {
-              setPostStatus(PostStatus.Filter);
-            });
-          }}
-          setOpen={closeModalHandler}
+          onBlur={({ description }) => dispatch(setDescription(description))}
+          onPrevClick={() => setPostStatus(PostStatus.Filter)}
+          onPublishPost={confirmPublicationPost}
+          publishButtonLabel={t.post.createPostCard.postDescription.titleBtnSubmit}
+          title={t.post.createPostCard.labelCard}
           userName={'UserName'}
         />
       </div>
@@ -164,16 +157,16 @@ export const ModalCreatePublication = () => {
 
   return (
     <Modal
-      contentProps={{ onInteractOutside: handleInteractOutside }}
       onOpenChange={open => {
         if (!open) {
           closeModalHandler();
+          setPostStatus(PostStatus.Init);
         }
       }}
       open={open}
     >
       {steps[postStatus]()}
-      <ConfirmModal
+      {/* <ConfirmModal
         headerTitle={labelCloseModal}
         onCancel={() => setOpenConfirmModal(false)}
         onConfirm={closeModalHandler}
@@ -182,7 +175,7 @@ export const ModalCreatePublication = () => {
         <Typography.Regular16 className={s.confirmModal}>
           {descriptionCloseModal}
         </Typography.Regular16>
-      </ConfirmModal>
+      </ConfirmModal> */}
     </Modal>
   );
 };
