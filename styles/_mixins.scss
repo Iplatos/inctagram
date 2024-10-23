@@ -52,42 +52,34 @@
   }
 }
 
-// A mixin used to align the styles of a thin scrollbar in different browsers.
-@mixin thin-scrollbar {
-  @supports not selector(::-webkit-scrollbar) {
-    scrollbar-width: thin;
-  }
-
+@mixin common-scrollbar {
   @at-root #{selector.append(&, '::-webkit-scrollbar')} {
-    width: 8px;
-    height: 8px;
-    background-color: hsl(0deg 50% 0% / 35%);
+    background-color: var(--scrollbar-bg-color);
   }
 
   @at-root #{selector.append(&, '::-webkit-scrollbar-thumb')} {
-    background-color: hsl(0deg 50% 100% / 45%);
+    background-color: var(--scrollbar-thumb-bg-color);
 
     &:hover {
-      background-color: hsl(0deg 0% 100% / 30%);
+      background-color: var(--scrollbar-thumb-bg-color-hover);
     }
 
     &:active {
-      background-color: hsl(0deg 0% 100% / 22%);
+      background-color: var(--scrollbar-thumb-bg-color-active);
     }
   }
 }
 
-@mixin webkit-custom-scrollbar {
-  &::-webkit-scrollbar {
-    width: 10px;
+// A mixin used to align the styles of a thin scrollbar in different browsers.
+@mixin thin-common-scrollbar {
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-width: thin;
   }
 
-  &::-webkit-scrollbar-track {
-    background: var(--color-dark-100);
-  }
+  @include common-scrollbar;
 
-  &::-webkit-scrollbar-thumb {
-    background: rgb(100 99 99);
-    border-radius: 10px;
+  @at-root #{selector.append(&, '::-webkit-scrollbar')} {
+    width: var(--thin-scrollbar-width);
+    height: var(--thin-scrollbar-height);
   }
 }

@@ -43,7 +43,7 @@ $max-card-height: 560px;
 }
 
 .commentsSection {
-  @include thin-scrollbar;
+  @include thin-common-scrollbar;
 
   overflow-y: auto;
   height: 330px;
