@@ -212,6 +212,14 @@ export const en: LocaleType = {
       },
       title: 'Add a Profile Photo',
     },
+    createPostModal: {
+      addPhotoCard: {
+        errors: {
+          tooBig: '<bold>Error!</bold> Photo size must be less than 20 MB (MegaBytes)',
+          wrongFormat: '<bold>Error!</bold> The format of the uploaded photo must be PNG or JPEG',
+        },
+      },
+    },
     datePicker: {
       locale: gregorian_en,
     },

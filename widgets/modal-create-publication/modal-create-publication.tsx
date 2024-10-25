@@ -1,5 +1,4 @@
-import { ReactElement, useState } from 'react';
-import { batch } from 'react-redux';
+import { ReactElement, useMemo, useState } from 'react';
 
 import {
   AddPhotoCard,
@@ -22,11 +21,13 @@ import {
 } from '@/shared/api/modal-slice';
 import { useAppDispatch } from '@/shared/api/pretyped-redux-hooks';
 import { useAppSelector } from '@/shared/api/store';
-import { blobToBase64 } from '@/shared/helpers';
+import { blobToBase64, getPhotoValidationSchema } from '@/shared/helpers';
 import { useTranslation } from '@/shared/hooks';
 import { Modal } from '@/shared/ui';
 
 import s from './modal-create-publication.module.scss';
+
+const PHOTO_MAX_SIZE = 20_971_520; // 20 Megabytes
 
 export enum PostStatus {
   Init,
@@ -45,16 +46,33 @@ export const ModalCreatePublication = () => {
   const description = useAppSelector(selectCreatePostModalDescription);
 
   const { descriptionCloseModal, labelCloseModal } = t.post.createPostCard;
+  const tCommon = t.common.createPostModal.addPhotoCard;
 
-  const closeModalHandler = () => {
+  const closeAndResetCreatePostModal = () => {
     dispatch(closeModal());
     setPostStatus(PostStatus.Init);
-    // setOpenConfirmModal(false);
+    setError(null);
     // open save draft modal
   };
 
   // TODO: consider moving the status to the redux store to allow manual reopening of the modal in a certain state.
   const [postStatus, setPostStatus] = useState<PostStatus>(PostStatus.Init);
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [error, setError] = useState<null | string>(null);
+  const photoValidationSchema = useMemo(
+    () =>
+      getPhotoValidationSchema(
+        {
+          allowedFormats: ['image/jpeg', 'image/png'] as const,
+          maxSize: PHOTO_MAX_SIZE,
+        },
+        {
+          tooBig: () => tCommon.errors.tooBig,
+          wrongFormat: () => tCommon.errors.wrongFormat,
+        }
+      ),
+    [tCommon]
+  );
 
   const handleCropComplete: PGWithCropCropCompleteHandler = (cropArea, cropAreaPixels, index) => {
     dispatch(setItemCropParams({ cropArea, cropAreaPixels, index }));
@@ -80,6 +98,7 @@ export const ModalCreatePublication = () => {
             onAspectRatioChange: (aspectRatio, index) =>
               dispatch(setItemCropParams({ aspectRatio, index })),
             onCropComplete: handleCropComplete,
+            // TODO: add validation when adding an item via `CropPhotoCard`
             onItemAdd: src => {
               dispatch(addItem({ filter: 'normal', src }));
 
@@ -122,16 +141,23 @@ export const ModalCreatePublication = () => {
     [PostStatus.Init]: () => (
       <div className={s.addPhotoCardWrapper}>
         <AddPhotoCard
-          error={null}
-          onClose={closeModalHandler}
+          error={error}
+          onClose={closeAndResetCreatePostModal}
           onFileInputChange={async e => {
             const file = e.target.files?.[0];
 
             if (file) {
+              const result = photoValidationSchema.safeParse(file);
+
+              if (result.success) {
               const src = await blobToBase64(file);
 
               dispatch(addItem({ filter: 'normal', src }));
               setPostStatus(PostStatus.Cropping);
+                setError(null);
+              } else {
+                setError(result.error.issues[0].message);
+              }
             }
           }}
           primaryButtonTitle={t.editProfile.createPublication.primaryButtonTitle}

@@ -208,6 +208,14 @@ export const ru = {
       },
       title: 'Добавить Фото Пользователя',
     },
+    createPostModal: {
+      addPhotoCard: {
+        errors: {
+          tooBig: '<bold>Ошибка!</bold> Размер фото должен быть менее 20 MB (Мегабайт)',
+          wrongFormat: '<bold>Ошибка!</bold> Формат загружаемого фото должен быть PNG или JPEG',
+        },
+      },
+    },
     datePicker: {
       locale: gregorian_ru,
     },

@@ -13,3 +13,4 @@ export * from './onCropDone';
 export * from './extractInitials';
 export * from './compartmentalize';
 export * from './sleep';
+export * from './get-photo-validation-schema';
