@@ -346,12 +346,6 @@ export const ru = {
     notifications: 'Уведомления',
   },
 
-
-  publicPage: {
-    hide: 'Свернуть',
-    registeredUsers: 'Зарегистрировано пользователей',
-    showMore: 'Показать больше',
-
   post: {
     card: {
       addNewComment: {
@@ -408,7 +402,11 @@ export const ru = {
         titleBtnSubmit: 'Сохранить',
       },
     },
-
+  },
+  publicPage: {
+    hide: 'Свернуть',
+    registeredUsers: 'Зарегистрировано пользователей',
+    showMore: 'Показать больше',
   },
 };
 

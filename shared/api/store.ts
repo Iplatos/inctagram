@@ -4,10 +4,8 @@ import { ThunkAction, UnknownAction, combineSlices, configureStore } from '@redu
 import { createWrapper } from 'next-redux-wrapper';
 
 import { countriesApi } from './countries.api';
-
-import { publicPageSlice } from './public-page-slice';
-
 import { modalSlice } from './modal-slice';
+import { publicPageSlice } from './public-page-slice';
 
 const rootReducer = combineSlices(baseApi, countriesApi, appSlice, modalSlice, publicPageSlice);
 
@@ -16,8 +14,7 @@ export const store = configureStore({
   reducer: rootReducer,
 });
 
-setupListeners(store.dispatch);
-
+// setupListeners(store.dispatch);
 
 //export type AppDispatch = typeof store.dispatch;
 

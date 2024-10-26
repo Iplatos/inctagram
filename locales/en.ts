@@ -246,7 +246,6 @@ export const en: LocaleType = {
       title: 'Delete Photo',
     },
 
-
     draft: {
       cancel: 'Discard',
       confirm: 'Save draft',
@@ -254,7 +253,6 @@ export const en: LocaleType = {
         'Do you really want to close the creation of a publication? If you close everything will be deleted',
       title: 'Сlose',
     },
-
 
     photoSlider: {
       deletePhoto: {
@@ -353,12 +351,6 @@ export const en: LocaleType = {
     notifications: 'Notifications',
   },
 
-
-  publicPage: {
-    hide: 'Hide',
-    registeredUsers: 'Registered users',
-    showMore: 'Show more',
-
   post: {
     card: {
       addNewComment: {
@@ -417,6 +409,11 @@ export const en: LocaleType = {
         titleBtnSubmit: 'Save changes',
       },
     },
+  },
 
+  publicPage: {
+    hide: 'Hide',
+    registeredUsers: 'Registered users',
+    showMore: 'Show more',
   },
 };
