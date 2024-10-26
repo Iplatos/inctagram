@@ -4,9 +4,20 @@ import { ThunkAction, UnknownAction, combineSlices, configureStore } from '@redu
 import { createWrapper } from 'next-redux-wrapper';
 
 import { countriesApi } from './countries.api';
+
 import { publicPageSlice } from './public-page-slice';
 
-const rootReducer = combineSlices(baseApi, countriesApi, appSlice, publicPageSlice);
+import { modalSlice } from './modal-slice';
+
+const rootReducer = combineSlices(baseApi, countriesApi, appSlice, modalSlice, publicPageSlice);
+
+export const store = configureStore({
+  middleware: gDM => gDM().concat(baseApi.middleware, countriesApi.middleware),
+  reducer: rootReducer,
+});
+
+setupListeners(store.dispatch);
+
 
 //export type AppDispatch = typeof store.dispatch;
 

@@ -232,9 +232,21 @@ export const ru = {
   editProfile: {
     addPhotoButton: 'Добавить Фото Пользователя',
 
+    createPublication: {
+      primaryButtonTitle: 'Загрузить с устройства',
+      title: 'Добавить фото',
+    },
+
     deleteAvatarModal: {
       message: 'Вы уверены, что хотите удалить это фото?',
       title: 'Удалить Фото',
+    },
+    draft: {
+      cancel: 'Отменить',
+      confirm: 'Сохранить черновик',
+      message:
+        'Вы действительно хотите отменить создание публикации? Когда окно будет закрыто все удалится',
+      title: 'Закрыть',
     },
 
     photoSlider: {
@@ -298,6 +310,19 @@ export const ru = {
   },
 
   myProfile: {
+    addPostModal: {
+      postDescriptionCard: {
+        labelCard: 'Публикация',
+        postDescription: {
+          errors: {
+            tooBig: 'Максимальное количество символов 500',
+          },
+          label: 'Добавить описание публикации',
+          placeholder: 'Текстовое поле',
+          titleBtnSubmit: 'Опубликовать',
+        },
+      },
+    },
     settingsButton: 'Настройки Профиля',
     statistics: {
       followers: { label: 'подписчики' },
@@ -321,10 +346,69 @@ export const ru = {
     notifications: 'Уведомления',
   },
 
+
   publicPage: {
     hide: 'Свернуть',
     registeredUsers: 'Зарегистрировано пользователей',
     showMore: 'Показать больше',
+
+  post: {
+    card: {
+      addNewComment: {
+        error: 'макс. длина 150 символов',
+        placeholder: 'Добавить комментарий...',
+        submit: 'Опубликовать',
+      },
+      header: {
+        buttons: {
+          copyLink: 'Скопировать ссылку',
+          deletePost: 'Удалить пост',
+          editPost: 'Редактировать пост',
+          follow: 'Подписаться',
+          unfollow: 'Отписаться',
+        },
+      },
+      info: {
+        likes: 'Нравится',
+      },
+    },
+    comment: {
+      answer: 'Ответить',
+      like: '"Нравиться"',
+      likes: '"Нравиться"',
+      viewAnswersBth: {
+        close: 'Скрыть ответы',
+        open: 'Показать ответы',
+      },
+    },
+    createPostCard: {
+      descriptionCloseModal:
+        'Вы действительно хотите закрыть создание публикации?\n' + 'Если закрыть все будет удалено',
+      labelCard: 'Публикация',
+      labelCloseModal: 'Отменить создание поста',
+      postDescription: {
+        errors: {
+          tooBig: 'Максимальное количество символов 500',
+        },
+        label: 'Добавить описание публикации',
+        placeholder: 'Текстовое поле',
+        titleBtnSubmit: 'Опубликовать',
+      },
+    },
+    editPostModalCard: {
+      descriptionCloseModal:
+        'Вы действительно хотите закрыть редактирование публикации? Если закрыть, изменения не будут сохранены',
+      labelCard: 'Редактирование публикации',
+      postDescription: {
+        errors: {
+          tooBig: 'Максимальное количество символов 500',
+        },
+        label: 'Добавить описание публикации',
+        placeholder: 'Текстовое поле',
+        titleBtnSubmit: 'Сохранить',
+      },
+    },
+
   },
 };
 

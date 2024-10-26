@@ -1,0 +1,31 @@
+@use '../../styles/helpers' as *;
+@use '../../styles/mixins' as *;
+
+$card-max-height: calc(-2 * var(--header-height) + 100vh);
+$card-with-gallery-max-height: min(560px, $card-max-height);
+
+// min() and max() function doesn't work properly :(
+@mixin card-max-width($width) {
+  width: $width;
+  max-width: 100%;
+}
+
+.addPhotoCardWrapper {
+  @include card-max-width(370px);
+
+  // Added `display: flex` to provide auto height adjustment for the `AddPhotoCard`
+  display: flex;
+  max-height: $card-max-height;
+}
+
+.cropPhotoCardWrapper {
+  @include card-max-width(490px);
+
+  height: $card-with-gallery-max-height;
+}
+
+.filterPhotoCardWrapper {
+  @include card-max-width(970px);
+
+  height: $card-with-gallery-max-height;
+}

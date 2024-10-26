@@ -1,5 +1,7 @@
 import { FC } from 'react';
 
+import { openModal } from '@/shared/api/modal-slice';
+import { useAppDispatch } from '@/shared/api/pretyped-redux-hooks';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Typography } from '@/shared/ui';
 import { CropProps, CroppedImage } from '@/shared/ui/croppedImage';
@@ -28,6 +30,8 @@ export const PostsList: FC<PostsListProps> = ({ className, posts = [] }) => {
     </div>
   ));
 
+  const dispatch = useAppDispatch();
+
   return (
     <section className={clsx(s.container, className)}>
       {posts.length ? (
@@ -37,7 +41,7 @@ export const PostsList: FC<PostsListProps> = ({ className, posts = [] }) => {
           <Typography.H1 className={s.message} component={'h2'}>
             {t.noPostsMessage}
           </Typography.H1>
-          <Button>{t.addPostButton}</Button>
+          <Button onClick={() => dispatch(openModal())}>{t.addPostButton}</Button>
         </div>
       )}
     </section>

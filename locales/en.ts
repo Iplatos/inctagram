@@ -1,4 +1,6 @@
 /* eslint-disable max-lines -- useless rule for locale file */
+import { title } from 'process';
+
 import gregorian_en from 'react-date-object/locales/gregorian_en';
 
 import { LocaleType } from './ru';
@@ -234,10 +236,26 @@ export const en: LocaleType = {
   editProfile: {
     addPhotoButton: 'Add a Profile Photo',
 
+    createPublication: {
+      primaryButtonTitle: 'Select from Device',
+      title: 'Add Photo',
+    },
+
     deleteAvatarModal: {
       message: 'Are you sure you want to delete the photo?',
       title: 'Delete Photo',
     },
+
+
+    draft: {
+      cancel: 'Discard',
+      confirm: 'Save draft',
+      message:
+        'Do you really want to close the creation of a publication? If you close everything will be deleted',
+      title: 'Сlose',
+    },
+
+
     photoSlider: {
       deletePhoto: {
         cancelButtonTitle: 'Cancel',
@@ -298,6 +316,19 @@ export const en: LocaleType = {
   },
 
   myProfile: {
+    addPostModal: {
+      postDescriptionCard: {
+        labelCard: 'Publication',
+        postDescription: {
+          errors: {
+            tooBig: 'Maximum number of characters 500',
+          },
+          label: 'Add publication descriptions',
+          placeholder: 'Text-area',
+          titleBtnSubmit: 'Publish',
+        },
+      },
+    },
     settingsButton: 'Profile Settings',
     statistics: {
       followers: { label: 'followers' },
@@ -322,9 +353,70 @@ export const en: LocaleType = {
     notifications: 'Notifications',
   },
 
+
   publicPage: {
     hide: 'Hide',
     registeredUsers: 'Registered users',
     showMore: 'Show more',
+
+  post: {
+    card: {
+      addNewComment: {
+        error: 'Maximum number of characters is 150',
+        placeholder: 'Add a Сomment...',
+        submit: 'Publish',
+      },
+      header: {
+        buttons: {
+          copyLink: 'Copy Link',
+          deletePost: 'Delete Post',
+          editPost: 'Edit Post',
+          follow: 'Follow',
+          unfollow: 'Unfollow',
+        },
+      },
+      info: {
+        likes: 'Like',
+      },
+    },
+    comment: {
+      answer: 'Answer',
+      like: 'Like',
+      likes: 'Likes',
+      viewAnswersBth: {
+        close: 'View Answer',
+        open: 'Show Answers',
+      },
+    },
+    createPostCard: {
+      descriptionCloseModal:
+        'Do you really want to close the creation of a publication? If you close everything will' +
+        ' be deleted',
+      labelCard: 'Publication',
+      labelCloseModal: 'Canceled create post',
+      postDescription: {
+        errors: {
+          tooBig: 'Maximum number of characters 500',
+        },
+        label: 'Add publication descriptions',
+        placeholder: 'Text-area',
+        titleBtnSubmit: 'Publish',
+      },
+    },
+    editPostModalCard: {
+      descriptionCloseModal:
+        'Do you really want to close the edition of the publication? If you' +
+        ' close changes won’t be saved',
+      labelCard: 'Edit Post',
+      postDescription: {
+        errors: {
+          tooBig: 'Maximum number of characters 500',
+        },
+        label: 'Add publication descriptions',
+        placeholder: 'Text-area',
+        titleBtnSubmit: 'Save changes',
+      },
+    },
+
   },
 };

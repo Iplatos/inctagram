@@ -15,9 +15,9 @@ type FilteredTextFieldProps<T extends TextFieldProps> = Omit<
 // prettier-ignore
 export type ControlledTextFieldProps<TFieldValues extends FieldValues> =
   | (ControllerProps<TFieldValues> &
-      FilteredTextFieldProps<Extract<TextFieldProps, { as: 'textarea' }>>)
+  FilteredTextFieldProps<Extract<TextFieldProps, { as: "textarea" }>>)
   | (ControllerProps<TFieldValues> &
-      FilteredTextFieldProps<Extract<TextFieldProps, { as?: 'input' }>>);
+  FilteredTextFieldProps<Extract<TextFieldProps, { as?: "input" }>>);
 
 export const ControlledTextField = <TFieldValues extends FieldValues = FieldValues>({
   control,
