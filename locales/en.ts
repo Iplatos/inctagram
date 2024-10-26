@@ -410,4 +410,10 @@ export const en: LocaleType = {
       },
     },
   },
+
+  publicPage: {
+    hide: 'Hide',
+    registeredUsers: 'Registered users',
+    showMore: 'Show more',
+  },
 };
