@@ -1,14 +1,15 @@
-import { TypedUseSelectorHook, useSelector } from 'react-redux';
-
 import { appSlice } from '@/shared/api/app-slice';
 import { baseApi } from '@/shared/api/base-api';
-import { combineSlices, configureStore } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query';
+import { ThunkAction, UnknownAction, combineSlices, configureStore } from '@reduxjs/toolkit';
+import { createWrapper } from 'next-redux-wrapper';
 
 import { countriesApi } from './countries.api';
+
+import { publicPageSlice } from './public-page-slice';
+
 import { modalSlice } from './modal-slice';
 
-const rootReducer = combineSlices(baseApi, countriesApi, appSlice, modalSlice);
+const rootReducer = combineSlices(baseApi, countriesApi, appSlice, modalSlice, publicPageSlice);
 
 export const store = configureStore({
   middleware: gDM => gDM().concat(baseApi.middleware, countriesApi.middleware),
@@ -17,13 +18,28 @@ export const store = configureStore({
 
 setupListeners(store.dispatch);
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-// TODO: remove in the future. Consider using Redux devtools instead
-if (globalThis?.window) {
-  // @ts-ignore
+//export type AppDispatch = typeof store.dispatch;
 
-  window.store = store;
+export interface State {
+  tick: string;
 }
+
+const makeStore = () =>
+  configureStore({
+    devTools: true,
+    middleware: gDM => gDM().concat(baseApi.middleware, countriesApi.middleware),
+    reducer: rootReducer,
+  });
+
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  UnknownAction
+>;
+
+export const wrapper = createWrapper<AppStore>(makeStore);

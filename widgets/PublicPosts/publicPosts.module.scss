@@ -1,0 +1,26 @@
+@use '../../styles/helpers' as *;
+@use '../../styles/mixins' as *;
+
+
+.page {
+    align-items: center;
+    padding-right: 200px;
+    padding-left: 200px;
+}
+
+.posts {
+    display: flex;
+    justify-content: space-between;  
+}
+
+
+
+
+
+
+
+.count-panel {
+    margin-top: 90px;
+    margin-bottom: 40px;
+}
+

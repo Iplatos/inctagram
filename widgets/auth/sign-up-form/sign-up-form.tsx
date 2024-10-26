@@ -76,7 +76,13 @@ export const SignUpForm = () => {
   // }
 
   const signUp = handleSubmit(({ email, nickname, password }) => {
-    return signUpTrigger({ email, password, username: nickname });
+    return signUpTrigger({
+      // FIXME: add different baseUrl for different environment variables
+      baseUrl: 'localhost:3000',
+      email,
+      password,
+      userName: nickname,
+    });
   });
 
   const submitIsDisabled = !isDirty || (!isValid && !!submitCount) || isSubmitting;
