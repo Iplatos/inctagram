@@ -7,7 +7,7 @@ import { countriesApi } from './countries.api';
 import { modalSlice } from './modal-slice';
 import { publicPageSlice } from './public-page-slice';
 
-const rootReducer = combineSlices(baseApi, countriesApi, appSlice, publicPageSlice);
+const rootReducer = combineSlices(baseApi, countriesApi, appSlice, publicPageSlice, modalSlice);
 
 //export type AppDispatch = typeof store.dispatch;
 
