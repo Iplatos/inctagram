@@ -416,4 +416,10 @@ export const en: LocaleType = {
     registeredUsers: 'Registered users',
     showMore: 'Show more',
   },
+
+  publicPage: {
+    hide: 'Hide',
+    registeredUsers: 'Registered users',
+    showMore: 'Show more',
+  },
 };

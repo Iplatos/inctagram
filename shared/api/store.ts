@@ -7,20 +7,14 @@ import { countriesApi } from './countries.api';
 import { modalSlice } from './modal-slice';
 import { publicPageSlice } from './public-page-slice';
 
-const rootReducer = combineSlices(baseApi, countriesApi, appSlice, modalSlice, publicPageSlice);
+const rootReducer = combineSlices(baseApi, countriesApi, appSlice, publicPageSlice);
 
 //export type AppDispatch = typeof store.dispatch;
 
-export interface State {
-  tick: string;
-}
-
-const makeStore = () =>
-  configureStore({
-    devTools: true,
-    middleware: gDM => gDM().concat(baseApi.middleware, countriesApi.middleware),
-    reducer: rootReducer,
-  });
+export const store = configureStore({
+  middleware: gDM => gDM().concat(baseApi.middleware, countriesApi.middleware),
+  reducer: rootReducer,
+});
 
 export type AppStore = ReturnType<typeof makeStore>;
 export type RootState = ReturnType<AppStore['getState']>;

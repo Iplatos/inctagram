@@ -409,6 +409,12 @@ export const ru = {
     registeredUsers: 'Зарегистрировано пользователей',
     showMore: 'Показать больше',
   },
+
+  publicPage: {
+    hide: 'Свернуть',
+    registeredUsers: 'Зарегистрировано пользователей',
+    showMore: 'Показать больше',
+  },
 };
 
 export type LocaleType = typeof ru;
