@@ -10,6 +10,8 @@ import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
 import s from './postsList.module.scss';
 
+import { ModalCreatePublication } from '../modal-create-publication';
+
 // For now, only avatar related data is contained in one post. Will be expanded in the future
 export type Post = {
   cropProps?: CropProps;
@@ -44,6 +46,7 @@ export const PostsList: FC<PostsListProps> = ({ className, posts = [] }) => {
           <Button onClick={() => dispatch(openModal())}>{t.addPostButton}</Button>
         </div>
       )}
+      <ModalCreatePublication />
     </section>
   );
 };

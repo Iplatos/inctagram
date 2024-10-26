@@ -20,8 +20,7 @@ import {
   selectCreatePostModalOpen,
   setItemCropParams,
 } from '@/shared/api/modal-slice';
-import { useAppDispatch } from '@/shared/api/pretyped-redux-hooks';
-import { useAppSelector } from '@/shared/api/store';
+import { useAppDispatch, useAppSelector } from '@/shared/api/pretyped-redux-hooks';
 import { blobToBase64 } from '@/shared/helpers';
 import { useTranslation } from '@/shared/hooks';
 import { Modal, Typography } from '@/shared/ui';

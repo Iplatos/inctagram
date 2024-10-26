@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { ConfirmModal } from '@/features/confirm-modal';
 import { useLogoutMutation, useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { openModal } from '@/shared/api/modal-slice';
+import { useAppDispatch } from '@/shared/api/pretyped-redux-hooks';
 import { useLazyGetMeQuery } from '@/shared/api/users-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
@@ -20,13 +20,12 @@ import Link from 'next/link';
 
 import s from './sidebar.module.scss';
 
-import { Trans } from '../Trans/Trans';
 import { ModalCreatePublication } from '../modal-create-publication';
 
 export const Sidebar = () => {
   const t = useTranslation().t.common;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [open, setOpen] = useState(false);
 
@@ -104,7 +103,7 @@ export const Sidebar = () => {
         Log Out
       </Typography.Regular14>
 
-      <ConfirmModal
+      {/* <ConfirmModal
         cancelButtonTitle={t.modal.buttonNames.cancel}
         confirmButtonTitle={t.modal.buttonNames.confirm}
         disabled={isLogOutLoading}
@@ -121,7 +120,7 @@ export const Sidebar = () => {
             text={t.logOutModal.description}
           />
         </Typography.Regular14>
-      </ConfirmModal>
+      </ConfirmModal> */}
     </div>
   );
 };
