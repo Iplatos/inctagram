@@ -1,6 +1,14 @@
 import { PGWithCropAspectRatio, PGWithCropCropArea } from '@/entities/photo-gallery-with-crop';
-import { CCGramFilter, CCGramFilterOrString } from '@/shared/hooks';
+import { adjustArrayIndexByBoundaries } from '@/shared/helpers';
+import { CCGramFilterOrString } from '@/shared/hooks';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
+export enum CreatePostStatus {
+  Init,
+  Cropping,
+  Filter,
+  Publication,
+}
 
 // TODO: consider a source of truth for this type. Maybe choose PhotoGalleryItem or something like that
 export type CreatePostModalItem = {
@@ -14,15 +22,26 @@ export type CreatePostModalItem = {
 
 type InitialState = {
   description?: string;
+  error: null | string;
   items: CreatePostModalItem[];
   open: boolean;
+  postStatus: CreatePostStatus;
 };
 
 const initialState: InitialState = {
   description: '',
+  error: null,
   items: [],
   open: false,
+  postStatus: CreatePostStatus.Init,
 };
+
+const postCreationStatusPipeline: CreatePostStatus[] = [
+  CreatePostStatus.Init,
+  CreatePostStatus.Cropping,
+  CreatePostStatus.Filter,
+  CreatePostStatus.Publication,
+];
 
 export const modalSlice = createSlice({
   initialState,
@@ -30,26 +49,29 @@ export const modalSlice = createSlice({
   reducers: {
     addItem: (state, action: PayloadAction<CreatePostModalItem>) => {
       state.items.push(action.payload);
+      state.error = null;
     },
-    addItemFilter: (state, action: PayloadAction<{ filter: CCGramFilter; index: number }>) => {
-      const { filter, index } = action.payload;
-      const item = state.items[index];
+    closeModal: () => {
+      return initialState;
+    },
+    moveToNextStep: state => {
+      const currentStep = postCreationStatusPipeline.findIndex(el => el === state.postStatus);
 
-      if (item) {
-        item.filter = filter;
+      if (currentStep !== -1) {
+        state.postStatus = adjustArrayIndexByBoundaries(
+          postCreationStatusPipeline.length,
+          currentStep + 1
+        );
       }
     },
-    clearItems: state => {
-      state.items = [];
-    },
-    // TODO: maybe rename action to `resetAndClose` ?
-    closeModal: (state, action: PayloadAction<boolean | void>) => {
-      state.open = false;
-      const shouldClearItems = action.payload ?? true;
+    moveToPreviousStep: state => {
+      const currentStep = postCreationStatusPipeline.findIndex(el => el === state.postStatus);
 
-      if (shouldClearItems) {
-        state.items = [];
-        state.description = '';
+      if (currentStep !== -1) {
+        state.postStatus = adjustArrayIndexByBoundaries(
+          postCreationStatusPipeline.length,
+          currentStep - 1
+        );
       }
     },
     openModal: state => {
@@ -58,15 +80,11 @@ export const modalSlice = createSlice({
     removeItem: (state, { payload: index }: PayloadAction<number>) => {
       state.items.splice(index, 1);
     },
-    resetItemFilters: state => {
-      for (const item of state.items) {
-        if (item.filter !== 'normal') {
-          item.filter = 'normal';
-        }
-      }
-    },
     setDescription: (state, { payload }: PayloadAction<string>) => {
       state.description = payload;
+    },
+    setError: (state, { payload }: PayloadAction<null | string>) => {
+      state.error = payload;
     },
     setItemCropParams: (
       state,
@@ -80,28 +98,18 @@ export const modalSlice = createSlice({
       }
     },
   },
-  selectors: {
-    selectCreatePostModalDescription: state => state.description,
-    selectCreatePostModalItems: state => state.items,
-    selectCreatePostModalOpen: state => state.open,
-  },
 });
 
 export default modalSlice.reducer;
 
 export const {
   addItem,
-  addItemFilter,
-  clearItems,
   closeModal,
+  moveToNextStep,
+  moveToPreviousStep,
   openModal,
   removeItem,
-  resetItemFilters,
   setDescription,
+  setError,
   setItemCropParams,
 } = modalSlice.actions;
-export const {
-  selectCreatePostModalDescription,
-  selectCreatePostModalItems,
-  selectCreatePostModalOpen,
-} = modalSlice.selectors;

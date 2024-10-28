@@ -1,4 +1,4 @@
-import { ReactElement, useMemo, useState } from 'react';
+import { ChangeEvent, ReactElement, useState } from 'react';
 
 import {
   AddPhotoCard,
@@ -6,73 +6,43 @@ import {
   FilterPhotoCard,
   PGWithCropCropCompleteHandler,
 } from '@/features';
+import { ConfirmModal } from '@/features/confirm-modal';
 import { CreatePostCard } from '@/features/post';
 import {
+  CreatePostStatus,
   addItem,
-  clearItems,
   closeModal,
+  moveToNextStep,
+  moveToPreviousStep,
   removeItem,
-  resetItemFilters,
-  selectCreatePostModalDescription,
-  selectCreatePostModalItems,
-  selectCreatePostModalOpen,
   setDescription,
+  setError,
   setItemCropParams,
 } from '@/shared/api/modal-slice';
 import { useAppDispatch } from '@/shared/api/pretyped-redux-hooks';
 import { useAppSelector } from '@/shared/api/store';
 import { blobToBase64, getPhotoValidationSchema } from '@/shared/helpers';
 import { useTranslation } from '@/shared/hooks';
-import { Modal } from '@/shared/ui';
+import { Modal, Typography } from '@/shared/ui';
 
 import s from './modal-create-publication.module.scss';
 
 const PHOTO_MAX_SIZE = 20_971_520; // 20 Megabytes
 
-export enum PostStatus {
-  Init,
-  Cropping,
-  Filter,
-  Publication,
-}
+type ValidationErrorsMap = Parameters<typeof getPhotoValidationSchema>[1];
 
 export const ModalCreatePublication = () => {
   const { t } = useTranslation();
-
-  const dispatch = useAppDispatch();
-
-  const open: boolean = useAppSelector(selectCreatePostModalOpen);
-  const items = useAppSelector(selectCreatePostModalItems);
-  const description = useAppSelector(selectCreatePostModalDescription);
-
   const { descriptionCloseModal, labelCloseModal } = t.post.createPostCard;
   const tCommon = t.common.createPostModal.addPhotoCard;
 
-  const closeAndResetCreatePostModal = () => {
-    dispatch(closeModal());
-    setPostStatus(PostStatus.Init);
-    setError(null);
-    // open save draft modal
-  };
+  const dispatch = useAppDispatch();
 
-  // TODO: consider moving the status to the redux store to allow manual reopening of the modal in a certain state.
-  const [postStatus, setPostStatus] = useState<PostStatus>(PostStatus.Init);
-  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
-  const [error, setError] = useState<null | string>(null);
-  const photoValidationSchema = useMemo(
-    () =>
-      getPhotoValidationSchema(
-        {
-          allowedFormats: ['image/jpeg', 'image/png'] as const,
-          maxSize: PHOTO_MAX_SIZE,
-        },
-        {
-          tooBig: () => tCommon.errors.tooBig,
-          wrongFormat: () => tCommon.errors.wrongFormat,
-        }
-      ),
-    [tCommon]
-  );
+  const { description, error, items, open, postStatus } = useAppSelector(state => state.modal);
+
+  const [confirmModalOpen, setConformModalOpen] = useState(false);
+
+  const closeAndResetCreatePostModal = () => dispatch(closeModal());
 
   const handleCropComplete: PGWithCropCropCompleteHandler = (cropArea, cropAreaPixels, index) => {
     dispatch(setItemCropParams({ cropArea, cropAreaPixels, index }));
@@ -82,8 +52,44 @@ export const ModalCreatePublication = () => {
     console.log('Publication', { description });
   };
 
-  const steps: Record<PostStatus, () => ReactElement> = {
-    [PostStatus.Cropping]: () => (
+  const handleCreatePostModalClose = (open: boolean) => {
+    if (!open) {
+      if (postStatus !== CreatePostStatus.Init) {
+        setConformModalOpen(true);
+      } else {
+        closeAndResetCreatePostModal();
+      }
+    }
+  };
+
+  const selectNextCard = () => dispatch(moveToNextStep());
+  const selectPreviousCard = () => dispatch(moveToPreviousStep());
+
+  const handleFileInputChange =
+    (errorsMap?: ValidationErrorsMap) => async (e: ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+
+      if (file) {
+        const photoValidationSchema = getPhotoValidationSchema(
+          { allowedFormats: ['image/jpeg', 'image/png'] as const, maxSize: PHOTO_MAX_SIZE },
+          errorsMap
+        );
+
+        const result = photoValidationSchema.safeParse(file);
+
+        if (result.success) {
+          // TODO: consider using DataURL link instead of base64
+          const src = await blobToBase64(file);
+
+          dispatch(addItem({ filter: 'normal', src }));
+          selectNextCard();
+        } else {
+          dispatch(setError(result.error.issues[0].message));
+        }
+      }
+    };
+  const steps: Record<CreatePostStatus, () => ReactElement> = {
+    [CreatePostStatus.Cropping]: () => (
       <div className={s.cropPhotoCardWrapper}>
         <CropPhotoCard
           galleryProps={{
@@ -111,67 +117,44 @@ export const ModalCreatePublication = () => {
             },
             onZoomChange: (zoom, index) => dispatch(setItemCropParams({ index, zoom })),
           }}
-          onNextClick={() => setPostStatus(PostStatus.Filter)}
-          onPrevClick={() => {
-            dispatch(clearItems());
-            setPostStatus(PostStatus.Init);
-          }}
+          onNextClick={selectNextCard}
+          onPrevClick={() => handleCreatePostModalClose(false)}
           // TODO: don't forget to add locales to all cards fields!
           title={'Cropping'}
         />
       </div>
     ),
-    [PostStatus.Filter]: () => (
+    [CreatePostStatus.Filter]: () => (
       <div className={s.filterPhotoCardWrapper}>
         <FilterPhotoCard
           items={items}
           onFilterChange={(filter, index) => dispatch(setItemCropParams({ filter, index }))}
-          onNextClick={() => {
-            setPostStatus(PostStatus.Publication);
-          }}
-          onPrevClick={() => {
-            batch(() => {
-              dispatch(resetItemFilters());
-              setPostStatus(PostStatus.Cropping);
-            });
-          }}
+          onNextClick={selectNextCard}
+          onPrevClick={selectPreviousCard}
         />
       </div>
     ),
-    [PostStatus.Init]: () => (
+    [CreatePostStatus.Init]: () => (
       <div className={s.addPhotoCardWrapper}>
         <AddPhotoCard
           error={error}
           onClose={closeAndResetCreatePostModal}
-          onFileInputChange={async e => {
-            const file = e.target.files?.[0];
-
-            if (file) {
-              const result = photoValidationSchema.safeParse(file);
-
-              if (result.success) {
-              const src = await blobToBase64(file);
-
-              dispatch(addItem({ filter: 'normal', src }));
-              setPostStatus(PostStatus.Cropping);
-                setError(null);
-              } else {
-                setError(result.error.issues[0].message);
-              }
-            }
-          }}
+          onFileInputChange={handleFileInputChange({
+            tooBig: () => tCommon.errors.tooBig,
+            wrongFormat: () => tCommon.errors.wrongFormat,
+          })}
           primaryButtonTitle={t.editProfile.createPublication.primaryButtonTitle}
           title={t.editProfile.createPublication.title}
         />
       </div>
     ),
-    [PostStatus.Publication]: () => (
+    [CreatePostStatus.Publication]: () => (
       <div className={s.descriptionPhotoCardWrapper}>
         <CreatePostCard
           description={description}
           items={items}
           onBlur={({ description }) => dispatch(setDescription(description))}
-          onPrevClick={() => setPostStatus(PostStatus.Filter)}
+          onPrevClick={selectPreviousCard}
           onPublishPost={confirmPublicationPost}
           publishButtonLabel={t.post.createPostCard.postDescription.titleBtnSubmit}
           title={t.post.createPostCard.labelCard}
@@ -182,26 +165,24 @@ export const ModalCreatePublication = () => {
   };
 
   return (
-    <Modal
-      onOpenChange={open => {
-        if (!open) {
-          closeModalHandler();
-          setPostStatus(PostStatus.Init);
-        }
-      }}
-      open={open}
-    >
-      {steps[postStatus]()}
-      {/* <ConfirmModal
+    <>
+      <Modal onOpenChange={handleCreatePostModalClose} open={open}>
+        {steps[postStatus]()}
+      </Modal>
+
+      <ConfirmModal
         headerTitle={labelCloseModal}
-        onCancel={() => setOpenConfirmModal(false)}
-        onConfirm={closeModalHandler}
-        open={openConfirmModal}
+        onCancel={() => setConformModalOpen(false)}
+        onConfirm={() => {
+          dispatch(closeModal());
+          setConformModalOpen(false);
+        }}
+        open={confirmModalOpen}
       >
         <Typography.Regular16 className={s.confirmModal}>
           {descriptionCloseModal}
         </Typography.Regular16>
-      </ConfirmModal> */}
-    </Modal>
+      </ConfirmModal>
+    </>
   );
 };
