@@ -1,8 +1,8 @@
 import { PropsWithChildren, ReactElement } from 'react';
 
 import { NavBar } from '@/widgets/NavBar/NavBar';
+import { CreatePostModal } from '@/widgets/create-post-modal';
 import { Header } from '@/widgets/header';
-import { ModalCreatePublication } from '@/widgets/modal-create-publication';
 import { Sidebar } from '@/widgets/sidebar';
 import { NextPage } from 'next';
 
@@ -36,7 +36,7 @@ export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
       <Header />
       <main className={s.outerContainer}>
         <Sidebar />
-        <ModalCreatePublication onPublishPost={args => console.log(args)} />
+        <CreatePostModal onPublishPost={args => console.log(args)} />
 
         <div className={s.innerContainer}>{children}</div>
       </main>

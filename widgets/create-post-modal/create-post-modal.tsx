@@ -1,12 +1,17 @@
 import { FC, ReactElement, useState } from 'react';
 
-import { AddPhotoCard, CropPhotoCard, DescriptionPhotoCard, FilterPhotoCard } from '@/features';
-import { ConfirmModal } from '@/features/confirm-modal';
+import {
+  AddPhotoCard,
+  ConfirmModal,
+  CropPhotoCard,
+  DescriptionPhotoCard,
+  FilterPhotoCard,
+} from '@/features';
 import { CreatePostModalItem, CreatePostStatus } from '@/shared/api/modal-slice';
 import { useTranslation } from '@/shared/hooks';
 import { Modal, Typography } from '@/shared/ui';
 
-import s from './modal-create-publication.module.scss';
+import s from './create-post-modal.module.scss';
 
 import { useCreatePostModalHandle } from './use-create-post-modal-handle';
 
@@ -14,7 +19,7 @@ type CreatePostModalProps = {
   onPublishPost?: (data: { description?: string; items: CreatePostModalItem[] }) => void;
 };
 
-export const ModalCreatePublication: FC<CreatePostModalProps> = ({ onPublishPost }) => {
+export const CreatePostModal: FC<CreatePostModalProps> = ({ onPublishPost }) => {
   const t = useTranslation().t.common.createPostModal;
 
   const {
