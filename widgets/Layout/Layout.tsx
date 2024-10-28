@@ -36,7 +36,7 @@ export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
       <Header />
       <main className={s.outerContainer}>
         <Sidebar />
-        <ModalCreatePublication />
+        <ModalCreatePublication onPublishPost={args => console.log(args)} />
 
         <div className={s.innerContainer}>{children}</div>
       </main>

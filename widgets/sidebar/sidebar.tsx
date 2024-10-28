@@ -21,7 +21,6 @@ import Link from 'next/link';
 import s from './sidebar.module.scss';
 
 import { Trans } from '../Trans/Trans';
-import { ModalCreatePublication } from '../modal-create-publication';
 
 export const Sidebar = () => {
   const t = useTranslation().t.common;

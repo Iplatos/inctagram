@@ -1,93 +1,60 @@
-import { ChangeEvent, ReactElement, useState } from 'react';
+import { FC, ReactElement, useState } from 'react';
 
-import {
-  AddPhotoCard,
-  CropPhotoCard,
-  FilterPhotoCard,
-  PGWithCropCropCompleteHandler,
-} from '@/features';
+import { AddPhotoCard, CropPhotoCard, FilterPhotoCard } from '@/features';
 import { ConfirmModal } from '@/features/confirm-modal';
 import { CreatePostCard } from '@/features/post';
-import {
-  CreatePostStatus,
-  addItem,
-  closeModal,
-  moveToNextStep,
-  moveToPreviousStep,
-  removeItem,
-  setDescription,
-  setError,
-  setItemCropParams,
-} from '@/shared/api/modal-slice';
-import { useAppDispatch } from '@/shared/api/pretyped-redux-hooks';
-import { useAppSelector } from '@/shared/api/store';
-import { blobToBase64, getPhotoValidationSchema } from '@/shared/helpers';
+import { CreatePostModalItem, CreatePostStatus } from '@/shared/api/modal-slice';
 import { useTranslation } from '@/shared/hooks';
 import { Modal, Typography } from '@/shared/ui';
 
 import s from './modal-create-publication.module.scss';
 
-const PHOTO_MAX_SIZE = 20_971_520; // 20 Megabytes
+import { useCreatePostModalHandle } from './use-create-post-modal-handle';
 
-type ValidationErrorsMap = Parameters<typeof getPhotoValidationSchema>[1];
+type CreatePostModalProps = {
+  onPublishPost?: (data: { description?: string; items: CreatePostModalItem[] }) => void;
+};
 
-export const ModalCreatePublication = () => {
+export const ModalCreatePublication: FC<CreatePostModalProps> = ({ onPublishPost }) => {
   const { t } = useTranslation();
   const { descriptionCloseModal, labelCloseModal } = t.post.createPostCard;
   const tCommon = t.common.createPostModal.addPhotoCard;
 
-  const dispatch = useAppDispatch();
-
-  const { description, error, items, open, postStatus } = useAppSelector(state => state.modal);
+  const {
+    handlers: {
+      closeModal: closeCreatePostModal,
+      moveToNextStep,
+      moveToPreviousStep,
+      onAspectRatioChange,
+      onCropAreaChange,
+      onFileInputChange,
+      onFilterChange,
+      onItemAdd,
+      onItemRemove,
+      onZoomChange,
+      setDescription,
+    },
+    state: { description, error, items, open, postStatus },
+  } = useCreatePostModalHandle();
 
   const [confirmModalOpen, setConformModalOpen] = useState(false);
-
-  const closeAndResetCreatePostModal = () => dispatch(closeModal());
-
-  const handleCropComplete: PGWithCropCropCompleteHandler = (cropArea, cropAreaPixels, index) => {
-    dispatch(setItemCropParams({ cropArea, cropAreaPixels, index }));
-  };
-
-  const confirmPublicationPost = () => {
-    console.log('Publication', { description });
-  };
 
   const handleCreatePostModalClose = (open: boolean) => {
     if (!open) {
       if (postStatus !== CreatePostStatus.Init) {
         setConformModalOpen(true);
       } else {
-        closeAndResetCreatePostModal();
+        closeCreatePostModal();
       }
     }
   };
 
-  const selectNextCard = () => dispatch(moveToNextStep());
-  const selectPreviousCard = () => dispatch(moveToPreviousStep());
+  const handlePostDraftSave = () => {
+    // Add logic to save a draft post in the future
+    closeCreatePostModal();
+    setConformModalOpen(false);
+  };
 
-  const handleFileInputChange =
-    (errorsMap?: ValidationErrorsMap) => async (e: ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-
-      if (file) {
-        const photoValidationSchema = getPhotoValidationSchema(
-          { allowedFormats: ['image/jpeg', 'image/png'] as const, maxSize: PHOTO_MAX_SIZE },
-          errorsMap
-        );
-
-        const result = photoValidationSchema.safeParse(file);
-
-        if (result.success) {
-          // TODO: consider using DataURL link instead of base64
-          const src = await blobToBase64(file);
-
-          dispatch(addItem({ filter: 'normal', src }));
-          selectNextCard();
-        } else {
-          dispatch(setError(result.error.issues[0].message));
-        }
-      }
-    };
   const steps: Record<CreatePostStatus, () => ReactElement> = {
     [CreatePostStatus.Cropping]: () => (
       <div className={s.cropPhotoCardWrapper}>
@@ -101,23 +68,14 @@ export const ModalCreatePublication = () => {
                 original: src,
               };
             }),
-            onAspectRatioChange: (aspectRatio, index) =>
-              dispatch(setItemCropParams({ aspectRatio, index })),
-            onCropComplete: handleCropComplete,
+            onAspectRatioChange,
+            onCropComplete: onCropAreaChange,
             // TODO: add validation when adding an item via `CropPhotoCard`
-            onItemAdd: src => {
-              dispatch(addItem({ filter: 'normal', src }));
-
-              return true;
-            },
-            onItemRemove: index => {
-              dispatch(removeItem(index));
-
-              return true;
-            },
-            onZoomChange: (zoom, index) => dispatch(setItemCropParams({ index, zoom })),
+            onItemAdd,
+            onItemRemove,
+            onZoomChange,
           }}
-          onNextClick={selectNextCard}
+          onNextClick={moveToNextStep}
           onPrevClick={() => handleCreatePostModalClose(false)}
           // TODO: don't forget to add locales to all cards fields!
           title={'Cropping'}
@@ -128,9 +86,9 @@ export const ModalCreatePublication = () => {
       <div className={s.filterPhotoCardWrapper}>
         <FilterPhotoCard
           items={items}
-          onFilterChange={(filter, index) => dispatch(setItemCropParams({ filter, index }))}
-          onNextClick={selectNextCard}
-          onPrevClick={selectPreviousCard}
+          onFilterChange={onFilterChange}
+          onNextClick={moveToNextStep}
+          onPrevClick={moveToPreviousStep}
         />
       </div>
     ),
@@ -138,8 +96,8 @@ export const ModalCreatePublication = () => {
       <div className={s.addPhotoCardWrapper}>
         <AddPhotoCard
           error={error}
-          onClose={closeAndResetCreatePostModal}
-          onFileInputChange={handleFileInputChange({
+          onClose={closeCreatePostModal}
+          onFileInputChange={onFileInputChange({
             tooBig: () => tCommon.errors.tooBig,
             wrongFormat: () => tCommon.errors.wrongFormat,
           })}
@@ -153,9 +111,9 @@ export const ModalCreatePublication = () => {
         <CreatePostCard
           description={description}
           items={items}
-          onBlur={({ description }) => dispatch(setDescription(description))}
-          onPrevClick={selectPreviousCard}
-          onPublishPost={confirmPublicationPost}
+          onBlur={({ description }) => setDescription(description)}
+          onPrevClick={moveToPreviousStep}
+          onPublishPost={() => onPublishPost?.({ description, items })}
           publishButtonLabel={t.post.createPostCard.postDescription.titleBtnSubmit}
           title={t.post.createPostCard.labelCard}
           userName={'UserName'}
@@ -173,10 +131,7 @@ export const ModalCreatePublication = () => {
       <ConfirmModal
         headerTitle={labelCloseModal}
         onCancel={() => setConformModalOpen(false)}
-        onConfirm={() => {
-          dispatch(closeModal());
-          setConformModalOpen(false);
-        }}
+        onConfirm={handlePostDraftSave}
         open={confirmModalOpen}
       >
         <Typography.Regular16 className={s.confirmModal}>
