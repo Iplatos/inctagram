@@ -1,8 +1,7 @@
 import { FC, ReactElement, useState } from 'react';
 
-import { AddPhotoCard, CropPhotoCard, FilterPhotoCard } from '@/features';
+import { AddPhotoCard, CropPhotoCard, DescriptionPhotoCard, FilterPhotoCard } from '@/features';
 import { ConfirmModal } from '@/features/confirm-modal';
-import { CreatePostCard } from '@/features/post';
 import { CreatePostModalItem, CreatePostStatus } from '@/shared/api/modal-slice';
 import { useTranslation } from '@/shared/hooks';
 import { Modal, Typography } from '@/shared/ui';
@@ -108,7 +107,7 @@ export const ModalCreatePublication: FC<CreatePostModalProps> = ({ onPublishPost
     ),
     [CreatePostStatus.Publication]: () => (
       <div className={s.descriptionPhotoCardWrapper}>
-        <CreatePostCard
+        <DescriptionPhotoCard
           description={description}
           editPostFormProps={{
             textFieldProps: {

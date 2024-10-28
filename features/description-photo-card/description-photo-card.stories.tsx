@@ -1,14 +1,14 @@
 import { getPGWithCropMockItems } from '@/features/photo-gallery-with-crop/photo-gallery-with-crop.stories';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { CreatePostCard } from '.';
+import { DescriptionPhotoCard } from './description-photo-card';
 
 const meta = {
   argTypes: {
     onPrevClick: { control: 'action' },
     onPublishPost: { control: 'action' },
   },
-  component: CreatePostCard,
+  component: DescriptionPhotoCard,
   decorators: [
     Story => (
       <div style={{ height: 'calc(-2rem + 100vh)' }}>
@@ -17,7 +17,8 @@ const meta = {
     ),
   ],
   tags: ['autodocs'],
-} satisfies Meta<typeof CreatePostCard>;
+  title: 'FEATURES/DescriptionPhotoCard',
+} satisfies Meta<typeof DescriptionPhotoCard>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

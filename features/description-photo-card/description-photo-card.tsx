@@ -8,10 +8,10 @@ import { Button, IconButton, ModalCard, Typography, UserBanner } from '@/shared/
 import clsx from 'clsx';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
-import s from './create-post-card.module.scss';
+import s from './description-photo-card.module.scss';
 import modalCardS from '@/shared/ui/modal-card/modal-card.module.scss';
 
-type Props = {
+type DescriptionPhotoCardProps = {
   avatar?: StaticImport | string;
   description?: string;
   editPostFormProps?: Pick<EditPostFormProps, 'textFieldProps'>;
@@ -26,7 +26,7 @@ type Props = {
 };
 
 // TODO: add `disabled` styles and behavior
-export const CreatePostCard = ({
+export const DescriptionPhotoCard = ({
   avatar,
   description,
   editPostFormProps,
@@ -38,7 +38,7 @@ export const CreatePostCard = ({
   textLimit,
   title,
   userName,
-}: Props) => {
+}: DescriptionPhotoCardProps) => {
   const formId = useId();
 
   return (
