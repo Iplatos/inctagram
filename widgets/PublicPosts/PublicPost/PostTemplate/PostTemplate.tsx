@@ -1,6 +1,5 @@
 import ReactTimeAgo from 'react-time-ago';
 
-import { PhotoGallery } from '@/features';
 import { Post } from '@/shared/types/public.types';
 import { Button, Typography } from '@/shared/ui';
 import Image from 'next/image';
@@ -39,7 +38,7 @@ export const PostTemplate = (props: Props) => {
             alt={'post'}
             className={s.image}
             height={height}
-            src={post.images[0].url}
+            src={post.images[0]?.url}
             width={width}
           />
         </Link>

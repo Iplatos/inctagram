@@ -13,6 +13,45 @@ import { TestPostModal } from '@/widgets/TestPostModal/TestPostModal';
 import { Header } from '@/widgets/header';
 import { UserProfile } from '@/widgets/user-profile';
 
+type PublicPostByIdProps = {
+  post: PublicPostByIdResponse;
+  userPosts: PublicPostsByUserIdResponse;
+  userProfile: PublicProfileByIdResponse;
+};
+
+const PublicPostById = (props: PublicPostByIdProps) => {
+  const [open, setOpen] = useState(true);
+
+  const { post, userPosts, userProfile } = props;
+
+  const urls = userPosts.items.flatMap(item =>
+    item.images.map(image => {
+      return {
+        src: image.url,
+      };
+    })
+  );
+
+  const avatar = { url: userProfile.avatars[0]?.url };
+
+  return (
+    <>
+      <Header />
+      {/* <TestPostModal open={open} post={post} setOpen={setOpen} /> */}
+      {/* <div style={{ marginLeft: '100px', marginTop: '100px' }}> */}
+      <UserProfile
+        aboutMe={userProfile.aboutMe}
+        avatarProps={avatar ?? null}
+        posts={urls}
+        userName={userProfile.userName}
+      />
+      {/* </div> */}
+    </>
+  );
+};
+
+export default PublicPostById;
+
 export const getServerSideProps = wrapper.getServerSideProps(store => async context => {
   const { postId } = context.query;
 
@@ -44,42 +83,3 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async cont
 
   return { props: { post, userPosts, userProfile } };
 });
-
-type Props = {
-  post: PublicPostByIdResponse;
-  userPosts: PublicPostsByUserIdResponse;
-  userProfile: PublicProfileByIdResponse;
-};
-
-const PublicPostById = (props: Props) => {
-  const [open, setOpen] = useState(true);
-
-  const { post, userPosts, userProfile } = props;
-
-  const urls = userPosts.items.flatMap(item =>
-    item.images.map(image => {
-      return {
-        src: image.url,
-      };
-    })
-  );
-
-  const avatar = { url: userProfile.avatars[0]?.url };
-
-  return (
-    <>
-      <Header />
-      <TestPostModal open={open} post={post} setOpen={setOpen} />
-      <div style={{ marginLeft: '100px', marginTop: '100px' }}>
-        <UserProfile
-          aboutMe={userProfile.aboutMe}
-          avatarProps={avatar ?? null}
-          posts={urls}
-          userName={userProfile.userName}
-        />
-      </div>
-    </>
-  );
-};
-
-export default PublicPostById;

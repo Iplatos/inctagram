@@ -12,30 +12,12 @@ import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { PublicPosts } from '@/widgets/PublicPosts/PublicPosts';
 import { Header } from '@/widgets/header';
 
-export const getStaticProps = wrapper.getStaticProps(store => async () => {
-  const users = await store.dispatch(PublicUserApi.endpoints.getTotalUsersCount.initiate());
-
-  const posts = await store.dispatch(
-    publicPostsApi.endpoints.getPublicPosts.initiate({ pageSize: 4 })
-  );
-
-  await Promise.all(store.dispatch(getRunningQueriesThunk()));
-
-  return {
-    props: {
-      posts,
-      users,
-    },
-    revalidate: 60,
-  };
-});
-
-type Props = {
+type PublicPageProps = {
   posts: PublicAPIResponse<PublicPostsResponse>;
   users: PublicAPIResponse<PublicUsersResponse>;
 };
 
-function PublicPage(props: Props) {
+function PublicPage(props: PublicPageProps) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -57,3 +39,21 @@ function PublicPage(props: Props) {
 }
 
 export default PublicPage;
+
+export const getStaticProps = wrapper.getStaticProps(store => async () => {
+  const users = await store.dispatch(PublicUserApi.endpoints.getTotalUsersCount.initiate());
+
+  const posts = await store.dispatch(
+    publicPostsApi.endpoints.getPublicPosts.initiate({ pageSize: 4 })
+  );
+
+  await Promise.all(store.dispatch(getRunningQueriesThunk()));
+
+  return {
+    props: {
+      posts,
+      users,
+    },
+    revalidate: 60,
+  };
+});
