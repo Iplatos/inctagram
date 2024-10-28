@@ -9,7 +9,7 @@ import {
 } from '@/features';
 import { CreatePostModalItem, CreatePostStatus } from '@/shared/api/modal-slice';
 import { useTranslation } from '@/shared/hooks';
-import { Modal, Typography } from '@/shared/ui';
+import { Button, Modal, Typography } from '@/shared/ui';
 
 import s from './create-post-modal.module.scss';
 
@@ -51,11 +51,13 @@ export const CreatePostModal: FC<CreatePostModalProps> = ({ onPublishPost }) => 
     }
   };
 
-  const handlePostDraftSave = () => {
-    // Add logic to save a draft post in the future
+  const handlePostDraftDiscard = () => {
     closeCreatePostModal();
     setConformModalOpen(false);
   };
+
+  // Add logic to save a draft post in the future
+  const handlePostDraftSave = handlePostDraftDiscard;
 
   const steps: Record<CreatePostStatus, () => ReactElement> = {
     [CreatePostStatus.Cropping]: () => (
@@ -144,8 +146,12 @@ export const CreatePostModal: FC<CreatePostModalProps> = ({ onPublishPost }) => 
         confirmButtonTitle={t.saveDraftSubModal.buttons.confirm}
         headerTitle={t.saveDraftSubModal.title}
         onCancel={() => setConformModalOpen(false)}
-        onConfirm={handlePostDraftSave}
+        onConfirm={handlePostDraftDiscard}
         open={confirmModalOpen}
+        renderCancelButton={({ onClick, ...props }) => (
+          // Add custom behavior instead of standard `onCancel` handler
+          <Button onClick={handlePostDraftSave} {...props} />
+        )}
       >
         <Typography.Regular16 className={s.confirmModal}>
           {t.saveDraftSubModal.message}
