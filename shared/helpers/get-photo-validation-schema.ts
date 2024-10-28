@@ -21,20 +21,23 @@ const getDefaultValidationErrorsMap = ({
     `The photo must have one of this formats: ${allowedFormats}. Provided format: ${file.type}.`,
 });
 
-export const getPhotoValidationSchema = (config: PhotoValidationConfig, errorsMap: ErrorsMap) => {
+export const getPhotoValidationSchema = (config: PhotoValidationConfig, errorsMap?: ErrorsMap) => {
   const { allowedFormats, maxSize } = config;
 
-  errorsMap = { ...getDefaultValidationErrorsMap(config), ...errorsMap };
+  const resolvedErrorsMap = {
+    ...getDefaultValidationErrorsMap(config),
+    ...errorsMap,
+  };
 
   let schema = z.custom<File>().refine(
     ({ type }) => z.enum(allowedFormats).safeParse(type).success,
-    value => ({ message: errorsMap.wrongFormat?.(value) })
+    value => ({ message: resolvedErrorsMap.wrongFormat?.(value) })
   );
 
   if (maxSize) {
     schema = schema.refine(
       ({ size }) => z.number().max(maxSize).safeParse(size).success,
-      value => ({ message: errorsMap?.tooBig?.(value) })
+      value => ({ message: resolvedErrorsMap.tooBig?.(value) })
     );
   }
 
