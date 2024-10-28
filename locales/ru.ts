@@ -210,10 +210,49 @@ export const ru = {
     },
     createPostModal: {
       addPhotoCard: {
+        buttons: {
+          primary: 'Загрузить с Устройства',
+          secondary: 'Открыть черновик',
+        },
         errors: {
           tooBig: '<bold>Ошибка!</bold> Размер фото должен быть менее 20 MB (Мегабайт)',
           wrongFormat: '<bold>Ошибка!</bold> Формат загружаемого фото должен быть PNG или JPEG',
         },
+        title: 'Добавить Фото',
+      },
+      cropPhotoCard: {
+        buttons: {
+          next: 'Далее',
+        },
+        title: 'Обрезка',
+      },
+      filterPhotoCard: {
+        buttons: {
+          next: 'Далее',
+        },
+        title: 'Фильтры',
+      },
+      publishPhotoCard: {
+        buttons: {
+          publish: 'Опубликовать',
+        },
+        descriptionField: {
+          errors: {
+            tooBig: 'Максимальное количество символов 500',
+          },
+          label: 'Добавить описание публикации',
+          placeholder: 'Описание...',
+        },
+        title: 'Публикация',
+      },
+      saveDraftSubModal: {
+        buttons: {
+          cancel: 'Сохранить Черновик',
+          confirm: 'Отменить',
+        },
+        message:
+          'Вы действительно хотите отменить создание публикации? В случае отмены все данные будут утеряны',
+        title: 'Закрыть',
       },
     },
     datePicker: {
@@ -249,13 +288,6 @@ export const ru = {
     deleteAvatarModal: {
       message: 'Вы уверены, что хотите удалить это фото?',
       title: 'Удалить Фото',
-    },
-    draft: {
-      cancel: 'Отменить',
-      confirm: 'Сохранить черновик',
-      message:
-        'Вы действительно хотите отменить создание публикации? Когда окно будет закрыто все удалится',
-      title: 'Закрыть',
     },
 
     photoSlider: {
@@ -319,19 +351,6 @@ export const ru = {
   },
 
   myProfile: {
-    addPostModal: {
-      postDescriptionCard: {
-        labelCard: 'Публикация',
-        postDescription: {
-          errors: {
-            tooBig: 'Максимальное количество символов 500',
-          },
-          label: 'Добавить описание публикации',
-          placeholder: 'Текстовое поле',
-          titleBtnSubmit: 'Опубликовать',
-        },
-      },
-    },
     settingsButton: 'Настройки Профиля',
     statistics: {
       followers: { label: 'подписчики' },
@@ -383,20 +402,6 @@ export const ru = {
       viewAnswersBth: {
         close: 'Скрыть ответы',
         open: 'Показать ответы',
-      },
-    },
-    createPostCard: {
-      descriptionCloseModal:
-        'Вы действительно хотите закрыть создание публикации?\n' + 'Если закрыть все будет удалено',
-      labelCard: 'Публикация',
-      labelCloseModal: 'Отменить создание поста',
-      postDescription: {
-        errors: {
-          tooBig: 'Максимальное количество символов 500',
-        },
-        label: 'Добавить описание публикации',
-        placeholder: 'Текстовое поле',
-        titleBtnSubmit: 'Опубликовать',
       },
     },
     editPostModalCard: {

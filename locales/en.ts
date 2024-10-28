@@ -214,10 +214,49 @@ export const en: LocaleType = {
     },
     createPostModal: {
       addPhotoCard: {
+        buttons: {
+          primary: 'Select from Device',
+          secondary: 'Open Draft',
+        },
         errors: {
           tooBig: '<bold>Error!</bold> Photo size must be less than 20 MB (MegaBytes)',
           wrongFormat: '<bold>Error!</bold> The format of the uploaded photo must be PNG or JPEG',
         },
+        title: 'Add Photo',
+      },
+      cropPhotoCard: {
+        buttons: {
+          next: 'Next',
+        },
+        title: 'Cropping',
+      },
+      filterPhotoCard: {
+        buttons: {
+          next: 'Next',
+        },
+        title: 'Filters',
+      },
+      publishPhotoCard: {
+        buttons: {
+          publish: 'Publish',
+        },
+        descriptionField: {
+          errors: {
+            tooBig: 'Maximum number of characters 500',
+          },
+          label: 'Add publication description',
+          placeholder: 'Description...',
+        },
+        title: 'Publication',
+      },
+      saveDraftSubModal: {
+        buttons: {
+          cancel: 'Save draft',
+          confirm: 'Discard',
+        },
+        message:
+          'Do you really want to close the creation of a publication? If you close everything will be deleted',
+        title: 'Close',
       },
     },
     datePicker: {
@@ -254,15 +293,6 @@ export const en: LocaleType = {
       message: 'Are you sure you want to delete the photo?',
       title: 'Delete Photo',
     },
-
-    draft: {
-      cancel: 'Discard',
-      confirm: 'Save draft',
-      message:
-        'Do you really want to close the creation of a publication? If you close everything will be deleted',
-      title: 'Сlose',
-    },
-
     photoSlider: {
       deletePhoto: {
         cancelButtonTitle: 'Cancel',
@@ -323,19 +353,6 @@ export const en: LocaleType = {
   },
 
   myProfile: {
-    addPostModal: {
-      postDescriptionCard: {
-        labelCard: 'Publication',
-        postDescription: {
-          errors: {
-            tooBig: 'Maximum number of characters 500',
-          },
-          label: 'Add publication descriptions',
-          placeholder: 'Text-area',
-          titleBtnSubmit: 'Publish',
-        },
-      },
-    },
     settingsButton: 'Profile Settings',
     statistics: {
       followers: { label: 'followers' },
@@ -387,21 +404,6 @@ export const en: LocaleType = {
       viewAnswersBth: {
         close: 'View Answer',
         open: 'Show Answers',
-      },
-    },
-    createPostCard: {
-      descriptionCloseModal:
-        'Do you really want to close the creation of a publication? If you close everything will' +
-        ' be deleted',
-      labelCard: 'Publication',
-      labelCloseModal: 'Canceled create post',
-      postDescription: {
-        errors: {
-          tooBig: 'Maximum number of characters 500',
-        },
-        label: 'Add publication descriptions',
-        placeholder: 'Text-area',
-        titleBtnSubmit: 'Publish',
       },
     },
     editPostModalCard: {

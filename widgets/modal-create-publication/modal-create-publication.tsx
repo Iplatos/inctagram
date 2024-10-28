@@ -16,9 +16,7 @@ type CreatePostModalProps = {
 };
 
 export const ModalCreatePublication: FC<CreatePostModalProps> = ({ onPublishPost }) => {
-  const { t } = useTranslation();
-  const { descriptionCloseModal, labelCloseModal } = t.post.createPostCard;
-  const tCommon = t.common.createPostModal.addPhotoCard;
+  const t = useTranslation().t.common.createPostModal;
 
   const {
     handlers: {
@@ -75,10 +73,10 @@ export const ModalCreatePublication: FC<CreatePostModalProps> = ({ onPublishPost
             onItemRemove,
             onZoomChange,
           }}
+          nextButtonTitle={t.cropPhotoCard.buttons.next}
           onNextClick={moveToNextStep}
           onPrevClick={() => handleCreatePostModalClose(false)}
-          // TODO: don't forget to add locales to all cards fields!
-          title={'Cropping'}
+          title={t.cropPhotoCard.title}
         />
       </div>
     ),
@@ -86,9 +84,11 @@ export const ModalCreatePublication: FC<CreatePostModalProps> = ({ onPublishPost
       <div className={s.filterPhotoCardWrapper}>
         <FilterPhotoCard
           items={items}
+          nextButtonTitle={t.filterPhotoCard.buttons.next}
           onFilterChange={onFilterChange}
           onNextClick={moveToNextStep}
           onPrevClick={moveToPreviousStep}
+          title={t.filterPhotoCard.title}
         />
       </div>
     ),
@@ -98,11 +98,11 @@ export const ModalCreatePublication: FC<CreatePostModalProps> = ({ onPublishPost
           error={error}
           onClose={closeCreatePostModal}
           onFileInputChange={onFileInputChange({
-            tooBig: () => tCommon.errors.tooBig,
-            wrongFormat: () => tCommon.errors.wrongFormat,
+            tooBig: () => t.addPhotoCard.errors.tooBig,
+            wrongFormat: () => t.addPhotoCard.errors.wrongFormat,
           })}
-          primaryButtonTitle={t.editProfile.createPublication.primaryButtonTitle}
-          title={t.editProfile.createPublication.title}
+          primaryButtonTitle={t.addPhotoCard.buttons.primary}
+          title={t.addPhotoCard.title}
         />
       </div>
     ),
@@ -110,12 +110,19 @@ export const ModalCreatePublication: FC<CreatePostModalProps> = ({ onPublishPost
       <div className={s.descriptionPhotoCardWrapper}>
         <CreatePostCard
           description={description}
+          editPostFormProps={{
+            textFieldProps: {
+              error: t.publishPhotoCard.descriptionField.errors.tooBig,
+              label: t.publishPhotoCard.descriptionField.label,
+              placeholder: t.publishPhotoCard.descriptionField.placeholder,
+            },
+          }}
           items={items}
           onBlur={({ description }) => setDescription(description)}
           onPrevClick={moveToPreviousStep}
           onPublishPost={() => onPublishPost?.({ description, items })}
-          publishButtonLabel={t.post.createPostCard.postDescription.titleBtnSubmit}
-          title={t.post.createPostCard.labelCard}
+          publishButtonLabel={t.publishPhotoCard.buttons.publish}
+          title={t.publishPhotoCard.title}
           userName={'UserName'}
         />
       </div>
@@ -129,13 +136,15 @@ export const ModalCreatePublication: FC<CreatePostModalProps> = ({ onPublishPost
       </Modal>
 
       <ConfirmModal
-        headerTitle={labelCloseModal}
+        cancelButtonTitle={t.saveDraftSubModal.buttons.cancel}
+        confirmButtonTitle={t.saveDraftSubModal.buttons.confirm}
+        headerTitle={t.saveDraftSubModal.title}
         onCancel={() => setConformModalOpen(false)}
         onConfirm={handlePostDraftSave}
         open={confirmModalOpen}
       >
         <Typography.Regular16 className={s.confirmModal}>
-          {descriptionCloseModal}
+          {t.saveDraftSubModal.message}
         </Typography.Regular16>
       </ConfirmModal>
     </>

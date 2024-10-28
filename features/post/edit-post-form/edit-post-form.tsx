@@ -1,9 +1,8 @@
 import { ComponentPropsWithoutRef, ElementType, ReactNode, forwardRef, useEffect } from 'react';
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 
-import { useTranslation } from '@/shared/hooks';
 import { PropsWithoutChildren, Replace } from '@/shared/types/helpers';
-import { Typography } from '@/shared/ui';
+import { TextFieldProps, Typography } from '@/shared/ui';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { clsx } from 'clsx';
@@ -17,7 +16,7 @@ const DevTool: ElementType = dynamic(
   { ssr: false }
 );
 
-type EditPostFormProps = Replace<
+export type EditPostFormProps = Replace<
   PropsWithoutChildren<ComponentPropsWithoutRef<'form'>>,
   {
     actions?: ReactNode;
@@ -27,11 +26,18 @@ type EditPostFormProps = Replace<
     onBlur?: (data: FormValues) => void;
     onSubmit: SubmitHandler<FormValues>;
     onSubmitError?: SubmitErrorHandler<FormValues>;
+    textFieldProps?: Pick<TextFieldProps, 'error' | 'label' | 'placeholder'>;
     textLimit?: number;
   }
 >;
 
 type FormValues = z.infer<ReturnType<typeof getEditPostFormSchema>>;
+
+const defaultTextFieldProps = {
+  error: 'Maximum number of characters 500',
+  label: 'Add publication description',
+  placeholder: 'Description...',
+} satisfies EditPostFormProps['textFieldProps'];
 
 const getEditPostFormSchema = (max: number, message: string) =>
   z.object({ description: z.string().max(max, { message }) });
@@ -47,22 +53,18 @@ export const EditPostForm = forwardRef<HTMLFormElement, EditPostFormProps>(
       onBlur,
       onSubmit,
       onSubmitError,
+      textFieldProps,
       textLimit = 500,
       ...rest
     },
     ref
   ) => {
-    const { t } = useTranslation();
-
-    const editPostSchema = getEditPostFormSchema(
-      textLimit,
-      t.myProfile.addPostModal.postDescriptionCard.postDescription.errors.tooBig
-    );
+    const resolvedTextFieldProps = { ...defaultTextFieldProps, ...textFieldProps };
+    const editPostSchema = getEditPostFormSchema(textLimit, resolvedTextFieldProps.error);
 
     const {
       control,
       formState: { isSubmitSuccessful, isSubmitting },
-      getValues,
       handleSubmit,
       reset,
       trigger,
@@ -73,7 +75,7 @@ export const EditPostForm = forwardRef<HTMLFormElement, EditPostFormProps>(
       resolver: zodResolver(editPostSchema),
     });
 
-    // Initiate a check when the component is mounted to immediately generate an error
+    // Initiate a validation when the component is mounted to immediately generate an error
     //  if `description.length` >= `textLimit`
     useEffect(() => {
       trigger('description');
@@ -109,9 +111,9 @@ export const EditPostForm = forwardRef<HTMLFormElement, EditPostFormProps>(
             className={s.field}
             control={control}
             disabled={isSubmitting || disabled}
-            label={t.myProfile.addPostModal.postDescriptionCard.postDescription.label}
+            label={resolvedTextFieldProps.label}
             name={'description'}
-            placeholder={t.myProfile.addPostModal.postDescriptionCard.postDescription.placeholder}
+            placeholder={resolvedTextFieldProps.placeholder}
           />
           <Typography.Regular12 className={s.charsCounter}>
             {`${description.length}/${textLimit}`}

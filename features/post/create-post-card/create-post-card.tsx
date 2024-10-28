@@ -2,9 +2,8 @@ import { useId } from 'react';
 
 import { ArrowIOSBack } from '@/assets/icons/arrow-ios-back';
 import { PhotoGallery } from '@/features/photo-gallery';
-import { EditPostForm } from '@/features/post/edit-post-form';
+import { EditPostForm, EditPostFormProps } from '@/features/post/edit-post-form';
 import { CreatePostModalItem } from '@/shared/api/modal-slice';
-import { useTranslation } from '@/shared/hooks';
 import { Button, IconButton, ModalCard, Typography, UserBanner } from '@/shared/ui';
 import clsx from 'clsx';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
@@ -15,6 +14,7 @@ import modalCardS from '@/shared/ui/modal-card/modal-card.module.scss';
 type Props = {
   avatar?: StaticImport | string;
   description?: string;
+  editPostFormProps?: Pick<EditPostFormProps, 'textFieldProps'>;
   items: CreatePostModalItem[];
   onBlur?: (data: { description: string }) => void;
   onPrevClick?: () => void;
@@ -29,6 +29,7 @@ type Props = {
 export const CreatePostCard = ({
   avatar,
   description,
+  editPostFormProps,
   items,
   onBlur,
   onPrevClick,
@@ -38,13 +39,7 @@ export const CreatePostCard = ({
   title,
   userName,
 }: Props) => {
-  const { t } = useTranslation();
   const formId = useId();
-
-  const {
-    labelCard,
-    postDescription: { titleBtnSubmit },
-  } = t.post.createPostCard;
 
   return (
     <ModalCard className={s.cardRoot}>
@@ -79,6 +74,7 @@ export const CreatePostCard = ({
             onBlur={onBlur}
             onSubmit={() => onPublishPost?.()}
             textLimit={textLimit}
+            {...editPostFormProps}
           />
         </ModalCard.Content>
       </div>
