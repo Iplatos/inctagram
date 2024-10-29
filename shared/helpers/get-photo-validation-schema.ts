@@ -31,13 +31,13 @@ export const getPhotoValidationSchema = (config: PhotoValidationConfig, errorsMa
 
   let schema = z.custom<File>().refine(
     ({ type }) => z.enum(allowedFormats).safeParse(type).success,
-    value => ({ message: resolvedErrorsMap.wrongFormat?.(value) })
+    value => ({ message: resolvedErrorsMap.wrongFormat(value) })
   );
 
   if (maxSize) {
     schema = schema.refine(
       ({ size }) => z.number().max(maxSize).safeParse(size).success,
-      value => ({ message: resolvedErrorsMap.tooBig?.(value) })
+      value => ({ message: resolvedErrorsMap.tooBig(value) })
     );
   }
 

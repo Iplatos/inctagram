@@ -4,7 +4,7 @@ import { BookmarkOutline } from '@/assets/icons/bookmark-outline';
 import { HeartFilled } from '@/assets/icons/heart-filled';
 import { HeartOutlined } from '@/assets/icons/heart-outlined';
 import { PaperPlaneOutline } from '@/assets/icons/paper-plane-outline';
-import { compartmentalize, extractInitials } from '@/shared/helpers';
+import { compartmentalize, getAbbreviation } from '@/shared/helpers';
 import { useDateFormat } from '@/shared/hooks/useDateFormat';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Avatar, IconButton, Typography } from '@/shared/ui';
@@ -42,7 +42,7 @@ export const PostInfoSection = (props: PostInfoProps) => {
               .map((item, index) => (
                 <Avatar
                   classes={{ avatarRoot: s.icon }}
-                  fallback={extractInitials(item.userName)}
+                  fallback={getAbbreviation(item.userName)}
                   key={index}
                   size={'small'}
                   src={item.avatar}

@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react';
 
-import { extractInitials } from '@/shared/helpers';
+import { getAbbreviation } from '@/shared/helpers';
 import useRelativeTime from '@/shared/hooks/useRelativeTime';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Avatar, Typography } from '@/shared/ui';
@@ -57,7 +57,7 @@ export const PostComment = (props: PostCommentProps) => {
       <div className={cls.sectionComment}>
         <Avatar
           classes={{ avatarRoot: s.commentAvatar }}
-          fallback={extractInitials(userName)}
+          fallback={getAbbreviation(userName)}
           size={'small'}
           src={avatar}
         />

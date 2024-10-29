@@ -10,7 +10,7 @@ export * from './roundNumber';
 export * from './get-cropped-image-data-URL';
 export * from './get-photo-gallery-default-crop-props';
 export * from './onCropDone';
-export * from './extractInitials';
+export * from './get-abbreviation';
 export * from './compartmentalize';
 export * from './sleep';
 export * from './get-photo-validation-schema';

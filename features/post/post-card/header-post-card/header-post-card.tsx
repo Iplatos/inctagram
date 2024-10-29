@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 
 import { ThreeDots } from '@/assets/icons/three-dots';
-import { extractInitials } from '@/shared/helpers';
+import { getAbbreviation } from '@/shared/helpers';
 import { Avatar, IconButton, Typography } from '@/shared/ui';
 import { DropDown } from '@/shared/ui/drop-down-menu';
 
@@ -24,7 +24,7 @@ export const HeaderPostCard = (props: HeaderPostCardProps) => {
   return (
     <div className={s.header}>
       <div style={{ alignItems: 'center', display: 'flex', gap: '12px' }}>
-        <Avatar fallback={extractInitials(userName)} size={'small'} src={avatar} />
+        <Avatar fallback={getAbbreviation(userName)} size={'small'} src={avatar} />
         <Typography.H3>{userName}</Typography.H3>
       </div>
       {/*<UserBanner userName={userName} avatar={avatar} />*/}
