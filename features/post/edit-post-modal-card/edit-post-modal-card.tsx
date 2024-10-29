@@ -75,7 +75,7 @@ export const EditPostModalCard = (props: Props) => {
       <Card.Content className={s.content} ignoreHeader>
         <PhotoGallery additionalClass={s.gallery} items={img.map(i => ({ original: i }))} />
         <div className={s.form}>
-          <UserBanner avatar={avatar} name={userName} />
+          <UserBanner avatarProps={{ src: avatar }} userName={userName} />
           <EditPostForm
             actions={
               <Button className={s.submitBtn} onClick={handleButtonClick}>

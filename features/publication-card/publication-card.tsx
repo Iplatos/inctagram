@@ -42,7 +42,7 @@ export const PublicationCard = (props: PublicationCardProps) => {
         <ModalCard.Content>
           {/* <div className={s.form} style={{ background: 'green' }}> */}
           {/* <UserBanner avatar={meResponse?.data.avatar?.url} name={meResponse?.data.username} /> */}
-          <UserBanner name={'Username'} />
+          <UserBanner userName={'Username'} />
 
           <EditPostForm classNameActions={s.actions} onSubmit={handleSubmit} ref={formRef} />
           {/* </div> */}

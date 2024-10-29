@@ -5,24 +5,27 @@ import { UserBanner } from './user-banner';
 
 const meta: Meta<typeof UserBanner> = {
   argTypes: {
-    actions: {
-      control: false,
-      description: 'Actions or components to be rendered at the end of the user banner.',
+    avatarProps: {
+      description: 'Props passed to the underlying `Avatar` component',
+      table: { type: { summary: "Omit<AvatarProps, 'alt' | 'classes'>" } },
     },
-    avatar: {
-      description: 'URL of the user avatar image.',
+    link: {
+      description:
+        'If passed, the nested avatar and username will be wrapped with a `Next/Link` component.',
+      table: { type: { summary: 'string' } },
     },
-    avatarSize: {
-      description: "Size of the avatar image in 'large' | 'medium' | 'small'",
-    },
-    className: {
-      description: 'Additional CSS class names for styling.',
-    },
-    name: {
+    userName: {
       description: 'Name of the user.',
     },
   },
   component: UserBanner,
+  decorators: [
+    Story => (
+      <div style={{ maxWidth: '20ch' }}>
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs'],
   title: 'UI/UserBanner',
 };
@@ -30,17 +33,17 @@ const meta: Meta<typeof UserBanner> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = { args: { name: 'UserName' } };
+export const Default: Story = { args: { userName: 'UserName' } };
 
-export const WithAction: Story = {
+export const WithLink: Story = {
   args: {
-    actions: <Button>Your component will be placed here.</Button>,
-    name: 'UserName',
+    link: '/',
+    userName: 'UserName',
   },
 };
 
 export const LongUserName: Story = {
   args: {
-    name: 'UserWithVeryLongNameAndSurname',
+    userName: 'Lorem ipsum dolor sit amet consectetur adipisicing elit',
   },
 };

@@ -67,7 +67,11 @@ export const DescriptionPhotoCard = ({
           }))}
         />
         <ModalCard.Content className={clsx(s.content, modalCardS.contentScrollable)}>
-          <UserBanner avatar={avatar} className={s.userBanner} name={userName} />
+          <UserBanner
+            avatarProps={{ src: avatar }}
+            classes={{ userBannerRoot: s.userBanner }}
+            userName={userName}
+          />
           <EditPostForm
             description={description}
             id={formId}
