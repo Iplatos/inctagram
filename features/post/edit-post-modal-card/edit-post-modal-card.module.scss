@@ -1,50 +1,39 @@
-$max-card-width: 962px;
-$max-card-height: 560px;
+@use '../../../styles/mixins' as *;
+@use '../../../styles/helpers' as *;
 
-.root {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  width: $max-card-width;
-  height: $max-card-height;
+.cardRoot {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .header {
-  display: flex;
-  align-items: center;
   justify-content: space-between;
-
-  &:not(:last-child) {
-    margin-bottom: 0;
-  }
 }
 
-.content {
+.contentWrapper {
+  overflow: hidden;
   display: grid;
   grid-template-areas: 'gallery details';
   grid-template-columns: 1fr 1fr;
 
-  width: 100%;
   height: 100%;
-  padding: 0;
+
+  .content {
+    @include flex($justify: null, $align: null, $direction: column);
+
+    grid-area: details;
+    gap: 24px;
+    height: 100%;
+    padding-top: 24px;
+  }
 }
 
 .gallery {
-  --aspect-ratio: 1;
-
-  max-width: 490px;
-  height: 100%;
+  grid-area: gallery;
 }
 
-.form {
-  grid-area: details;
-  max-width: 470px;
-  padding: 12px 0 0;
-}
-
-.confirmModal {
-  width: 100%;
-}
-
-.actions {
+.submitButton {
   align-self: end;
+  margin-top: auto;
 }
