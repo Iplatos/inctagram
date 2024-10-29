@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import { ThreeDots } from '@/assets/icons/three-dots';
 import { getAbbreviation } from '@/shared/helpers';
-import { Avatar, IconButton, Typography } from '@/shared/ui';
+import { Avatar, IconButton, Typography, UserBanner } from '@/shared/ui';
 import { DropDown } from '@/shared/ui/drop-down-menu';
 
 import s from './header-post-card.module.scss';
@@ -23,11 +23,7 @@ export const HeaderPostCard = (props: HeaderPostCardProps) => {
 
   return (
     <div className={s.header}>
-      <div style={{ alignItems: 'center', display: 'flex', gap: '12px' }}>
-        <Avatar fallback={getAbbreviation(userName)} size={'small'} src={avatar} />
-        <Typography.H3>{userName}</Typography.H3>
-      </div>
-      {/*<UserBanner userName={userName} avatar={avatar} />*/}
+      <UserBanner avatarProps={{ src: avatar }} userName={userName} />
       {itemsDropDown && (
         <DropDown.Menu
           align={'end'}

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import { BookmarkOutline } from '@/assets/icons/bookmark-outline';
 import { HeartFilled } from '@/assets/icons/heart-filled';

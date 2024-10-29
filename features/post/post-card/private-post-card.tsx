@@ -101,16 +101,12 @@ export const PrivatePostCard = (props: PrivatePostCardProps) => {
               </div>
             )}
           />
-          <Button
-            className={s.btnSubmit}
-            disabled={submitIsDisabled}
-            type={'submit'}
-            variant={'text'}
-          >
+          <Button disabled={submitIsDisabled} type={'submit'} variant={'text'}>
             {t.post.card.addNewComment.submit}
           </Button>
         </form>
       }
+      classes={{ commentsDetails: s.commentDetailsPrivate }}
       commentsSection={comments.map((comment, index) => {
         return <PrivatePostComment addNewAnswer={addNewAnswerHandler} {...comment} key={index} />;
       })}

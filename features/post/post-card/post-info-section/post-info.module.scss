@@ -1,11 +1,10 @@
 @use '../../../../styles/mixins' as *;
 @use '../../../../styles/helpers' as *;
 
-.root{
+.root {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-height: rem(80);
 }
 
 .actionButtons {

@@ -1,10 +1,11 @@
 import { ReactNode } from 'react';
 
-import { PhotoGallery } from '@/features';
-import { Card } from '@/shared/ui';
+import { PhotoGallery } from '@/features/photo-gallery';
+import { ModalCard } from '@/shared/ui';
 import clsx from 'clsx';
 
 import s from './post-card.module.scss';
+import modalCardS from '@/shared/ui/modal-card/modal-card.module.scss';
 
 export type PostSlot = 'commentsDetails' | 'commentsSection' | 'formSection' | 'headerSection';
 export type PostClasses = { [P in PostSlot]?: string };
@@ -16,11 +17,14 @@ type PostCardProps = {
   headerSection: ReactNode;
   infoSection: ReactNode;
 };
-``;
 
-export const PostCard = (props: PostCardProps) => {
-  const { addNewCommentForm, classes = {}, commentsSection, headerSection, infoSection } = props;
-
+export const PostCard = ({
+  addNewCommentForm,
+  classes = {},
+  commentsSection,
+  headerSection,
+  infoSection,
+}: PostCardProps) => {
   const cls = getClassNames(classes);
 
   const img = [
@@ -30,21 +34,24 @@ export const PostCard = (props: PostCardProps) => {
   ];
 
   return (
-    <Card.Root className={s.root}>
-      <Card.Content className={s.content}>
-        <div className={s.gallery}>
-          <PhotoGallery additionalClass={s.slider} items={img.map(i => ({ original: i }))} />
-        </div>
-        <div className={s.postDetails}>
-          <Card.Header className={cls.headerSection}>{headerSection}</Card.Header>
-          <Card.Content className={cls.commentsSection}>{commentsSection}</Card.Content>
-          <Card.Content className={cls.commentsDetails}>{infoSection}</Card.Content>
+    <ModalCard.Root className={s.cardRoot}>
+      <div className={s.outerWrapper}>
+        <PhotoGallery additionalClass={s.gallery} items={img.map(i => ({ original: i }))} />
+
+        <div className={s.contentWrapper}>
+          <ModalCard.Header>{headerSection}</ModalCard.Header>
+          <ModalCard.Content className={clsx(cls.commentsSection, modalCardS.contentScrollable)}>
+            {commentsSection}
+          </ModalCard.Content>
+          <ModalCard.Content className={cls.commentsDetails}>{infoSection}</ModalCard.Content>
           {addNewCommentForm && (
-            <Card.Content className={s.addNewCommentSection}>{addNewCommentForm}</Card.Content>
+            <ModalCard.Content className={s.addNewCommentSection}>
+              {addNewCommentForm}
+            </ModalCard.Content>
           )}
         </div>
-      </Card.Content>
-    </Card.Root>
+      </div>
+    </ModalCard.Root>
   );
 };
 

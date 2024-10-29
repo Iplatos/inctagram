@@ -10,6 +10,13 @@ import { FriendPrivatePostCard } from './friend-post-card';
 
 const meta = {
   component: PostCard,
+  decorators: [
+    Story => (
+      <div style={{ height: `calc(100vh - 2rem)` }}>
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs'],
   title: 'features/post/PostCard',
 } satisfies Meta<typeof PostCard>;
@@ -153,7 +160,6 @@ export const Public: Story<PublicPostCardProps> = {
     likesCount: 100,
     userName: 'Patrik',
   },
-
   render: function Render(args: PublicPostCardProps) {
     return <PublicPostCard {...args} />;
   },
