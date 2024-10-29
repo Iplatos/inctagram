@@ -19,8 +19,6 @@ const DevTool: ElementType = dynamic(
 export type EditPostFormProps = Replace<
   PropsWithoutChildren<ComponentPropsWithoutRef<'form'>>,
   {
-    actions?: ReactNode;
-    classNameActions?: string;
     description?: string;
     disabled?: boolean;
     onBlur?: (data: FormValues) => void;
@@ -45,9 +43,7 @@ const getEditPostFormSchema = (max: number, message: string) =>
 export const EditPostForm = forwardRef<HTMLFormElement, EditPostFormProps>(
   (
     {
-      actions,
       className,
-      classNameActions,
       description: initialDescription = '',
       disabled,
       onBlur,
@@ -118,7 +114,6 @@ export const EditPostForm = forwardRef<HTMLFormElement, EditPostFormProps>(
           <Typography.Regular12 className={s.charsCounter}>
             {`${description.length}/${textLimit}`}
           </Typography.Regular12>
-          <div className={classNameActions}>{actions}</div>
         </form>
       </>
     );
