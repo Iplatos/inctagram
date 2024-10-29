@@ -1,98 +1,76 @@
 @use '../../../styles/helpers' as *;
 @use '../../../styles/mixins' as *;
 
-.comment {
+.commentRoot {
   display: flex;
   gap: rem(12);
 
-  &Avatar {
+  .avatar {
     flex-shrink: 0;
-  }
-
-  &Body {
-    display: flex;
-    flex-direction: column;
-
-    &Info {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-
-      p,
-      span {
-        user-select: none;
-        color: var(--color-light-900);
-      }
-    }
+    margin-top: em(4);
   }
 }
 
-.bottomSection {
-  cursor: pointer;
-  display: flex;
-  gap: 12px;
-  align-items: center;
+.infoSection {
+  @include inline-flex($justify: null);
 
-  p {
-    user-select: none;
-    color: var(--color-light-900);
+  gap: 12px;
+  margin-top: 6px;
+
+  &Item {
+    --info-section-item-color: var(--color-light-900);
+
+    color: var(--info-section-item-color);
+  }
+
+  &Action {
+    @extend .infoSectionItem;
+
+    @include hover {
+      --info-section-item-color: var(--color-light-700);
+
+      text-decoration: underline;
+    }
+
+    cursor: pointer;
   }
 }
 
 .primaryAction {
   margin-top: 8px;
-  margin-left: 8px;
+  margin-left: 16px;
 }
 
 .answers {
   &Section {
-    margin-bottom: 8px;
-    padding-left: 48px;
+    margin-top: 8px;
+  }
+
+  &OpenButton {
+    @extend .infoSectionAction;
+
+    position: relative;
+    margin-left: 36px;
+
+    &::before {
+      content: '';
+
+      position: absolute;
+      top: 50%;
+      right: 100%;
+
+      width: 24px;
+      height: 1px;
+      margin-inline: 12px;
+
+      background-color: var(--info-section-item-color);
+    }
   }
 
   &List {
-    display: flex;
-    flex-direction: column;
+    @include flex($justify: null, $align: null, $direction: column);
+
     gap: 10px;
+    margin-top: 16px;
   }
-}
-
-.btnOpenAnswers {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-
-  p {
-    width: 24px;
-    height: 1px;
-    border-bottom: 1px solid var(--color-light-900);
-  }
-
-  &Title {
-    @include hover {
-      color: var(--color-light-700);
-      text-decoration: underline;
-    }
-
-    cursor: pointer;
-    user-select: none;
-    color: var(--color-light-900);
-  }
-}
-
-.textBth {
-  @include hover {
-    text-decoration: underline;
-
-    span {
-      color: var(--color-light-700);
-    }
-  }
-
-  height: 18px;
-  padding: 0;
-}
-
-.answerTextWidth {
-  max-width: 294px;
 }

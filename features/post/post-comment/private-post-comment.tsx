@@ -1,9 +1,7 @@
-import React from 'react';
-
 import { HeartFilled } from '@/assets/icons/heart-filled';
 import { HeartOutlined } from '@/assets/icons/heart-outlined';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button, IconButton, Typography } from '@/shared/ui';
+import { IconButton, Typography } from '@/shared/ui';
 
 import s from '@/features/post/post-comment/post-comment.module.scss';
 
@@ -21,52 +19,41 @@ export type PrivatePostCommentProps = {
   toggleIsLiked?: (isLiked: boolean) => void;
 } & PostCommentProps;
 
-export const PrivatePostComment = (props: PrivatePostCommentProps) => {
-  const { addNewAnswer, answers, isLiked, ...res } = props;
+export const PrivatePostComment = ({
+  addNewAnswer,
+  answers,
+  isLiked,
+  ...props
+}: PrivatePostCommentProps) => {
   const { t } = useTranslation();
 
-  const addNewAnswerForComment = () => addNewAnswer?.(res.id, res.userName, res.commentId);
+  const addNewAnswerForComment = () => addNewAnswer?.(props.id, props.userName, props.commentId);
 
   return (
     <PostComment
       answersCount={answers?.length}
       answersSection={answers?.map((answer, index) => (
-        <PostComment
-          bottomSection={
-            <Button
-              className={s.textBth}
-              component={'span'}
-              onClick={() => addNewAnswer?.(answer.id, answer.userName, answer.commentId)}
-              variant={'text'}
-            >
-              <Typography.Semibold12>{t.post.comment.answer}</Typography.Semibold12>
-            </Button>
-          }
-          key={index}
-          primaryAction={
-            <IconButton className={s.iconBth} size={'small'}>
-              {answer.isLiked ? <HeartFilled style={{ fill: 'red' }} /> : <HeartOutlined />}
-            </IconButton>
-          }
-          {...answer}
-        />
+        <PrivatePostComment key={index} {...answer} />
       ))}
-      bottomSection={
-        <Button
-          className={s.textBth}
-          component={'span'}
-          onClick={addNewAnswerForComment}
-          variant={'text'}
-        >
-          <Typography.Semibold12>{t.post.comment.answer}</Typography.Semibold12>
-        </Button>
-      }
+      infoSectionRender={({ likes, time }) => (
+        <>
+          {time}
+          {likes}
+          <Typography.Semibold12
+            className={s.infoSectionAction}
+            component={'button'}
+            onClick={addNewAnswerForComment}
+          >
+            {t.post.comment.answer}
+          </Typography.Semibold12>
+        </>
+      )}
       primaryAction={
-        <IconButton className={s.iconBth} size={'small'}>
+        <IconButton size={'small'}>
           {isLiked ? <HeartFilled style={{ fill: 'red' }} /> : <HeartOutlined />}
         </IconButton>
       }
-      {...res}
+      {...props}
     />
   );
 };

@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import { ReactElement, ReactNode, useState } from 'react';
 
 import { getAbbreviation } from '@/shared/helpers';
 import useRelativeTime from '@/shared/hooks/useRelativeTime';
@@ -8,23 +8,23 @@ import clsx from 'clsx';
 
 import s from './post-comment.module.scss';
 
-export type CommentSlot =
-  | 'answerSection'
-  | 'bottomSection'
-  | 'commentRoot'
-  | 'primaryAction'
-  | 'sectionComment';
+export type CommentSlot = 'answersSection' | 'commentRoot' | 'infoSection' | 'primaryAction';
 export type CommentClasses = { [P in CommentSlot]?: string };
+
+export type InfoSectionRender = (elements: {
+  likes: ReactElement | null;
+  time: ReactElement;
+}) => ReactNode;
 
 export type PostCommentProps = {
   answersCount?: number;
   answersSection?: ReactNode;
   avatar?: string;
-  bottomSection?: ReactNode;
   classes?: CommentClasses;
   commentId: string;
   createdAt: string;
   id: string;
+  infoSectionRender?: InfoSectionRender;
   likesCount: number;
   primaryAction?: ReactNode;
   text: string;
@@ -36,9 +36,9 @@ export const PostComment = (props: PostCommentProps) => {
     answersCount,
     answersSection,
     avatar,
-    bottomSection,
     classes = {},
     createdAt,
+    infoSectionRender = ({ likes, time }) => [time, likes],
     likesCount,
     primaryAction,
     text,
@@ -54,51 +54,56 @@ export const PostComment = (props: PostCommentProps) => {
 
   return (
     <div className={cls.commentRoot}>
-      <div className={cls.sectionComment}>
-        <Avatar
-          classes={{ avatarRoot: s.commentAvatar }}
-          fallback={getAbbreviation(userName)}
-          size={'small'}
-          src={avatar}
-        />
-        <div className={s.commentBody}>
-          <div className={s.commentBodyText}>
-            <Typography.Bold14>{userName}</Typography.Bold14>
-            <Typography.Regular14>{' ' + text}</Typography.Regular14>
-          </div>
-          <div className={s.commentBodyInfo}>
-            <Typography.SmallText>{relativeTime}</Typography.SmallText>
-            {likesCount > 0 && (
-              <Typography.Semibold12>
+      <Avatar
+        classes={{ avatarRoot: s.avatar }}
+        fallback={getAbbreviation(userName).slice(0, 2)}
+        size={'small'}
+        src={avatar}
+      />
+      <div>
+        <Typography.Regular14 component={'p'}>
+          <Typography.Bold14>{userName}</Typography.Bold14> {text}
+        </Typography.Regular14>
+
+        <div className={cls.infoSection}>
+          {infoSectionRender({
+            likes: likesCount ? (
+              <Typography.Semibold12 className={s.infoSectionItem}>
                 {`${likesCount > 1 ? t.post.comment.likes : t.post.comment.like}: ${likesCount}`}
               </Typography.Semibold12>
-            )}
-            <div className={cls.bottomSection}>{bottomSection}</div>
-          </div>
+            ) : null,
+            time: (
+              <Typography.SmallText className={s.infoSectionItem}>
+                {relativeTime}
+              </Typography.SmallText>
+            ),
+          })}
         </div>
-        <div className={cls.primaryAction}>{primaryAction}</div>
-      </div>
-      {!!answersCount && (
-        <div className={cls.answerSection}>
-          <div className={s.btnOpenAnswers}>
-            <p></p>
-            <Typography.Semibold12 className={s.btnOpenAnswersTitle} onClick={setOpenHandler}>
+
+        {!!answersCount && (
+          <div className={cls.answersSection}>
+            <Typography.Semibold12
+              className={s.answersOpenButton}
+              component={'button'}
+              onClick={setOpenHandler}
+            >
               {`${
                 open ? t.post.comment.viewAnswersBth.close : t.post.comment.viewAnswersBth.open
               } (${answersCount ?? 0})`}
             </Typography.Semibold12>
+            <div className={s.answersList}>{open && answersSection}</div>
           </div>
-          <div className={s.answersList}>{open && answersSection}</div>
-        </div>
-      )}
+        )}
+      </div>
+
+      <div className={cls.primaryAction}>{primaryAction}</div>
     </div>
   );
 };
 
 const getClassNames = (classes: CommentClasses): Required<CommentClasses> => ({
-  answerSection: clsx(s.answersSection, classes.answerSection),
-  bottomSection: clsx(s.bottomSection, classes.bottomSection),
-  commentRoot: clsx(s.root, classes.commentRoot),
+  answersSection: clsx(s.answersSection, classes.answersSection),
+  commentRoot: clsx(s.commentRoot, classes.commentRoot),
+  infoSection: clsx(s.infoSection, classes.infoSection),
   primaryAction: clsx(s.primaryAction, classes.primaryAction),
-  sectionComment: clsx(s.comment, classes.sectionComment),
 });

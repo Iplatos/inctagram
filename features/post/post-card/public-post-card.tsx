@@ -8,18 +8,16 @@ import {
   PublicPostCommentProps,
 } from '@/features/post/post-comment/public-post-comment';
 
-import s from './post-card.module.scss';
-
 export type PublicPostCardProps = {
   avatar?: string;
-  comments: [] | PublicPostCommentProps[];
+  comments?: PublicPostCommentProps[];
   createdAt: string;
-  likesCount: number;
+  likesCount?: number;
   userName: string;
 };
 
 export const PublicPostCard = (props: PublicPostCardProps) => {
-  const { comments, createdAt, likesCount, userName } = props;
+  const { comments = [], createdAt, likesCount, userName } = props;
   const icons = [
     {
       avatar: '',
@@ -37,10 +35,6 @@ export const PublicPostCard = (props: PublicPostCardProps) => {
 
   return (
     <PostCard
-      classes={{
-        commentsDetails: s.commentsDetailsPublick,
-        commentsSection: s.commentsSectionPublick,
-      }}
       commentsSection={comments.map((comment, index) => (
         <PublicPostComment {...comment} key={index} />
       ))}

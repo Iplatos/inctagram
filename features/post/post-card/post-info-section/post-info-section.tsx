@@ -18,11 +18,11 @@ type PostInfoProps = {
     avatar: string;
     userName: string;
   }[];
-  likesCount: number;
+  likesCount?: number;
 };
 
 export const PostInfoSection = (props: PostInfoProps) => {
-  const { actions, createdAt, icons, likesCount } = props;
+  const { actions, createdAt, icons, likesCount = 0 } = props;
   const { t } = useTranslation();
 
   const formattedDate = useDateFormat(
