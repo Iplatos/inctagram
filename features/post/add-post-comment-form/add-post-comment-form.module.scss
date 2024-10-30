@@ -1,0 +1,24 @@
+@use '../../../styles/mixins' as *;
+@use '../../../styles/helpers' as *;
+
+.root {
+  // It is needed to adjust the layout of the submit button as it uses `ModalCard` styles.
+  --icon-button-padding: 12px;
+
+  @include flex($justify: space-between);
+
+  .textField {
+    &Container {
+      margin-bottom: 0;
+    }
+
+    &Input {
+      padding-left: 0;
+      border: none;
+
+      :is(:hover, :focus) {
+        border: none;
+      }
+    }
+  }
+}
