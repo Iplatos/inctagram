@@ -14,3 +14,4 @@ export * from './get-abbreviation';
 export * from './compartmentalize';
 export * from './sleep';
 export * from './get-photo-validation-schema';
+export * from './get-random-integer';
