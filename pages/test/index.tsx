@@ -1,24 +1,17 @@
 import { useState } from 'react';
 
-import { CloseIcon } from '@/assets/icons/close';
-import {
-  FriendPrivatePostCard,
-  ProfilePrivatePostCard,
-  PublicPostCard,
-} from '@/features/post/post-card';
-import { PrivatePostCommentProps } from '@/features/post/post-comment/private-post-comment';
-import { PublicPostCommentProps } from '@/features/post/post-comment/public-post-comment';
+import { PostCommentProps, PrivatePostCommentProps } from '@/features/post/post-comment';
 import {
   PrivateFriendPostModal,
   PrivateProfilePostModal,
   PublicPostModal,
 } from '@/features/post/post-modal';
-import { Button, IconButton, SelectBox } from '@/shared/ui';
+import { Button, SelectBox } from '@/shared/ui';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
 
 function Test() {
-  const comments: PublicPostCommentProps[] = [
+  const comments: PostCommentProps[] = [
     {
       answers: [
         {

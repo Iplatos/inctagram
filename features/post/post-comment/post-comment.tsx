@@ -16,41 +16,47 @@ export type InfoSectionRender = (elements: {
   time: ReactElement;
 }) => ReactNode;
 
-export type PostCommentProps = {
-  answersCount?: number;
-  answersSection?: ReactNode;
+export type RenderAnswer<T extends PostCommentType> = (answer: T) => ReactNode;
+
+export type PostCommentType = {
   avatar?: string;
-  classes?: CommentClasses;
   commentId: string;
   createdAt: string;
   id: string;
-  infoSectionRender?: InfoSectionRender;
   likesCount: number;
-  primaryAction?: ReactNode;
   text: string;
   userName: string;
 };
 
-export const PostComment = (props: PostCommentProps) => {
-  const {
-    answersCount,
-    answersSection,
-    avatar,
-    classes = {},
-    createdAt,
-    infoSectionRender = ({ likes, time }) => [time, likes],
-    likesCount,
-    primaryAction,
-    text,
-    userName,
-  } = props;
+export type PostCommentProps<Answer extends PostCommentType = PostCommentType> = {
+  answers?: Answer[];
+  classes?: CommentClasses;
+  infoSectionRender?: InfoSectionRender;
+  primaryAction?: ReactNode;
+  renderAnswer?: RenderAnswer<Answer>;
+} & PostCommentType;
+
+export const PostComment = <Answer extends PostCommentType>({
+  answers,
+  avatar,
+  classes = {},
+  createdAt,
+  infoSectionRender = ({ likes, time }) => [time, likes],
+  likesCount,
+  primaryAction,
+  renderAnswer,
+  text,
+  userName,
+}: PostCommentProps<Answer>) => {
   const relativeTime = useRelativeTime(createdAt);
-  const { t } = useTranslation();
+  const t = useTranslation().t.post.comment;
 
   const cls = getClassNames(classes);
 
   const [open, setOpen] = useState<boolean>(false);
   const setOpenHandler = () => setOpen(!open);
+
+  const RenderAnswer = renderAnswer ?? PostComment;
 
   return (
     <div className={cls.commentRoot}>
@@ -69,7 +75,7 @@ export const PostComment = (props: PostCommentProps) => {
           {infoSectionRender({
             likes: likesCount ? (
               <Typography.Semibold12 className={s.infoSectionItem}>
-                {`${likesCount > 1 ? t.post.comment.likes : t.post.comment.like}: ${likesCount}`}
+                {`${likesCount > 1 ? t.likes : t.like}: ${likesCount}`}
               </Typography.Semibold12>
             ) : null,
             time: (
@@ -80,18 +86,23 @@ export const PostComment = (props: PostCommentProps) => {
           })}
         </div>
 
-        {!!answersCount && (
+        {!!answers?.length && (
           <div className={cls.answersSection}>
             <Typography.Semibold12
               className={s.answersOpenButton}
               component={'button'}
               onClick={setOpenHandler}
             >
-              {`${
-                open ? t.post.comment.viewAnswersBth.close : t.post.comment.viewAnswersBth.open
-              } (${answersCount ?? 0})`}
+              {`${open ? t.viewAnswersBth.close : t.viewAnswersBth.open} (${answers.length})`}
             </Typography.Semibold12>
-            <div className={s.answersList}>{open && answersSection}</div>
+
+            {open && (
+              <div className={s.answersList}>
+                {answers?.map((answer, index) => {
+                  return <RenderAnswer key={index} {...answer} />;
+                })}
+              </div>
+            )}
           </div>
         )}
       </div>

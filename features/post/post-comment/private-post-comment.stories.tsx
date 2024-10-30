@@ -1,45 +1,61 @@
+import { getRandomInteger } from '@/shared/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { PrivatePostComment, PrivatePostCommentProps } from './private-post-comment';
-import { getPublicPostComments } from './public-post-comment.stories';
+import { PrivatePostComment, PrivatePostCommentType } from './private-post-comment';
+import { getMockPublicPostComments as getMockPublicPC } from './public-post-comment.stories';
 
 const meta = {
   component: PrivatePostComment,
-  excludeStories: ['getPrivatePostComments'],
+  decorators: [
+    Story => (
+      <div style={{ maxWidth: '50ch' }}>
+        <Story />
+      </div>
+    ),
+  ],
+  excludeStories: ['getMockPrivatePostComments', 'getMockPrivatePostCommentsWithAnswers'],
   tags: ['autodocs'],
   title: 'FEATURES/post/PrivatePostComment',
-} satisfies Meta<PrivatePostCommentProps>;
+} satisfies Meta<typeof PrivatePostComment>;
 
-export const getPrivatePostComments = (count: number, withAvatar: boolean = true) =>
-  getPublicPostComments(count, withAvatar).map<PrivatePostCommentProps>(
-    ({ answers, ...comment }) => ({
-      ...comment,
-      answers: answers?.map(answer => ({
-        ...answer,
-        isLiked: Math.random() > 0.5 ? true : false,
-      })),
-      isLiked: Math.random() > 0.5 ? true : false,
-    })
-  );
+export const getMockPrivatePostComments = (...args: Parameters<typeof getMockPublicPC>) =>
+  getMockPublicPC(...args).map<PrivatePostCommentType>(comment => ({
+    ...comment,
+    isLiked: Math.random() > 0.5,
+    likesCount: getRandomInteger(0, 10),
+  }));
+
+export const getMockPrivatePostCommentsWithAnswers = (
+  ...args: Parameters<typeof getMockPrivatePostComments>
+) =>
+  getMockPrivatePostComments(...args).map<
+    PrivatePostCommentType & { answers: PrivatePostCommentType[] }
+  >(comment => ({
+    ...comment,
+    answers: getMockPrivatePostComments(...args),
+  }));
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const NoAvatar: Story = {
   args: {
-    ...getPrivatePostComments(1, false)[0],
+    ...getMockPrivatePostComments(1, false)[0],
+    isLiked: true,
+    likesCount: 10,
   },
 };
 
 export const NoAnswers: Story = {
   args: {
-    ...getPrivatePostComments(1)[0],
+    ...NoAvatar.args,
+    ...getMockPrivatePostComments(1)[0],
   },
 };
 
 export const WithAnswers: Story = {
   args: {
     ...NoAnswers.args,
-    answers: getPrivatePostComments(5),
+    answers: getMockPrivatePostComments(5),
   },
 };

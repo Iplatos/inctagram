@@ -1,28 +1,31 @@
 import { HeartFilled } from '@/assets/icons/heart-filled';
 import { HeartOutlined } from '@/assets/icons/heart-outlined';
-import { useTranslation } from '@/shared/hooks/useTranslation';
+import { useTranslation } from '@/shared/hooks';
+import { Replace } from '@/shared/types/helpers';
 import { IconButton, Typography } from '@/shared/ui';
 
 import s from '@/features/post/post-comment/post-comment.module.scss';
 
-import { PostComment, PostCommentProps } from './post-comment';
+import { PostComment, PostCommentProps, PostCommentType } from './post-comment';
 
-export type PrivateAnswer = {
+export type PrivatePostCommentType = {
   isLiked: boolean;
   likesCount: number;
-} & Omit<PostCommentProps, 'answersSection, answersCount'>;
+} & PostCommentType;
 
-export type PrivatePostCommentProps = {
-  addNewAnswer?: (id: string, userName: string, commentId: string) => void;
-  answers?: PrivateAnswer[];
-  isLiked: boolean;
-  toggleIsLiked?: (isLiked: boolean) => void;
-} & PostCommentProps;
+export type PrivatePostCommentProps = Replace<
+  PostCommentProps<PrivatePostCommentType>,
+  {
+    addNewAnswer?: (id: string, userName: string, commentId: string) => void;
+    isLiked: boolean;
+    onLikeClick?: () => void;
+  }
+>;
 
 export const PrivatePostComment = ({
   addNewAnswer,
-  answers,
   isLiked,
+  onLikeClick,
   ...props
 }: PrivatePostCommentProps) => {
   const { t } = useTranslation();
@@ -31,10 +34,6 @@ export const PrivatePostComment = ({
 
   return (
     <PostComment
-      answersCount={answers?.length}
-      answersSection={answers?.map((answer, index) => (
-        <PrivatePostComment key={index} {...answer} />
-      ))}
       infoSectionRender={({ likes, time }) => (
         <>
           {time}
@@ -49,10 +48,11 @@ export const PrivatePostComment = ({
         </>
       )}
       primaryAction={
-        <IconButton size={'small'}>
+        <IconButton onClick={onLikeClick} size={'small'}>
           {isLiked ? <HeartFilled style={{ fill: 'red' }} /> : <HeartOutlined />}
         </IconButton>
       }
+      renderAnswer={PrivatePostComment}
       {...props}
     />
   );
