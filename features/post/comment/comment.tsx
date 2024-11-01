@@ -1,13 +1,13 @@
 import { MouseEventHandler, ReactNode, useState } from 'react';
 
-import { PostCommentInfoSectionItem } from '@/entities/post-comment';
+import { PostCommentInfoSectionItem } from '@/entities/post';
 import { getAbbreviation, transformTaggedString } from '@/shared/helpers';
 import { useTranslation } from '@/shared/hooks';
 import useRelativeTime from '@/shared/hooks/useRelativeTime';
 import { Avatar, Typography } from '@/shared/ui';
 import clsx from 'clsx';
 
-import s from './post-comment.module.scss';
+import s from './comment.module.scss';
 
 export type PostCommentSlot =
   | 'answersList'

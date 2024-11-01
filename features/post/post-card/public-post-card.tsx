@@ -1,9 +1,9 @@
 import React from 'react';
 
+import { PostComment, PostCommentProps } from '@/features/post/comment';
 import { HeaderPostCard } from '@/features/post/post-card/header-post-card/header-post-card';
 import { PostCard } from '@/features/post/post-card/post-card';
 import { PostInfoSection } from '@/features/post/post-card/post-info-section';
-import { PostComment, PostCommentProps } from '@/features/post/post-comment/post-comment';
 
 export type PublicPostCardProps = {
   avatar?: string;

@@ -1,10 +1,9 @@
 import { HeartFilled } from '@/assets/icons/heart-filled';
 import { HeartOutlined } from '@/assets/icons/heart-outlined';
+import { PostComment, PostCommentProps, PostCommentType } from '@/features/post/comment';
 import { useTranslation } from '@/shared/hooks';
 import { Replace } from '@/shared/types/helpers';
 import { IconButton } from '@/shared/ui';
-
-import { PostComment, PostCommentProps, PostCommentType } from './post-comment';
 
 export type PrivatePostCommentType = {
   isLiked: boolean;

@@ -1,7 +1,7 @@
+import { getMockPublicPostComments as getMockPublicPC } from '@/features/post/comment/comment.stories';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { PrivatePostComment, PrivatePostCommentType } from './private-post-comment';
-import { getMockPublicPostComments as getMockPublicPC } from './public-post-comment.stories';
+import { PrivatePostComment, PrivatePostCommentType } from './private-comment';
 
 const meta = {
   component: PrivatePostComment,
@@ -14,7 +14,7 @@ const meta = {
   ],
   excludeStories: ['getMockPrivatePostComments'],
   tags: ['autodocs'],
-  title: 'FEATURES/post/PrivatePostComment',
+  title: 'FEATURES/post/PrivateComment',
 } satisfies Meta<typeof PrivatePostComment>;
 
 export const getMockPrivatePostComments = (...args: Parameters<typeof getMockPublicPC>) =>

@@ -5,10 +5,7 @@ import { userInfo } from 'os';
 
 import { PostCard } from '@/features/post/post-card/post-card';
 import { PrivatePostInfoSection } from '@/features/post/post-card/post-info-section';
-import {
-  PrivatePostComment,
-  PrivatePostCommentProps,
-} from '@/features/post/post-comment/private-post-comment';
+import { PrivatePostComment, PrivatePostCommentProps } from '@/features/post/private-comment';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button } from '@/shared/ui';
 import { zodResolver } from '@hookform/resolvers/zod';

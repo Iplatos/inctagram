@@ -1,11 +1,11 @@
-import { PostCard } from '@/features/post/post-card/post-card';
-import { PrivatePostCardProps } from '@/features/post/post-card/private-post-card';
-import { ProfilePrivatePostCard } from '@/features/post/post-card/profile-post-card';
-import { PublicPostCard, PublicPostCardProps } from '@/features/post/post-card/public-post-card';
+import { getMockPublicPostComments as getMockPublicPCWA } from '@/features/post/comment/comment.stories';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { getMockPublicPostComments as getMockPublicPCWA } from '../post-comment/public-post-comment.stories';
 import { FriendPrivatePostCard } from './friend-post-card';
+import { PostCard } from './post-card';
+import { PrivatePostCardProps } from './private-post-card';
+import { ProfilePrivatePostCard } from './profile-post-card';
+import { PublicPostCard, PublicPostCardProps } from './public-post-card';
 
 const meta = {
   component: PostCard,

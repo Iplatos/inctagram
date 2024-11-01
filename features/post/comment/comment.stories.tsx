@@ -2,7 +2,7 @@ import MockUserAvatar from '@/assets/img/mock-user-avatar.jpg';
 import { getRandomInteger, resolveImageSrcToString } from '@/shared/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { PostComment, PostCommentType } from './post-comment';
+import { PostComment, PostCommentType } from './comment';
 
 const meta = {
   component: PostComment,
@@ -15,7 +15,7 @@ const meta = {
   ],
   excludeStories: ['getMockPublicPostComments'],
   tags: ['autodocs'],
-  title: 'FEATURES/post/PublicPostComment',
+  title: 'FEATURES/post/Comment',
 } satisfies Meta<typeof PostComment>;
 
 const commentText =

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
-import { PostCommentProps, PrivatePostCommentProps } from '@/features/post/post-comment';
+import { PostCommentProps } from '@/features/post/comment';
 import {
   PrivateFriendPostModal,
   PrivateProfilePostModal,
   PublicPostModal,
 } from '@/features/post/post-modal';
+import { PrivatePostCommentProps } from '@/features/post/private-comment';
 import { Button, SelectBox } from '@/shared/ui';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
