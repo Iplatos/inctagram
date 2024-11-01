@@ -1,5 +1,6 @@
 import { PropsWithChildren, ReactElement, useEffect } from 'react';
 
+import { NotificationCenter } from '@/features/notification-center/notification-center';
 import { useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { useLazyGetMeQuery } from '@/shared/api/users-api';
 import { Typography } from '@/shared/ui';
@@ -40,6 +41,7 @@ export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
         <Sidebar />
         <div className={s.innerContainer}>{children}</div>
       </main>
+      <NotificationCenter />
       {process.env.NEXT_PUBLIC_MODE === 'development' && <NavBar />}
     </>
   );
