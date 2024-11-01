@@ -1,40 +1,27 @@
 @use '../../../styles/helpers' as *;
 @use '../../../styles/mixins' as *;
 
-.commentRoot {
-  display: flex;
-  gap: rem(12);
+.comment {
+  &Root {
+    display: flex;
+    gap: rem(12);
 
-  .avatar {
-    flex-shrink: 0;
-    margin-top: em(4);
+    .avatar {
+      flex-shrink: 0;
+      margin-top: em(4);
+    }
+  }
+
+  &Body {
+    flex: 1 1 auto;
   }
 }
 
 .infoSection {
-  @include inline-flex($justify: null);
+  @include inline-flex($justify: null, $wrap: wrap);
 
   gap: 12px;
   margin-top: 6px;
-
-  &Item {
-    --info-section-item-color: var(--color-light-900);
-
-    color: var(--info-section-item-color);
-    white-space: nowrap;
-  }
-
-  &Action {
-    @extend .infoSectionItem;
-
-    @include hover {
-      --info-section-item-color: var(--color-light-700);
-
-      text-decoration: underline;
-    }
-
-    cursor: pointer;
-  }
 }
 
 .primaryAction {
@@ -48,8 +35,6 @@
   }
 
   &OpenButton {
-    @extend .infoSectionAction;
-
     position: relative;
     margin-left: 36px;
 

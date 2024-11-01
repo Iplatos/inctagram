@@ -4,7 +4,7 @@ import { ProfilePrivatePostCard } from '@/features/post/post-card/profile-post-c
 import { PublicPostCard, PublicPostCardProps } from '@/features/post/post-card/public-post-card';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { getMockPublicPostCommentsWithAnswers as getMockPublicPCWA } from '../post-comment/public-post-comment.stories';
+import { getMockPublicPostComments as getMockPublicPCWA } from '../post-comment/public-post-comment.stories';
 import { FriendPrivatePostCard } from './friend-post-card';
 
 const meta = {
@@ -25,9 +25,15 @@ export default meta;
 // @ts-ignore
 type Story<T> = StoryObj<typeof meta, T>;
 
+export const getMockPublicPostCommentsWithAnswers = (count: number, withAvatar?: boolean) =>
+  getMockPublicPCWA(count, withAvatar).map(comment => ({
+    ...comment,
+    answers: getMockPublicPCWA(count, withAvatar),
+  }));
+
 export const Public: Story<PublicPostCardProps> = {
   args: {
-    comments: getMockPublicPCWA(5),
+    comments: getMockPublicPostCommentsWithAnswers(5),
     createdAt: '2024-07-01T10:00:00Z',
     likesCount: 100,
     userName: 'Patrik',
@@ -39,7 +45,7 @@ export const Public: Story<PublicPostCardProps> = {
 
 export const ProfilePostCard: Story<Omit<PrivatePostCardProps, 'headerSection'>> = {
   args: {
-    comments: getMockPublicPCWA(5),
+    comments: getMockPublicPostCommentsWithAnswers(5),
     createdAt: '2024-07-01T10:00:00Z',
     isFollowing: true,
     isPostLiked: false,
@@ -56,7 +62,7 @@ export const ProfilePostCard: Story<Omit<PrivatePostCardProps, 'headerSection'>>
 
 export const FriendPostCard: Story<Omit<PrivatePostCardProps, 'headerSection'>> = {
   args: {
-    comments: getMockPublicPCWA(5),
+    comments: getMockPublicPostCommentsWithAnswers(5),
     createdAt: '2024-07-01T10:00:00Z',
     isFollowing: true,
     isPostLiked: false,

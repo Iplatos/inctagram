@@ -1,62 +1,85 @@
-import { ReactElement, ReactNode, useState } from 'react';
+import { MouseEventHandler, ReactNode, useState } from 'react';
 
-import { getAbbreviation } from '@/shared/helpers';
+import { PostCommentInfoSectionItem } from '@/entities/post-comment';
+import { getAbbreviation, transformTaggedString } from '@/shared/helpers';
+import { useTranslation } from '@/shared/hooks';
 import useRelativeTime from '@/shared/hooks/useRelativeTime';
-import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Avatar, Typography } from '@/shared/ui';
 import clsx from 'clsx';
 
 import s from './post-comment.module.scss';
 
-export type CommentSlot = 'answersSection' | 'commentRoot' | 'infoSection' | 'primaryAction';
-export type CommentClasses = { [P in CommentSlot]?: string };
+export type PostCommentSlot =
+  | 'answersList'
+  | 'answersSection'
+  | 'commentBody'
+  | 'commentRoot'
+  | 'infoSection'
+  | 'primaryAction';
+export type PostCommentClasses = { [P in PostCommentSlot]?: string };
 
-export type InfoSectionRender = (elements: {
-  likes: ReactElement | null;
-  time: ReactElement;
-}) => ReactNode;
+type InfoSectionItem = {
+  bold?: boolean;
+  children: ReactNode;
+  onClick?: MouseEventHandler;
+};
 
-export type RenderAnswer<T extends PostCommentType> = (answer: T) => ReactNode;
+export type RenderPostCommentAnswer<T extends PostCommentType> = (answer: T) => ReactNode;
 
 export type PostCommentType = {
   avatar?: string;
-  commentId: string;
   createdAt: string;
-  id: string;
-  likesCount: number;
+  likesCount?: number;
   text: string;
   userName: string;
 };
 
 export type PostCommentProps<Answer extends PostCommentType = PostCommentType> = {
+  additionalInfoItems?: InfoSectionItem[];
+
   answers?: Answer[];
-  classes?: CommentClasses;
-  infoSectionRender?: InfoSectionRender;
+  classes?: PostCommentClasses;
+  infoSection?: ReactNode;
   primaryAction?: ReactNode;
-  renderAnswer?: RenderAnswer<Answer>;
+  renderAnswer?: RenderPostCommentAnswer<Answer>;
 } & PostCommentType;
 
+const { interpolate } = transformTaggedString;
+
 export const PostComment = <Answer extends PostCommentType>({
+  additionalInfoItems = [],
   answers,
   avatar,
   classes = {},
   createdAt,
-  infoSectionRender = ({ likes, time }) => [time, likes],
-  likesCount,
+  infoSection,
+  likesCount = 0,
   primaryAction,
   renderAnswer,
   text,
   userName,
 }: PostCommentProps<Answer>) => {
-  const relativeTime = useRelativeTime(createdAt);
   const t = useTranslation().t.post.comment;
+  const relativeTimeString = useRelativeTime(createdAt);
+  const [open, setOpen] = useState(false);
+
+  const toggleCommentsSectionOpen = () => setOpen(open => !open);
 
   const cls = getClassNames(classes);
+  const AnswerComponent = renderAnswer ?? PostComment;
 
-  const [open, setOpen] = useState<boolean>(false);
-  const setOpenHandler = () => setOpen(!open);
+  const resolvedInfoItems: InfoSectionItem[] = [
+    { children: relativeTimeString },
+    {
+      bold: true,
+      children: `${likesCount > 0 ? t.likes : t.like}: ${likesCount}`,
+    },
+    ...additionalInfoItems,
+  ];
 
-  const RenderAnswer = renderAnswer ?? PostComment;
+  const toggleAnswersButtonTitle = interpolate(t.viewAnswersBth[open ? 'close' : 'open'], {
+    count: () => String(answers?.length),
+  });
 
   return (
     <div className={cls.commentRoot}>
@@ -66,40 +89,33 @@ export const PostComment = <Answer extends PostCommentType>({
         size={'small'}
         src={avatar}
       />
-      <div>
+
+      <div className={cls.commentBody}>
         <Typography.Regular14 component={'p'}>
           <Typography.Bold14>{userName}</Typography.Bold14> {text}
         </Typography.Regular14>
 
         <div className={cls.infoSection}>
-          {infoSectionRender({
-            likes: likesCount ? (
-              <Typography.Semibold12 className={s.infoSectionItem}>
-                {`${likesCount > 1 ? t.likes : t.like}: ${likesCount}`}
-              </Typography.Semibold12>
-            ) : null,
-            time: (
-              <Typography.SmallText className={s.infoSectionItem}>
-                {relativeTime}
-              </Typography.SmallText>
-            ),
-          })}
+          {infoSection ??
+            resolvedInfoItems.map((item, index) => (
+              <PostCommentInfoSectionItem key={index} {...item} />
+            ))}
         </div>
 
-        {!!answers?.length && (
+        {answers?.length && (
           <div className={cls.answersSection}>
-            <Typography.Semibold12
+            <PostCommentInfoSectionItem
+              bold
               className={s.answersOpenButton}
-              component={'button'}
-              onClick={setOpenHandler}
+              onClick={toggleCommentsSectionOpen}
             >
-              {`${open ? t.viewAnswersBth.close : t.viewAnswersBth.open} (${answers.length})`}
-            </Typography.Semibold12>
+              {toggleAnswersButtonTitle}
+            </PostCommentInfoSectionItem>
 
             {open && (
-              <div className={s.answersList}>
+              <div className={cls.answersList}>
                 {answers?.map((answer, index) => {
-                  return <RenderAnswer key={index} {...answer} />;
+                  return <AnswerComponent key={index} {...answer} />;
                 })}
               </div>
             )}
@@ -107,14 +123,16 @@ export const PostComment = <Answer extends PostCommentType>({
         )}
       </div>
 
-      <div className={cls.primaryAction}>{primaryAction}</div>
+      {primaryAction && <div className={cls.primaryAction}>{primaryAction}</div>}
     </div>
   );
 };
 
-const getClassNames = (classes: CommentClasses): Required<CommentClasses> => ({
+const getClassNames = (classes: PostCommentClasses): Required<PostCommentClasses> => ({
+  answersList: clsx(s.answersList, classes.answersList),
   answersSection: clsx(s.answersSection, classes.answersSection),
-  commentRoot: clsx(s.commentRoot, classes.commentRoot),
+  commentBody: clsx(s.commentBody, classes.commentBody),
+  commentRoot: clsx(s.commentRoot, classes.commentRoot, 'post-comment-root'),
   infoSection: clsx(s.infoSection, classes.infoSection),
   primaryAction: clsx(s.primaryAction, classes.primaryAction),
 });

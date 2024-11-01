@@ -2,57 +2,48 @@ import { HeartFilled } from '@/assets/icons/heart-filled';
 import { HeartOutlined } from '@/assets/icons/heart-outlined';
 import { useTranslation } from '@/shared/hooks';
 import { Replace } from '@/shared/types/helpers';
-import { IconButton, Typography } from '@/shared/ui';
-
-import s from '@/features/post/post-comment/post-comment.module.scss';
+import { IconButton } from '@/shared/ui';
 
 import { PostComment, PostCommentProps, PostCommentType } from './post-comment';
 
 export type PrivatePostCommentType = {
   isLiked: boolean;
-  likesCount: number;
 } & PostCommentType;
 
 export type PrivatePostCommentProps = Replace<
   PostCommentProps<PrivatePostCommentType>,
   {
-    addNewAnswer?: (id: string, userName: string, commentId: string) => void;
     isLiked: boolean;
-    onLikeClick?: () => void;
+    onAnswer?: () => void;
+    onAnswerLikeToggle?: () => void;
+    onCommentLikeToggle?: () => void;
   }
 >;
 
 export const PrivatePostComment = ({
-  addNewAnswer,
   isLiked,
-  onLikeClick,
+  onAnswer,
+  onAnswerLikeToggle,
+  onCommentLikeToggle,
   ...props
 }: PrivatePostCommentProps) => {
-  const { t } = useTranslation();
-
-  const addNewAnswerForComment = () => addNewAnswer?.(props.id, props.userName, props.commentId);
+  const t = useTranslation().t.post.comment;
 
   return (
     <PostComment
-      infoSectionRender={({ likes, time }) => (
-        <>
-          {time}
-          {likes}
-          <Typography.Semibold12
-            className={s.infoSectionAction}
-            component={'button'}
-            onClick={addNewAnswerForComment}
-          >
-            {t.post.comment.answer}
-          </Typography.Semibold12>
-        </>
-      )}
+      additionalInfoItems={[{ bold: true, children: t.answer, onClick: onAnswer }]}
       primaryAction={
-        <IconButton onClick={onLikeClick} size={'small'}>
+        <IconButton onClick={onCommentLikeToggle} size={'small'}>
           {isLiked ? <HeartFilled style={{ fill: 'red' }} /> : <HeartOutlined />}
         </IconButton>
       }
-      renderAnswer={PrivatePostComment}
+      renderAnswer={answer => (
+        <PrivatePostComment
+          onAnswer={onAnswer}
+          onCommentLikeToggle={onAnswerLikeToggle}
+          {...answer}
+        />
+      )}
       {...props}
     />
   );

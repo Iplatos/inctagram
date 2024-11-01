@@ -402,8 +402,8 @@ export const en: LocaleType = {
       like: 'Like',
       likes: 'Likes',
       viewAnswersBth: {
-        close: 'View Answer',
-        open: 'Show Answers',
+        close: 'View Answers (<count></count>)',
+        open: 'Show Answers (<count></count>)',
       },
     },
     editPostModalCard: {

@@ -400,8 +400,8 @@ export const ru = {
       like: 'Нравится',
       likes: 'Нравится',
       viewAnswersBth: {
-        close: 'Скрыть ответы',
-        open: 'Показать ответы',
+        close: 'Скрыть ответы (<count></count>)',
+        open: 'Показать ответы (<count></count>)',
       },
     },
     editPostModalCard: {

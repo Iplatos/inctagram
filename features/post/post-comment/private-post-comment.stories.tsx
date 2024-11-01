@@ -1,4 +1,3 @@
-import { getRandomInteger } from '@/shared/helpers';
 import { Meta, StoryObj } from '@storybook/react';
 
 import { PrivatePostComment, PrivatePostCommentType } from './private-post-comment';
@@ -13,7 +12,7 @@ const meta = {
       </div>
     ),
   ],
-  excludeStories: ['getMockPrivatePostComments', 'getMockPrivatePostCommentsWithAnswers'],
+  excludeStories: ['getMockPrivatePostComments'],
   tags: ['autodocs'],
   title: 'FEATURES/post/PrivatePostComment',
 } satisfies Meta<typeof PrivatePostComment>;
@@ -22,17 +21,6 @@ export const getMockPrivatePostComments = (...args: Parameters<typeof getMockPub
   getMockPublicPC(...args).map<PrivatePostCommentType>(comment => ({
     ...comment,
     isLiked: Math.random() > 0.5,
-    likesCount: getRandomInteger(0, 10),
-  }));
-
-export const getMockPrivatePostCommentsWithAnswers = (
-  ...args: Parameters<typeof getMockPrivatePostComments>
-) =>
-  getMockPrivatePostComments(...args).map<
-    PrivatePostCommentType & { answers: PrivatePostCommentType[] }
-  >(comment => ({
-    ...comment,
-    answers: getMockPrivatePostComments(...args),
   }));
 
 export default meta;
@@ -41,14 +29,11 @@ type Story = StoryObj<typeof meta>;
 export const NoAvatar: Story = {
   args: {
     ...getMockPrivatePostComments(1, false)[0],
-    isLiked: true,
-    likesCount: 10,
   },
 };
 
 export const NoAnswers: Story = {
   args: {
-    ...NoAvatar.args,
     ...getMockPrivatePostComments(1)[0],
   },
 };

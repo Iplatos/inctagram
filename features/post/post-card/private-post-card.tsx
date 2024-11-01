@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
+import { userInfo } from 'os';
+
 import { PostCard } from '@/features/post/post-card/post-card';
 import { PrivatePostInfoSection } from '@/features/post/post-card/post-info-section';
 import {
@@ -59,9 +61,8 @@ export const PrivatePostCard = (props: PrivatePostCardProps) => {
   const sharePostHandler = () => console.log(['sharePostHandler', postId]);
   const toggleLikePostHandler = () => console.log(['toggleLikePostHandler', postId]);
 
-  const addNewAnswerHandler = (id: string, userName: string, commentId: string) => {
-    setValue('comment', `@${userName} `);
-    console.log(['addNewAnswerHandler', id, userName, commentId]);
+  const addNewAnswerHandler = () => {
+    setValue('comment', `@${res.userName} `);
   };
 
   const submitIsDisabled = !isDirty || (!isValid && !!submitCount) || isSubmitting;
@@ -108,7 +109,7 @@ export const PrivatePostCard = (props: PrivatePostCardProps) => {
       }
       classes={{ commentsDetails: s.commentDetailsPrivate }}
       commentsSection={comments.map((comment, index) => {
-        return <PrivatePostComment addNewAnswer={addNewAnswerHandler} {...comment} key={index} />;
+        return <PrivatePostComment onAnswer={addNewAnswerHandler} {...comment} key={index} />;
       })}
       headerSection={headerSection}
       infoSection={
