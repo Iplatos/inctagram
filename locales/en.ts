@@ -353,6 +353,14 @@ export const en: LocaleType = {
   },
 
   myProfile: {
+    myPostModal: {
+      deleteModal: {
+        cancelButtonTitle: 'No',
+        confirmButtonTitle: 'Yes',
+        description: 'Are you sure you want to delete this post?',
+        title: 'Delete Post',
+      },
+    },
     settingsButton: 'Profile Settings',
     statistics: {
       followers: { label: 'followers' },

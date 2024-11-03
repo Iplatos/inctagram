@@ -351,6 +351,14 @@ export const ru = {
   },
 
   myProfile: {
+    myPostModal: {
+      deleteModal: {
+        cancelButtonTitle: 'Нет',
+        confirmButtonTitle: 'Да',
+        description: 'Вы уверены, что хотите удалить этот пост?',
+        title: 'Удалить Пост',
+      },
+    },
     settingsButton: 'Настройки Профиля',
     statistics: {
       followers: { label: 'подписчики' },

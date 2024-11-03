@@ -153,9 +153,7 @@ export const CreatePostModal: FC<CreatePostModalProps> = ({ onPublishPost }) => 
           <Button onClick={handlePostDraftSave} {...props} />
         )}
       >
-        <Typography.Regular16 className={s.confirmModal}>
-          {t.saveDraftSubModal.message}
-        </Typography.Regular16>
+        <Typography.Regular16>{t.saveDraftSubModal.message}</Typography.Regular16>
       </ConfirmModal>
     </>
   );
