@@ -1,8 +1,8 @@
 import { useId } from 'react';
 
 import { ArrowIOSBack } from '@/assets/icons/arrow-ios-back';
+import { EditPostForm, EditPostFormProps } from '@/entities/post';
 import { PhotoGallery } from '@/features/photo-gallery';
-import { EditPostForm, EditPostFormProps } from '@/features/post/edit-post-form';
 import { CreatePostModalItem } from '@/shared/api/modal-slice';
 import { Button, IconButton, ModalCard, Typography, UserBanner } from '@/shared/ui';
 import clsx from 'clsx';

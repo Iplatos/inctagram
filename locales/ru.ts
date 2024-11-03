@@ -392,7 +392,7 @@ export const ru = {
         },
       },
       info: {
-        likes: 'Нравится',
+        likes: '<count></count> <bold>"Нравится"</bold>',
       },
     },
     comment: {
@@ -407,13 +407,13 @@ export const ru = {
     editPostModalCard: {
       descriptionCloseModal:
         'Вы действительно хотите закрыть редактирование публикации? Если закрыть, изменения не будут сохранены',
-      labelCard: 'Редактирование публикации',
+      labelCard: 'Редактирование Публикации',
       postDescription: {
         errors: {
           tooBig: 'Максимальное количество символов 500',
         },
         label: 'Добавить описание публикации',
-        placeholder: 'Текстовое поле',
+        placeholder: 'Описание...',
         titleBtnSubmit: 'Сохранить',
       },
     },

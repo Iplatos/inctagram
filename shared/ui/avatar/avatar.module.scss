@@ -25,10 +25,12 @@ $avatar-sizes: (
   $camel-cased-name: string.to-upper-case(string.slice($name, 1, 1)) + string.slice($name, 2);
 
   .avatarRoot#{$camel-cased-name} {
+    --avatar-size: #{$size};
+
     @extend %avatar-root;
 
-    width: $size;
-    height: $size;
+    width: var(--avatar-size);
+    height: var(--avatar-size);
   }
 }
 

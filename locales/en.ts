@@ -394,7 +394,7 @@ export const en: LocaleType = {
         },
       },
       info: {
-        likes: 'Like',
+        likes: '<count></count> <bold>"Likes"</bold>',
       },
     },
     comment: {
@@ -415,8 +415,8 @@ export const en: LocaleType = {
         errors: {
           tooBig: 'Maximum number of characters 500',
         },
-        label: 'Add publication descriptions',
-        placeholder: 'Text-area',
+        label: 'Add publication description',
+        placeholder: 'Description...',
         titleBtnSubmit: 'Save changes',
       },
     },

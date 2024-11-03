@@ -1,0 +1,8 @@
+@use '../../../../styles/mixins' as *;
+@use '../../../../styles/helpers' as *;
+
+.root {
+  @include flex($justify: space-between);
+
+  width: 100%;
+}

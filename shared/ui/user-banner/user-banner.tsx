@@ -11,7 +11,7 @@ import s from './user-banner.module.scss';
 type UserBannerSlot = 'avatarWrapper' | 'userBannerRoot' | 'userName' | 'userNameWrapper';
 type UserBannerClasses = { [P in UserBannerSlot]?: string } & { avatarClasses?: AvatarClasses };
 
-type UserBannerProps = {
+export type UserBannerProps = {
   avatarProps?: Omit<AvatarProps, 'alt' | 'classes'>;
   classes?: UserBannerClasses;
   link?: string;
