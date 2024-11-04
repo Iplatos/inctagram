@@ -1,40 +1,34 @@
-import { FC, ReactNode, useState } from 'react';
+import { FC, useState } from 'react';
 
 import { ConfirmModal } from '@/features/confirm-modal';
-import { EditPostCard } from '@/features/post/edit-post-card';
 import { MyProfilePostCard, MyProfilePostCardProps } from '@/features/post/my-profile-card';
 import { useTranslation } from '@/shared/hooks';
+import { Replace } from '@/shared/types/helpers';
 import { Modal, Typography } from '@/shared/ui';
 
 import s from './my-profile-card-modal.module.scss';
 
-enum MyProfilePostStatus {
-  Browsing,
-  Editing,
-}
-
-export type MyProfilePostCardModalProps = {
-  description?: string;
-  onClose: () => void;
-  onEditPostSubmit?: (description: string) => void;
-  open: boolean;
-} & Omit<MyProfilePostCardProps, 'onEditPost'>;
+export type MyProfilePostCardModalProps = Replace<
+  MyProfilePostCardProps,
+  {
+    onClose: () => void;
+    open: boolean;
+  }
+>;
 
 export const MyProfilePostCardModal: FC<MyProfilePostCardModalProps> = ({
   description,
   onClose,
-  onDeletePost,
-  onEditPostSubmit,
+  onDeleteMenuItemClick: onDeletePost,
+  onEditPost,
   open,
   ...restMyProfileCardProps
 }) => {
   const t = useTranslation().t.myProfile.myPostModal;
-  const [status, setStatus] = useState<MyProfilePostStatus>(MyProfilePostStatus.Browsing);
   const [deletePostModalOpen, setDeletePostModalOpen] = useState(false);
 
   const handleModalClose = (open: boolean) => {
     if (!open) {
-      setStatus(MyProfilePostStatus.Browsing);
       onClose();
     }
   };
@@ -44,32 +38,17 @@ export const MyProfilePostCardModal: FC<MyProfilePostCardModalProps> = ({
     onDeletePost?.();
   };
 
-  const contentToStatusMap: Record<MyProfilePostStatus, () => ReactNode> = {
-    [MyProfilePostStatus.Browsing]: () => (
-      <MyProfilePostCard
-        onDeletePost={() => setDeletePostModalOpen(true)}
-        onEditPost={() => setStatus(MyProfilePostStatus.Editing)}
-        {...restMyProfileCardProps}
-      />
-    ),
-    [MyProfilePostStatus.Editing]: () => (
-      <EditPostCard
-        avatar={restMyProfileCardProps.headerProps.avatar}
-        editPostFormProps={{
-          description,
-          onSubmit: ({ description }) => onEditPostSubmit?.(description),
-        }}
-        images={restMyProfileCardProps.images}
-        onClose={() => setStatus(MyProfilePostStatus.Browsing)}
-        userName={restMyProfileCardProps.headerProps.userName}
-      />
-    ),
-  };
-
   return (
     <>
       <Modal onOpenChange={handleModalClose} open={open}>
-        <div className={s.myProfilePosCardWrapper}>{contentToStatusMap[status]()}</div>
+        <div className={s.myProfilePosCardWrapper}>
+          <MyProfilePostCard
+            onClose={() => handleModalClose(false)}
+            onDeleteMenuItemClick={() => setDeletePostModalOpen(true)}
+            onEditPost={onEditPost}
+            {...restMyProfileCardProps}
+          />
+        </div>
       </Modal>
 
       <ConfirmModal

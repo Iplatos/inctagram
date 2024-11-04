@@ -2,6 +2,7 @@ import { ThreeDots } from '@/assets/icons/three-dots';
 import { IconButton, UserBanner } from '@/shared/ui';
 import { DropDown } from '@/shared/ui/drop-down-menu';
 import { DropDownMenuItemProps } from '@/shared/ui/drop-down-menu/item/item';
+import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
 import s from './header.module.scss';
 import modalCardS from '@/shared/ui/modal-card/modal-card.module.scss';
@@ -12,7 +13,7 @@ export type PostCardHeaderMenuItem = Pick<
 >;
 
 export type PostCardHeaderProps = {
-  avatar?: string;
+  avatar?: StaticImport | string;
   menuItems?: PostCardHeaderMenuItem[];
   userName: string;
 };
