@@ -1,79 +1,65 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { PostCommentProps, PrivatePostCommentProps } from '@/entities/post';
-import { Button, SelectBox } from '@/shared/ui';
+import {
+  CreatePostParams,
+  useCreatePostMutation,
+  useDeletePostMutation,
+} from '@/shared/api/posts-api';
+import { Button } from '@/shared/ui';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { getLayout } from '@/widgets/Layout/Layout';
 
+import IMG from './IMG.jpg';
+
 function Test() {
-  // const comments: PostCommentProps[] = [];
-  // const privateComments: PrivatePostCommentProps[] = [];
-  // type VariantsCardT = 'friend' | 'profile' | 'public';
-  // const [variant, setVariant] = useState<VariantsCardT | string>('public');
-  // const setVariantHandler = (option: string) => {
-  //   if (option !== '') {
-  //     setVariant(option);
-  //   }
-  // };
-  // const [open, setOpen] = useState(false);
-  // return (
-  //   <>
-  //     <HeadMeta title={'test'} />
-  //     {/* eslint-disable-next-line no-nested-ternary */}
-  //     {variant === 'public' ? (
-  //       <>
-  //         <Button onClick={() => setOpen(true)}>Click me</Button>
-  //         <PublicPostModal
-  //           comments={comments}
-  //           createdAt={'2024-07-01T11:00:00Z'}
-  //           isOpen={open}
-  //           likesCount={25456454}
-  //           onClose={setOpen}
-  //           userName={'userName'}
-  //         />
-  //       </>
-  //     ) : variant === 'profile' ? (
-  //       <>
-  //         <Button onClick={() => setOpen(true)}>Click me</Button>
-  //         <PrivateProfilePostModal
-  //           comments={privateComments}
-  //           createdAt={'2024-07-01T11:00:00Z'}
-  //           isOpen={open}
-  //           isPostLiked={false}
-  //           likesCount={25456454}
-  //           onClose={setOpen}
-  //           postId={'21321sdf'}
-  //           userId={'das4d5as4d5as4d'}
-  //           userName={'userName'}
-  //         />
-  //       </>
-  //     ) : (
-  //       <>
-  //         <Button onClick={() => setOpen(true)}>Click me</Button>
-  //         <PrivateFriendPostModal
-  //           comments={privateComments}
-  //           createdAt={'2024-07-01T11:00:00Z'}
-  //           isOpen={open}
-  //           isPostLiked={false}
-  //           likesCount={25456454}
-  //           onClose={setOpen}
-  //           postId={'21321sdf'}
-  //           userId={'das4d5as4d5as4d'}
-  //           userName={'userName'}
-  //         />
-  //       </>
-  //     )}
-  //     <SelectBox
-  //       defaultValue={'public'}
-  //       onChangeFn={setVariantHandler}
-  //       options={[
-  //         { label: 'friend', value: 'friend' },
-  //         { label: 'profile', value: 'profile' },
-  //         { label: 'public', value: 'public' },
-  //       ]}
-  //     />
-  //   </>
-  // );
+  const [createPost, { data: createPostData }] = useCreatePostMutation();
+  const [deletePost] = useDeletePostMutation();
+  const [file, setFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      const response = await fetch(IMG.src);
+      const blob = await response.blob();
+      const file = new File([blob], 'IMG.jpg', { type: 'image/jpeg' });
+
+      setFile(file);
+    };
+
+    fetchImage();
+  }, []);
+
+  const data: CreatePostParams = {
+    description: 'Create new post',
+    files: file ? [file] : [],
+  };
+
+  const createPostHandler = () => {
+    if (file) {
+      createPost(data);
+      console.log(data);
+    } else {
+      console.log('File not loaded yet');
+    }
+  };
+
+  const deletePostHandler = () => {
+    deletePost({
+      postId: 2535,
+      uploadIds: ['671d796080446fc979886540'],
+    });
+  };
+
+  console.log(createPostData);
+
+  return (
+    <>
+      <HeadMeta title={'test'} />
+      <div>
+        <Button onClick={createPostHandler}>Create Post</Button>
+        <Button onClick={deletePostHandler}>Delete Post</Button>
+      </div>
+    </>
+  );
 }
 
 Test.getLayout = getLayout;

@@ -3,11 +3,11 @@ import { baseApi } from '@/shared/api/base-api';
 import { PublicAPIResponse } from '../types/common.types';
 import {
   GetPublicPostsRequest,
+  PostByIdRequest,
   PublicPostByIdResponse,
   PublicPostsByUserIdResponse,
   PublicPostsResponse,
 } from '../types/public.types';
-import { PostByIdRequest } from './posts-api';
 
 export const publicPostsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
