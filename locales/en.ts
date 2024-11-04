@@ -12,7 +12,6 @@ export const en: LocaleType = {
       textButton: 'Sign In',
       title: 'Congratulations!',
     },
-
     forgotPasswordPage: {
       backToSignIn: 'Back to Sign In',
       invalidEmail: 'Invalid email',
@@ -435,5 +434,11 @@ export const en: LocaleType = {
         titleBtnSubmit: 'Save changes',
       },
     },
+  },
+
+  publicPage: {
+    hide: 'Hide',
+    registeredUsers: 'Registered users',
+    showMore: 'Show more',
   },
 };

@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ProfileSummaryItem } from '@/features/profile-info/profile-summary';
 import { NextPageWithLayout } from '@/pages/_app';
 import { useLazyGetMeQuery } from '@/shared/api/users-api';
+import { useLazyGetUsersProfileQuery } from '@/shared/api/users-profile-api';
 import { useAuthRedirect } from '@/shared/hooks/useAuthRedirect';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Typography } from '@/shared/ui';
@@ -12,15 +13,11 @@ import { UserProfile } from '@/widgets/user-profile';
 import Link from 'next/link';
 
 // temporary placeholder
-const statistics = [
-  { name: 'following', value: 0 } as const,
-  { name: 'followers', value: 0 } as const,
-  { name: 'publications', value: 0 } as const,
-] satisfies ProfileSummaryItem[];
 
 const MyProfile: NextPageWithLayout = () => {
   const { myProfile: t } = useTranslation().t;
   const [getMyProfile, { data: meResponse, isError }] = useLazyGetMeQuery();
+  const [getUserProfile, { data, isError: isMyProfileError }] = useLazyGetUsersProfileQuery();
 
   const isAuthSuccess = useAuthRedirect();
 
@@ -30,18 +27,34 @@ const MyProfile: NextPageWithLayout = () => {
     }
   }, [isAuthSuccess, getMyProfile]);
 
-  if (isError || !meResponse) {
+  useEffect(() => {
+    if (meResponse) {
+      getUserProfile(meResponse.userName);
+    }
+  }, [meResponse, getUserProfile]);
+
+  if (isError || !meResponse || isMyProfileError) {
     return <Typography.H1>Profile loading error</Typography.H1>;
   }
 
-  const { aboutMe, avatar, username } = meResponse.data;
+  if (!data) {
+    return null;
+  }
+
+  const statistics = [
+    { name: 'following', value: data.followingCount } as const,
+    { name: 'followers', value: data.followersCount } as const,
+    { name: 'publications', value: data.publicationsCount } as const,
+  ] satisfies ProfileSummaryItem[];
+
+  const avatar = data?.avatars[0]?.url;
 
   return (
     <>
       <HeadMeta title={'My Profile'} />
       <UserProfile
-        aboutMe={aboutMe}
-        avatarProps={avatar}
+        aboutMe={data.aboutMe}
+        avatarProps={{ url: avatar }}
         primaryAction={
           <Button
             component={'span'}
@@ -55,7 +68,7 @@ const MyProfile: NextPageWithLayout = () => {
           name: t.statistics[key].label,
           value,
         }))}
-        userName={username}
+        userName={data.userName}
       />
     </>
   );

@@ -7,6 +7,7 @@ import type {
   LogoutResponse,
   PasswordRecoveryRequestType,
   RefreshTokenResponse,
+  ResendConfirmationCodeRequest,
   SignUpRequestData,
   SignUpResponse,
 } from '@/shared/types/auth.types';
@@ -25,31 +26,34 @@ export const authApi = baseApi.injectEndpoints({
         };
       },
     }),
+
     confirmCode: builder.mutation<ConfirmCodeResponse, ConfirmCodeRequestData>({
       query: params => {
         return {
           body: params,
           method: 'POST',
-          url: 'auth/confirm-code',
+          url: '/api/v1/auth/registration-confirmation',
         };
       },
     }),
+
     forgotPassword: builder.mutation<any, PasswordRecoveryRequestType>({
       query: params => {
         return {
           body: params,
           method: 'POST',
-          url: 'auth/password-recovery-email',
+          url: '/api/v1/auth/password-recovery',
         };
       },
     }),
+
     login: builder.mutation<LoginResponse, LoginRequestData>({
       invalidatesTags: ['Me', 'Auth'],
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
 
-          dispatch(accessTokenReceived(data.data.accessToken));
+          dispatch(accessTokenReceived(data.accessToken));
         } catch (e) {
           console.error("Don't forget to handle async errors!", e);
         }
@@ -57,9 +61,10 @@ export const authApi = baseApi.injectEndpoints({
       query: arg => ({
         body: arg,
         method: 'POST',
-        url: 'auth/login',
+        url: '/api/v1/auth/login',
       }),
     }),
+
     logout: builder.mutation<LogoutResponse, void>({
       invalidatesTags: ['Auth', 'Me'],
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
@@ -70,27 +75,40 @@ export const authApi = baseApi.injectEndpoints({
           console.error("Don't forget to handle async errors!", e);
         }
       },
-      query: () => ({ method: 'POST', url: 'auth/logout' }),
+      query: () => ({ method: 'POST', url: '/api/v1/auth/logout' }),
     }),
+
     refreshToken: builder.query<RefreshTokenResponse, void>({
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
 
-          dispatch(accessTokenReceived(data.data.accessToken));
+          dispatch(accessTokenReceived(data.accessToken));
         } catch (e) {
           console.error("Don't forget to handle async errors!", e);
         }
       },
       providesTags: ['Auth'],
-      query: () => 'auth/refresh-token',
+      query: () => {
+        return { method: 'POST', url: '/api/v1/auth/update-tokens' };
+      },
     }),
+    resendConfirmCode: builder.mutation<ConfirmCodeResponse, ResendConfirmationCodeRequest>({
+      query: params => {
+        return {
+          body: params,
+          method: 'POST',
+          url: '/api/v1/auth/registration-email-resending',
+        };
+      },
+    }),
+
     signUp: builder.mutation<SignUpResponse, SignUpRequestData>({
       query: body => {
         return {
           body,
           method: 'POST',
-          url: 'auth/registration',
+          url: '/api/v1/auth/registration',
         };
       },
     }),
@@ -104,5 +122,6 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useRefreshTokenQuery,
+  useResendConfirmCodeMutation,
   useSignUpMutation,
 } = authApi;

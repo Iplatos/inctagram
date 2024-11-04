@@ -1,0 +1,59 @@
+.post {
+    max-width: 234px;
+    max-height: 391px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    margin-top: 7px;
+}
+
+.miniature {
+    margin-right: 9px;
+    border-radius: 50%;
+}
+
+.time-container {
+    margin-top: 5px;
+}
+
+
+
+.time {
+    font-size: var( --font-size-xs);
+    color:  var(--color-light-900);
+}
+
+
+
+.text {
+   overflow: hidden;
+   display: -webkit-box;
+
+   font-size: var(--font-size-s);
+
+   -webkit-box-orient: vertical;
+
+   -webkit-line-clamp: 3;
+}
+
+.fullText {
+    font-size: var(--font-size-s);
+}
+
+.text-button {
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start
+}
+
+
+
+.show-hide {
+    cursor: pointer
+}
+
+.image {
+    object-fit: none
+}

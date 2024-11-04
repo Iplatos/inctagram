@@ -70,10 +70,14 @@ export const withReauth = (baseQueryFactory: BaseQueryFactoryWithSubdomain) => {
         const release = await mutex.acquire();
 
         try {
-          const { data: refreshResult } = await baseQuery('auth/refresh-token', api, extraOptions);
+          const { data: refreshResult } = await baseQuery(
+            '/api/v1/auth/update-tokens',
+            api,
+            extraOptions
+          );
 
           if (refreshResult) {
-            const { accessToken } = (refreshResult as unknown as RefreshTokenResponse).data;
+            const { accessToken } = refreshResult as unknown as RefreshTokenResponse;
 
             api.dispatch(accessTokenReceived(accessToken));
 

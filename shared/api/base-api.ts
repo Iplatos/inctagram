@@ -10,6 +10,7 @@ import {
   createApi,
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
+import { HYDRATE } from 'next-redux-wrapper';
 
 import { selectAccessToken } from './app-slice';
 
@@ -41,6 +42,24 @@ const baseQuery = enhancedFetchBaseQuery({
 export const baseApi = createApi({
   baseQuery,
   endpoints: _builder => ({}),
+  extractRehydrationInfo(action: any, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
   reducerPath: 'baseApi',
-  tagTypes: ['Auth', 'Me', 'MyAvatarBase64'],
+  tagTypes: [
+    'Auth',
+    'Me',
+    'MyAvatarBase64',
+    'PublicUsers',
+    'Posts',
+    'Public-Posts',
+    'My-Profile',
+    'Users-Profile',
+  ],
 });
+
+export const {
+  util: { getRunningQueriesThunk },
+} = baseApi;

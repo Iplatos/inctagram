@@ -5,8 +5,9 @@ import { DateObject } from 'react-multi-date-picker';
 import { AddProfilePhoto } from '@/features/accounts/edit';
 import { FormValues, ProfileForm } from '@/features/accounts/edit/profile-form/profile-form';
 import { useLazyGetMeQuery, useUpdateMeMutation } from '@/shared/api/users-api';
+import { useLazyGetUsersProfileQuery } from '@/shared/api/users-profile-api';
 import { useAuthRedirect } from '@/shared/hooks/useAuthRedirect';
-import { UpdateMeRequestData, UserProfile } from '@/shared/types/user.types';
+import { GetUserProfileResponse, UpdateMeRequestData } from '@/shared/types/user.types';
 import { Typography } from '@/shared/ui';
 
 import style from './general-information.module.scss';
@@ -14,6 +15,7 @@ import style from './general-information.module.scss';
 export const GeneralInformation = () => {
   const [getMyProfile, { data: meResponse, isError }] = useLazyGetMeQuery();
   const [updateProfile] = useUpdateMeMutation();
+  const [getUserProfile, { data, isError: isMyProfileError }] = useLazyGetUsersProfileQuery();
 
   const isAuthSuccess = useAuthRedirect();
 
@@ -23,8 +25,18 @@ export const GeneralInformation = () => {
     }
   }, [isAuthSuccess, getMyProfile]);
 
-  if (isError || !meResponse) {
+  useEffect(() => {
+    if (meResponse) {
+      getUserProfile(meResponse.userName);
+    }
+  }, [meResponse, getUserProfile]);
+
+  if (isError || !meResponse || isMyProfileError) {
     return <Typography.H1>Profile loading error</Typography.H1>;
+  }
+
+  if (!data) {
+    return null;
   }
 
   const handleSubmit: SubmitHandler<FormValues> = data => {
@@ -37,10 +49,10 @@ export const GeneralInformation = () => {
             date: data.dateOfBirth,
             format: 'DD.MM.YYYY',
           }).format()
-        : undefined,
-      firstname: data.firstName,
-      lastname: data.lastName,
-      username: data.userName,
+        : '',
+      firstName: data.firstName,
+      lastName: data.lastName,
+      userName: data.userName,
     };
 
     return updateProfile(requestBody);
@@ -50,20 +62,17 @@ export const GeneralInformation = () => {
     <div className={style.container}>
       <AddProfilePhoto />
 
-      <ProfileForm
-        defaultValues={mapUserProfileToFormValues(meResponse.data)}
-        onSubmit={handleSubmit}
-      />
+      <ProfileForm defaultValues={mapUserProfileToFormValues(data)} onSubmit={handleSubmit} />
     </div>
   );
 };
 
-const mapUserProfileToFormValues = (profile: UserProfile): FormValues => ({
-  aboutMe: profile.aboutMe ?? '',
-  city: profile.city ?? '',
-  country: profile.country ?? '',
-  dateOfBirth: profile.dateOfBirth ? new Date(profile.dateOfBirth) : null,
-  firstName: profile.firstname ?? '',
-  lastName: profile.lastname ?? '',
-  userName: profile.username,
+const mapUserProfileToFormValues = (profile: GetUserProfileResponse): FormValues => ({
+  aboutMe: profile?.aboutMe ?? '',
+  city: profile?.city ?? '',
+  country: profile?.country ?? '',
+  dateOfBirth: profile?.dateOfBirth ? new Date(profile.dateOfBirth) : null,
+  firstName: profile?.firstName ?? '',
+  lastName: profile?.lastName ?? '',
+  userName: profile?.userName,
 });
