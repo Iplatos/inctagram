@@ -15,7 +15,7 @@ export type MyProfilePostCardEditContentProps = {
   avatar?: StaticImport | string;
   editPostFormProps: Pick<
     EditPostFormProps,
-    'description' | 'onSubmit' | 'onSubmitError' | 'textLimit'
+    'description' | 'onBlur' | 'onFocus' | 'onSubmit' | 'onSubmitError' | 'textLimit'
   >;
   onClose?: () => void;
   onPrevClick?: () => void;

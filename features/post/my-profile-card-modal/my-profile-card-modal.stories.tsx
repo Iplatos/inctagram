@@ -49,6 +49,13 @@ export const CommentsWithAvatars: Story = {
   },
 };
 
+export const WithDescription: Story = {
+  args: {
+    ...CommentsWithAvatars.args,
+    description: 'description',
+  },
+};
+
 export const NoComments: Story = {
   args: {
     ...MyProfileCardStories.NoComments.args,

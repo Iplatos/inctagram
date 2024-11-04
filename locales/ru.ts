@@ -352,7 +352,14 @@ export const ru = {
 
   myProfile: {
     myPostModal: {
-      deleteModal: {
+      cancelEditModal: {
+        cancelButtonTitle: 'Нет',
+        confirmButtonTitle: 'Да',
+        description:
+          'Вы действительно хотите закончить редактирование? В случае отмены сделанные вами изменения не будут сохранены.',
+        title: 'Отменить Редактирование',
+      },
+      confirmDeleteModal: {
         cancelButtonTitle: 'Нет',
         confirmButtonTitle: 'Да',
         description: 'Вы уверены, что хотите удалить этот пост?',

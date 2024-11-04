@@ -354,7 +354,14 @@ export const en: LocaleType = {
 
   myProfile: {
     myPostModal: {
-      deleteModal: {
+      cancelEditModal: {
+        cancelButtonTitle: 'No',
+        confirmButtonTitle: 'Yes',
+        description:
+          'Do you really want to finish editing? If you close the changes you made will not be saved.',
+        title: 'Discard Editing',
+      },
+      confirmDeleteModal: {
         cancelButtonTitle: 'No',
         confirmButtonTitle: 'Yes',
         description: 'Are you sure you want to delete this post?',

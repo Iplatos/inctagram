@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 import { ConfirmModal } from '@/features/confirm-modal';
 import { MyProfilePostCard, MyProfilePostCardProps } from '@/features/post/my-profile-card';
@@ -8,34 +8,47 @@ import { Modal, Typography } from '@/shared/ui';
 
 import s from './my-profile-card-modal.module.scss';
 
+import { useMyProfileCardModalHandle } from './use-my-profile-card-modal-handle';
+
 export type MyProfilePostCardModalProps = Replace<
-  MyProfilePostCardProps,
+  Omit<MyProfilePostCardProps, 'onDeleteMenuItemClick'>,
   {
     onClose: () => void;
+    onDeletePost?: () => void;
     open: boolean;
   }
 >;
 
 export const MyProfilePostCardModal: FC<MyProfilePostCardModalProps> = ({
-  description,
+  description: initialDescription = '',
   onClose,
-  onDeleteMenuItemClick: onDeletePost,
-  onEditPost,
+  onDeletePost,
   open,
-  ...restMyProfileCardProps
+  ...props
 }) => {
-  const t = useTranslation().t.myProfile.myPostModal;
-  const [deletePostModalOpen, setDeletePostModalOpen] = useState(false);
+  const { cancelEditModal: tEditModal, confirmDeleteModal: tDeleteModal } =
+    useTranslation().t.myProfile.myPostModal;
+
+  const {
+    handlers: {
+      onAttemptToClose,
+      onCancelEditModalClose,
+      onConfirmDeleteModalClose,
+      onConfirmDeleteModalOpen,
+      onEditCardBackClick,
+      onFormBlur,
+      onFormFocus,
+      onPostDeleteCommit,
+      onResetPostEditingAndClose,
+      onSwitchToEditMode,
+    },
+    state,
+  } = useMyProfileCardModalHandle({ initialDescription, onClose, onDeletePost });
 
   const handleModalClose = (open: boolean) => {
     if (!open) {
-      onClose();
+      onAttemptToClose();
     }
-  };
-
-  const handlePostDelete = () => {
-    setDeletePostModalOpen(false);
-    onDeletePost?.();
   };
 
   return (
@@ -43,23 +56,39 @@ export const MyProfilePostCardModal: FC<MyProfilePostCardModalProps> = ({
       <Modal onOpenChange={handleModalClose} open={open}>
         <div className={s.myProfilePosCardWrapper}>
           <MyProfilePostCard
-            onClose={() => handleModalClose(false)}
-            onDeleteMenuItemClick={() => setDeletePostModalOpen(true)}
-            onEditPost={onEditPost}
-            {...restMyProfileCardProps}
+            description={initialDescription}
+            isEditingPost={state.isEditing}
+            onClose={onAttemptToClose}
+            onDeleteMenuItemClick={onConfirmDeleteModalOpen}
+            onEditCardBackClick={onEditCardBackClick}
+            onEditFormBlur={onFormBlur}
+            onEditFormFocus={onFormFocus}
+            onEditMenuItemClick={onSwitchToEditMode}
+            {...props}
           />
         </div>
       </Modal>
 
       <ConfirmModal
-        cancelButtonTitle={t.deleteModal.cancelButtonTitle}
-        confirmButtonTitle={t.deleteModal.confirmButtonTitle}
-        headerTitle={t.deleteModal.title}
-        onCancel={() => setDeletePostModalOpen(false)}
-        onConfirm={handlePostDelete}
-        open={deletePostModalOpen}
+        cancelButtonTitle={tDeleteModal.cancelButtonTitle}
+        confirmButtonTitle={tDeleteModal.confirmButtonTitle}
+        headerTitle={tDeleteModal.title}
+        onCancel={onConfirmDeleteModalClose}
+        onConfirm={onPostDeleteCommit}
+        open={state.confirmDeleteModalOpen}
       >
-        <Typography.Regular16>{t.deleteModal.description}</Typography.Regular16>
+        <Typography.Regular16>{tDeleteModal.description}</Typography.Regular16>
+      </ConfirmModal>
+
+      <ConfirmModal
+        cancelButtonTitle={tEditModal.cancelButtonTitle}
+        confirmButtonTitle={tEditModal.confirmButtonTitle}
+        headerTitle={tEditModal.title}
+        onCancel={onCancelEditModalClose}
+        onConfirm={onResetPostEditingAndClose}
+        open={state.cancelEditModalOpen}
+      >
+        <Typography.Regular16>{tEditModal.description}</Typography.Regular16>
       </ConfirmModal>
     </>
   );
