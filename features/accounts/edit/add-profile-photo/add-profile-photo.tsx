@@ -2,8 +2,11 @@ import { useState } from 'react';
 
 import { CloseIcon } from '@/assets/icons/close';
 import { ConfirmModal } from '@/features/confirm-modal';
-import { useDeleteMyAvatarMutation, useSetMyAvatarMutation } from '@/shared/api/users-api';
-import { useGetMyProfileQuery } from '@/shared/api/users-profile-api';
+import {
+  useDeleteMyAvatarMutation,
+  useGetMyProfileQuery,
+  useSetMyAvatarMutation,
+} from '@/shared/api/users-api';
 import { getDefaultCropProps } from '@/shared/helpers/getDefaultCropProps';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Avatar, Button, Typography } from '@/shared/ui';
