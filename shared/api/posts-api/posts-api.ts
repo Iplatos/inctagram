@@ -147,7 +147,6 @@ export const postsApi = baseApi.injectEndpoints({
     getPosts: builder.query<GetPostResponse, GetPostParams>({
       providesTags: ['Posts'],
       query: params => ({
-        body: params,
         method: 'GET',
         url: `/api/v1/posts/${params.userName}`,
       }),
@@ -182,6 +181,7 @@ export const {
   useGetCommentsQuery,
   useGetPostLikesQuery,
   useGetPostsQuery,
+  useLazyGetPostsQuery,
   useUpdateLikeStatusPostMutation,
   useUpdatePostMutation,
 } = postsApi;

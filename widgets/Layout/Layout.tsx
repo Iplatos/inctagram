@@ -1,12 +1,19 @@
 import { PropsWithChildren, ReactElement } from 'react';
 
+import { CreatePostModalItem } from '@/shared/api/modal-slice';
+import { useCreatePostMutation } from '@/shared/api/posts-api';
+import { useAppDispatch } from '@/shared/api/pretyped-redux-hooks';
+import { dataURLToBlob } from '@/shared/helpers';
 import { NavBar } from '@/widgets/NavBar/NavBar';
 import { CreatePostModal } from '@/widgets/create-post-modal';
 import { Header } from '@/widgets/header';
 import { Sidebar } from '@/widgets/sidebar';
+import { nanoid } from '@reduxjs/toolkit';
 import { NextPage } from 'next';
 
 import s from './Layout.module.scss';
+
+import { useCreatePostModalHandle } from '../create-post-modal/use-create-post-modal-handle';
 
 export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
   // FIXME: UNCOMMENT NEXT BLOCK OF CODE TO ENABLE AUTHENTICATION LOGIC!!!
@@ -30,13 +37,28 @@ export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
   // if (isMeLoading) {
   //   children = <Typography.H1>Loading profile data...</Typography.H1>;
   // }
+  const [createPost, { isError, isLoading }] = useCreatePostMutation();
+
+  const uploadNewPost = ({
+    description = '',
+    items,
+  }: {
+    description?: string | undefined;
+    items: CreatePostModalItem[];
+  }) => {
+    const files = items
+      .map(({ src }) => dataURLToBlob(src))
+      .map(blob => new File([blob], nanoid()));
+
+    createPost({ description, files });
+  };
 
   return (
     <>
       <Header />
       <main className={s.outerContainer}>
         <Sidebar />
-        <CreatePostModal onPublishPost={args => console.log(args)} />
+        <CreatePostModal onPublishPost={uploadNewPost} />
 
         <div className={s.innerContainer}>{children}</div>
       </main>
