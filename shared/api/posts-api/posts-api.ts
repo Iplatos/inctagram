@@ -23,7 +23,7 @@ import {
 export const postsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     createPost: builder.mutation<CreatePostResponse, CreatePostParams>({
-      invalidatesTags: ['Posts'],
+      invalidatesTags: ['Posts', 'My-Profile'],
       queryFn: async ({ description, files }, _api, _extraOptions, baseQuery) => {
         try {
           const formData = new FormData();
@@ -152,21 +152,21 @@ export const postsApi = baseApi.injectEndpoints({
       }),
     }),
 
-    updateLikeStatusPost: builder.mutation<any, UpdatePostParams>({
-      invalidatesTags: ['Posts'],
-      query: params => ({
-        body: { description: params.description },
-        method: 'PUT',
-        url: `/api/v1/posts/${params.postId}`,
-      }),
-    }),
-
-    updatePost: builder.mutation<any, UpdateLikeStatusPostParams>({
+    updateLikeStatusPost: builder.mutation<any, UpdateLikeStatusPostParams>({
       invalidatesTags: ['Posts'],
       query: params => ({
         body: { likeStatus: 'NONE' },
         method: 'PUT',
         url: `/api/v1/posts/${params.postId}/like-status`,
+      }),
+    }),
+
+    updatePost: builder.mutation<void, UpdatePostParams>({
+      invalidatesTags: ['Posts'],
+      query: ({ description, postId }) => ({
+        body: { description: description },
+        method: 'PUT',
+        url: `/api/v1/posts/${postId}`,
       }),
     }),
   }),

@@ -36,7 +36,7 @@ export type PrivatePostCardProps = {
   likesCount?: number;
   onAnswerLikeToggle?: () => void;
   onCommentLikeToggle?: () => void;
-  onCommentReply: (comment: string) => void;
+  onCommentReply?: (comment: string) => void;
   onCopyProfileLink: () => void;
   onFollow: () => void;
   onUnfollow: () => void;
@@ -127,7 +127,7 @@ export const PrivatePostCard: FC<PrivatePostCardProps> = ({
       <ModalCard.Content>
         <AddPostCommentForm
           formRef={addCommentFormRef}
-          onSubmit={({ comment }) => onCommentReply(comment)}
+          onSubmit={({ comment }) => onCommentReply?.(comment)}
           textLimit={150}
         />
       </ModalCard.Content>

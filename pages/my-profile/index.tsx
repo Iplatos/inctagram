@@ -15,7 +15,7 @@ import Link from 'next/link';
 const MyProfile: NextPageWithLayout = () => {
   const { myProfile: t } = useTranslation().t;
   const [getMe, { data: meResponse, isError: isMeDataError }] = useLazyGetMeQuery();
-  const [getPosts, { data: posts, isError: isPostsError }] = useLazyGetPostsQuery();
+  const [getPosts, { data: postsResponse, isError: isPostsError }] = useLazyGetPostsQuery();
   const [getUserProfile, { data, isError: isMyProfileError }] = useLazyGetUserProfileQuery();
 
   const isAuthSuccess = useAuthRedirect();
@@ -55,9 +55,7 @@ const MyProfile: NextPageWithLayout = () => {
       <UserProfile
         aboutMe={data.aboutMe}
         avatarProps={{ url: avatar }}
-        posts={posts?.items?.map(post => ({
-          src: post.images[0].url,
-        }))}
+        posts={postsResponse?.items}
         primaryAction={
           <Button
             component={'span'}

@@ -96,7 +96,7 @@ export const MyProfilePostCardContent: FC<MyProfilePostCardContentProps> = ({
       <ModalCard.Content>
         <AddPostCommentForm
           formRef={addCommentFormRef}
-          onSubmit={({ comment }) => onCommentReply(comment)}
+          onSubmit={({ comment }) => onCommentReply?.(comment)}
           textLimit={150}
         />
       </ModalCard.Content>

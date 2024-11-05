@@ -7,20 +7,21 @@ import {
   DescriptionPhotoCard,
   FilterPhotoCard,
 } from '@/features';
-import { CreatePostModalItem, CreatePostStatus } from '@/shared/api/modal-slice';
+import { CreatePostStatus } from '@/shared/api/modal-slice';
+import { useCreatePostMutation } from '@/shared/api/posts-api';
+import { dataURLToBlob } from '@/shared/helpers';
 import { useTranslation } from '@/shared/hooks';
 import { Button, Modal, Typography } from '@/shared/ui';
+import { nanoid } from '@reduxjs/toolkit';
 
 import s from './create-post-modal.module.scss';
 
 import { useCreatePostModalHandle } from './use-create-post-modal-handle';
 
-type CreatePostModalProps = {
-  onPublishPost?: (data: { description?: string; items: CreatePostModalItem[] }) => void;
-};
-
-export const CreatePostModal: FC<CreatePostModalProps> = ({ onPublishPost }) => {
+export const CreatePostModal: FC = () => {
   const t = useTranslation().t.common.createPostModal;
+
+  const [createPostTrigger, { isLoading: isCreatingPost }] = useCreatePostMutation();
 
   const {
     handlers: {
@@ -41,8 +42,16 @@ export const CreatePostModal: FC<CreatePostModalProps> = ({ onPublishPost }) => 
 
   const [confirmModalOpen, setConformModalOpen] = useState(false);
 
+  const uploadNewPost = () => {
+    const files = items
+      .map(({ src }) => dataURLToBlob(src))
+      .map(blob => new File([blob], nanoid()));
+
+    createPostTrigger({ description: description ?? '', files });
+  };
+
   const handleCreatePostModalClose = (open: boolean) => {
-    if (!open) {
+    if (!open && !isCreatingPost) {
       if (postStatus !== CreatePostStatus.Init) {
         setConformModalOpen(true);
       } else {
@@ -126,7 +135,7 @@ export const CreatePostModal: FC<CreatePostModalProps> = ({ onPublishPost }) => 
           items={items}
           onBlur={({ description }) => setDescription(description)}
           onPrevClick={moveToPreviousStep}
-          onPublishPost={() => onPublishPost?.({ description, items })}
+          onPublishPost={uploadNewPost}
           publishButtonLabel={t.publishPhotoCard.buttons.publish}
           title={t.publishPhotoCard.title}
           userName={'UserName'}
