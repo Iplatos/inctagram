@@ -77,7 +77,7 @@ export type PublicPostsByUserIdResponse = {
     {
       avatarOwner: string;
       createdAt: string;
-      description: null | string;
+      description: string;
       id: number;
       images: [
         {

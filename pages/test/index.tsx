@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-
+import { NextPageWithLayout } from '@/pages/_app';
 import {
   CreatePostParams,
   useCreatePostMutation,
@@ -11,35 +10,25 @@ import { getLayout } from '@/widgets/Layout/Layout';
 
 import IMG from './IMG.jpg';
 
-function Test() {
+const Test: NextPageWithLayout = () => {
   const [createPost, { data: createPostData }] = useCreatePostMutation();
   const [deletePost] = useDeletePostMutation();
-  const [file, setFile] = useState<File | null>(null);
 
-  useEffect(() => {
-    const fetchImage = async () => {
-      const response = await fetch(IMG.src);
-      const blob = await response.blob();
-      const file = new File([blob], 'IMG.jpg', { type: 'image/jpeg' });
+  const fetchImageFile = async (src: string) => {
+    const response = await fetch(src);
+    const blob = await response.blob();
 
-      setFile(file);
-    };
-
-    fetchImage();
-  }, []);
-
-  const data: CreatePostParams = {
-    description: 'Create new post',
-    files: file ? [file] : [],
+    return new File([blob], 'IMG.jpg', { type: 'image/jpeg' });
   };
 
-  const createPostHandler = () => {
-    if (file) {
-      createPost(data);
-      console.log(data);
-    } else {
-      console.log('File not loaded yet');
-    }
+  const createPostHandler = async () => {
+    const file = await fetchImageFile(IMG.src);
+    const data: CreatePostParams = {
+      description: 'Create new post',
+      files: [file],
+    };
+
+    createPost(data);
   };
 
   const deletePostHandler = () => {
@@ -48,8 +37,6 @@ function Test() {
       uploadIds: ['671d796080446fc979886540'],
     });
   };
-
-  console.log(createPostData);
 
   return (
     <>
@@ -60,7 +47,7 @@ function Test() {
       </div>
     </>
   );
-}
+};
 
 Test.getLayout = getLayout;
 export default Test;
