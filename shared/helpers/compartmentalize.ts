@@ -1,6 +1,14 @@
 export const compartmentalize = (value: number | string, count: number = 3): string => {
-  const str = typeof value === 'string' ? value : value.toString();
-  const regex = new RegExp(`\\B(?=(\\d{${count}})+(?!\\d))`, 'g');
+  const str = String(value);
 
-  return str.replace(regex, ' ');
+  let start = str.length % count;
+  const parts = start ? [str.slice(0, start)] : [];
+
+  for (; start < str.length; start += 3) {
+    const part = str.slice(start, start + 3);
+
+    parts.push(part);
+  }
+
+  return parts.join(' ');
 };

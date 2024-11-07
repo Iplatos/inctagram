@@ -10,6 +10,7 @@ import { PostTemplate } from './PostTemplate/PostTemplate';
 type Props = {
   hide: string;
   locale?: string;
+  onPostPreviewClick?: () => void;
   post: Post;
   showMore: string;
 };
@@ -27,6 +28,7 @@ export const PublicPost = (props: Props) => {
           fullText={false}
           height={120}
           locale={locale}
+          onPostPreviewClick={props.onPostPreviewClick}
           post={post}
           setFullText={() => setFullText(false)}
           toggleButton={hide}
@@ -38,6 +40,7 @@ export const PublicPost = (props: Props) => {
           fullText
           height={240}
           locale={locale}
+          onPostPreviewClick={props.onPostPreviewClick}
           post={post}
           setFullText={() => setFullText(true)}
           toggleButton={showMore}

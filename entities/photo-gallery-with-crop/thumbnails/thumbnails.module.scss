@@ -5,7 +5,7 @@
 }
 
 .scrollContainer {
-  @include thin-scrollbar;
+  @include thin-common-scrollbar;
 
   overflow: auto hidden;
   display: flex;

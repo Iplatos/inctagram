@@ -14,3 +14,4 @@ export * from './scroll-area-container';
 export * from './modal';
 export * from './modal-card';
 export * from './user-banner';
+export * from './time';

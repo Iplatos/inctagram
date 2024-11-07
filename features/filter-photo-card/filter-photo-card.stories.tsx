@@ -124,5 +124,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: { imagesCount: 5, items: [], parserFunction: 'getBlob' },
+  args: { imagesCount: 5, items: [], parserFunction: 'getBlob', title: 'Filters' },
 };

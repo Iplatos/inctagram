@@ -63,6 +63,10 @@ $image-gallery-elements: 'content', 'slide-wrapper', 'swipe', 'slides', 'slide';
           object-fit: cover;
         }
       }
+
+      &-bullets {
+        width: fit-content;
+      }
     }
   }
 }

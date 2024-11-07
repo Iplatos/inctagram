@@ -1,0 +1,62 @@
+@use '../../../../styles/helpers' as *;
+@use '../../../../styles/mixins' as *;
+
+.comment {
+  &Root {
+    display: flex;
+    gap: rem(12);
+
+    .avatar {
+      flex-shrink: 0;
+      margin-top: em(4);
+    }
+  }
+
+  &Body {
+    flex: 1 1 auto;
+  }
+}
+
+.infoSection {
+  @include inline-flex($justify: null, $wrap: wrap);
+
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.primaryAction {
+  margin-top: 8px;
+  margin-left: 16px;
+}
+
+.answers {
+  &Section {
+    margin-top: 8px;
+  }
+
+  &OpenButton {
+    position: relative;
+    margin-left: 36px;
+
+    &::before {
+      content: '';
+
+      position: absolute;
+      top: 50%;
+      right: 100%;
+
+      width: 24px;
+      height: 1px;
+      margin-inline: 12px;
+
+      background-color: var(--info-section-item-color);
+    }
+  }
+
+  &List {
+    @include flex($justify: null, $align: null, $direction: column);
+
+    gap: 10px;
+    margin-top: 16px;
+  }
+}

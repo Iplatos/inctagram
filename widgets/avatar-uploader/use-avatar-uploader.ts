@@ -3,6 +3,7 @@ import type { CroppedRect, Position } from 'react-avatar-editor';
 
 import { useReducer } from 'react';
 
+import { getPhotoValidationSchema } from '@/shared/helpers';
 import { getDefaultCropProps } from '@/shared/helpers/getDefaultCropProps';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
@@ -66,24 +67,24 @@ const slice = createSlice({
       state.error = null;
     },
     loadedFromDevice(state, { payload }: PayloadAction<File>) {
-      if (!['image/jpeg', 'image/png'].includes(payload.type)) {
-        state.error = state.errorsList.wrongFormat;
+      const schema = getPhotoValidationSchema(
+        { allowedFormats: ['image/jpeg', 'image/png'], maxSize: PHOTO_MAX_SIZE },
+        {
+          tooBig: () => state.errorsList.tooBig,
+          wrongFormat: () => state.errorsList.wrongFormat,
+        }
+      );
 
-        return;
-      }
-      if (payload.size > PHOTO_MAX_SIZE) {
-        state.error = state.errorsList.tooBig;
+      const result = schema.safeParse(payload);
 
-        return;
-      }
-
-      if (state.error) {
+      if (result.success) {
         state.error = null;
+        state.preview = payload;
+        state.editorPosition = initialState.editorPosition;
+        state.scale = dCP.scale;
+      } else {
+        state.error = result.error.issues[0].message;
       }
-
-      state.preview = payload;
-      state.editorPosition = initialState.editorPosition;
-      state.scale = dCP.scale;
     },
     scaleChanged(state, { payload: offset }: PayloadAction<number>) {
       const prev = state.scale;

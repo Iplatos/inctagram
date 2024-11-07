@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 
 import { ProfileSummaryItem } from '@/features/profile-info/profile-summary';
 import { NextPageWithLayout } from '@/pages/_app';
-import { useLazyGetMeQuery } from '@/shared/api/users-api';
-import { useLazyGetUsersProfileQuery } from '@/shared/api/users-profile-api';
+import { useLazyGetPostsQuery } from '@/shared/api/posts-api';
+import { useLazyGetMeQuery, useLazyGetUserProfileQuery } from '@/shared/api/users-api';
 import { useAuthRedirect } from '@/shared/hooks/useAuthRedirect';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Typography } from '@/shared/ui';
@@ -12,28 +12,28 @@ import { getLayout } from '@/widgets/Layout/Layout';
 import { UserProfile } from '@/widgets/user-profile';
 import Link from 'next/link';
 
-// temporary placeholder
-
 const MyProfile: NextPageWithLayout = () => {
   const { myProfile: t } = useTranslation().t;
-  const [getMyProfile, { data: meResponse, isError }] = useLazyGetMeQuery();
-  const [getUserProfile, { data, isError: isMyProfileError }] = useLazyGetUsersProfileQuery();
+  const [getMe, { data: meResponse, isError: isMeDataError }] = useLazyGetMeQuery();
+  const [getPosts, { data: postsResponse, isError: isPostsError }] = useLazyGetPostsQuery();
+  const [getUserProfile, { data, isError: isMyProfileError }] = useLazyGetUserProfileQuery();
 
   const isAuthSuccess = useAuthRedirect();
 
   useEffect(() => {
     if (isAuthSuccess) {
-      getMyProfile(undefined, true);
+      getMe(undefined, true);
     }
-  }, [isAuthSuccess, getMyProfile]);
+  }, [isAuthSuccess, getMe]);
 
   useEffect(() => {
     if (meResponse) {
       getUserProfile(meResponse.userName);
+      getPosts({ userName: meResponse.userName });
     }
-  }, [meResponse, getUserProfile]);
+  }, [meResponse, getUserProfile, getPosts]);
 
-  if (isError || !meResponse || isMyProfileError) {
+  if (isMeDataError || !meResponse || isMyProfileError) {
     return <Typography.H1>Profile loading error</Typography.H1>;
   }
 
@@ -55,6 +55,7 @@ const MyProfile: NextPageWithLayout = () => {
       <UserProfile
         aboutMe={data.aboutMe}
         avatarProps={{ url: avatar }}
+        posts={postsResponse?.items}
         primaryAction={
           <Button
             component={'span'}

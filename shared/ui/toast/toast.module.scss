@@ -15,7 +15,7 @@
   }
 
   .message {
-    @include thin-scrollbar;
+    @include thin-common-scrollbar;
 
     overflow: auto;
     max-height: 100%;

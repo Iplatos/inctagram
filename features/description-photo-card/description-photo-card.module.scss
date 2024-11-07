@@ -1,0 +1,47 @@
+@use '../../styles/mixins' as *;
+@use '../../styles/helpers' as *;
+
+.cardRoot {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .header {
+    position: relative;
+  }
+
+  .publishButton {
+    --icon-button-padding: #{em(12)};
+
+    padding-inline: var(--icon-button-padding);
+  }
+
+  .content {
+    grid-area: details;
+    padding-top: 24px;
+  }
+}
+
+.headerTitle {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+}
+
+.contentWrapper {
+  overflow: hidden;
+  display: grid;
+  grid-template-areas: 'gallery details';
+  grid-template-columns: 1fr 1fr;
+
+  height: 100%;
+}
+
+.gallery {
+  grid-area: gallery;
+  background-color: var(--color-dark-900);
+}
+
+.userBanner {
+  margin-bottom: 24px;
+}
