@@ -39,6 +39,7 @@ export type PrivatePostCardProps = {
   onCommentReply?: (comment: string) => void;
   onCopyProfileLink: () => void;
   onFollow: () => void;
+  onPostLikeToggle: () => void;
   onUnfollow: () => void;
 };
 
@@ -55,6 +56,7 @@ export const PrivatePostCard: FC<PrivatePostCardProps> = ({
   onCommentReply,
   onCopyProfileLink,
   onFollow,
+  onPostLikeToggle,
   onUnfollow,
 }) => {
   const t = useTranslation().t.post.card;
@@ -120,6 +122,7 @@ export const PrivatePostCard: FC<PrivatePostCardProps> = ({
           date={date}
           isLiked={isLiked}
           likesCount={likesCount}
+          onLikeToggle={onPostLikeToggle}
           usersData={likedUsersData}
         />
       </ModalCard.Content>

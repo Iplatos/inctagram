@@ -16,7 +16,7 @@ import {
   GetPostLikesParams,
   GetPostParams,
   GetPostResponse,
-  UpdateLikeStatusPostParams,
+  UpdatePostLikeStatusParams,
   UpdatePostParams,
 } from './posts-api.types';
 
@@ -152,21 +152,21 @@ export const postsApi = baseApi.injectEndpoints({
       }),
     }),
 
-    updateLikeStatusPost: builder.mutation<any, UpdateLikeStatusPostParams>({
-      invalidatesTags: ['Posts'],
-      query: params => ({
-        body: { likeStatus: 'NONE' },
-        method: 'PUT',
-        url: `/api/v1/posts/${params.postId}/like-status`,
-      }),
-    }),
-
     updatePost: builder.mutation<void, UpdatePostParams>({
       invalidatesTags: ['Posts'],
       query: ({ description, postId }) => ({
         body: { description: description },
         method: 'PUT',
         url: `/api/v1/posts/${postId}`,
+      }),
+    }),
+
+    updatePostLikeStatus: builder.mutation<void, UpdatePostLikeStatusParams>({
+      invalidatesTags: ['Posts'],
+      query: ({ likeStatus, postId }) => ({
+        body: { likeStatus },
+        method: 'PUT',
+        url: `/api/v1/posts/${postId}/like-status`,
       }),
     }),
   }),
@@ -182,6 +182,6 @@ export const {
   useGetPostLikesQuery,
   useGetPostsQuery,
   useLazyGetPostsQuery,
-  useUpdateLikeStatusPostMutation,
+  useUpdatePostLikeStatusMutation,
   useUpdatePostMutation,
 } = postsApi;

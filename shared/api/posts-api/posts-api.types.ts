@@ -134,6 +134,7 @@ export interface UpdatePostParams {
   postId: number;
 }
 
-export interface UpdateLikeStatusPostParams {
+export interface UpdatePostLikeStatusParams {
+  likeStatus: 'LIKE' | 'NONE';
   postId: number;
 }

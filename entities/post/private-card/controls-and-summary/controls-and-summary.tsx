@@ -1,4 +1,3 @@
-import { MouseEventHandler } from 'react';
 import { DateObject } from 'react-multi-date-picker';
 
 import { BookmarkOutline } from '@/assets/icons/bookmark-outline';
@@ -17,9 +16,9 @@ export type PostCardActionsAndSummaryProps = {
   hideControls?: boolean;
 
   isLiked: boolean;
-  onAddBookmark?: MouseEventHandler;
-  onLikeToggle?: MouseEventHandler;
-  onShare?: MouseEventHandler;
+  onAddBookmark?: () => void;
+  onLikeToggle?: () => void;
+  onShare?: () => void;
 } & PostLikesSummaryProps;
 
 export const PostCardActionsAndSummary = ({

@@ -35,6 +35,7 @@ export const MyProfilePostCardContent: FC<MyProfilePostCardContentProps> = ({
   onCommentReply,
   onDeleteMenuItemClick,
   onEditMenuItemClick,
+  onPostLikeToggle,
 }) => {
   const t = useTranslation().t.post.card;
   const addCommentFormRef = useRef<HTMLFormElement>(null);
@@ -89,6 +90,7 @@ export const MyProfilePostCardContent: FC<MyProfilePostCardContentProps> = ({
           date={date}
           isLiked={isLiked}
           likesCount={likesCount}
+          onLikeToggle={onPostLikeToggle}
           usersData={likedUsersData}
         />
       </ModalCard.Content>

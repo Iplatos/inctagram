@@ -2,7 +2,12 @@ import { FC, useState } from 'react';
 
 import { MyProfilePostCardModal } from '@/features/post/my-profile-card-modal/my-profile-card-modal';
 import { openModal } from '@/shared/api/modal-slice';
-import { Post, useDeletePostMutation, useUpdatePostMutation } from '@/shared/api/posts-api';
+import {
+  Post,
+  useDeletePostMutation,
+  useUpdatePostLikeStatusMutation,
+  useUpdatePostMutation,
+} from '@/shared/api/posts-api';
 import { useAppDispatch } from '@/shared/api/pretyped-redux-hooks';
 import { useGetMyProfileQuery } from '@/shared/api/users-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
@@ -23,6 +28,8 @@ export const PostsList: FC<PostsListProps> = ({ className, posts = [] }) => {
   const { data: myProfile } = useGetMyProfileQuery();
   const [deletePostTrigger, { isLoading: isDeletingPost }] = useDeletePostMutation();
   const [updatePotTrigger, { isLoading: isUpdatingPost }] = useUpdatePostMutation();
+  const [updateLikeStatusTrigger, { isLoading: isUpdatingLikeStatus }] =
+    useUpdatePostLikeStatusMutation();
 
   const [openPostModal, setOpenPostModal] = useState(false);
   const [selectedPostIndex, setSelectedPostIndex] = useState(0);
@@ -35,7 +42,7 @@ export const PostsList: FC<PostsListProps> = ({ className, posts = [] }) => {
   };
 
   const handlePostModalClose = () => {
-    const isPostModalDisabled = isDeletingPost || isUpdatingPost;
+    const isPostModalDisabled = isDeletingPost || isUpdatingPost || isUpdatingLikeStatus;
 
     if (!isPostModalDisabled) {
       setOpenPostModal(false);
@@ -49,6 +56,10 @@ export const PostsList: FC<PostsListProps> = ({ className, posts = [] }) => {
 
   const handlePostEdit = (description: string) => {
     updatePotTrigger({ description, postId: post.id });
+  };
+
+  const handlePostLikeToggle = () => {
+    updateLikeStatusTrigger({ likeStatus: post.isLiked ? 'NONE' : 'LIKE', postId: post.id });
   };
 
   return (
@@ -88,6 +99,7 @@ export const PostsList: FC<PostsListProps> = ({ className, posts = [] }) => {
           onClose={handlePostModalClose}
           onDeletePost={handlePostDelete}
           onEditPost={handlePostEdit}
+          onPostLikeToggle={handlePostLikeToggle}
           open={openPostModal}
         />
       )}
