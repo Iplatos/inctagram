@@ -80,7 +80,7 @@ export const PostsList: FC<PostsListProps> = ({ className, posts = [] }) => {
           date={post.createdAt}
           description={post.description}
           headerProps={{ avatar: myProfile?.avatars[0].url, userName: post.userName }}
-          images={post.images.map((i: any) => i.url)}
+          images={post.images.map(i => i.url)}
           isLiked={post.isLiked}
           // reset the local state containing the `description` for a particular post
           key={post.description}
