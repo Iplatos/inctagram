@@ -15,3 +15,4 @@ export * from './modal';
 export * from './modal-card';
 export * from './user-banner';
 export * from './time';
+export * from './skeleton';
