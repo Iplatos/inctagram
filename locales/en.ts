@@ -441,4 +441,14 @@ export const en: LocaleType = {
     registeredUsers: 'Registered users',
     showMore: 'Show more',
   },
+  sidebar: {
+    create: 'Create',
+    favorites: 'Favorites',
+    home: 'Home',
+    logOut: 'Log Out',
+    messenger: 'Messenger',
+    myProfile: 'My Profile',
+    search: 'Search',
+    statistic: 'Statistic',
+  },
 };

@@ -68,12 +68,18 @@ export const PostsList: FC<PostsListProps> = ({ className, posts = [] }) => {
         {posts.length ? (
           posts.map(({ images }, index) => (
             <div className={s.post} key={index}>
-              <CroppedImage
-                alt={''}
-                fill
-                onClick={() => handlePostModalOpen(index)}
-                src={images[0].url}
-              />
+              {images && images.length > 0 ? (
+                <CroppedImage
+                  alt={''}
+                  fill
+                  onClick={() => handlePostModalOpen(index)}
+                  src={images[0].url}
+                />
+              ) : (
+                <div className={s.noImagePlaceholder}>
+                  <Typography.H1 component={'h3'}>{'Not found '}</Typography.H1>
+                </div>
+              )}
             </div>
           ))
         ) : (
@@ -86,12 +92,12 @@ export const PostsList: FC<PostsListProps> = ({ className, posts = [] }) => {
         )}
       </section>
 
-      {post && (
+      {post && myProfile && (
         <MyProfilePostCardModal
           date={post.createdAt}
           description={post.description}
-          headerProps={{ avatar: myProfile?.avatars[0].url, userName: post.userName }}
-          images={post.images.map(i => i.url)}
+          headerProps={{ avatar: myProfile.avatars[0]?.url, userName: myProfile.userName }}
+          images={post.images?.length ? post.images.map(i => i.url) : []}
           isLiked={post.isLiked}
           // reset the local state containing the `description` for a particular post
           key={post.description}

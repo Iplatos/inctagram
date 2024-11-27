@@ -1,5 +1,6 @@
 import { PropsWithChildren, ReactElement } from 'react';
 
+import { CreatePostModal } from '@/widgets/create-post-modal';
 import { NextPage } from 'next';
 import { Sidebar } from 'widgets/layouts/private-layout/sidebar';
 
@@ -13,6 +14,7 @@ export const PrivateLayout: NextPage<PropsWithChildren> = ({ children }) => {
       <PrivateHeader />
       <main className={s.outerContainer}>
         <Sidebar />
+        <CreatePostModal />
         <div className={s.innerContainer}>{children}</div>
       </main>
     </>

@@ -23,7 +23,9 @@ import s from './sidebar.module.scss';
 import { Trans } from '../../../Trans/Trans';
 
 export const Sidebar = () => {
-  const t = useTranslation().t.common;
+  const { logOutModal, modal } = useTranslation().t.common;
+  const { create, favorites, home, logOut, messenger, myProfile, search, statistic } =
+    useTranslation().t.sidebar;
 
   const dispatch = useDispatch();
 
@@ -58,7 +60,7 @@ export const Sidebar = () => {
       <div className={s.buttonsGroup}>
         <Typography.Regular14 className={s.button} component={Link} href={'/'}>
           <HomeOutline className={s.svg} />
-          Home
+          {home}
         </Typography.Regular14>
 
         <Typography.Regular14
@@ -67,30 +69,30 @@ export const Sidebar = () => {
           tabIndex={1}
         >
           <PlusSquareOutline className={s.svg} />
-          Create
+          {create}
         </Typography.Regular14>
         <Typography.Regular14 className={s.button} component={Link} href={'/my-profile'}>
           <PersonOutline className={s.svg} />
-          My Profile
+          {myProfile}
         </Typography.Regular14>
         <Typography.Regular14 className={s.button} tabIndex={1}>
           <MessageCircleOutline className={s.svg} />
-          Messenger
+          {messenger}
         </Typography.Regular14>
         <Typography.Regular14 className={s.button} tabIndex={1}>
           <SearchOutline className={s.svg} />
-          Search
+          {search}
         </Typography.Regular14>
       </div>
 
       <div className={s.buttonsGroup}>
         <Typography.Regular14 className={s.button} tabIndex={1}>
           <TrendingUpOutline className={s.svg} />
-          Statistics
+          {statistic}
         </Typography.Regular14>
         <Typography.Regular14 className={s.button} tabIndex={1}>
           <BookmarkOutline className={s.svg} />
-          Favorites
+          {favorites}
         </Typography.Regular14>
       </div>
 
@@ -100,14 +102,14 @@ export const Sidebar = () => {
         tabIndex={1}
       >
         <LogOutOutline className={s.svg} />
-        Log Out
+        {logOut}
       </Typography.Regular14>
 
       <ConfirmModal
-        cancelButtonTitle={t.modal.buttonNames.cancel}
-        confirmButtonTitle={t.modal.buttonNames.confirm}
+        cancelButtonTitle={modal.buttonNames.cancel}
+        confirmButtonTitle={modal.buttonNames.confirm}
         disabled={isLogOutLoading}
-        headerTitle={t.logOutModal.title}
+        headerTitle={logOutModal.title}
         onCancel={closeModal}
         onConfirm={handleLogout}
         open={open}
@@ -117,7 +119,7 @@ export const Sidebar = () => {
             tags={{
               email: () => <Typography.Bold16>{meResponse?.email}</Typography.Bold16>,
             }}
-            text={t.logOutModal.description}
+            text={logOutModal.description}
           />
         </Typography.Regular14>
       </ConfirmModal>
