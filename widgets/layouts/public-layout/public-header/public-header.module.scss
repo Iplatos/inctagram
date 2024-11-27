@@ -1,0 +1,14 @@
+@import 'styles/helpers';
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+}
+
+.controlsWrapper {
+  display: flex;
+  gap: rem(48);
+}

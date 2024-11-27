@@ -1,14 +1,17 @@
+import React from 'react';
+
+import { ProtectedRouter } from '@/shared/hoc/ProtectedRouter';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
+import { getPrivateLayout } from '@/widgets/layouts';
 
 function Home() {
   return (
     <>
       <HeadMeta title={'main'} />
-      <div style={{ marginLeft: '300px' }}>Hello World!</div>
+      <div>Hello World!</div>
     </>
   );
 }
 
-Home.getLayout = getLayout;
-export default Home;
+Home.getLayout = getPrivateLayout;
+export default ProtectedRouter(Home);

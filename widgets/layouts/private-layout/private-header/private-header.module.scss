@@ -1,0 +1,17 @@
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+}
+
+.controlsWrapper {
+  display: flex;
+}
+
+.buttonsWrapper {
+  display: flex;
+  gap: 1.5rem;
+  margin-left: 2.25rem;
+}

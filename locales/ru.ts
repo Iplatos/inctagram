@@ -436,6 +436,16 @@ export const ru = {
     registeredUsers: 'Зарегистрировано пользователей',
     showMore: 'Показать больше',
   },
+  sidebar: {
+    create: 'Create',
+    favorites: 'Favorites',
+    home: 'Home',
+    logOut: 'Log Out',
+    messenger: 'Messenger',
+    myProfile: 'My Profile',
+    search: 'Search',
+    statistic: 'Statistic',
+  },
 };
 
 export type LocaleType = typeof ru;

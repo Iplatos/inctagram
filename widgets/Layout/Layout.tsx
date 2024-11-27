@@ -3,8 +3,8 @@ import { PropsWithChildren, ReactElement } from 'react';
 import { NavBar } from '@/widgets/NavBar/NavBar';
 import { CreatePostModal } from '@/widgets/create-post-modal';
 import { Header } from '@/widgets/header';
-import { Sidebar } from '@/widgets/sidebar';
 import { NextPage } from 'next';
+import { Sidebar } from 'widgets/layouts/private-layout/sidebar';
 
 import s from './Layout.module.scss';
 

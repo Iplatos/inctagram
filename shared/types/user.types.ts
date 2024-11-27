@@ -46,15 +46,17 @@ export type GetMyProfileResponse = {
 
 export type GetUserProfileResponse = {
   aboutMe: string;
-  avatars: [
-    {
-      createdAt: string;
-      fileSize: number;
-      height: number;
-      url: string;
-      width: number;
-    },
-  ];
+  avatars:
+    | [
+        {
+          createdAt: string;
+          fileSize: number;
+          height: number;
+          url: string;
+          width: number;
+        },
+      ]
+    | [];
   city: string;
   country: string;
   dateOfBirth: string;
