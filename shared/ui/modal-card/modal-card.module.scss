@@ -4,8 +4,6 @@
   .headerIconButton {
     --modal-card-icon-btn-padding: var(--icon-button-padding, 0px);
 
-    margin-right: calc(var(--modal-card-icon-btn-padding) * -1);
-
     &:hover,
     &:focus-visible {
       background-color: var(--color-dark-400);
@@ -15,9 +13,17 @@
       background-color: var(--color-dark-500);
     }
 
+    &First {
+      @extend .headerIconButton;
+
+      margin-right: auto;
+      margin-left: calc(var(--modal-card-icon-btn-padding) * -1);
+    }
+
     &Last {
       @extend .headerIconButton;
 
+      margin-right: calc(var(--modal-card-icon-btn-padding) * -1);
       margin-left: auto;
     }
   }
@@ -31,7 +37,7 @@
   }
 
   .contentScrollable {
-    @include thin-scrollbar;
+    @include thin-common-scrollbar;
 
     overflow: auto;
   }

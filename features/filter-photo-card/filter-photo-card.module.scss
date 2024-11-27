@@ -33,7 +33,7 @@
 
     --columns-count: 3;
 
-    @include webkit-custom-scrollbar;
+    @include thin-common-scrollbar;
 
     overflow: auto;
     display: grid;

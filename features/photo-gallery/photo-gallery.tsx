@@ -1,42 +1,62 @@
-import { ElementRef, FC, ForwardedRef, PropsWithChildren } from 'react';
-import ReactImageGallery, { ReactImageGalleryProps } from 'react-image-gallery';
+import { ForwardedRef } from 'react';
+import ReactImageGallery, {
+  ReactImageGalleryItem,
+  ReactImageGalleryProps,
+} from 'react-image-gallery';
 
+import {
+  type PhotoGalleryItem,
+  PhotoGalleryItemRender,
+  PhotoGalleryPreviewImageWrapper,
+} from '@/entities/photo-gallery';
+import { PhotoAspectRatio } from '@/shared/constants';
+import { Replace } from '@/shared/types/helpers';
 import clsx from 'clsx';
-import Image from 'next/image';
 
 import 'react-image-gallery/styles/scss/image-gallery.scss';
 
 import style from './photo-gallery.module.scss';
 
-import { LeftNav } from '../photo-slider/controls/leftNav';
-import { RightNav } from '../photo-slider/controls/rightNav';
+import { LeftNav } from './controls/leftNav';
+import { RightNav } from './controls/rightNav';
 
-export type PhotoGalleryProps = ReactImageGalleryProps & {
-  galleryRef?: ForwardedRef<ReactImageGallery>;
-  previewRef?: ForwardedRef<ElementRef<'img'>>;
-};
+export type PhotoGalleryProps = Replace<
+  ReactImageGalleryProps,
+  {
+    aspectRatio?: PhotoAspectRatio;
+    galleryRef?: ForwardedRef<ReactImageGallery>;
+    items: PhotoGalleryItem[];
+  }
+>;
 
 const PhotoGalleryRoot = ({
   additionalClass,
+  aspectRatio: globalAspectRatio,
   galleryRef,
-  previewRef,
+  items,
   ...props
 }: PhotoGalleryProps) => {
+  const itemsWithCustomRender = items.map<ReactImageGalleryItem>(({ aspectRatio, ...item }) => {
+    const renderSpecificItem: ReactImageGalleryProps['renderItem'] = props => (
+      <PhotoGalleryItemRender aspectRatio={aspectRatio ?? globalAspectRatio} {...props} />
+    );
+
+    // `renderSpecificItem` is used by default if `renderItem` prop is not passed to the component,
+    // either as a separate prop (to replace the render function for all slides) or as part of the `items` array
+    // (to render each slide individually).
+    // If either or both of these props are passed, they are applied as specified in the `ReactImageGallery` documentation.
+    // That is, `renderItem` (specific) > `renderItem` (general)
+    return {
+      renderItem: props.renderItem ? undefined : renderSpecificItem,
+      ...item,
+    };
+  });
+
   return (
     <ReactImageGallery
       additionalClass={clsx(style.container, additionalClass)}
+      items={itemsWithCustomRender}
       ref={galleryRef}
-      renderItem={({ original, originalAlt }) => (
-        <PhotoGalleryPreviewImageWrapper>
-          <Image
-            alt={originalAlt ?? ''}
-            className={'image-gallery-slide-image'}
-            fill
-            ref={previewRef}
-            src={original}
-          />
-        </PhotoGalleryPreviewImageWrapper>
-      )}
       renderLeftNav={(onClick, disabled) => <LeftNav disabled={disabled} onClick={onClick} />}
       renderRightNav={(onClick, disabled) => <RightNav disabled={disabled} onClick={onClick} />}
       showBullets
@@ -48,12 +68,6 @@ const PhotoGalleryRoot = ({
     />
   );
 };
-
-export const PhotoGalleryPreviewImageWrapper: FC<PropsWithChildren> = ({ children }) => (
-  <div className={'image-gallery-image-outer-wrapper'}>
-    <div className={'image-gallery-image-inner-wrapper'}>{children}</div>
-  </div>
-);
 
 export const PhotoGallery = Object.assign(PhotoGalleryRoot, {
   PreviewImageWrapper: PhotoGalleryPreviewImageWrapper,

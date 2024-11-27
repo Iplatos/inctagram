@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import BookmarkOutline from '@/assets/icons/bookmark-outline.svg';
 import HomeOutline from '@/assets/icons/home-outline.svg';
@@ -10,6 +11,7 @@ import SearchOutline from '@/assets/icons/searchOutline.svg';
 import TrendingUpOutline from '@/assets/icons/trending-up-outline.svg';
 import { ConfirmModal } from '@/features/confirm-modal';
 import { useLogoutMutation, useRefreshTokenQuery } from '@/shared/api/auth-api';
+import { openModal } from '@/shared/api/modal-slice';
 import { useLazyGetMeQuery } from '@/shared/api/users-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
@@ -22,6 +24,9 @@ import { Trans } from '../../../Trans/Trans';
 
 export const Sidebar = () => {
   const t = useTranslation().t.common;
+
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
 
   const [logoutTrigger, { isLoading: isLogOutLoading }] = useLogoutMutation();
@@ -56,7 +61,11 @@ export const Sidebar = () => {
           Home
         </Typography.Regular14>
 
-        <Typography.Regular14 className={s.button} tabIndex={1}>
+        <Typography.Regular14
+          className={s.button}
+          onClick={() => dispatch(openModal())}
+          tabIndex={1}
+        >
           <PlusSquareOutline className={s.svg} />
           Create
         </Typography.Regular14>
@@ -106,7 +115,7 @@ export const Sidebar = () => {
         <Typography.Regular14>
           <Trans
             tags={{
-              email: () => <Typography.Bold16>{meResponse?.data.email}</Typography.Bold16>,
+              email: () => <Typography.Bold16>{meResponse?.email}</Typography.Bold16>,
             }}
             text={t.logOutModal.description}
           />

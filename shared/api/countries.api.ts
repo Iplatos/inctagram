@@ -5,9 +5,9 @@ export const countriesApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://countriesnow.space/api/v0.1/countries/',
   }),
-  endpoints: build => {
+  endpoints: builder => {
     return {
-      getCities: build.query<CountriesApiResponse<string[]>, string>({
+      getCities: builder.query<CountriesApiResponse<string[]>, string>({
         query: country => {
           return {
             body: { country },
@@ -16,7 +16,8 @@ export const countriesApi = createApi({
           };
         },
       }),
-      getCountries: build.query<CountriesApiResponse<CountryWithFlagApiData[]>, void>({
+
+      getCountries: builder.query<CountriesApiResponse<CountryWithFlagApiData[]>, void>({
         query: () => {
           return {
             method: 'GET',

@@ -15,13 +15,16 @@ type FilteredTextFieldProps<T extends TextFieldProps> = Omit<
 // prettier-ignore
 export type ControlledTextFieldProps<TFieldValues extends FieldValues> =
   | (ControllerProps<TFieldValues> &
-      FilteredTextFieldProps<Extract<TextFieldProps, { as: 'textarea' }>>)
+  FilteredTextFieldProps<Extract<TextFieldProps, { as: "textarea" }>>)
   | (ControllerProps<TFieldValues> &
-      FilteredTextFieldProps<Extract<TextFieldProps, { as?: 'input' }>>);
+  FilteredTextFieldProps<Extract<TextFieldProps, { as?: "input" }>>);
 
 export const ControlledTextField = <TFieldValues extends FieldValues = FieldValues>({
   control,
-  disabled,
+  // In useForm's `useController`, it gives a strange validation error on submit
+  //  when the `disabled` prop takes the value `undefined`.
+  //  So we need to explicitly set it to `boolean`.
+  disabled = false,
   name,
   ...props
 }: ControlledTextFieldProps<TFieldValues>) => {

@@ -24,7 +24,6 @@ export const ru = {
       textButton: 'Отправить еще раз',
       title: 'Срок действия ссылки истек',
     },
-
     passwordResetPage: {
       confirmPasswordZod: 'Подтверждение пароля обязательно',
       message: 'Ваш пароль должен содержать от 6 до 20 символов',
@@ -208,6 +207,53 @@ export const ru = {
       },
       title: 'Добавить Фото Пользователя',
     },
+    createPostModal: {
+      addPhotoCard: {
+        buttons: {
+          primary: 'Загрузить с Устройства',
+          secondary: 'Открыть черновик',
+        },
+        errors: {
+          tooBig: '<bold>Ошибка!</bold> Размер фото должен быть менее 20 MB (Мегабайт)',
+          wrongFormat: '<bold>Ошибка!</bold> Формат загружаемого фото должен быть PNG или JPEG',
+        },
+        title: 'Добавить Фото',
+      },
+      cropPhotoCard: {
+        buttons: {
+          next: 'Далее',
+        },
+        title: 'Обрезка',
+      },
+      filterPhotoCard: {
+        buttons: {
+          next: 'Далее',
+        },
+        title: 'Фильтры',
+      },
+      publishPhotoCard: {
+        buttons: {
+          publish: 'Опубликовать',
+        },
+        descriptionField: {
+          errors: {
+            tooBig: 'Максимальное количество символов 500',
+          },
+          label: 'Добавить описание публикации',
+          placeholder: 'Описание...',
+        },
+        title: 'Публикация',
+      },
+      saveDraftSubModal: {
+        buttons: {
+          cancel: 'Сохранить Черновик',
+          confirm: 'Отменить',
+        },
+        message:
+          'Вы действительно хотите отменить создание публикации? В случае отмены все данные будут утеряны',
+        title: 'Закрыть',
+      },
+    },
     datePicker: {
       locale: gregorian_ru,
     },
@@ -232,6 +278,11 @@ export const ru = {
 
   editProfile: {
     addPhotoButton: 'Добавить Фото Пользователя',
+
+    createPublication: {
+      primaryButtonTitle: 'Загрузить с устройства',
+      title: 'Добавить фото',
+    },
 
     deleteAvatarModal: {
       message: 'Вы уверены, что хотите удалить это фото?',
@@ -299,6 +350,21 @@ export const ru = {
   },
 
   myProfile: {
+    myPostModal: {
+      cancelEditModal: {
+        cancelButtonTitle: 'Нет',
+        confirmButtonTitle: 'Да',
+        description:
+          'Вы действительно хотите закончить редактирование? В случае отмены сделанные вами изменения не будут сохранены.',
+        title: 'Отменить Редактирование',
+      },
+      confirmDeleteModal: {
+        cancelButtonTitle: 'Нет',
+        confirmButtonTitle: 'Да',
+        description: 'Вы уверены, что хотите удалить этот пост?',
+        title: 'Удалить Пост',
+      },
+    },
     settingsButton: 'Настройки Профиля',
     statistics: {
       followers: { label: 'подписчики' },
@@ -306,7 +372,6 @@ export const ru = {
       publications: { label: 'публикации' },
     },
   },
-
   navbar: {
     forgotPassword: 'Забыл пароль',
     main: 'Главная страница',
@@ -321,6 +386,55 @@ export const ru = {
     new: 'Новое',
     newNotification: 'Новое уведомление!',
     notifications: 'Уведомления',
+  },
+
+  post: {
+    card: {
+      addNewComment: {
+        error: 'макс. длина 150 символов',
+        placeholder: 'Добавить комментарий...',
+        submit: 'Опубликовать',
+      },
+      header: {
+        buttons: {
+          copyLink: 'Скопировать ссылку',
+          deletePost: 'Удалить пост',
+          editPost: 'Редактировать пост',
+          follow: 'Подписаться',
+          unfollow: 'Отписаться',
+        },
+      },
+      info: {
+        likes: '<count></count> <bold>"Нравится"</bold>',
+      },
+    },
+    comment: {
+      answer: 'Ответить',
+      like: 'Нравится',
+      likes: 'Нравится',
+      viewAnswersBth: {
+        close: 'Скрыть ответы (<count></count>)',
+        open: 'Показать ответы (<count></count>)',
+      },
+    },
+    editPostModalCard: {
+      descriptionCloseModal:
+        'Вы действительно хотите закрыть редактирование публикации? Если закрыть, изменения не будут сохранены',
+      labelCard: 'Редактирование Публикации',
+      postDescription: {
+        errors: {
+          tooBig: 'Максимальное количество символов 500',
+        },
+        label: 'Добавить описание публикации',
+        placeholder: 'Описание...',
+        titleBtnSubmit: 'Сохранить',
+      },
+    },
+  },
+  publicPage: {
+    hide: 'Свернуть',
+    registeredUsers: 'Зарегистрировано пользователей',
+    showMore: 'Показать больше',
   },
 };
 

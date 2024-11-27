@@ -26,6 +26,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "widgets/PublicPosts/PublicPost"  ],
   "exclude": ["node_modules"]
 }

@@ -46,6 +46,8 @@ export const ForgotPasswordForm = () => {
   const onSubmit = (data: FormValuesType) => {
     forgotPassword({
       email: data.email,
+      // FIXME: achieve recaptcha from backend
+      recaptcha: '',
     });
   };
 

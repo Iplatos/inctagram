@@ -59,12 +59,14 @@ export const Typography = {
   H3: createTypography('h3'),
   Large: createTypography('large'),
   Medium14: createTypography('medium14'),
+  Medium16: createTypography('medium16'),
   Regular12: createTypography('regular12'),
   Regular14: createTypography('regular14'),
   Regular16: createTypography('regular16'),
   RegularLink: createTypography('regularLink'),
   Semibold12: createTypography('semibold12'),
   SmallLink: createTypography('smallLink'),
+  SmallText: createTypography('smallText'),
 };
 
 const TYPOGRAPHY_VARIANT_MAP = {
@@ -75,12 +77,14 @@ const TYPOGRAPHY_VARIANT_MAP = {
   h3: 'h3',
   large: 'p',
   medium14: 'span',
+  medium16: 'span',
   regular12: 'span',
   regular14: 'span',
   regular16: 'span',
   regularLink: 'a',
   semibold12: 'span',
   smallLink: 'a',
+  smallText: 'span',
 } as const;
 
 type TypographyVariant = keyof typeof TYPOGRAPHY_VARIANT_MAP;

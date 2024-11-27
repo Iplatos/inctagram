@@ -3,27 +3,37 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { FC } from 'react';
 
 import MockUserAvatar from '@/assets/img/mock-user-avatar.jpg';
-import { CropProps } from '@/shared/ui/croppedImage';
+import { Image, Post } from '@/shared/api/posts-api';
 
-import { Post, PostsList, PostsListProps } from './postsList';
+import { PostsList, PostsListProps } from './postsList';
 
-export const getRandomPosts = (count: number = 0, adjacentPosts: Post[] = []) => {
+export const getMockPostImage = (): Image => ({
+  createdAt: new Date().toString(),
+  fileSize: 300_000,
+  height: 300,
+  uploadId: '',
+  url: MockUserAvatar.src,
+  width: 300,
+});
+
+export const getMockPosts = (count: number = 0, adjacentPosts: Post[] = []): Post[] => {
+  const mockPost: Post = {
+    createdAt: new Date().toString(),
+    description: 'Post description',
+    id: Date.now(),
+    images: new Array(10).fill(0).map(getMockPostImage),
+    isLiked: Math.random() > 0.5,
+    likesCount: 10,
+    owner: {},
+    ownerId: Date.now(),
+    updatedAt: new Date().toString(),
+    userName: 'UserName',
+  };
+
   return Array(count)
     .fill(0)
-    .map(() => ({ cropProps: getRandomCropProps(), src: MockUserAvatar }) as Post)
+    .map(() => mockPost)
     .concat(adjacentPosts);
-
-  function getRandomCropProps(): CropProps {
-    return {
-      offsetX: getRandomNumber(),
-      offsetY: getRandomNumber(),
-      scale: getRandomNumber() + 1,
-    };
-  }
-
-  function getRandomNumber() {
-    return +Math.random().toFixed(2);
-  }
 };
 
 export type PostsListPropsAndCustomArgs = PostsListProps & { postsCount?: number };
@@ -33,7 +43,7 @@ const CustomRender: FC<PostsListPropsAndCustomArgs> = ({
   postsCount = 0,
   ...props
 }) => {
-  const posts = getRandomPosts(postsCount, adjacentPosts);
+  const posts = getMockPosts(postsCount, adjacentPosts);
 
   return <PostsList posts={posts} {...props} />;
 };
@@ -63,7 +73,7 @@ const meta = {
       </div>
     ),
   ],
-  excludeStories: ['getRandomPosts'],
+  excludeStories: ['getMockPosts', 'getMockPostImage'],
   tags: ['autodocs'],
   title: 'WIDGETS/PostsList',
 } satisfies Meta<PostsListPropsAndCustomArgs>;

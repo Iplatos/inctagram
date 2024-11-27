@@ -1,12 +1,13 @@
 import { ElementRef, useEffect, useRef, useState } from 'react';
 
+import { FilterPhotoCardItem } from '@/entities/filter-photo-card';
 import { getPhotoGalleryMockImages } from '@/features/photo-gallery/photo-gallery.stories';
 import { dataURLToBlob } from '@/shared/helpers';
 import { CCGramImageParsers } from '@/shared/hooks';
 import { Button } from '@/shared/ui/Button';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { FilterPhotoCard, FilterPhotoCardItem, FilterPhotoCardProps } from './filter-photo-card';
+import { FilterPhotoCard, FilterPhotoCardProps } from './filter-photo-card';
 import { FilterPhotoCardRefObject } from './use-filter-photo-card-handle';
 
 type CustomRenderProps = FilterPhotoCardProps & {
@@ -47,7 +48,7 @@ const CustomRender = ({
     });
   }, [images]);
 
-  const handleFilterChange = (filter: string) => {
+  const handleFilterChange = (filter: string, selectedIndex: number) => {
     if (!galleryRef.current) {
       return;
     }
@@ -57,7 +58,7 @@ const CustomRender = ({
     setImages(images =>
       images.map((image, index) => (index === selectedImageIndex ? { ...image, filter } : image))
     );
-    onFilterChange?.(filter);
+    onFilterChange?.(filter, selectedIndex);
   };
 
   const navigateToParsedImage = async () => {
@@ -123,5 +124,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: { imagesCount: 5, items: [], parserFunction: 'getBlob' },
+  args: { imagesCount: 5, items: [], parserFunction: 'getBlob', title: 'Filters' },
 };

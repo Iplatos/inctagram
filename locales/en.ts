@@ -1,4 +1,6 @@
 /* eslint-disable max-lines -- useless rule for locale file */
+import { title } from 'process';
+
 import gregorian_en from 'react-date-object/locales/gregorian_en';
 
 import { LocaleType } from './ru';
@@ -10,7 +12,6 @@ export const en: LocaleType = {
       textButton: 'Sign In',
       title: 'Congratulations!',
     },
-
     forgotPasswordPage: {
       backToSignIn: 'Back to Sign In',
       invalidEmail: 'Invalid email',
@@ -210,6 +211,53 @@ export const en: LocaleType = {
       },
       title: 'Add a Profile Photo',
     },
+    createPostModal: {
+      addPhotoCard: {
+        buttons: {
+          primary: 'Select from Device',
+          secondary: 'Open Draft',
+        },
+        errors: {
+          tooBig: '<bold>Error!</bold> Photo size must be less than 20 MB (MegaBytes)',
+          wrongFormat: '<bold>Error!</bold> The format of the uploaded photo must be PNG or JPEG',
+        },
+        title: 'Add Photo',
+      },
+      cropPhotoCard: {
+        buttons: {
+          next: 'Next',
+        },
+        title: 'Cropping',
+      },
+      filterPhotoCard: {
+        buttons: {
+          next: 'Next',
+        },
+        title: 'Filters',
+      },
+      publishPhotoCard: {
+        buttons: {
+          publish: 'Publish',
+        },
+        descriptionField: {
+          errors: {
+            tooBig: 'Maximum number of characters 500',
+          },
+          label: 'Add publication description',
+          placeholder: 'Description...',
+        },
+        title: 'Publication',
+      },
+      saveDraftSubModal: {
+        buttons: {
+          cancel: 'Save draft',
+          confirm: 'Discard',
+        },
+        message:
+          'Do you really want to close the creation of a publication? If you close everything will be deleted',
+        title: 'Close',
+      },
+    },
     datePicker: {
       locale: gregorian_en,
     },
@@ -235,11 +283,15 @@ export const en: LocaleType = {
   editProfile: {
     addPhotoButton: 'Add a Profile Photo',
 
+    createPublication: {
+      primaryButtonTitle: 'Select from Device',
+      title: 'Add Photo',
+    },
+
     deleteAvatarModal: {
       message: 'Are you sure you want to delete the photo?',
       title: 'Delete Photo',
     },
-
     photoSlider: {
       deletePhoto: {
         cancelButtonTitle: 'Cancel',
@@ -300,6 +352,21 @@ export const en: LocaleType = {
   },
 
   myProfile: {
+    myPostModal: {
+      cancelEditModal: {
+        cancelButtonTitle: 'No',
+        confirmButtonTitle: 'Yes',
+        description:
+          'Do you really want to finish editing? If you close the changes you made will not be saved.',
+        title: 'Discard Editing',
+      },
+      confirmDeleteModal: {
+        cancelButtonTitle: 'No',
+        confirmButtonTitle: 'Yes',
+        description: 'Are you sure you want to delete this post?',
+        title: 'Delete Post',
+      },
+    },
     settingsButton: 'Profile Settings',
     statistics: {
       followers: { label: 'followers' },
@@ -322,5 +389,56 @@ export const en: LocaleType = {
     new: 'New',
     newNotification: 'New notification!',
     notifications: 'Notifications',
+  },
+
+  post: {
+    card: {
+      addNewComment: {
+        error: 'Maximum number of characters is 150',
+        placeholder: 'Add a Сomment...',
+        submit: 'Publish',
+      },
+      header: {
+        buttons: {
+          copyLink: 'Copy Link',
+          deletePost: 'Delete Post',
+          editPost: 'Edit Post',
+          follow: 'Follow',
+          unfollow: 'Unfollow',
+        },
+      },
+      info: {
+        likes: '<count></count> <bold>"Likes"</bold>',
+      },
+    },
+    comment: {
+      answer: 'Answer',
+      like: 'Like',
+      likes: 'Likes',
+      viewAnswersBth: {
+        close: 'View Answers (<count></count>)',
+        open: 'Show Answers (<count></count>)',
+      },
+    },
+    editPostModalCard: {
+      descriptionCloseModal:
+        'Do you really want to close the edition of the publication? If you' +
+        ' close changes won’t be saved',
+      labelCard: 'Edit Post',
+      postDescription: {
+        errors: {
+          tooBig: 'Maximum number of characters 500',
+        },
+        label: 'Add publication description',
+        placeholder: 'Description...',
+        titleBtnSubmit: 'Save changes',
+      },
+    },
+  },
+
+  publicPage: {
+    hide: 'Hide',
+    registeredUsers: 'Registered users',
+    showMore: 'Show more',
   },
 };

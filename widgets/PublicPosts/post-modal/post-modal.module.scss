@@ -1,0 +1,17 @@
+@use '../../../styles/mixins' as *;
+@use '../../../styles/mixins' as *;
+
+$card-max-height: calc(-2 * var(--header-height) + 100vh);
+$card-with-gallery-max-height: min(560px, $card-max-height);
+
+// min() and max() function doesn't work properly :(
+@mixin card-max-width($width) {
+  width: $width;
+  max-width: 100%;
+}
+
+.publicPostCardWrapper {
+  @include card-max-width(970px);
+
+  height: $card-with-gallery-max-height;
+}

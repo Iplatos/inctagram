@@ -2,36 +2,38 @@ import { ElementRef, ForwardedRef, MutableRefObject, useMemo, useState } from 'r
 import { ReactImageGalleryItem } from 'react-image-gallery';
 
 import { ArrowIOSBack } from '@/assets/icons/arrow-ios-back';
+import { type FilterPhotoCardItem, FilterPhotoCardItemRender } from '@/entities/filter-photo-card';
 import { PhotoGallery, PhotoGalleryProps } from '@/features';
 import { adjustArrayIndexByBoundaries, capitalise } from '@/shared/helpers';
-import { CCGramFilterOrString } from '@/shared/hooks';
-import { Button, Card, IconButton, Typography } from '@/shared/ui';
+import { Button, IconButton, ModalCard, Typography } from '@/shared/ui';
 import Image from 'next/image';
 
 import s from './filter-photo-card.module.scss';
 
 import { FilterPhotoCardRefObject, useFilterPhotoCardHandle } from './use-filter-photo-card-handle';
 
-export type FilterPhotoCardItem = { filter: CCGramFilterOrString; src: string };
-
 export type FilterPhotoCardProps = {
   galleryProps?: Omit<PhotoGalleryProps, 'items'>;
   galleryRef?: ForwardedRef<FilterPhotoCardRefObject>;
   items: FilterPhotoCardItem[];
-  onFilterChange?: (selectedFilter: string) => void;
+  nextButtonTitle?: string;
+  onFilterChange?: (selectedFilter: string, index: number) => void;
   onNextClick?: () => void;
   onPrevClick?: () => void;
   previewItemsRef?: MutableRefObject<Map<FilterPhotoCardItem, ElementRef<'img'>>>;
+  title: string;
 };
 
 export const FilterPhotoCard = ({
   galleryProps = {},
   galleryRef,
   items,
+  nextButtonTitle = 'Next',
   onFilterChange,
   onNextClick,
   onPrevClick,
   previewItemsRef,
+  title,
 }: FilterPhotoCardProps) => {
   const { onSlide, startIndex, ...restGalleryProps } = galleryProps;
 
@@ -39,10 +41,9 @@ export const FilterPhotoCard = ({
     filter: { applyFilter, filterNames, registerImage },
     innerGalleryRef,
   } = useFilterPhotoCardHandle(galleryRef);
-
   const [prevStartIndex, setPrevStartIndex] = useState(startIndex);
   const [selectedIndex, setSelectedIndex] = useState(
-    adjustArrayIndexByBoundaries(items, startIndex)
+    adjustArrayIndexByBoundaries(items.length, startIndex)
   );
 
   // The `startIndex` is not used to set the current value, as is usually the case
@@ -55,7 +56,7 @@ export const FilterPhotoCard = ({
   // if the `startIndex` prop of the `FilterPhotoCard` has been changed.
   if (prevStartIndex !== startIndex) {
     setPrevStartIndex(startIndex);
-    setSelectedIndex(adjustArrayIndexByBoundaries(items, startIndex));
+    setSelectedIndex(adjustArrayIndexByBoundaries(items.length, startIndex));
   }
 
   const handleSlideChange: PhotoGalleryProps['onSlide'] = currentIndex => {
@@ -64,33 +65,20 @@ export const FilterPhotoCard = ({
   };
 
   const handleFilterChange = (filter: string) => {
-    onFilterChange?.(filter);
+    onFilterChange?.(filter, selectedIndex);
     applyFilter(filter);
   };
 
   const renderItems = items.map<ReactImageGalleryItem>((item, index) => ({
     original: item.src,
     renderItem: ({ original }) => (
-      <PhotoGallery.PreviewImageWrapper>
-        <Image
-          alt={'preview a photo with the selected filter'}
-          className={'image-gallery-slide-image'}
-          data-test-id={`preview-filtered-image-${index}`}
-          fill
-          priority
-          ref={node => {
-            const map = previewItemsRef?.current;
-
-            if (node) {
-              map?.set(item, node);
-            } else {
-              map?.delete(item);
-            }
-          }}
-          src={original}
-          {...registerImage(item.filter)}
-        />
-      </PhotoGallery.PreviewImageWrapper>
+      <FilterPhotoCardItemRender
+        index={index}
+        item={item}
+        previewItemsRef={previewItemsRef}
+        registerImage={registerImage}
+        src={original}
+      />
     ),
   }));
 
@@ -122,18 +110,18 @@ export const FilterPhotoCard = ({
   });
 
   return (
-    <Card className={s.cardRoot}>
-      <Card.Header className={s.header}>
+    <ModalCard className={s.cardRoot}>
+      <ModalCard.Header className={s.header}>
         <IconButton onClick={onPrevClick}>
           <ArrowIOSBack />
         </IconButton>
         <Typography.H1 className={s.headerTitle} component={'h2'}>
-          Filters
+          {title}
         </Typography.H1>
         <Button onClick={onNextClick} variant={'text'}>
-          Next
+          {nextButtonTitle}
         </Button>
-      </Card.Header>
+      </ModalCard.Header>
 
       <div className={s.contentWrapper}>
         <PhotoGallery
@@ -144,8 +132,8 @@ export const FilterPhotoCard = ({
           startIndex={selectedIndex}
           {...restGalleryProps}
         />
-        <Card.Content className={s.filtersList}>{filterPreviewArray}</Card.Content>
+        <ModalCard.Content className={s.filtersList}>{filterPreviewArray}</ModalCard.Content>
       </div>
-    </Card>
+    </ModalCard>
   );
 };

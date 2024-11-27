@@ -1,0 +1,33 @@
+@use '../../../styles/mixins' as *;
+
+.form {
+  @include flex($justify: null, $align: null, $direction: column);
+
+  .field {
+    --thin-scrollbar-width: 5px;
+
+    @include thin-common-scrollbar;
+
+    resize: none;
+    height: 6.7lh;
+    background-color: var(--color-dark-500);
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+    }
+  }
+}
+
+.charsCounter {
+  align-self: end;
+
+  margin-top: -10px;
+  margin-right: 2px;
+
+  line-height: 1.33;
+  color: var(--color-light-900);
+}
