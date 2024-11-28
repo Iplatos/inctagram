@@ -437,14 +437,14 @@ export const ru = {
     showMore: 'Показать больше',
   },
   sidebar: {
-    create: 'Create',
-    favorites: 'Favorites',
-    home: 'Home',
-    logOut: 'Log Out',
-    messenger: 'Messenger',
-    myProfile: 'My Profile',
-    search: 'Search',
-    statistic: 'Statistic',
+    create: 'Создать',
+    favorites: 'Избранные',
+    home: 'Главная',
+    logOut: 'Выход',
+    messenger: 'Сообщения',
+    myProfile: 'Мой Профиль',
+    search: 'Поиск',
+    statistic: 'Статистика',
   },
 };
 
