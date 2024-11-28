@@ -11,6 +11,10 @@ module.exports = {
         pathname: '/incta-back/**',
         protocol: 'https',
       },
+      {
+        hostname: 'images.pexels.com',
+      },
+      { hostname: 'staging-it-incubator.s3.eu-central-1.amazonaws.com' },
     ],
   },
   reactStrictMode: true,

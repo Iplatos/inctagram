@@ -1,0 +1,24 @@
+.cell {
+    padding: 12px;
+    background-color: var(--color-dark-700);
+}
+
+.border {
+    width: 1px;
+    height:30px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+
+    background-color:var(--color-dark-300)
+}
+
+.container {
+    display: flex;
+}
+
+.panel {
+    display: flex;
+    background-color: black;
+}
+
+

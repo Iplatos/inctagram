@@ -2,49 +2,80 @@ import { useEffect } from 'react';
 
 import { ProfileSummaryItem } from '@/features/profile-info/profile-summary';
 import { NextPageWithLayout } from '@/pages/_app';
-import { useLazyGetMeQuery } from '@/shared/api/users-api';
+import { useLazyGetPostsQuery } from '@/shared/api/posts-api';
+import { useLazyGetMeQuery, useLazyGetUserProfileQuery } from '@/shared/api/users-api';
 import { useAuthRedirect } from '@/shared/hooks/useAuthRedirect';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Typography } from '@/shared/ui';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
+import { getPrivateLayout } from '@/widgets/layouts';
 import { UserProfile } from '@/widgets/user-profile';
 import Link from 'next/link';
 
-// temporary placeholder
-const statistics = [
-  { name: 'following', value: 0 } as const,
-  { name: 'followers', value: 0 } as const,
-  { name: 'publications', value: 0 } as const,
-] satisfies ProfileSummaryItem[];
-
 const MyProfile: NextPageWithLayout = () => {
   const { myProfile: t } = useTranslation().t;
-  const [getMyProfile, { data: meResponse, isError }] = useLazyGetMeQuery();
+  const [getMe, { data: meResponse, isError: isMeDataError, isLoading: isLoadingProfile }] =
+    useLazyGetMeQuery();
+  const [getPosts, { data: postsResponse, isError: isPostsError, isLoading: isLoadingPosts }] =
+    useLazyGetPostsQuery();
+  const [getUserProfile, { data, isError: isMyProfileError, isLoading: isLoadingUser }] =
+    useLazyGetUserProfileQuery();
 
   const isAuthSuccess = useAuthRedirect();
 
   useEffect(() => {
     if (isAuthSuccess) {
-      getMyProfile(undefined, true);
+      getMe(undefined, true);
     }
-  }, [isAuthSuccess, getMyProfile]);
+  }, [isAuthSuccess, getMe]);
 
-  if (isError || !meResponse) {
-    return <Typography.H1>Profile loading error</Typography.H1>;
+  useEffect(() => {
+    if (meResponse) {
+      getUserProfile(meResponse.userName);
+      getPosts({ userName: meResponse.userName });
+    }
+  }, [meResponse, getUserProfile, getPosts]);
+
+  if (isLoadingPosts || isLoadingProfile || isLoadingUser) {
+    console.log(isLoadingPosts || isLoadingProfile || isLoadingUser);
+
+    return <div>Loading...</div>;
   }
 
-  const { aboutMe, avatar, username } = meResponse.data;
+  // if (isMeDataError || !meResponse || isMyProfileError) {
+  //   return <Typography.H1>Profile loading error</Typography.H1>;
+  // }
+
+  if (!data) {
+    return null;
+  }
+
+  const statistics = [
+    { name: 'following', value: data.followingCount } as const,
+    { name: 'followers', value: data.followersCount } as const,
+    { name: 'publications', value: data.publicationsCount } as const,
+  ] satisfies ProfileSummaryItem[];
+
+  if (isLoadingPosts && isLoadingProfile && isLoadingUser) {
+    return <div>Loading...</div>;
+  }
+
+  const avatar = data?.avatars[0]?.url;
 
   return (
     <>
       <HeadMeta title={'My Profile'} />
+
       <UserProfile
-        aboutMe={aboutMe}
-        avatarProps={avatar}
+        aboutMe={data.aboutMe}
+        avatarProps={{ url: avatar }}
+        posts={postsResponse?.items}
         primaryAction={
-          // TODO: fix button styles when it is used as span. Rename `as` prop to `component`
-          <Button as={'span'} style={{ height: '100%', width: '100%' }} variant={'secondary'}>
+          <Button
+            component={'span'}
+            style={{ height: '100%', width: '100%' }}
+            variant={'secondary'}
+          >
             <Link href={'/accounts/edit'}>{t.settingsButton}</Link>
           </Button>
         }
@@ -52,12 +83,12 @@ const MyProfile: NextPageWithLayout = () => {
           name: t.statistics[key].label,
           value,
         }))}
-        userName={username}
+        userName={data.userName}
       />
     </>
   );
 };
 
-MyProfile.getLayout = getLayout;
+MyProfile.getLayout = getPrivateLayout;
 
 export default MyProfile;

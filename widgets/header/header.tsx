@@ -25,10 +25,10 @@ export const Header = () => {
         <div className={styles.controlsWrapper}>
           <LangSwitcher />
           <div className={styles.buttonsWrapper}>
-            <Button as={'span'} variant={'text'}>
+            <Button component={'span'} variant={'text'}>
               <Link href={'/sign-in'}>{t.navbar.signIn}</Link>
             </Button>
-            <Button as={'span'}>
+            <Button component={'span'}>
               <Link href={'/sign-up'}>{t.navbar.signUp}</Link>
             </Button>
           </div>

@@ -3,10 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 import { useChangePasswordMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Typography } from '@/shared/ui';
-import { Button } from '@/shared/ui/Button/button';
-import { Card } from '@/shared/ui/Card/Card';
-import { TextField } from '@/shared/ui/textField/TextField';
+import { Button, DEPRECATED_Card, TextField, Typography } from '@/shared/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
 import { z } from 'zod';
@@ -83,7 +80,7 @@ export const PasswordResetForm = () => {
   };
 
   return (
-    <Card className={style.card}>
+    <DEPRECATED_Card className={style.card}>
       <Typography.H1 style={{ paddingBottom: '37px' }}>
         {t.auth.passwordResetPage.title}
       </Typography.H1>
@@ -131,6 +128,6 @@ export const PasswordResetForm = () => {
           {t.auth.passwordResetPage.textLink}
         </Button>
       </form>
-    </Card>
+    </DEPRECATED_Card>
   );
 };

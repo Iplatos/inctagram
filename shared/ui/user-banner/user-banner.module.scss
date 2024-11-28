@@ -1,0 +1,24 @@
+@use '../../../styles/mixins' as *;
+@use '../../../styles/helpers' as *;
+
+.root {
+  @include flex($justify: null);
+
+  gap: em(12);
+
+  .avatar {
+    flex: 0 0 auto;
+
+    &Wrapper {
+      @extend .avatar;
+    }
+  }
+
+  .userName {
+    @include text-overflow-ellipsis;
+
+    &Wrapper {
+      @extend .userName;
+    }
+  }
+}

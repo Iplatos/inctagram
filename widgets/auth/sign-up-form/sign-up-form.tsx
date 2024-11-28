@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import { useSignUpMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
-import { Button, Card, Typography } from '@/shared/ui';
+import { Button, DEPRECATED_Card, Typography } from '@/shared/ui';
 import { ControlledCheckbox } from '@/shared/ui/checkbox/controlled-checkbox';
 import { ControlledTextField } from '@/shared/ui/controlled';
 import { Trans } from '@/widgets/Trans/Trans';
@@ -76,14 +76,20 @@ export const SignUpForm = () => {
   // }
 
   const signUp = handleSubmit(({ email, nickname, password }) => {
-    return signUpTrigger({ email, password, username: nickname });
+    return signUpTrigger({
+      // FIXME: add different baseUrl for different environment variables
+      baseUrl: 'localhost:3000',
+      email,
+      password,
+      userName: nickname,
+    });
   });
 
   const submitIsDisabled = !isDirty || (!isValid && !!submitCount) || isSubmitting;
 
   return (
     <div className={s.outerContainer}>
-      <Card className={s.card}>
+      <DEPRECATED_Card className={s.card}>
         <Typography.H1>{t.auth.signUpPage.title}</Typography.H1>
         <GitHubGoogleContainer />
         <form onSubmit={signUp}>
@@ -151,10 +157,10 @@ export const SignUpForm = () => {
         <div className={s.bottom}>
           <Typography.Regular16>{t.auth.signUpPage.account}</Typography.Regular16>
         </div>
-        <Button className={clsx(s.center, s.signUp)} variant={'text'}>
+        <Button className={clsx(s.center, s.signUp)} component={'span'} variant={'text'}>
           <Link href={'/sign-in'}>{t.auth.signUpPage.signIn}</Link>
         </Button>
-      </Card>
+      </DEPRECATED_Card>
     </div>
   );
 };

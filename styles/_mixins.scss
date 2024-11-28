@@ -1,4 +1,5 @@
 @use 'helpers' as *;
+@use 'sass:selector';
 
 @mixin flex($justify: center, $align: center, $direction: null, $wrap: null) {
   display: flex;
@@ -28,5 +29,57 @@
 
   @media ($media-query) {
     @content;
+  }
+}
+
+@mixin text-overflow-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+
+  @media (hover: none) {
+    &:active {
+      @content;
+    }
+  }
+}
+
+@mixin common-scrollbar {
+  @at-root #{selector.append(&, '::-webkit-scrollbar')} {
+    background-color: var(--scrollbar-bg-color);
+  }
+
+  @at-root #{selector.append(&, '::-webkit-scrollbar-thumb')} {
+    background-color: var(--scrollbar-thumb-bg-color);
+
+    &:hover {
+      background-color: var(--scrollbar-thumb-bg-color-hover);
+    }
+
+    &:active {
+      background-color: var(--scrollbar-thumb-bg-color-active);
+    }
+  }
+}
+
+// A mixin used to align the styles of a thin scrollbar in different browsers.
+@mixin thin-common-scrollbar {
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-width: thin;
+  }
+
+  @include common-scrollbar;
+
+  @at-root #{selector.append(&, '::-webkit-scrollbar')} {
+    width: var(--thin-scrollbar-width);
+    height: var(--thin-scrollbar-height);
   }
 }

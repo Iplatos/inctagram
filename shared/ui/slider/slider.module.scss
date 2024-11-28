@@ -32,9 +32,9 @@
 }
 
 .small {
-  --thumb-size: #{em(16)};
-  --track-thickness: #{em(3)};
-  --track-length: #{em(150)};
+  --thumb-size: #{em(12)};
+  --track-thickness: #{em(2)};
+  --track-length: #{em(100)};
 }
 
 .track {
@@ -88,8 +88,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    width: em(36);
-    height: em(36);
+    width: em(20);
+    height: em(20);
 
     opacity: 0.45;
     border-radius: 50%;

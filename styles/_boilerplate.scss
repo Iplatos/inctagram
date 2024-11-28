@@ -39,6 +39,16 @@ a {
   color: inherit;
 }
 
+:root {
+  --header-height: 60px;
+  --thin-scrollbar-width: 8px;
+  --thin-scrollbar-height: 8px;
+  --scrollbar-bg-color: hsl(0deg 50% 0% / 35%);
+  --scrollbar-thumb-bg-color: hsl(0deg 50% 100% / 45%);
+  --scrollbar-thumb-bg-color-hover: hsl(0deg 0% 100% / 30%);
+  --scrollbar-thumb-bg-color-active: hsl(0deg 0% 100% / 22%);
+}
+
 body {
   margin: 0;
   padding: 0;

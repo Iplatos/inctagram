@@ -1,0 +1,124 @@
+@use '../../styles/mixins' as *;
+@use '../../styles/helpers' as *;
+
+%filter-preview-image {
+  img {
+    object-fit: cover;
+  }
+}
+
+.cardRoot {
+  @include flex($justify: null, $align: null, $direction: column);
+
+  height: 100%;
+
+  .header {
+    position: relative;
+    justify-content: space-between;
+  }
+
+  .galleryWrapper {
+    grid-area: preview;
+    height: 100%;
+  }
+
+  .filtersList {
+    $filters-list-adaptive-padding: get-adaptive-size(
+      $min-size: 16,
+      $max-size: 54,
+      $min-device-size: get-breakpoint('tablet-m'),
+      $max-device-size: get-breakpoint('tablet-l'),
+      $unit: 1px,
+    );
+
+    --columns-count: 3;
+
+    @include thin-common-scrollbar;
+
+    overflow: auto;
+    display: grid;
+    grid-area: filters;
+    grid-template-columns: repeat(var(--columns-count), minmax(100px, 1fr));
+    gap: 18px clamp(12px, 7.5%, 24px);
+
+    padding-inline: clamp(16px, $filters-list-adaptive-padding, 11%);
+
+    @include media-breakpoint('desktop-s') {
+      --columns-count: auto-fill;
+    }
+
+    @include media-breakpoint('tablet-m') {
+      grid-auto-columns: 15%;
+      grid-auto-flow: column;
+      grid-template: none;
+      gap: 16px;
+
+      padding-block: 12px;
+    }
+
+    @include media-breakpoint('tablet-s') {
+      grid-auto-columns: 20%;
+      gap: 8px;
+      padding: 12px;
+    }
+
+    @include media-breakpoint('mobile-l') {
+      grid-auto-columns: 25%;
+    }
+  }
+}
+
+.headerTitle {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+}
+
+.contentWrapper {
+  // This adaptive sizing assumes that with a viewport width of 990px, the column was ~480px wide.
+  //  A coefficient 80 is added to the `$min-device-size` value
+  //  to shift the beginning of the column width increment towards a larger value,
+  //  so that with a viewport width of 600px, the column width is ~140px.
+  $adaptive-filters-list-width: get-adaptive-size(
+    $min-size: 0,
+    $max-size: 480,
+    $min-device-size: get-breakpoint('mobile-m') + 80,
+    $max-device-size: get-breakpoint('tablet-l'),
+    $unit: 1px,
+  );
+
+  overflow: hidden;
+  display: grid;
+  grid-template: 'preview filters' / 1fr min(49.5%, $adaptive-filters-list-width);
+  flex: 1 1 auto;
+
+  @include media-breakpoint('tablet-m') {
+    grid-template: 'preview' 1fr 'filters' min-content;
+  }
+}
+
+.filterItem {
+  @include flex($justify: null, $direction: column);
+
+  width: 100%;
+
+  .filterTitle {
+    @include text-overflow-ellipsis;
+
+    max-width: 100%;
+    margin-top: em(2);
+
+    @include media-breakpoint('tablet-m') {
+      font-size: var(--font-size-s);
+    }
+  }
+}
+
+.filterImageWrapper {
+  @extend %filter-preview-image;
+
+  cursor: pointer;
+  position: relative;
+  aspect-ratio: 1;
+  width: 100%;
+}

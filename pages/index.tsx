@@ -1,15 +1,17 @@
-import { Typography } from '@/shared/ui';
+import React from 'react';
+
+import { ProtectedRouter } from '@/shared/hoc/ProtectedRouter';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
+import { getPrivateLayout } from '@/widgets/layouts';
 
 function Home() {
   return (
     <>
       <HeadMeta title={'main'} />
-      <Typography.H1>Hello World!</Typography.H1>
+      <div>Hello World!</div>
     </>
   );
 }
 
-Home.getLayout = getLayout;
-export default Home;
+Home.getLayout = getPrivateLayout;
+export default ProtectedRouter(Home);

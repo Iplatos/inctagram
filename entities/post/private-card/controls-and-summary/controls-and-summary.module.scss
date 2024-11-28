@@ -1,0 +1,18 @@
+@use '../../../../styles/mixins' as *;
+@use '../../../../styles/helpers' as *;
+
+.root {
+  @include flex($justify: null, $align: null, $direction: column);
+
+  gap: 12px;
+
+  .actionButtons {
+    display: flex;
+    gap: 12px;
+
+    .iconButtonFirst {
+      // Fix ill-conceived `modalCardS.headerIconButtonFirst` behavior
+      margin-right: 0;
+    }
+  }
+}

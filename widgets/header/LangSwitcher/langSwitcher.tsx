@@ -10,7 +10,7 @@ const selectOptions = [
 ];
 
 export const LangSwitcher = () => {
-  const { asPath, locale, locales, pathname, push, query } = useRouter();
+  const { asPath, locale, pathname, push, query } = useRouter();
   const defaultIdx = selectOptions.findIndex(option => option.value === locale);
 
   const changeLangHandler = (value: string) => {

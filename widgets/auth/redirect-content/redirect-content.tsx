@@ -1,7 +1,13 @@
+import { useForm } from 'react-hook-form';
+
+import { useResendConfirmCodeMutation } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Button, Typography } from '@/shared/ui';
+import { ControlledTextField } from '@/shared/ui/controlled';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
+import { z } from 'zod';
 
 import style from './redirect-content.module.scss';
 
@@ -15,6 +21,30 @@ export type ContentType = {
 
 export const RedirectContent = (props: ContentType) => {
   const { emailConfirmed, linkExpired } = props;
+
+  const resentCodeSchema = z.object({
+    email: z.string().email('Неверный формат').min(1, 'Enter email'),
+  });
+
+  type FormValuesType = z.infer<typeof resentCodeSchema>;
+
+  const {
+    control,
+    formState: { isDirty, isSubmitting, isValid, submitCount },
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      email: '',
+    },
+    resolver: zodResolver(resentCodeSchema),
+  });
+
+  const onSubmit = (data: FormValuesType) => {
+    resentCode({ baseUrl: process.env.NEXT_PUBLIC_BASE_URL, email: data.email });
+  };
+
+  const [resentCode] = useResendConfirmCodeMutation();
+
   const { t } = useTranslation();
 
   return (
@@ -32,13 +62,24 @@ export const RedirectContent = (props: ContentType) => {
       </div>
 
       {emailConfirmed && (
-        <Link href={'/signIn'}>
-          <Button className={style.buttonSignIn}>{t.auth.emailConfirmedPage.textButton}</Button>
-        </Link>
+        <Button className={style.buttonSignIn} component={'span'}>
+          <Link href={'/sign-in'}>{t.auth.emailConfirmedPage.textButton}</Link>
+        </Button>
       )}
 
       {linkExpired && (
-        <Button className={style.buttonExpired}>{t.auth.linkExpiredPage.textButton}</Button>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <ControlledTextField
+            control={control}
+            disabled={isSubmitting}
+            label={t.auth.signInPage.email}
+            name={'email'}
+            placeholder={t.auth.signInPage.email}
+          />
+          <Button className={style.buttonExpired} type={'submit'}>
+            {t.auth.linkExpiredPage.textButton}
+          </Button>
+        </form>
       )}
 
       {emailConfirmed && <Image alt={'Email Confirmed'} src={EmailConfirmedImage} />}

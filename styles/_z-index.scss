@@ -1,3 +1,5 @@
+@use 'sass:map';
+
 $z-index: (
   content: 1500,
   form: 100,
@@ -5,9 +7,21 @@ $z-index: (
 );
 
 @function z-index($key) {
-  @return map-get($z-index, $key);
+  @warn 'z-index function deprecated. Use get-z-index instead.';
+
+  @return get-z-index($key);
 }
 
 @mixin z-index($key) {
   z-index: z-index($key);
+}
+
+@function get-z-index($key) {
+  $z-index-value: map.get($z-index, $key);
+
+  @if not $z-index-value {
+    @error 'Z-index `#{$key}` is not found in the list of z-indexes. Consider one of the existing z-indexes: #{map.keys($z-index)}.';
+  }
+
+  @return $z-index-value;
 }

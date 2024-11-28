@@ -24,7 +24,7 @@ const CustomRender: FC<UserProfilePropsAndCustomArgs> = ({
   return (
     <UserProfile
       avatarProps={{ ...avatarProps, url: avatarSrc ? avatarProps?.url : undefined }}
-      posts={PostsListStories.getRandomPosts(postsCount, adjacentPosts)}
+      posts={PostsListStories.getMockPosts(postsCount, adjacentPosts)}
       statistics={statistics.map(s => ({
         ...s,
         action: s.action ? storybookAction(`on${capitalise(s.name)}Click`) : undefined,

@@ -1,0 +1,34 @@
+@use '../../../styles/mixins' as *;
+@use '../../../styles/helpers' as *;
+
+$card-border: 1px solid var(--color-dark-100);
+
+.content {
+  padding: 12px 24px;
+
+  &:not(:last-of-type) {
+    border-bottom: $card-border;
+  }
+
+  @include media-breakpoint('tablet-s') {
+    padding-inline: 16px;
+  }
+}
+
+.root {
+  background-color: var(--color-dark-300);
+  border: $card-border;
+  border-radius: 2px;
+}
+
+.header {
+  @extend .content;
+
+  @include flex($justify: null);
+
+  gap: rem(16);
+
+  & + .contentAfterHeader {
+    padding-top: 18px;
+  }
+}
