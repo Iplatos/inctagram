@@ -37,7 +37,7 @@ const MyProfile: NextPageWithLayout = () => {
   }, [meResponse, getUserProfile, getPosts]);
 
   if (isLoadingPosts || isLoadingProfile || isLoadingUser) {
-    console.log(isLoadingPosts || isLoadingProfile || isLoadingUser);
+    // console.log(isLoadingPosts || isLoadingProfile || isLoadingUser);
 
     return <div>Loading...</div>;
   }
