@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { PropsWithoutChildren } from '@/shared/types/helpers';
 import { Slider } from '@/shared/ui/slider/slider';
-import { PopoverProps, PopperContentProps } from '@radix-ui/react-popover';
+import { PopoverContentProps, PopoverProps } from '@radix-ui/react-popover';
 
 import { PopoverContent, PopoverRoot, PopoverTrigger } from '../popover-root';
 import { TriggerButton } from '../trigger-button/trigger-button';
@@ -13,7 +13,7 @@ export type ZoomProps = {
   minZoom?: number;
   onOpenChange?: PopoverProps['onOpenChange'];
   onZoomChange: (zoom: number) => void;
-  popoverContentProps?: PropsWithoutChildren<PopperContentProps>;
+  popoverContentProps?: PropsWithoutChildren<PopoverContentProps>;
   zoom: number;
 
   zoomSpeed?: number;
