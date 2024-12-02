@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { CloseIcon } from '@/assets/icons/close';
-import { Button, IconButton } from '@/shared/ui';
-import { DropDown } from '@/shared/ui/drop-down-menu/index';
+import { Button } from '@/shared/ui/Button';
+import { IconButton } from '@/shared/ui/IconButton';
+import { DropDown } from '@/shared/ui/drop-down-menu';
 
 const meta = {
   argTypes: {

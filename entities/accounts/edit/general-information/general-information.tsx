@@ -4,32 +4,35 @@ import { DateObject } from 'react-multi-date-picker';
 
 import { AddProfilePhoto } from '@/features/accounts/edit';
 import { FormValues, ProfileForm } from '@/features/accounts/edit/profile-form/profile-form';
-import { useLazyGetMeQuery, useUpdateMeMutation } from '@/shared/api/users-api';
-import { useLazyGetUsersProfileQuery } from '@/shared/api/users-profile-api';
+import {
+  useLazyGetMeQuery,
+  useLazyGetMyProfileQuery,
+  useUpdateMeMutation,
+} from '@/shared/api/users-api';
 import { useAuthRedirect } from '@/shared/hooks/useAuthRedirect';
-import { GetUserProfileResponse, UpdateMeRequestData } from '@/shared/types/user.types';
+import { GetMyProfileResponse, UpdateMeRequestData } from '@/shared/types/user.types';
 import { Typography } from '@/shared/ui';
 
 import style from './general-information.module.scss';
 
 export const GeneralInformation = () => {
-  const [getMyProfile, { data: meResponse, isError }] = useLazyGetMeQuery();
+  const [getMe, { data: meResponse, isError }] = useLazyGetMeQuery();
   const [updateProfile] = useUpdateMeMutation();
-  const [getUserProfile, { data, isError: isMyProfileError }] = useLazyGetUsersProfileQuery();
+  const [getMyProfile, { data, isError: isMyProfileError }] = useLazyGetMyProfileQuery();
 
   const isAuthSuccess = useAuthRedirect();
 
   useEffect(() => {
     if (isAuthSuccess) {
-      getMyProfile(undefined, true);
+      getMe(undefined, true);
     }
-  }, [isAuthSuccess, getMyProfile]);
+  }, [isAuthSuccess, getMe]);
 
   useEffect(() => {
     if (meResponse) {
-      getUserProfile(meResponse.userName);
+      getMyProfile();
     }
-  }, [meResponse, getUserProfile]);
+  }, [meResponse, getMyProfile]);
 
   if (isError || !meResponse || isMyProfileError) {
     return <Typography.H1>Profile loading error</Typography.H1>;
@@ -67,7 +70,7 @@ export const GeneralInformation = () => {
   );
 };
 
-const mapUserProfileToFormValues = (profile: GetUserProfileResponse): FormValues => ({
+const mapUserProfileToFormValues = (profile: GetMyProfileResponse): FormValues => ({
   aboutMe: profile?.aboutMe ?? '',
   city: profile?.city ?? '',
   country: profile?.country ?? '',

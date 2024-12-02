@@ -1,19 +1,12 @@
 import type {
   DeleteMyAvatarResponse,
   GetMeResponse,
+  GetMyProfileResponse,
   UpdateMeRequestData,
   UpdateMeResponse,
 } from '@/shared/types/user.types';
 
-import { fetchBaseQuery } from '@reduxjs/toolkit/query';
-
 import { baseApi } from './base-api';
-
-// The `baseQuery` instance required to retrieve the user's avatar file. Used for convenience instead of native `fetch`.
-const customBaseQuery = fetchBaseQuery({
-  baseUrl: '/',
-  responseHandler: res => res.arrayBuffer(),
-});
 
 export const usersApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -31,7 +24,20 @@ export const usersApi = baseApi.injectEndpoints({
         url: '/api/v1/auth/me',
       }),
     }),
-    // downloading the user's avatar file for re-uploading if the user wants to use the same image but with different cropping props.
+
+    getMyProfile: builder.query<GetMyProfileResponse, void>({
+      providesTags: ['My-Profile'],
+      query: () => '/api/v1/users/profile',
+    }),
+
+    getUserProfile: builder.query<any, string>({
+      providesTags: ['Users-Profile'],
+      query: userName => {
+        return {
+          url: `/api/v1/users/${userName}`,
+        };
+      },
+    }),
 
     setMyAvatar: builder.mutation<any, FormData>({
       invalidatesTags: ['Me', 'My-Profile'],
@@ -58,7 +64,10 @@ const selectMyProfile = usersApi.endpoints.getMe.select();
 export const {
   useDeleteMyAvatarMutation,
   useGetMeQuery,
+  useGetMyProfileQuery,
   useLazyGetMeQuery,
+  useLazyGetMyProfileQuery,
+  useLazyGetUserProfileQuery,
   useSetMyAvatarMutation,
   useUpdateMeMutation,
 } = usersApi;

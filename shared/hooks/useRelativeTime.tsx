@@ -63,11 +63,9 @@ const getShortRelativeTime = (date: Date, locale: Locale): string => {
   return locale === 'ru' ? `${shortFormatted}` : shortFormatted;
 };
 
-const useRelativeTime = (date: string): string => {
+export const useRelativeTime = (date: string): string => {
   const { locale } = useRouter();
   const effectiveLocale = locale === 'ru' || locale === 'en' ? locale : 'en';
 
   return getShortRelativeTime(new Date(date), effectiveLocale);
 };
-
-export default useRelativeTime;

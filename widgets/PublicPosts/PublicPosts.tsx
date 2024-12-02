@@ -1,17 +1,13 @@
-import { ReactNode, useId, useState } from 'react';
-import ReactTimeAgo from 'react-time-ago';
-
-import { pseudoRandomBytes } from 'crypto';
+import { useState } from 'react';
 
 import { useTranslation } from '@/shared/hooks';
 import { Post } from '@/shared/types/public.types';
-import { Button, Modal, Typography } from '@/shared/ui';
-import Image from 'next/image';
+import { PublicPagePostModal } from '@/widgets/PublicPosts/post-modal';
+import { UsersCountCard } from '@/widgets/UsersCountCard/UsersCountCard';
 import { useRouter } from 'next/router';
 
 import s from './publicPosts.module.scss';
 
-import { UsersCountCard } from '../UsersCountCard/UsersCountCard';
 import { PublicPost } from './PublicPost/PublicPost';
 
 type Props = {
@@ -19,27 +15,44 @@ type Props = {
   usersCount?: number;
 };
 
-export const PublicPosts = (props: Props) => {
-  const router = useRouter();
-
+export const PublicPosts = ({ posts, usersCount }: Props) => {
   const { publicPage: t } = useTranslation().t;
+
+  const router = useRouter();
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedPostIndex, setSelectedPostIndex] = useState(0);
+
+  const post = posts?.[selectedPostIndex];
+
+  const handleModalOpen = (index: number) => {
+    setSelectedPostIndex(index);
+    setOpenModal(true);
+  };
 
   return (
     <div className={s.page}>
       <div className={s['count-panel']}>
-        <UsersCountCard userCount={props.usersCount} />
+        <UsersCountCard userCount={usersCount} />
       </div>
       <div className={s.posts}>
-        {props.posts?.map(post => (
+        {posts?.map((post, index) => (
           <PublicPost
             hide={t.hide}
             key={post.id}
             locale={router.locale}
+            onPostPreviewClick={() => handleModalOpen(index)}
             post={post}
             showMore={t.showMore}
           />
         ))}
       </div>
+      {post && (
+        <PublicPagePostModal
+          onClose={() => setOpenModal(false)}
+          open={openModal}
+          post={posts[selectedPostIndex]}
+        />
+      )}
     </div>
   );
 };

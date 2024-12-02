@@ -14,7 +14,7 @@ import modalCardS from '@/shared/ui/modal-card/modal-card.module.scss';
 export type CropPhotoCardProps = {
   disabled?: boolean;
   galleryProps: PhotoGalleryWithCropProps;
-  nextButtonLabel?: string;
+  nextButtonTitle?: string;
   onNextClick?: () => void;
   onPrevClick?: () => void;
   title: string;
@@ -23,7 +23,7 @@ export type CropPhotoCardProps = {
 export const CropPhotoCard: FC<CropPhotoCardProps> = ({
   disabled,
   galleryProps,
-  nextButtonLabel = 'Next',
+  nextButtonTitle = 'Next',
   onNextClick,
   onPrevClick,
   title,
@@ -46,7 +46,7 @@ export const CropPhotoCard: FC<CropPhotoCardProps> = ({
           onClick={onNextClick}
           variant={'text'}
         >
-          {nextButtonLabel}
+          {nextButtonTitle}
         </Button>
       </ModalCard.Header>
 

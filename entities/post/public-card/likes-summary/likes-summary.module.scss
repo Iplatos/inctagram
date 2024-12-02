@@ -1,0 +1,22 @@
+@use '../../../../styles/mixins' as *;
+@use '../../../../styles/helpers' as *;
+
+.likesSummary {
+  @include flex($justify: null);
+
+  gap: 12px;
+}
+
+.avatarsWrapper {
+  display: flex;
+
+  .avatar {
+    --avatar-size: 2em;
+
+    font-size: em(12);
+
+    &:not(:first-of-type) {
+      margin-left: calc(var(--avatar-size) / 3 * -1);
+    }
+  }
+}

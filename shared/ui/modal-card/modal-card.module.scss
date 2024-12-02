@@ -37,7 +37,7 @@
   }
 
   .contentScrollable {
-    @include thin-scrollbar;
+    @include thin-common-scrollbar;
 
     overflow: auto;
   }
