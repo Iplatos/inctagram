@@ -82,4 +82,12 @@
     width: var(--thin-scrollbar-width);
     height: var(--thin-scrollbar-height);
   }
+
+  @at-root #{selector.append(&, '::-webkit-scrollbar-thumb')} {
+    border-radius: 1rem;
+  }
+
+  @at-root #{selector.append(&, '::-webkit-scrollbar-track')} {
+    margin-left: 1rem;
+  }
 }

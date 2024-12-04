@@ -388,6 +388,7 @@ export const en: LocaleType = {
     ago: 'ago',
     new: 'New',
     newNotification: 'New notification!',
+    notNewNotifications: 'No new notifications',
     notifications: 'Notifications',
   },
 

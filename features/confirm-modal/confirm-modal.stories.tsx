@@ -43,7 +43,7 @@ const CustomRender = ({
 };
 
 /**
- * `ConfirmModal` displays a dialog with an optional message and waits for the user
+ * `ConfirmModal` displays a dialog with an optional notification and waits for the user
  * to either confirm or cancel the dialog. It is based on [Modal](/docs/ui-modal--docs) wrapping [ModalCard](/docs/ui-modalcard--docs).
  */
 const meta = {
