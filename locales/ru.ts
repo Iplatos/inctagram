@@ -385,6 +385,7 @@ export const ru = {
     ago: 'назад',
     new: 'Новое',
     newNotification: 'Новое уведомление!',
+    notNewNotifications: 'Нет новых уведомлений',
     notifications: 'Уведомления',
   },
 

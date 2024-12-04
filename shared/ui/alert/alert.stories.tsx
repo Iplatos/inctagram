@@ -12,8 +12,8 @@ const alertClasses  = JSON.stringify({
 } as AlertClasses, null, 2)
 
 /**
- * An alert displays a short, important message in a way that attracts the user's attention.
- * An alert can have an action, such as a close or undo button. It is rendered after the message, at the end of the alert.
+ * An alert displays a short, important notification in a way that attracts the user's attention.
+ * An alert can have an action, such as a close or undo button. It is rendered after the notification, at the end of the alert.
  *
  * If a simple string is passed as `children`, it can contain XML-like tags wrapping fragments of the string to automatically adjust text (under the hood, the `Trans` component is used). Available tags:
  * * `<bold></bold>` wraps text with `Typography.Bold14` making it bold.

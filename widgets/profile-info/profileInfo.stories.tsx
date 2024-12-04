@@ -66,7 +66,7 @@ const CustomRender: FC<ProfileInfoPropsAndCustomArgs> = ({
 
 /**
  * The ProfileInfo widget is embedded on the user's page to display information about the user's profile
- * and also provides some contextual actions for the authorized user, such as "follow", "send message", etc.
+ * and also provides some contextual actions for the authorized user, such as "follow", "send notification", etc.
  * */
 const meta = {
   argTypes: {

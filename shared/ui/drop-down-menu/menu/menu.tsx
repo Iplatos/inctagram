@@ -18,6 +18,7 @@ export const Menu = forwardRef<ElementRef<typeof RadixDropDown.Content>, MenuPro
     const menuContent = (
       <RadixDropDown.Content className={clsx(s.content, className)} ref={ref} {...rest}>
         {children}
+        <RadixDropDown.Arrow className={s.arrow} />
       </RadixDropDown.Content>
     );
 

@@ -38,7 +38,6 @@ export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
       <main className={s.outerContainer}>
         <Sidebar />
         <CreatePostModal />
-
         <div className={s.innerContainer}>{children}</div>
       </main>
       {process.env.NEXT_PUBLIC_MODE === 'development' && <NavBar />}
