@@ -19,7 +19,7 @@ export type AvatarUploaderProps = {
   initCropProps?: CropProps;
   /**
    * `onClose` callback should return `true` if you want the loader to reset its state when closed.
-   * In particular, this means resetting the preview loaded from the device along with the error message.
+   * In particular, this means resetting the preview loaded from the device along with the error notification.
    * */
   onClose: () => boolean | void;
   onImageSave: (image: Blob, cropProps: CropProps & { mediaType: string }) => Promise<void> | void;

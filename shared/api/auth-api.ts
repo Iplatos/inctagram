@@ -14,37 +14,68 @@ import type {
 
 import { accessTokenReceived, resetApp } from '@/shared/api/app-slice';
 import { baseApi } from '@/shared/api/base-api';
+import { addNotification } from '@/shared/api/notification-slice';
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     changePassword: builder.mutation<void, ChangePasswordRequestType>({
-      query: params => {
-        return {
-          body: params,
-          method: 'POST',
-          url: 'auth/change-password',
-        };
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(addNotification({ message: 'Password changed successfully!', type: 'success' }));
+        } catch (e) {
+          dispatch(
+            addNotification({
+              message: 'Failed to change password. Please try again.',
+              type: 'error',
+            })
+          );
+        }
       },
+      query: params => ({
+        body: params,
+        method: 'POST',
+        url: 'auth/change-password',
+      }),
     }),
 
     confirmCode: builder.mutation<ConfirmCodeResponse, ConfirmCodeRequestData>({
-      query: params => {
-        return {
-          body: params,
-          method: 'POST',
-          url: '/api/v1/auth/registration-confirmation',
-        };
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(addNotification({ message: 'Code confirmed successfully!', type: 'success' }));
+        } catch (e) {
+          dispatch(
+            addNotification({ message: 'Failed to confirm code. Please try again.', type: 'error' })
+          );
+        }
       },
+      query: params => ({
+        body: params,
+        method: 'POST',
+        url: '/api/v1/auth/registration-confirmation',
+      }),
     }),
 
-    forgotPassword: builder.mutation<any, PasswordRecoveryRequestType>({
-      query: params => {
-        return {
-          body: params,
-          method: 'POST',
-          url: '/api/v1/auth/password-recovery',
-        };
+    forgotPassword: builder.mutation<void, PasswordRecoveryRequestType>({
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(addNotification({ message: 'Password recovery email sent!', type: 'success' }));
+        } catch (e) {
+          dispatch(
+            addNotification({
+              message: 'Failed to send recovery email. Please try again.',
+              type: 'error',
+            })
+          );
+        }
       },
+      query: params => ({
+        body: params,
+        method: 'POST',
+        url: '/api/v1/auth/password-recovery',
+      }),
     }),
 
     login: builder.mutation<LoginResponse, LoginRequestData>({
@@ -54,8 +85,9 @@ export const authApi = baseApi.injectEndpoints({
           const { data } = await queryFulfilled;
 
           dispatch(accessTokenReceived(data.accessToken));
+          dispatch(addNotification({ message: 'Login successful!', type: 'success' }));
         } catch (e) {
-          console.error("Don't forget to handle async errors!", e);
+          dispatch(addNotification({ message: 'Login failed. Please try again.', type: 'error' }));
         }
       },
       query: arg => ({
@@ -71,11 +103,15 @@ export const authApi = baseApi.injectEndpoints({
         try {
           await queryFulfilled;
           dispatch(resetApp());
+          dispatch(addNotification({ message: 'Logout successful!', type: 'success' }));
         } catch (e) {
-          console.error("Don't forget to handle async errors!", e);
+          dispatch(addNotification({ message: 'Logout failed. Please try again.', type: 'error' }));
         }
       },
-      query: () => ({ method: 'POST', url: '/api/v1/auth/logout' }),
+      query: () => ({
+        method: 'POST',
+        url: '/api/v1/auth/logout',
+      }),
     }),
 
     refreshToken: builder.query<RefreshTokenResponse, void>({
@@ -85,32 +121,60 @@ export const authApi = baseApi.injectEndpoints({
 
           dispatch(accessTokenReceived(data.accessToken));
         } catch (e) {
-          console.error("Don't forget to handle async errors!", e);
+          dispatch(
+            addNotification({
+              message: 'Failed to refresh token. Please try again.',
+              type: 'error',
+            })
+          );
         }
       },
       providesTags: ['Auth'],
-      query: () => {
-        return { method: 'POST', url: '/api/v1/auth/update-tokens' };
-      },
+      query: () => ({
+        method: 'POST',
+        url: '/api/v1/auth/update-tokens',
+      }),
     }),
+
     resendConfirmCode: builder.mutation<ConfirmCodeResponse, ResendConfirmationCodeRequest>({
-      query: params => {
-        return {
-          body: params,
-          method: 'POST',
-          url: '/api/v1/auth/registration-email-resending',
-        };
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(
+            addNotification({ message: 'Confirmation code resent successfully!', type: 'success' })
+          );
+        } catch (e) {
+          dispatch(
+            addNotification({
+              message: 'Failed to resend confirmation code. Please try again.',
+              type: 'error',
+            })
+          );
+        }
       },
+      query: params => ({
+        body: params,
+        method: 'POST',
+        url: '/api/v1/auth/registration-email-resending',
+      }),
     }),
 
     signUp: builder.mutation<SignUpResponse, SignUpRequestData>({
-      query: body => {
-        return {
-          body,
-          method: 'POST',
-          url: '/api/v1/auth/registration',
-        };
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(addNotification({ message: 'Sign up successful!', type: 'success' }));
+        } catch (e) {
+          dispatch(
+            addNotification({ message: 'Failed to sign up. Please try again.', type: 'error' })
+          );
+        }
       },
+      query: body => ({
+        body,
+        method: 'POST',
+        url: '/api/v1/auth/registration',
+      }),
     }),
   }),
 });
