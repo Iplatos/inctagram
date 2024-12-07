@@ -1,0 +1,41 @@
+@use '../../../styles/mixins' as *;
+@use '../../../styles/helpers' as *;
+
+.cardRoot {
+  @include flex($justify: null, $align: null, $direction: column);
+
+  height: 100%;
+
+  .commentsList {
+    @include thin-common-scrollbar;
+    @include flex($justify: null, $align: null, $direction: column);
+
+    overflow: auto;
+    flex: 1 1 auto;
+    gap: 16px;
+  }
+
+  .privateDetails {
+    padding-block: 8px;
+  }
+}
+
+.outerWrapper {
+  display: grid;
+  grid-template-areas: 'gallery details';
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+}
+
+.contentWrapper {
+  @include flex($justify: null, $align: null, $direction: column);
+
+  overflow: hidden;
+  grid-area: details;
+  height: 100%;
+}
+
+.gallery {
+  grid-area: gallery;
+  background-color: color-mix(in hsl, var(--color-dark-500), transparent 65%);
+}

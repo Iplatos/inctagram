@@ -5,6 +5,7 @@ import { publicPostsApi } from '@/shared/api/public-posts-api';
 import { PublicUserApi } from '@/shared/api/public-user-api';
 import { wrapper } from '@/shared/api/store';
 import {
+  Post,
   PublicPostByIdResponse,
   PublicPostsByUserIdResponse,
   PublicProfileByIdResponse,
@@ -56,13 +57,7 @@ const PublicPostById = (props: Props) => {
 
   const { post, userPosts, userProfile } = props;
 
-  const urls = userPosts.items.flatMap(item =>
-    item.images.map(image => {
-      return {
-        src: image.url,
-      };
-    })
-  );
+  // TODO: Consider removing second `Post` type from the project
 
   const avatar = { url: userProfile.avatars[0]?.url };
 
@@ -74,7 +69,7 @@ const PublicPostById = (props: Props) => {
         <UserProfile
           aboutMe={userProfile.aboutMe}
           avatarProps={avatar ?? null}
-          posts={urls}
+          posts={userPosts.items}
           userName={userProfile.userName}
         />
       </div>

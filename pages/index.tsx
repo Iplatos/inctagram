@@ -1,29 +1,17 @@
-import { useState } from 'react';
+import React from 'react';
 
-import {
-  openModal,
-  selectCreatePostModalItems,
-  selectCreatePostModalOpen,
-} from '@/shared/api/modal-slice';
-import { useAppDispatch } from '@/shared/api/pretyped-redux-hooks';
-import { Button } from '@/shared/ui';
+import { ProtectedRouter } from '@/shared/hoc/ProtectedRouter';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
-import { ModalCreatePublication } from '@/widgets/modal-create-publication';
+import { getPrivateLayout } from '@/widgets/layouts';
 
 function Home() {
-  const dispatch = useAppDispatch();
-
   return (
     <>
       <HeadMeta title={'main'} />
-      <div style={{ marginLeft: '300px' }}>Hello World!</div>
-
-      <Button onClick={() => dispatch(openModal())}>Add Post</Button>
-      <ModalCreatePublication />
+      <div>Hello World!</div>
     </>
   );
 }
 
-Home.getLayout = getLayout;
-export default Home;
+Home.getLayout = getPrivateLayout;
+export default ProtectedRouter(Home);

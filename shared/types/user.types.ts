@@ -5,11 +5,19 @@ export type GetMeResponse = {
   isBlocked: boolean;
   userId: number;
   userName: string;
-}; //AppResponse<UserProfile>;
+};
+
+export type UserAvatarResponse = {
+  createdAt: string;
+  fileSize: 300;
+  height: 300;
+  url: string;
+  width: 300;
+};
 
 export type UserProfile = {
   aboutMe: null | string;
-  avatar: AvatarResponse | null;
+  avatars: [UserAvatarResponse, UserAvatarResponse]; // [large, small] variants
   city: null | string;
   country: null | string;
   createdAt: string;
@@ -22,17 +30,33 @@ export type UserProfile = {
   userName: string;
 };
 
+export type GetMyProfileResponse = {
+  aboutMe: null | string;
+  avatars: [UserAvatarResponse, UserAvatarResponse]; // large and small variants
+  city: null | string;
+  country: null | string;
+  createdAt: string;
+  dateOfBirth: null | string;
+  firstName: null | string;
+  id: number;
+  lastName: null | string;
+  region: null | string;
+  userName: string;
+};
+
 export type GetUserProfileResponse = {
   aboutMe: string;
-  avatars: [
-    {
-      createdAt: string;
-      fileSize: number;
-      height: number;
-      url: string;
-      width: number;
-    },
-  ];
+  avatars:
+    | [
+        {
+          createdAt: string;
+          fileSize: number;
+          height: number;
+          url: string;
+          width: number;
+        },
+      ]
+    | [];
   city: string;
   country: string;
   dateOfBirth: string;

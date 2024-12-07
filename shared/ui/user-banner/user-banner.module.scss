@@ -1,18 +1,24 @@
 @use '../../../styles/mixins' as *;
 @use '../../../styles/helpers' as *;
 
-.userBanner {
-  @include flex($justify: space-between, $direction: row);
+.root {
+  @include flex($justify: null);
 
-  padding: 12px 24px;
-}
+  gap: em(12);
 
-.userInfo {
-  @include flex($justify: null, $direction: row);
+  .avatar {
+    flex: 0 0 auto;
 
-  gap: 12px;
-}
+    &Wrapper {
+      @extend .avatar;
+    }
+  }
 
-.longName {
-  @include text-overflow-ellipsis;
+  .userName {
+    @include text-overflow-ellipsis;
+
+    &Wrapper {
+      @extend .userName;
+    }
+  }
 }

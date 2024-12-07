@@ -1,13 +1,16 @@
-import { PropsWithChildren, ReactElement, useEffect } from 'react';
+import { PropsWithChildren, ReactElement } from 'react';
+
 
 import { NotificationCenter } from '@/features/notification-center/notification-center';
 import { useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { useLazyGetMeQuery } from '@/shared/api/users-api';
 import { Typography } from '@/shared/ui';
+
 import { NavBar } from '@/widgets/NavBar/NavBar';
+import { CreatePostModal } from '@/widgets/create-post-modal';
 import { Header } from '@/widgets/header';
-import { Sidebar } from '@/widgets/sidebar';
 import { NextPage } from 'next';
+import { Sidebar } from 'widgets/layouts/private-layout/sidebar';
 
 import s from './Layout.module.scss';
 
@@ -39,6 +42,8 @@ export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
       <Header />
       <main className={s.outerContainer}>
         <Sidebar />
+        <CreatePostModal />
+
         <div className={s.innerContainer}>{children}</div>
       </main>
       <NotificationCenter />

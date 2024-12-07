@@ -9,8 +9,11 @@ import Image from 'next/image';
 
 import s from 'shared/ui/textField/TextField.module.scss';
 
+type TextFieldSlot = 'container' | 'error' | 'input' | 'label';
+type TextFieldClasses = { [P in TextFieldSlot]?: string };
 type SharedProps = {
   className?: string;
+  classes?: TextFieldClasses;
   disabled?: boolean;
   error?: string;
   label?: string;
@@ -43,13 +46,13 @@ export type TextFieldComponent = {
 export const TextField: TextFieldComponent = forwardRef<
   HTMLInputElement | HTMLTextAreaElement,
   TextFieldProps
->(({ className, error, label, onChange, required, ...props }, ref) => {
+>(({ className, classes = {}, error, label, onChange, required, ...props }, ref) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     onChange(e.currentTarget.value);
 
-  const sharedClassName = clsx(s.input, error && s.error, className);
+  const sharedClassName = clsx(s.input, error && s.error, className, classes.input);
   let resolvedFragment: ReactNode;
 
   // Do not destructure the 'as' prop before 'if' statement
@@ -105,19 +108,28 @@ export const TextField: TextFieldComponent = forwardRef<
         className={sharedClassName}
         onChange={handleChange}
         ref={ref as unknown as ForwardedRef<HTMLTextAreaElement>}
+        spellCheck={'false'} // Remove annoying red underline text in Firefox browser
         {...restProps}
       />
     );
   }
 
+  const cls = getClassNames(classes);
+
   return (
-    <div className={s.inputContainer}>
-      <Typography.Regular14 color={'var(--color-light-900)'}>
+    <div className={cls.container}>
+      <Typography.Regular14 className={cls.label}>
         {label}
         {required && <Typography.Regular14 color={'red'}>*</Typography.Regular14>}
       </Typography.Regular14>
       {resolvedFragment}
-      <div className={s.errorMessage}>{error}</div>
+      <div className={cls.error}>{error}</div>
     </div>
   );
+});
+
+const getClassNames = (classes: TextFieldClasses): Required<Omit<TextFieldClasses, 'input'>> => ({
+  container: clsx(s.inputContainer, classes.container),
+  error: clsx(s.errorMessage, classes.error),
+  label: clsx(classes.label),
 });

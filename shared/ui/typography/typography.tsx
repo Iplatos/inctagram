@@ -84,7 +84,7 @@ const TYPOGRAPHY_VARIANT_MAP = {
   regularLink: 'a',
   semibold12: 'span',
   smallLink: 'a',
-  smallText: 'p',
+  smallText: 'span',
 } as const;
 
 type TypographyVariant = keyof typeof TYPOGRAPHY_VARIANT_MAP;

@@ -16,20 +16,24 @@ export type FilterPhotoCardProps = {
   galleryProps?: Omit<PhotoGalleryProps, 'items'>;
   galleryRef?: ForwardedRef<FilterPhotoCardRefObject>;
   items: FilterPhotoCardItem[];
+  nextButtonTitle?: string;
   onFilterChange?: (selectedFilter: string, index: number) => void;
   onNextClick?: () => void;
   onPrevClick?: () => void;
   previewItemsRef?: MutableRefObject<Map<FilterPhotoCardItem, ElementRef<'img'>>>;
+  title: string;
 };
 
 export const FilterPhotoCard = ({
   galleryProps = {},
   galleryRef,
   items,
+  nextButtonTitle = 'Next',
   onFilterChange,
   onNextClick,
   onPrevClick,
   previewItemsRef,
+  title,
 }: FilterPhotoCardProps) => {
   const { onSlide, startIndex, ...restGalleryProps } = galleryProps;
 
@@ -112,10 +116,10 @@ export const FilterPhotoCard = ({
           <ArrowIOSBack />
         </IconButton>
         <Typography.H1 className={s.headerTitle} component={'h2'}>
-          Filters
+          {title}
         </Typography.H1>
         <Button onClick={onNextClick} variant={'text'}>
-          Next
+          {nextButtonTitle}
         </Button>
       </ModalCard.Header>
 

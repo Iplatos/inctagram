@@ -1,0 +1,29 @@
+@use '../../../../styles/mixins' as *;
+@use '../../../../styles/helpers' as *;
+
+[class~='post-card-root'] {
+  .header {
+    position: relative;
+  }
+
+  .headerTitle {
+    @include text-overflow-ellipsis;
+
+    position: absolute;
+    left: 50%;
+    translate: -50% 0;
+    max-width: 65%;
+  }
+
+  .content {
+    @include flex($justify: null, $align: null, $direction: column);
+
+    gap: 24px;
+    height: 100%;
+  }
+
+  .submitButton {
+    align-self: end;
+    margin-top: auto;
+  }
+}

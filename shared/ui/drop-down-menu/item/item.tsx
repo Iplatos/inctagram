@@ -5,12 +5,18 @@ import clsx from 'clsx';
 
 import s from './item.module.scss';
 
-type Props = {
+export type DropDownMenuItemProps = {
   endIcon?: ReactNode;
   startIcon?: ReactNode;
 } & ComponentPropsWithoutRef<typeof RadixDropdown.Item>;
 
-export const Item = ({ children, className, endIcon, startIcon, ...rest }: Props) => {
+export const DropDownMenuItem = ({
+  children,
+  className,
+  endIcon,
+  startIcon,
+  ...rest
+}: DropDownMenuItemProps) => {
   return (
     <RadixDropdown.Item className={clsx(s.item, className)} {...rest}>
       {startIcon}

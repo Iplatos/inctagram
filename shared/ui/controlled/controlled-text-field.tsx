@@ -21,7 +21,10 @@ export type ControlledTextFieldProps<TFieldValues extends FieldValues> =
 
 export const ControlledTextField = <TFieldValues extends FieldValues = FieldValues>({
   control,
-  disabled,
+  // In useForm's `useController`, it gives a strange validation error on submit
+  //  when the `disabled` prop takes the value `undefined`.
+  //  So we need to explicitly set it to `boolean`.
+  disabled = false,
   name,
   ...props
 }: ControlledTextFieldProps<TFieldValues>) => {
