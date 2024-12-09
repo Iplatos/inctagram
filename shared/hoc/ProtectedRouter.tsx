@@ -1,8 +1,8 @@
-import { ReactElement, ReactNode, useEffect, useState } from 'react';
+import { ReactElement, ReactNode, useEffect } from 'react';
 import { HashLoader } from 'react-spinners';
 
 import { LocaleType } from '@/locales/ru';
-import { useGoogleLoginMutation, useRefreshTokenQuery } from '@/shared/api/auth-api';
+import { useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
@@ -16,53 +16,19 @@ export const ProtectedRouter = (Page: Page) => {
   const Component = ({ pageProps }: AppProps) => {
     const router = useRouter();
     const { t } = useTranslation();
-
-    const [isAuthChecked, setIsAuthChecked] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-
-    //TODO: in the future, we need to remove the Google login logic from here
-
-    const [googleLogin, { isLoading: isGoogleLoginLoading }] = useGoogleLoginMutation();
-    const {
-      data: refreshTokenData,
-      isError: isAuthError,
-      isLoading: isRefreshing,
-      isSuccess: isRefreshingSuccess,
-    } = useRefreshTokenQuery(undefined, {
-      skip: !isAuthChecked,
-    });
+    const { push } = useRouter();
+    const { isError: isAuthError, isLoading, isSuccess: isAuthSuccess } = useRefreshTokenQuery();
 
     useEffect(() => {
-      const params = new URLSearchParams(window.location.search);
-      const code = params.get('code');
-
-      if (code) {
-        googleLogin({ code, redirectUrl: process.env.NEXT_PUBLIC_URL })
-          .unwrap()
-          .then(() => {
-            setIsAuthChecked(true);
-          })
-          .catch(error => {
-            setIsAuthChecked(true);
-          });
-      } else {
-        setIsAuthChecked(true);
+      if ((!isLoading && !isAuthSuccess) || isAuthError) {
+        void push('sign-in');
+        void router.push('/public-posts');
       }
-    }, [googleLogin]);
-
-    useEffect(() => {
-      if (isAuthChecked && !isRefreshing) {
-        if (isAuthError || !refreshTokenData) {
-          void router.push('/public-posts');
-        } else {
-          setIsLoading(false);
-        }
-      }
-    }, [isAuthChecked, isRefreshing, isAuthError, refreshTokenData, router]);
+    }, [isAuthSuccess, push, isLoading, isAuthError]);
 
     const getLayout = Page?.getLayout ?? ((page: ReactNode) => page);
 
-    if (!isRefreshingSuccess || isLoading || isGoogleLoginLoading) {
+    if (isLoading) {
       return (
         <div
           style={{

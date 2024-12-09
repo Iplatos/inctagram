@@ -7,7 +7,7 @@ export const GitHubGoogleContainer = () => {
   const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(
     process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
   )}&redirect_uri=${
-    process.env.NEXT_PUBLIC_URL
+    process.env.NEXT_PUBLIC_URL + '/auth/google-redirect'
   }&response_type=code&scope=email profile&access_type=offline`;
 
   const gitHubLoginUrl = `${
