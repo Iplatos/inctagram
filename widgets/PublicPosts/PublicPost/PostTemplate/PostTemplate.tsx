@@ -1,5 +1,6 @@
 import ReactTimeAgo from 'react-time-ago';
 
+import ImageNotFound from '@/assets/img/img-not-found.webp';
 import { Post } from '@/shared/types/public.types';
 import { Button, Typography, UserBanner } from '@/shared/ui';
 import Image from 'next/image';
@@ -36,7 +37,7 @@ export const PostTemplate = ({
         className={s.image}
         height={height}
         onClick={onPostPreviewClick}
-        src={post.images[0].url}
+        src={post.images[0]?.url || ImageNotFound}
         width={width}
       />
       <UserBanner
