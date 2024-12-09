@@ -1,57 +1,81 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { HashLoader } from 'react-spinners';
 
-import { useConfirmCodeMutation } from '@/shared/api/auth-api';
+import { useConfirmCodeMutation, useResendConfirmCodeMutation } from '@/shared/api/auth-api';
 import { Button, Typography } from '@/shared/ui';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
-import Link from 'next/link';
+import { getPublicLayout } from '@/widgets/layouts';
 import { useRouter } from 'next/router';
 
 import s from './confirm-registration.module.scss';
 
 export const ConfirmRegistration = () => {
+  const [code, setCode] = useState<null | string>(null);
+  const [email, setEmail] = useState<null | string>(null);
   const router = useRouter();
-  const [confirmCode, { data: response }] = useConfirmCodeMutation();
-  const { isReady, query } = router;
+
+  const [setConfirmCode, { error, isError, isLoading, isSuccess }] = useConfirmCodeMutation();
+  const [resentConfirmCode] = useResendConfirmCodeMutation();
+
+  console.log({ error, isError, isLoading, isSuccess });
+
+  const onSignIn = () => router.push('/sign-in');
+
+  const resentConfirmCodeHandler = () => {
+    if (email) {
+      resentConfirmCode({ baseUrl: process.env.NEXT_PUBLIC_URL, email: email });
+    }
+  };
 
   useEffect(() => {
-    if (query.code) {
-      confirmCode({ confirmationCode: query.code as string });
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+
+      setCode(params.get('code'));
+      setEmail(params.get('email'));
     }
-  }, [confirmCode, query]);
+  }, []);
 
-  /**
-   * render the desired UI depending on the `confirmCode` response.
-   * - If all was successful, then show [this UI]{@link (https://www.figma.com/file/M7753HAzy0tm9rQWyRBrnI/Inctagram?type=design&node-id=301-5874&mode=design&t=pZd1HNpBuoy77ApL-4)}
-   * - If the confirmation code has expired, show [this UI]{@link (https://www.figma.com/file/M7753HAzy0tm9rQWyRBrnI/Inctagram?type=design&node-id=301-6009&mode=design&t=pZd1HNpBuoy77ApL-4)}
-   * - If the user tries to reuse the already confirmed code, then write something like "Invalid confirmation code. Please register for the confirmation code.  [/sign-up]{@link (../sign-up/index.tsx)}". __This UI is not in figma! You have to create it yourself__.
-   */
-  const success = response?.statusCode;
-
-  const children =
-    success === 204 ? (
-      <>
-        <Typography.H1>Congratulations!</Typography.H1>
-        <Typography.Regular16>Your email has been confirmed</Typography.Regular16>
-        <Button component={'span'}>
-          <Link href={'/sign-up'}>sign up</Link>
-        </Button>
-      </>
-    ) : (
-      <Typography.H1 style={{ textAlign: 'center' }}>
-        `code` search param wasn&apos;t provided or expired.
-      </Typography.H1>
-    );
+  useEffect(() => {
+    if (code) {
+      setConfirmCode({ confirmationCode: code });
+    }
+  }, [code, setConfirmCode]);
 
   return (
     <>
       <HeadMeta title={'Confirm Registration'} />
       <div className={s.outerContainer}>
-        <div className={s.innerContainer}>{isReady ? children : null}</div>
+        {isLoading && !isSuccess ? (
+          <HashLoader size={150} />
+        ) : (
+          <div className={s.innerContainer}>
+            {isError ? (
+              <>
+                <Typography.H1>Email verification link expired</Typography.H1>
+                <Typography.Regular16>
+                  Looks like the verification link has expired. Not to worry, we can send the link
+                  again
+                </Typography.Regular16>
+                <Button component={'span'} onClick={resentConfirmCodeHandler}>
+                  Resend verification link
+                </Button>
+              </>
+            ) : (
+              <>
+                <Typography.H1>Congratulations!</Typography.H1>
+                <Typography.Regular16>Your email has been confirmed</Typography.Regular16>
+                <Button component={'span'} onClick={onSignIn}>
+                  Sign In
+                </Button>
+              </>
+            )}
+          </div>
+        )}
       </div>
     </>
   );
 };
 
-ConfirmRegistration.getLayout = getLayout;
+ConfirmRegistration.getLayout = getPublicLayout;
 export default ConfirmRegistration;

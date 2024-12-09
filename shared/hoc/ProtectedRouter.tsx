@@ -1,8 +1,8 @@
-import { ReactElement, ReactNode, useEffect } from 'react';
+import { ReactElement, ReactNode, useEffect, useState } from 'react';
+import { HashLoader } from 'react-spinners';
 
-import { Loader } from '@/features/hooks/loader/loader';
 import { LocaleType } from '@/locales/ru';
-import { useRefreshTokenQuery } from '@/shared/api/auth-api';
+import { useGoogleLoginMutation, useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
@@ -14,22 +14,55 @@ export type Page<P = {}, IP = P> = NextPage<P, IP> & {
 
 export const ProtectedRouter = (Page: Page) => {
   const Component = ({ pageProps }: AppProps) => {
-    const { push } = useRouter();
-    const { isError: isAuthError, isLoading, isSuccess: isAuthSuccess } = useRefreshTokenQuery();
-
+    const router = useRouter();
     const { t } = useTranslation();
 
-    const getLayout = Page?.getLayout ?? (page => page);
+    const [isAuthChecked, setIsAuthChecked] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    console.log(isAuthSuccess);
+    //TODO: in the future, we need to remove the Google login logic from here
+
+    const [googleLogin, { isLoading: isGoogleLoginLoading }] = useGoogleLoginMutation();
+    const {
+      data: refreshTokenData,
+      isError: isAuthError,
+      isLoading: isRefreshing,
+      isSuccess: isRefreshingSuccess,
+    } = useRefreshTokenQuery(undefined, {
+      skip: !isAuthChecked,
+    });
 
     useEffect(() => {
-      if ((!isLoading && !isAuthSuccess) || isAuthError) {
-        void push('sign-in');
-      }
-    }, [isAuthSuccess, push, isLoading, isAuthError]);
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get('code');
 
-    if (isLoading) {
+      if (code) {
+        googleLogin({ code, redirectUrl: process.env.NEXT_PUBLIC_URL })
+          .unwrap()
+          .then(() => {
+            setIsAuthChecked(true);
+          })
+          .catch(error => {
+            setIsAuthChecked(true);
+          });
+      } else {
+        setIsAuthChecked(true);
+      }
+    }, [googleLogin]);
+
+    useEffect(() => {
+      if (isAuthChecked && !isRefreshing) {
+        if (isAuthError || !refreshTokenData) {
+          void router.push('/public-posts');
+        } else {
+          setIsLoading(false);
+        }
+      }
+    }, [isAuthChecked, isRefreshing, isAuthError, refreshTokenData, router]);
+
+    const getLayout = Page?.getLayout ?? ((page: ReactNode) => page);
+
+    if (!isRefreshingSuccess || isLoading || isGoogleLoginLoading) {
       return (
         <div
           style={{
@@ -40,7 +73,7 @@ export const ProtectedRouter = (Page: Page) => {
             width: '100%',
           }}
         >
-          <Loader />
+          <HashLoader color={'white'} size={200} />
         </div>
       );
     }
