@@ -12,6 +12,8 @@ import { getPrivateLayout } from '@/widgets/layouts';
 import { UserProfile } from '@/widgets/user-profile';
 import Link from 'next/link';
 
+import MyProfileSkeleton from './my-profile.skeleton';
+
 const MyProfile: NextPageWithLayout = () => {
   const { myProfile: t } = useTranslation().t;
   const [getMe, { data: meResponse, isError: isMeDataError, isLoading: isLoadingProfile }] =
@@ -37,9 +39,11 @@ const MyProfile: NextPageWithLayout = () => {
   }, [meResponse, getUserProfile, getPosts]);
 
   if (isLoadingPosts || isLoadingProfile || isLoadingUser) {
-    // console.log(isLoadingPosts || isLoadingProfile || isLoadingUser);
-
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <MyProfileSkeleton />
+      </div>
+    );
   }
 
   // if (isMeDataError || !meResponse || isMyProfileError) {

@@ -3,13 +3,13 @@
 
 .outerContainer {
   margin-top: 60px;
-  margin-left: 220px;
 }
 
 .innerContainer {
   @include flex($justify: null, $direction: column);
 
   gap: rem(16);
-  max-width: 300px;
+  max-width: 500px;
   margin-inline: auto;
+  text-align: center;
 }

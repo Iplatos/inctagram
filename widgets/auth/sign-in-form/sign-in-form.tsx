@@ -53,11 +53,11 @@ export const SignInForm = () => {
     resolver: zodResolver(signInSchema),
   });
 
-  // if (loginData) {
-  //   router.push(`/`);
-  //
-  //   return null;
-  // }
+  if (loginData) {
+    router.push(`/`);
+
+    return null;
+  }
 
   const submitIsDisabled = !isDirty || (!isValid && !!submitCount) || isSubmitting;
 

@@ -5407,7 +5407,6 @@ babel-plugin-polyfill-regenerator@^0.5.3:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/babel-plugin-polyfill-regenerator/-/babel-plugin-polyfill-regenerator-0.5.5.tgz#8b0c8fc6434239e5d7b8a9d1f832bb2b0310f06a"
   integrity sha512-OJGYZlhLqBh2DDHeqAxWB1XIvr49CxiJ2gIt61/PU55CQK4Z58OzMqjDe1zwQdQk+rBYsRc+1rJmdajM3gimHg==
-
   dependencies:
     "@babel/helper-define-polyfill-provider" "^0.5.0"
 
@@ -5416,7 +5415,6 @@ babel-plugin-polyfill-regenerator@^0.6.1:
   resolved "https://registry.yarnpkg.com/babel-plugin-polyfill-regenerator/-/babel-plugin-polyfill-regenerator-0.6.2.tgz#addc47e240edd1da1058ebda03021f382bba785e"
   integrity sha512-2R25rQZWP63nGwaAswvDazbPXfrM3HwVoBXK6HcqeKrSrL/JqcC/rDcf95l4r7LXLyxDXc8uQDa064GubtCABg==
   dependencies:
-
     "@babel/helper-define-polyfill-provider" "^0.6.2"
 
 babel-plugin-react-docgen@^4.2.1:
@@ -10292,7 +10290,6 @@ pend@~1.2.0:
   resolved "https://registry.npmjs.org/pend/-/pend-1.2.0.tgz"
   integrity sha512-F3asv42UuXchdzt+xXqfW1OGlVBe+mxa2mqI0pg5yAHZPvFmY3Y6drSf/GQ1A86WgWEN9Kzh/WrgKa6iGcHXLg==
 
-
 performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
@@ -10915,6 +10912,11 @@ react-simple-animate@^3.3.12:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/react-simple-animate/-/react-simple-animate-3.5.2.tgz#ab08865c8bd47872b92bd1e25902326bf7c695b3"
   integrity sha512-xLE65euP920QMTOmv5haPlml+hmOPDkbIr5WeF7ADIXWBYt5kW/vwpNfWg8EKMab8aeDxIZ6QjffVh8v2dUyhg==
+
+react-spinners@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/react-spinners/-/react-spinners-0.15.0.tgz#bb9536a3839ab4e1513bb98847d79cc1fc930b93"
+  integrity sha512-ZO3/fNB9Qc+kgpG3SfdlMnvTX6LtLmTnOogb3W6sXIaU/kZ1ydEViPfZ06kSOaEsor58C/tzXw2wROGQu3X2pA==
 
 react-style-singleton@^2.2.1:
   version "2.2.1"
@@ -11698,7 +11700,6 @@ string-length@^4.0.1:
     char-regex "^1.0.2"
     strip-ansi "^6.0.0"
 
-
 "string-width-cjs@npm:string-width@^4.2.0":
   version "4.2.3"
   resolved "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz"
@@ -11709,7 +11710,6 @@ string-length@^4.0.1:
     strip-ansi "^6.0.1"
 
 string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
-
   version "4.2.3"
   resolved "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -11783,7 +11783,6 @@ string_decoder@~1.1.1:
   dependencies:
     safe-buffer "~5.1.0"
 
-
 "strip-ansi-cjs@npm:strip-ansi@^6.0.1":
   version "6.0.1"
   resolved "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz"
@@ -11792,7 +11791,6 @@ string_decoder@~1.1.1:
     ansi-regex "^5.0.1"
 
 strip-ansi@^6.0.0, strip-ansi@^6.0.1:
-
   version "6.0.1"
   resolved "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==

@@ -6,6 +6,7 @@ import { PublicPostsResponse, PublicUsersResponse } from '@/shared/types/public.
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { PublicPosts } from '@/widgets/PublicPosts/PublicPosts';
 import { Header } from '@/widgets/header';
+import { getPublicLayout } from '@/widgets/layouts';
 
 export const getStaticProps = wrapper.getStaticProps(store => async () => {
   const { data: users } = await store.dispatch(
@@ -36,10 +37,10 @@ function PublicPage({ posts, users }: Props) {
   return (
     <>
       <HeadMeta title={'Public Page'} />
-      <Header />
       <PublicPosts posts={posts.items} usersCount={users.totalCount} />
     </>
   );
 }
 
+PublicPage.getLayout = getPublicLayout;
 export default PublicPage;

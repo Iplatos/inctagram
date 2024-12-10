@@ -12,7 +12,7 @@ export const PublicHeader = () => {
   return (
     <Header>
       <div className={s.content}>
-        <Typography.Large component={Link} href={'/'}>
+        <Typography.Large component={Link} href={'/public-posts'}>
           Inctagram
         </Typography.Large>
         <div className={s.controlsWrapper}>

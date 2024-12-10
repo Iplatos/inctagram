@@ -4,6 +4,7 @@ import { title } from 'process';
 import gregorian_en from 'react-date-object/locales/gregorian_en';
 
 import { LocaleType } from './ru';
+import { Success } from '@/shared/ui/alert';
 
 export const en: LocaleType = {
   auth: {
@@ -20,6 +21,10 @@ export const en: LocaleType = {
       sendLink: 'Send Link',
       title: 'Forgot Password',
       titleModal: 'Email Sent',
+    },
+
+    github: {
+      successMessage: `Congratulation, you're all set!`,
     },
 
     linkExpiredPage: {

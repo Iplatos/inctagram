@@ -1,5 +1,6 @@
 import { PropsWithChildren, ReactElement } from 'react';
 
+import { NotificationCenter } from '@/features/notification-center/notification-center';
 import { PublicHeader } from '@/widgets/layouts/public-layout/public-header';
 import { NextPage } from 'next';
 
@@ -12,6 +13,7 @@ export const PublicLayout: NextPage<PropsWithChildren> = ({ children }) => {
       <main className={s.outerContainer}>
         <div className={s.innerContainer}>{children}</div>
       </main>
+      <NotificationCenter />
     </>
   );
 };

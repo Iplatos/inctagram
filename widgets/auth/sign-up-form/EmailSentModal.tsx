@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { CloseDialog, DEPRECATED_Modal } from '@/features/DEPRECATED_Modal';
-import { Button } from '@/shared/ui/Button';
-import { Typography } from '@/shared/ui/typography';
+import { CloseDialog, DEPRECATED_Modal } from '@/features';
+import { Button, Typography } from '@/shared/ui';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
 import { Trans } from '@/widgets/Trans/Trans';
-import { getPublicLayout } from '@/widgets/layouts';
 import { useRouter } from 'next/navigation';
 
-const EmailSent = () => {
-  const [open, setOpen] = useState<boolean>(true);
-  const [email, setEmail] = useState<string>('someEmail');
+type Props = {
+  email: string;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+};
+
+export const EmailSentModal = (props: Props) => {
+  const { email, open, setOpen } = props;
   const router = useRouter();
 
   function handleModalClosed() {
     setOpen(false);
-    router.push('sign-up');
+    router.push('sign-in');
   }
 
   return (
@@ -46,6 +49,3 @@ const EmailSent = () => {
     </>
   );
 };
-
-EmailSent.getLayout = getPublicLayout;
-export default EmailSent;

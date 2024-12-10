@@ -1,5 +1,6 @@
 import { appSlice } from '@/shared/api/app-slice';
 import { baseApi } from '@/shared/api/base-api';
+import { notificationSlice } from '@/shared/api/notification-slice';
 import { ThunkAction, UnknownAction, combineSlices, configureStore } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 
@@ -7,7 +8,14 @@ import { countriesApi } from './countries.api';
 import { modalSlice } from './modal-slice';
 import { publicPageSlice } from './public-page-slice';
 
-const rootReducer = combineSlices(baseApi, countriesApi, appSlice, modalSlice, publicPageSlice);
+const rootReducer = combineSlices(
+  baseApi,
+  countriesApi,
+  appSlice,
+  modalSlice,
+  publicPageSlice,
+  notificationSlice
+);
 
 export const store = configureStore({
   middleware: gDM => gDM().concat(baseApi.middleware, countriesApi.middleware),
