@@ -25,7 +25,7 @@ export const Github = () => {
       dispatch(accessTokenReceived(accessToken));
       router.push('/');
     }
-  }, [router]);
+  }, [router, dispatch]);
 
   return (
     <div className={style.githubPage}>

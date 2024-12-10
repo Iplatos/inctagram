@@ -17,7 +17,7 @@ export const ConfirmRegistration = () => {
   const [setConfirmCode, { error, isError, isLoading, isSuccess }] = useConfirmCodeMutation();
   const [resentConfirmCode] = useResendConfirmCodeMutation();
 
-  console.log({ error, isError, isLoading, isSuccess });
+  // console.log({ error, isError, isLoading, isSuccess });
 
   const onSignIn = () => router.push('/sign-in');
 

@@ -12,7 +12,7 @@ import { getPrivateLayout } from '@/widgets/layouts';
 import { UserProfile } from '@/widgets/user-profile';
 import Link from 'next/link';
 
-import { MyProfileSkeleton } from './my-profile.skeleton';
+import MyProfileSkeleton from './my-profile.skeleton';
 
 const MyProfile: NextPageWithLayout = () => {
   const { myProfile: t } = useTranslation().t;

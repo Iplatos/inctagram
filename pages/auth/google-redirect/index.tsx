@@ -25,7 +25,7 @@ export const GoogleRedirect = () => {
         redirectUrl: process.env.NEXT_PUBLIC_URL + '/auth/google-redirect',
       });
     }
-  }, [router]);
+  }, [router, googleLogin, isLoading]);
 
   if (isError) {
     router.push('/sign-in');

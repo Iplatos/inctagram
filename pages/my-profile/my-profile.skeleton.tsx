@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-export const MyProfileSkeleton = () => {
+function MyProfileSkeleton() {
   return (
     <ContentLoader
       backgroundColor={'#4c4c4c'}
@@ -17,4 +17,6 @@ export const MyProfileSkeleton = () => {
       <rect height={'60'} rx={'2'} ry={'2'} width={'740'} x={'216'} y={'108'} />
     </ContentLoader>
   );
-};
+}
+
+export default MyProfileSkeleton;
