@@ -4,6 +4,7 @@ import { title } from 'process';
 import gregorian_en from 'react-date-object/locales/gregorian_en';
 
 import { LocaleType } from './ru';
+import { Success } from '@/shared/ui/alert';
 
 export const en: LocaleType = {
   auth: {
@@ -20,6 +21,10 @@ export const en: LocaleType = {
       sendLink: 'Send Link',
       title: 'Forgot Password',
       titleModal: 'Email Sent',
+    },
+
+    github: {
+      successMessage: `Congratulation, you're all set!`,
     },
 
     linkExpiredPage: {
@@ -281,6 +286,24 @@ export const en: LocaleType = {
   },
 
   editProfile: {
+    accountManagement: {
+      accountType: 'Account type:',
+      business: 'Business',
+      currentSubscription: 'Current Subscription:',
+      expireAt: 'Expire at',
+      modal: {
+        errorButton: 'Back to payment',
+        errorContent: 'Transaction failed. Please, write to support',
+        errorTitle: 'Error',
+        successButton: 'OK',
+        successContent: 'Payment was successful!',
+        successTitle: 'Success',
+      },
+      nextPayment: 'Next payment',
+      or: 'or',
+      personal: 'Personal',
+      yourSubscriptionCosts: 'Your subscription costs',
+    },
     addPhotoButton: 'Add a Profile Photo',
 
     createPublication: {
@@ -292,6 +315,14 @@ export const en: LocaleType = {
       message: 'Are you sure you want to delete the photo?',
       title: 'Delete Photo',
     },
+    myPayments: {
+      dateOfPayment: 'Date of Payment',
+      endDateOfSubscription: 'End date of subscription',
+      paymentType: 'Payment Type',
+      price: 'Price',
+      subscriptionType: 'Subscription Type',
+    },
+
     photoSlider: {
       deletePhoto: {
         cancelButtonTitle: 'Cancel',

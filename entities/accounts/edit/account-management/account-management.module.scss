@@ -1,0 +1,39 @@
+.header {
+    margin-bottom: 20px;
+}
+
+.card {
+    margin-bottom: 40px
+}
+
+.current-subscription-content {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.date {
+    margin-right: 30px;
+}
+
+.date-header {
+    color: var(--color-light-900)
+}
+
+.conjunction {
+    display: flex;
+    align-items: center;
+    justify-content: center;     
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+.autorenewalCheckbox {
+    margin-top: 10px;
+    margin-bottom: -20px
+}
+
+

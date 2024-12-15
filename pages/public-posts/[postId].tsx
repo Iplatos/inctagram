@@ -11,7 +11,7 @@ import {
   PublicProfileByIdResponse,
 } from '@/shared/types/public.types';
 import { TestPostModal } from '@/widgets/TestPostModal/TestPostModal';
-import { Header } from '@/widgets/header';
+import { getPublicLayout } from '@/widgets/layouts';
 import { UserProfile } from '@/widgets/user-profile';
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async context => {
@@ -53,7 +53,7 @@ type Props = {
 };
 
 const PublicPostById = (props: Props) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const { post, userPosts, userProfile } = props;
 
@@ -63,9 +63,8 @@ const PublicPostById = (props: Props) => {
 
   return (
     <>
-      <Header />
       <TestPostModal open={open} post={post} setOpen={setOpen} />
-      <div style={{ marginLeft: '100px', marginTop: '100px' }}>
+      <div>
         <UserProfile
           aboutMe={userProfile.aboutMe}
           avatarProps={avatar ?? null}
@@ -77,4 +76,5 @@ const PublicPostById = (props: Props) => {
   );
 };
 
+PublicPostById.getLayout = getPublicLayout;
 export default PublicPostById;
