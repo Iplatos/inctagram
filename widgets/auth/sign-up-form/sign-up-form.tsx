@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useSignUpMutation } from '@/shared/api/auth-api';
@@ -15,6 +15,8 @@ import Link from 'next/link';
 import { z } from 'zod';
 
 import s from 'widgets/auth/sign-up-form/sign-up.module.scss';
+
+import { EmailSentModal } from './EmailSentModal';
 
 const DevTool: React.ElementType = dynamic(
   () => import('@hookform/devtools').then(module => module.DevTool),
@@ -51,17 +53,19 @@ type FormValues = z.input<typeof schema>;
 export const SignUpForm = () => {
   const { t } = useTranslation();
   const [signUpTrigger] = useSignUpMutation();
+  const [openSentModal, setOpenSentModal] = useState(false);
+  const [email, setEmail] = useState('');
 
   const {
     control,
     formState: { isDirty, isSubmitting, isValid, submitCount },
     handleSubmit,
+    reset,
   } = useForm<FormValues>({
     defaultValues: {
       checkbox: false,
       confirm: '',
       email: '',
-      // 'nickname' is used instead of 'username' to disable the browser's autofill when clicking on this field, since the latter is reserved
       nickname: '',
       password: '',
     },
@@ -69,19 +73,16 @@ export const SignUpForm = () => {
     resolver: zodResolver(schema),
   });
 
-  // if (signUpData) {
-  //   router.push(`/email-sent`);
-  //
-  //   return null;
-  // }
+  const onSuccessHandler = (email: string) => {
+    setOpenSentModal(true);
+    setEmail(email);
+    reset();
+  };
 
   const signUp = handleSubmit(({ email, nickname, password }) => {
     return signUpTrigger({
-      // FIXME: add different baseUrl for different environment variables
-      baseUrl: 'localhost:3000',
-      email,
-      password,
-      userName: nickname,
+      body: { baseUrl: process.env.NEXT_PUBLIC_URL, email, password, userName: nickname },
+      onSuccess: () => onSuccessHandler(email),
     });
   });
 
@@ -89,6 +90,7 @@ export const SignUpForm = () => {
 
   return (
     <div className={s.outerContainer}>
+      <EmailSentModal email={email} open={openSentModal} setOpen={() => setOpenSentModal(false)} />
       <DEPRECATED_Card className={s.card}>
         <Typography.H1>{t.auth.signUpPage.title}</Typography.H1>
         <GitHubGoogleContainer />
