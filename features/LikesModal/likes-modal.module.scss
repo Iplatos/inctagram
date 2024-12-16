@@ -1,0 +1,42 @@
+@use '../../styles/helpers' as *;
+@use '../../styles/mixins' as *;
+
+.modalContent {
+  .cardRoot {
+    @include flex($justify: null, $align: null, $direction: column);
+    @include thin-scrollbar;
+
+    width: 644px;
+    max-width: 100%;
+    min-height: 210px;
+    margin-bottom: 400px;
+  }
+
+  .cardContent {
+    @include flex($justify: null, $align: null, $direction: column);
+
+    flex: 1 1 auto;
+    gap: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+.buttonsGroup {
+  @include flex($justify: space-between, $align: null, $wrap: wrap);
+
+  gap: 12px 16px;
+  height: 36px;
+  margin-top: auto;
+}
+
+.button {
+  min-width: em(96);
+  white-space: nowrap;
+
+  @include media-breakpoint('tablet-s') {
+    flex-basis: 0;
+    flex-grow: 1;
+    min-width: min-content;
+    min-height: em(48);
+  }
+}
