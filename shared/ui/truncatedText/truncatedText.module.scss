@@ -1,0 +1,67 @@
+.truncatedText {
+  position: relative;
+
+  overflow: hidden;
+  display: -webkit-box;
+
+  width: 300px;
+
+  text-align: justify;
+
+  -webkit-box-orient: vertical;
+
+  &.collapsed {
+    -webkit-line-clamp: 3;
+  }
+
+  &.expanded {
+    -webkit-line-clamp: unset;
+  }
+}
+
+.showMoreContainer {
+  position: absolute;
+  right: 4px;
+  bottom: 0;
+
+  height: 1.44em;
+  padding: 0;
+
+  border: 0;
+
+  &.expanded {
+    position: static;
+    height: 1em;
+  }
+}
+
+.ellipsis {
+  right: 4px;
+  bottom: 0;
+
+  display: inline-block;
+
+  width: 24px;
+  height: 1.44em;
+
+  background-color: var(--color-dark-700);
+
+  &.expanded {
+    height: 1em;
+  }
+}
+
+.button {
+  overflow: hidden;
+
+  width: max-content;
+  height: 1.44em;
+  padding: 0;
+
+  background-color: var(--color-dark-700);
+  border: 0;
+
+  &.expanded {
+    height: 1em;
+  }
+}
