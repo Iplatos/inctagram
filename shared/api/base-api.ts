@@ -60,6 +60,7 @@ export const baseApi = createApi({
     'Subscription',
     'Subscription-Cost',
     'Payments',
+    'Publications',
   ],
 });
 
