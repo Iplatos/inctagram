@@ -35,7 +35,7 @@ export const CurrentSubscription = () => {
           <Card>
             <Card.Content className={s['current-subscription-content']}>
               <div className={s.date}>
-                <Typography.Regular14 className={s['date-header']}>
+                <Typography.Regular14 className={s['date-PublicationHeader.tsx']}>
                   {t.accountManagement.expireAt}
                 </Typography.Regular14>
                 <div>
@@ -44,7 +44,7 @@ export const CurrentSubscription = () => {
               </div>
               <div className={s.date}>
                 {' '}
-                <Typography.Regular14 className={s['date-header']}>
+                <Typography.Regular14 className={s['date-PublicationHeader.tsx']}>
                   {t.accountManagement.nextPayment}
                 </Typography.Regular14>
                 <div>

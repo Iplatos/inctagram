@@ -2,6 +2,7 @@ export type GetPublicationsParams = {
   endCursorPostId?: number;
   pageNumber: number;
   pageSize?: number;
+  previousItems?: PublicationI[];
 };
 
 export interface GetPublicationsResponse {

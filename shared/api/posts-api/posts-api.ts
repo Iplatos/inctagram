@@ -13,6 +13,8 @@ import {
   GetCommentsParams,
   GetCommentsResponse,
   GetLikesResponse,
+  GetPostByIdParams,
+  GetPostByIdResponse,
   GetPostLikesParams,
   GetPostParams,
   GetPostResponse,
@@ -126,7 +128,7 @@ export const postsApi = baseApi.injectEndpoints({
       }),
     }),
 
-    getComments: builder.query<GetLikesResponse, GetCommentsParams>({
+    getComments: builder.query<GetCommentsResponse, GetCommentsParams>({
       providesTags: ['Posts'],
       query: ({ postId }) => ({
         method: 'GET',
@@ -148,6 +150,13 @@ export const postsApi = baseApi.injectEndpoints({
       query: params => ({
         method: 'GET',
         url: `/api/v1/posts/${params.userName}`,
+      }),
+    }),
+    getPostsById: builder.query<GetPostByIdResponse, GetPostByIdParams>({
+      providesTags: ['Posts', 'Publications'],
+      query: params => ({
+        method: 'GET',
+        url: `/api/v1/posts/id/${params.postId}`,
       }),
     }),
 
@@ -179,6 +188,7 @@ export const {
   useGetCommentLikesQuery,
   useGetCommentsQuery,
   useGetPostLikesQuery,
+  useGetPostsByIdQuery,
   useGetPostsQuery,
   useLazyGetPostsQuery,
   useUpdatePostLikeStatusMutation,

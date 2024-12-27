@@ -58,7 +58,7 @@ export const CustomRender = ({
  * For example, for `hover` and `active` states.
  * * `headerIconButtonLast` duplicates the styles of the preceding class.
  * Separates the leftmost button from the neighboring element.
- * * `headerTitle` class contains styles for a template header for modal windows.
+ * * `headerTitle` class contains styles for a template PublicationHeader.tsx for modal windows.
  * Includes trimming of too long string.
  * * `contentScrollable` adds the `overflow: auto` CSS property as well as a stylized scrollbar.
  * __Important!__ To display the scrollbar, you must explicitly limit the height of the ancestor tag
