@@ -1,0 +1,16 @@
+@import '../../styles/mixins';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: -10px auto;
+  gap: 2rem;
+  overflow-y: auto;
+  height: calc(100vh - 120px);
+  @include common-scrollbar();
+}
+
+.errorMessage {
+  color: var(--color-danger-500);
+}

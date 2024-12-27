@@ -13,6 +13,8 @@ import {
   GetCommentsParams,
   GetCommentsResponse,
   GetLikesResponse,
+  GetPostByIdParams,
+  GetPostByIdResponse,
   GetPostLikesParams,
   GetPostParams,
   GetPostResponse,
@@ -117,7 +119,7 @@ export const postsApi = baseApi.injectEndpoints({
       }),
     }),
 
-    getCommentLikes: builder.query<GetCommentsResponse, GetCommentsParams>({
+    getCommentLikes: builder.query<GetCommentsResponse, GetCommentLikesParams>({
       providesTags: ['Posts'],
       query: params => ({
         body: params,
@@ -126,12 +128,11 @@ export const postsApi = baseApi.injectEndpoints({
       }),
     }),
 
-    getComments: builder.query<GetLikesResponse, GetCommentLikesParams>({
+    getComments: builder.query<GetCommentsResponse, GetCommentsParams>({
       providesTags: ['Posts'],
-      query: params => ({
-        body: params,
+      query: ({ postId }) => ({
         method: 'GET',
-        url: `/api/v1/posts/${params.postId}/comments`,
+        url: `/api/v1/posts/${postId}/comments`,
       }),
     }),
 
@@ -151,6 +152,13 @@ export const postsApi = baseApi.injectEndpoints({
         url: `/api/v1/posts/${params.userName}`,
       }),
     }),
+    getPostsById: builder.query<GetPostByIdResponse, GetPostByIdParams>({
+      providesTags: ['Posts', 'Publications'],
+      query: params => ({
+        method: 'GET',
+        url: `/api/v1/posts/id/${params.postId}`,
+      }),
+    }),
 
     updatePost: builder.mutation<void, UpdatePostParams>({
       invalidatesTags: ['Posts'],
@@ -162,7 +170,7 @@ export const postsApi = baseApi.injectEndpoints({
     }),
 
     updatePostLikeStatus: builder.mutation<void, UpdatePostLikeStatusParams>({
-      invalidatesTags: ['Posts'],
+      invalidatesTags: ['Posts', 'Publications'],
       query: ({ likeStatus, postId }) => ({
         body: { likeStatus },
         method: 'PUT',
@@ -180,6 +188,7 @@ export const {
   useGetCommentLikesQuery,
   useGetCommentsQuery,
   useGetPostLikesQuery,
+  useGetPostsByIdQuery,
   useGetPostsQuery,
   useLazyGetPostsQuery,
   useUpdatePostLikeStatusMutation,
