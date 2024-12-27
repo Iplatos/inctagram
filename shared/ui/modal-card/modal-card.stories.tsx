@@ -2,6 +2,7 @@ import { ElementRef, ForwardedRef, ReactNode } from 'react';
 
 import { CloseIcon } from '@/assets/icons/close';
 import { Replace } from '@/shared/types/helpers';
+import { ModalCard, ModalCardContentProps, ModalCardProps } from '@/shared/ui';
 import { IconButton } from '@/shared/ui/IconButton';
 import * as CardStories from '@/shared/ui/card/card.stories';
 import { Typography } from '@/shared/ui/typography';
@@ -10,8 +11,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import clsx from 'clsx';
 
 import styles from './modal-card.module.scss';
-
-import { ModalCard, ModalCardContentProps, ModalCardProps } from './modal-card';
 
 const CardStoriesArgTypes = CardStories.default.argTypes;
 
