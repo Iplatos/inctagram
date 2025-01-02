@@ -23,7 +23,7 @@ export const SearchList = ({ searchParams }: Props) => {
     if (usersData) {
       setUsers(usersData);
     }
-  }, [searchParams, currentPage]);
+  }, [searchParams, currentPage, usersData]);
 
   if (!usersData || isLoading) {
     return <SearchItemSkeleton />;
