@@ -91,15 +91,17 @@ export const Sidebar = () => {
           {myProfile}
         </Typography.Regular14>
         <Typography.Regular14
-          className={clsx(s.button, isActiveLink('#') && s.active)}
-          tabIndex={1}
+          className={clsx(s.button, isActiveLink('/messenger') && s.active)}
+          component={Link}
+          href={'messenger'}
         >
           <MessageCircleOutline className={s.svg} />
           {messenger}
         </Typography.Regular14>
         <Typography.Regular14
-          className={clsx(s.button, isActiveLink('#') && s.active)}
-          tabIndex={1}
+          className={clsx(s.button, isActiveLink('/search') && s.active)}
+          component={Link}
+          href={'search'}
         >
           <SearchOutline className={s.svg} />
           {search}
@@ -108,15 +110,17 @@ export const Sidebar = () => {
 
       <div className={s.buttonsGroup}>
         <Typography.Regular14
-          className={clsx(s.button, isActiveLink('#') && s.active)}
-          tabIndex={1}
+          className={clsx(s.button, isActiveLink('/statistic') && s.active)}
+          component={Link}
+          href={'statistic'}
         >
           <TrendingUpOutline className={s.svg} />
           {statistic}
         </Typography.Regular14>
         <Typography.Regular14
-          className={clsx(s.button, isActiveLink('#') && s.active)}
-          tabIndex={1}
+          className={clsx(s.button, isActiveLink('/favorites') && s.active)}
+          component={Link}
+          href={'favorites'}
         >
           <BookmarkOutline className={s.svg} />
           {favorites}

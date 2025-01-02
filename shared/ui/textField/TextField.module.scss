@@ -41,7 +41,7 @@
   }
 
   &.inputSearch {
-    padding-left: 30px;
+    padding-left: 35px;
 
     &.error {
       color: var(--color-danger-300);
@@ -83,7 +83,7 @@
 
 .searchOutline {
   position: absolute;
-  top: 0;
+  top: 5px;
   left: 5px;
 
   &.searchOutlineWithLabel {

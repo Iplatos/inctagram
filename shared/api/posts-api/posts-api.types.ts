@@ -46,14 +46,14 @@ export interface CreatePostResponse extends Post {}
 
 export interface Post {
   avatarOwner: string;
-  avatarWhoLikes: string[];
+  avatarWhoLikes?: string[];
   createdAt: string;
   description: string;
   id: number;
   images: Image[];
   isLiked: boolean;
   likesCount: number;
-  location: string;
+  location: null | string;
   owner: Owner;
   ownerId: number;
   updatedAt: string;

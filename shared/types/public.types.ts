@@ -46,7 +46,7 @@ export type Post = {
 
   likesCount: number;
   location: null | string;
-  owner: { firstName: string; lastName: string };
+  owner: Owner;
   ownerId: number;
   updatedAt: string;
   userName: string;
@@ -73,34 +73,7 @@ export type PublicUsersResponse = {
 };
 
 export type PublicPostsByUserIdResponse = {
-  items: [
-    {
-      avatarOwner: string;
-      createdAt: string;
-      description: string;
-      id: number;
-      images: [
-        {
-          createdAt: string;
-          fileSize: number;
-          height: number;
-          uploadId: string;
-          url: string;
-          width: number;
-        },
-      ];
-      isLiked: boolean;
-      likesCount: number;
-      location: string;
-      owner: {
-        firstName: string;
-        lastName: string;
-      };
-      ownerId: number;
-      updatedAt: string;
-      userName: string;
-    },
-  ];
+  items: Post[];
   pageSize: number;
   totalCount: number;
   totalUsers: number;
