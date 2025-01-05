@@ -16,11 +16,11 @@ import {
 
 export const UsersApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    addFollower: builder.query<RemoveFollowerResponse, RemoveFollowerParams>({
-      providesTags: ['Users-Profile'],
-      query: ({ userId }) => ({
-        method: 'DELETE',
-        url: `/api/v1/users/follower/${userId}`,
+    addFollower: builder.mutation<AddFollowerResponse, AddFollowerParams>({
+      query: ({ selectedUserId }) => ({
+        body: { selectedUserId },
+        method: 'POST',
+        url: `/api/v1/users/following`,
       }),
     }),
     getUser: builder.query<GetUserResponse, GetUserParams>({
@@ -55,15 +55,14 @@ export const UsersApi = baseApi.injectEndpoints({
         url: '/api/v1/users',
       }),
     }),
-    removeFollower: builder.query<AddFollowerResponse, AddFollowerParams>({
+    removeFollower: builder.query<RemoveFollowerResponse, RemoveFollowerParams>({
       providesTags: ['Users-Profile'],
-      query: ({ selectedUserId }) => ({
-        body: { selectedUserId },
-        method: 'POST',
-        url: `/api/v1/users/following`,
+      query: ({ userId }) => ({
+        method: 'DELETE',
+        url: `/api/v1/users/follower/${userId}`,
       }),
     }),
   }),
 });
 
-export const { useGetUsersQuery } = UsersApi;
+export const { useAddFollowerMutation, useGetUsersQuery } = UsersApi;

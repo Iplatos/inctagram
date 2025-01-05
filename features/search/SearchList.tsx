@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
 import { SearchItemSkeleton } from '@/features/search/SearchItemSkeleton';
-import { useGetUsersQuery } from '@/shared/api/users/users-api';
+import { useAddFollowerMutation, useGetUsersQuery } from '@/shared/api/users/users-api';
 import { User } from '@/shared/api/users/users-api.types';
-import { Typography, UserBanner } from '@/shared/ui';
+import { Button, Typography, UserBanner } from '@/shared/ui';
 
 type Props = {
   searchParams: string;
@@ -17,6 +17,7 @@ export const SearchList = ({ searchParams }: Props) => {
     search: searchParams,
   });
 
+  const [addFollower] = useAddFollowerMutation();
   const usersData = data?.items;
 
   useEffect(() => {
@@ -41,10 +42,17 @@ export const SearchList = ({ searchParams }: Props) => {
     );
   }
 
+  const addFollowerHandler = (id: number) => {
+    addFollower({ selectedUserId: id });
+  };
+
   return (
     <div>
       {users.map((user, index) => (
-        <UserBanner key={index} userName={user.userName} />
+        <div key={index}>
+          <UserBanner userName={user.userName} />
+          <Button onClick={() => addFollowerHandler(user.id)}>Following</Button>
+        </div>
       ))}
     </div>
   );
