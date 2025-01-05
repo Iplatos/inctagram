@@ -2,6 +2,7 @@ import { ElementRef, ForwardedRef, ReactNode } from 'react';
 
 import { CloseIcon } from '@/assets/icons/close';
 import { Replace } from '@/shared/types/helpers';
+import { ModalCard, ModalCardContentProps, ModalCardProps } from '@/shared/ui';
 import { IconButton } from '@/shared/ui/IconButton';
 import * as CardStories from '@/shared/ui/card/card.stories';
 import { Typography } from '@/shared/ui/typography';
@@ -10,8 +11,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import clsx from 'clsx';
 
 import styles from './modal-card.module.scss';
-
-import { ModalCard, ModalCardContentProps, ModalCardProps } from './modal-card';
 
 const CardStoriesArgTypes = CardStories.default.argTypes;
 
@@ -58,7 +57,7 @@ export const CustomRender = ({
  * For example, for `hover` and `active` states.
  * * `headerIconButtonLast` duplicates the styles of the preceding class.
  * Separates the leftmost button from the neighboring element.
- * * `headerTitle` class contains styles for a template header for modal windows.
+ * * `headerTitle` class contains styles for a template PublicationHeader.tsx for modal windows.
  * Includes trimming of too long string.
  * * `contentScrollable` adds the `overflow: auto` CSS property as well as a stylized scrollbar.
  * __Important!__ To display the scrollbar, you must explicitly limit the height of the ancestor tag

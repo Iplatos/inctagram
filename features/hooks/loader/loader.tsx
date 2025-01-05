@@ -15,11 +15,11 @@ export const Loader = () => {
       <rect height={'36'} rx={'2'} ry={'2'} width={'192'} x={'0'} y={'240'} />
       <rect height={'60'} rx={'2'} ry={'2'} width={'740'} x={'216'} y={'24'} />
       <rect height={'60'} rx={'2'} ry={'2'} width={'740'} x={'216'} y={'108'} />
-      <rect height={'60'} rx={'2'} ry={'2'} width={'740'} x={'216'} y={'192'} />
+      {/* <rect height={'60'} rx={'2'} ry={'2'} width={'740'} x={'216'} y={'192'} />
       <rect height={'60'} rx={'2'} ry={'2'} width={'740'} x={'216'} y={'276'} />
       <rect height={'60'} rx={'2'} ry={'2'} width={'358'} x={'216'} y={'360'} />
       <rect height={'60'} rx={'2'} ry={'2'} width={'358'} x={'598'} y={'360'} />
-      <rect height={'108'} rx={'2'} ry={'2'} width={'740'} x={'216'} y={'444'} />
+      <rect height={'108'} rx={'2'} ry={'2'} width={'740'} x={'216'} y={'444'} /> */}
     </ContentLoader>
   );
 };

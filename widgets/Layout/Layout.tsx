@@ -1,9 +1,10 @@
-import { PropsWithChildren, ReactElement, useEffect } from 'react';
+import { PropsWithChildren, ReactElement } from 'react';
 
+import { NotificationCenter } from '@/features/notification-center/notification-center';
 
 import { NavBar } from '@/widgets/NavBar/NavBar';
+import { CreatePostModal } from '@/widgets/create-post-modal';
 import { Header } from '@/widgets/header';
-import { Sidebar } from '@/widgets/sidebar';
 import { NextPage } from 'next';
 import { Sidebar } from 'widgets/layouts/private-layout/sidebar';
 
@@ -40,6 +41,7 @@ export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
         <CreatePostModal />
         <div className={s.innerContainer}>{children}</div>
       </main>
+      <NotificationCenter />
       {process.env.NEXT_PUBLIC_MODE === 'development' && <NavBar />}
     </>
   );

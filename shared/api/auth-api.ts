@@ -2,6 +2,8 @@ import type {
   ChangePasswordRequestType,
   ConfirmCodeRequestData,
   ConfirmCodeResponse,
+  GoogleLoginRequestData,
+  GoogleLoginResponse,
   LoginRequestData,
   LoginResponse,
   LogoutResponse,
@@ -15,6 +17,7 @@ import type {
 import { accessTokenReceived, resetApp } from '@/shared/api/app-slice';
 import { baseApi } from '@/shared/api/base-api';
 import { addNotification } from '@/shared/api/notification-slice';
+import { useRouter } from 'next/navigation';
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -78,6 +81,25 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
 
+    googleLogin: builder.mutation<GoogleLoginResponse, GoogleLoginRequestData>({
+      invalidatesTags: ['Me', 'Auth'],
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+
+          dispatch(accessTokenReceived(data.accessToken));
+          dispatch(addNotification({ message: 'Login successful!', type: 'success' }));
+        } catch (e) {
+          dispatch(addNotification({ message: 'Login failed. Please try again.', type: 'error' }));
+        }
+      },
+      query: arg => ({
+        body: arg,
+        method: 'POST',
+        url: '/api/v1/auth/google/login',
+      }),
+    }),
+
     login: builder.mutation<LoginResponse, LoginRequestData>({
       invalidatesTags: ['Me', 'Auth'],
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
@@ -121,12 +143,12 @@ export const authApi = baseApi.injectEndpoints({
 
           dispatch(accessTokenReceived(data.accessToken));
         } catch (e) {
-          dispatch(
-            addNotification({
-              message: 'Failed to refresh token. Please try again.',
-              type: 'error',
-            })
-          );
+          // dispatch(
+          //   addNotification({
+          //     message: 'Failed to refresh token. Please try again.',
+          //     type: 'error',
+          //   })
+          // );
         }
       },
       providesTags: ['Auth'],
@@ -144,9 +166,11 @@ export const authApi = baseApi.injectEndpoints({
             addNotification({ message: 'Confirmation code resent successfully!', type: 'success' })
           );
         } catch (e) {
+          const errorAPI = e as ConfirmCodeResponse;
+
           dispatch(
             addNotification({
-              message: 'Failed to resend confirmation code. Please try again.',
+              message: errorAPI.error.data.messages[0].message,
               type: 'error',
             })
           );
@@ -159,18 +183,21 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
 
-    signUp: builder.mutation<SignUpResponse, SignUpRequestData>({
-      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+    signUp: builder.mutation<SignUpResponse, { body: SignUpRequestData; onSuccess: () => void }>({
+      async onQueryStarted({ onSuccess }, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
           dispatch(addNotification({ message: 'Sign up successful!', type: 'success' }));
+          onSuccess();
         } catch (e) {
+          const errorAPI = e as SignUpResponse;
+
           dispatch(
-            addNotification({ message: 'Failed to sign up. Please try again.', type: 'error' })
+            addNotification({ message: errorAPI.error.data.messages[0].message, type: 'error' })
           );
         }
       },
-      query: body => ({
+      query: ({ body }) => ({
         body,
         method: 'POST',
         url: '/api/v1/auth/registration',
@@ -183,6 +210,7 @@ export const {
   useChangePasswordMutation,
   useConfirmCodeMutation,
   useForgotPasswordMutation,
+  useGoogleLoginMutation,
   useLoginMutation,
   useLogoutMutation,
   useRefreshTokenQuery,

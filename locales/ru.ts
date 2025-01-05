@@ -18,6 +18,9 @@ export const ru = {
       title: 'Забыл пароль',
       titleModal: 'Ссылка отправлена',
     },
+    github: {
+      successMessage: `Поздравляем, все готово!`,
+    },
 
     linkExpiredPage: {
       text: 'Похоже, срок действия ссылки для подтверждения истек. Не волнуйтесь, мы можем отправить ссылку еще раз.',
@@ -277,6 +280,25 @@ export const ru = {
   },
 
   editProfile: {
+    accountManagement: {
+      accountType: 'Тип аккаунта:',
+      business: 'Бизнес',
+      currentSubscription: 'Текущая подписка:',
+      expireAt: 'Срок истечения',
+      modal: {
+        errorButton: 'Обратно к платежам',
+        errorContent: 'Транзакция не выполнилась. Пожалуйста, обратитесь в поддержку',
+        errorTitle: 'Ошибка',
+        successButton: 'OK',
+        successContent: 'Оплата произведена успешно!',
+        successTitle: 'Успех',
+      },
+      nextPayment: 'Следующий платеж',
+      or: 'или',
+      personal: 'Личный',
+      yourSubscriptionCosts: 'Стоимость вашей подписки',
+    },
+
     addPhotoButton: 'Добавить Фото Пользователя',
 
     createPublication: {
@@ -287,6 +309,14 @@ export const ru = {
     deleteAvatarModal: {
       message: 'Вы уверены, что хотите удалить это фото?',
       title: 'Удалить Фото',
+    },
+
+    myPayments: {
+      dateOfPayment: 'Дата Платежа',
+      endDateOfSubscription: 'Окончание Подписки',
+      paymentType: 'Тип Платежа',
+      price: 'Цена',
+      subscriptionType: 'Тип Подписки',
     },
 
     photoSlider: {
