@@ -1,0 +1,48 @@
+@use '../../styles/mixins' as *;
+
+.notificationMenu {
+  max-width: 371px;
+  max-height: 420px;
+  padding: 1rem;
+}
+
+.label {
+  padding-block: 0 0.75rem;
+  padding-inline: 0;
+  width: 100%;
+}
+
+.notNotificationLabel {
+  padding-block: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trigger {
+  position: relative;
+}
+
+.notVisibleCount {
+  position: absolute;
+  width: fit-content;
+  top: -0.25rem;
+  right: 0.25rem;
+  padding-inline: 0.25rem;
+  background: var(--color-danger-300);
+  border-radius: 50%;
+}
+
+.notificationsList {
+  margin-top: 0.5rem;
+  margin-right: -0.5rem;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  @include thin-common-scrollbar();
+}
+
+.notificationItem {
+  padding-block: 0.5rem;
+  padding-inline: 0;
+}

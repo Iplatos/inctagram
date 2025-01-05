@@ -1,0 +1,18 @@
+.notification {
+  display: flex;
+  flex-direction: column;
+
+  &Label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .status {
+      color: var(--color-accent-700);
+    }
+  }
+
+  &Date {
+    color: var(--color-light-900);
+  }
+}
