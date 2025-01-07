@@ -17,6 +17,7 @@ import { useTranslation } from '@/shared/hooks/useTranslation';
 import { Typography } from '@/shared/ui';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import s from './sidebar.module.scss';
 
@@ -24,6 +25,8 @@ import { Trans } from '../../../Trans/Trans';
 
 export const Sidebar = () => {
   const { logOutModal, modal } = useTranslation().t.common;
+  const router = useRouter();
+  const currentPath = router.pathname;
   const { create, favorites, home, logOut, messenger, myProfile, search, statistic } =
     useTranslation().t.sidebar;
 
@@ -55,10 +58,18 @@ export const Sidebar = () => {
     }
   };
 
+  const isActiveLink = (href: string) => {
+    return href === currentPath;
+  };
+
   return (
     <div className={s.container}>
       <div className={s.buttonsGroup}>
-        <Typography.Regular14 className={s.button} component={Link} href={'/'}>
+        <Typography.Regular14
+          className={clsx(s.button, isActiveLink('/') && s.active)}
+          component={Link}
+          href={'/'}
+        >
           <HomeOutline className={s.svg} />
           {home}
         </Typography.Regular14>
@@ -71,26 +82,46 @@ export const Sidebar = () => {
           <PlusSquareOutline className={s.svg} />
           {create}
         </Typography.Regular14>
-        <Typography.Regular14 className={s.button} component={Link} href={'/my-profile'}>
+        <Typography.Regular14
+          className={clsx(s.button, isActiveLink('/my-profile') && s.active)}
+          component={Link}
+          href={'/my-profile'}
+        >
           <PersonOutline className={s.svg} />
           {myProfile}
         </Typography.Regular14>
-        <Typography.Regular14 className={s.button} tabIndex={1}>
+        <Typography.Regular14
+          className={clsx(s.button, isActiveLink('/messenger') && s.active)}
+          component={Link}
+          href={'messenger'}
+        >
           <MessageCircleOutline className={s.svg} />
           {messenger}
         </Typography.Regular14>
-        <Typography.Regular14 className={s.button} tabIndex={1}>
+        <Typography.Regular14
+          className={clsx(s.button, isActiveLink('/search') && s.active)}
+          component={Link}
+          href={'search'}
+        >
           <SearchOutline className={s.svg} />
           {search}
         </Typography.Regular14>
       </div>
 
       <div className={s.buttonsGroup}>
-        <Typography.Regular14 className={s.button} tabIndex={1}>
+        <Typography.Regular14
+          className={clsx(s.button, isActiveLink('/statistic') && s.active)}
+          component={Link}
+          href={'statistic'}
+        >
           <TrendingUpOutline className={s.svg} />
           {statistic}
         </Typography.Regular14>
-        <Typography.Regular14 className={s.button} tabIndex={1}>
+        <Typography.Regular14
+          className={clsx(s.button, isActiveLink('/favorites') && s.active)}
+          component={Link}
+          href={'favorites'}
+        >
           <BookmarkOutline className={s.svg} />
           {favorites}
         </Typography.Regular14>

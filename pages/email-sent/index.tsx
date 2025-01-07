@@ -4,15 +4,18 @@ import { CloseDialog, DEPRECATED_Modal } from '@/features/DEPRECATED_Modal';
 import { Button } from '@/shared/ui/Button';
 import { Typography } from '@/shared/ui/typography';
 import { HeadMeta } from '@/widgets/HeadMeta/HeadMeta';
-import { getLayout } from '@/widgets/Layout/Layout';
 import { Trans } from '@/widgets/Trans/Trans';
+import { getPublicLayout } from '@/widgets/layouts';
+import { useRouter } from 'next/navigation';
 
 const EmailSent = () => {
   const [open, setOpen] = useState<boolean>(true);
   const [email, setEmail] = useState<string>('someEmail');
+  const router = useRouter();
 
   function handleModalClosed() {
     setOpen(false);
+    router.push('sign-up');
   }
 
   return (
@@ -44,5 +47,5 @@ const EmailSent = () => {
   );
 };
 
-EmailSent.getLayout = getLayout;
+EmailSent.getLayout = getPublicLayout;
 export default EmailSent;

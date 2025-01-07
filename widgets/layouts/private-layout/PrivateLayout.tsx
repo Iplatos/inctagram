@@ -1,5 +1,6 @@
 import { PropsWithChildren, ReactElement } from 'react';
 
+import { NotificationCenter } from '@/features/notification-center/notification-center';
 import { CreatePostModal } from '@/widgets/create-post-modal';
 import { NextPage } from 'next';
 import { Sidebar } from 'widgets/layouts/private-layout/sidebar';
@@ -17,6 +18,7 @@ export const PrivateLayout: NextPage<PropsWithChildren> = ({ children }) => {
         <CreatePostModal />
         <div className={s.innerContainer}>{children}</div>
       </main>
+      <NotificationCenter />
     </>
   );
 };

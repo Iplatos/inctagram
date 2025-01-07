@@ -1,6 +1,6 @@
 import { ReactElement, ReactNode, useEffect } from 'react';
+import { HashLoader } from 'react-spinners';
 
-import { Loader } from '@/features/hooks/loader/loader';
 import { LocaleType } from '@/locales/ru';
 import { useRefreshTokenQuery } from '@/shared/api/auth-api';
 import { useTranslation } from '@/shared/hooks';
@@ -14,20 +14,19 @@ export type Page<P = {}, IP = P> = NextPage<P, IP> & {
 
 export const ProtectedRouter = (Page: Page) => {
   const Component = ({ pageProps }: AppProps) => {
+    const router = useRouter();
+    const { t } = useTranslation();
     const { push } = useRouter();
     const { isError: isAuthError, isLoading, isSuccess: isAuthSuccess } = useRefreshTokenQuery();
-
-    const { t } = useTranslation();
-
-    const getLayout = Page?.getLayout ?? (page => page);
-
-    console.log(isAuthSuccess);
 
     useEffect(() => {
       if ((!isLoading && !isAuthSuccess) || isAuthError) {
         void push('sign-in');
+        void router.push('/public-posts');
       }
     }, [isAuthSuccess, push, isLoading, isAuthError]);
+
+    const getLayout = Page?.getLayout ?? ((page: ReactNode) => page);
 
     if (isLoading) {
       return (
@@ -40,7 +39,7 @@ export const ProtectedRouter = (Page: Page) => {
             width: '100%',
           }}
         >
-          <Loader />
+          <HashLoader color={'white'} size={200} />
         </div>
       );
     }

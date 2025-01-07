@@ -45,6 +45,8 @@ export interface CreatePostImageResponse {
 export interface CreatePostResponse extends Post {}
 
 export interface Post {
+  avatarOwner?: string;
+  avatarWhoLikes?: string[];
   createdAt: string;
   description: string;
   id: number;
@@ -66,8 +68,13 @@ export interface DeletePostParams {
 export interface GetPostParams extends PaginationAndSortParams {
   userName: string;
 }
+export interface GetPostByIdParams {
+  postId: number;
+}
 
 export interface GetPostResponse extends PaginatedResponse<Post> {}
+
+export interface GetPostByIdResponse extends Post {}
 
 export interface Comment {
   commentId: number;

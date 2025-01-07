@@ -1,0 +1,38 @@
+.icon {
+    margin-left: 10px;
+  }
+
+  .headblock {
+    display: flex
+  }
+
+  .root {
+    position: relative;
+
+    border-collapse: collapse;
+
+    width: 100%;
+
+    color: var(--color-light-100);
+
+    border: 1px solid var(--color-dark-500);
+  }
+
+  .tableRow {
+    border-bottom: 1px solid var(--color-dark-500);
+    transition: 0.3s;
+  }
+
+  .tableHead {
+    background-color: var(--color-dark-500)
+  }
+
+  .tableHeadCell {
+    cursor: pointer;
+    padding: 12px 24px;
+    text-align: left;
+  }
+
+  .tableDataCell {
+    padding: 12px 24px;
+  }

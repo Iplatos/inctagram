@@ -57,6 +57,10 @@ export const baseApi = createApi({
     'Public-Posts',
     'My-Profile',
     'Users-Profile',
+    'Subscription',
+    'Subscription-Cost',
+    'Payments',
+    'Publications',
   ],
 });
 
