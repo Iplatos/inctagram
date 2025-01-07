@@ -19,7 +19,7 @@ export const usePublication = ({ postId }: Props) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const relativeTimeString = postData?.createdAt ? useRelativeTime(postData.createdAt) : '';
 
-  const avatarWhoLikes = postData?.avatarWhoLikes.map(img => ({
+  const avatarWhoLikes = postData?.avatarWhoLikes?.map(img => ({
     avatar: img,
     userName: 'Avatar',
   }));

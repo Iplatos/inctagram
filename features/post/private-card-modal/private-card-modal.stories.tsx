@@ -4,7 +4,10 @@ import * as MyProfileCardStories from '@/features/post/my-profile-card/my-profil
 import { Button } from '@/shared/ui';
 import { Meta, StoryObj } from '@storybook/react';
 
-import { MyProfilePostCardModal, MyProfilePostCardModalProps } from './private-card-modal';
+import {
+  MyProfilePostCardModal,
+  MyProfilePostCardModalProps,
+} from '../my-profile-card-modal/my-profile-card-modal';
 
 type CustomRenderProps = Omit<MyProfilePostCardModalProps, 'onClose' | 'open'>;
 

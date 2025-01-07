@@ -45,7 +45,7 @@ export interface CreatePostImageResponse {
 export interface CreatePostResponse extends Post {}
 
 export interface Post {
-  avatarOwner: string;
+  avatarOwner?: string;
   avatarWhoLikes?: string[];
   createdAt: string;
   description: string;
@@ -53,7 +53,7 @@ export interface Post {
   images: Image[];
   isLiked: boolean;
   likesCount: number;
-  location: null | string;
+  location?: null | string;
   owner: Owner;
   ownerId: number;
   updatedAt: string;
